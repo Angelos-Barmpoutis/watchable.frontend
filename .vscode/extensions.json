@@ -1,4 +1,12 @@
 {
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
-  "recommendations": ["angular.ng-template"]
+    "recommendations": [
+        // General extensions
+        "Angular.ng-template",
+        "johnpapa.Angular2",
+        "Gruntfuggly.todo-tree",
+        // Formatting and Linting
+        "EditorConfig.EditorConfig",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint"
+    ]
 }
