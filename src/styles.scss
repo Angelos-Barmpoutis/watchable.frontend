@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+app-movies,
+app-movie,
+app-now-playing,
+app-popular,
+app-top-rated,
+app-trending,
+app-upcoming,
+app-people,
+app-person,
+app-series,
+app-airing-today,
+app-serie {
+    flex-grow: 1;
+}

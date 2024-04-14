@@ -1,0 +1,15 @@
+footer {
+    .features-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
+
+        &__feature {
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+        }
+    }
+}
