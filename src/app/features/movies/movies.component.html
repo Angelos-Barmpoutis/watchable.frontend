@@ -1,7 +1,7 @@
 <section>
     <h2>Trending</h2>
     <div class="media-container">
-        <div *ngFor="let movie of trendingMovies" class="media-container__media">
+        <div *ngFor="let movie of trending" class="media-container__media">
             <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
             <h3>{{ movie.title }}</h3>
             <div class="media-container__media__details">
@@ -19,7 +19,7 @@
 <section>
     <h2>Now Playing</h2>
     <div class="media-container">
-        <div *ngFor="let movie of nowPlayingMovies" class="media-container__media">
+        <div *ngFor="let movie of nowPlaying" class="media-container__media">
             <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
             <h3>{{ movie.title }}</h3>
             <div class="media-container__media__details">
@@ -37,7 +37,7 @@
 <section>
     <h2>Popular</h2>
     <div class="media-container">
-        <div *ngFor="let movie of popularMovies" class="media-container__media">
+        <div *ngFor="let movie of popular" class="media-container__media">
             <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
             <h3>{{ movie.title }}</h3>
             <div class="media-container__media__details">
@@ -55,7 +55,7 @@
 <section>
     <h2>Top Rated</h2>
     <div class="media-container">
-        <div *ngFor="let movie of topRatedMovies" class="media-container__media">
+        <div *ngFor="let movie of topRated" class="media-container__media">
             <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
             <h3>{{ movie.title }}</h3>
             <div class="media-container__media__details">
@@ -73,7 +73,7 @@
 <section>
     <h2>Upcoming</h2>
     <div class="media-container">
-        <div *ngFor="let movie of upcomingMovies" class="media-container__media">
+        <div *ngFor="let movie of upcoming" class="media-container__media">
             <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
             <h3>{{ movie.title }}</h3>
             <div class="media-container__media__details">
