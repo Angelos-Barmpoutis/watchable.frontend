@@ -12,7 +12,7 @@ export const routes: Routes = [
     },
     {
         path: 'series',
-        loadChildren: () => import('./features/series/series.routes').then((m) => m.routes),
+        loadChildren: () => import('./features/tv-series/tv-series.routes').then((m) => m.routes),
     },
     {
         path: 'people',

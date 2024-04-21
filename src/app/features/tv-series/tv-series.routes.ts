@@ -3,11 +3,11 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
     {
         path: '',
-        loadComponent: () => import('./series.component').then((c) => c.SeriesComponent),
+        loadComponent: () => import('./tv-series.component').then((c) => c.TvSeriesComponent),
     },
     {
         path: 'serie/:id',
-        loadComponent: () => import('./pages/serie/serie.component').then((c) => c.SerieComponent),
+        loadComponent: () => import('./pages/tv-serie/tv-serie.component').then((c) => c.TvSerieComponent),
     },
     {
         path: 'airing-today',

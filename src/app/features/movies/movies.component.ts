@@ -5,11 +5,7 @@ import { forkJoin, Observable, takeUntil } from 'rxjs';
 
 import { TrendingFilter } from '../../core/enumerations/trending-filter.enum';
 import { Movie } from '../../core/models/movies/movie.model';
-import { NowPlayingResponse } from '../../core/models/movies/responses/now-playing.model';
-import { PopularResponse } from '../../core/models/movies/responses/popular.model';
-import { TopRatedResponse } from '../../core/models/movies/responses/top-rated.model';
-import { TrendingResponse } from '../../core/models/movies/responses/trending.model';
-import { UpcomingResponse } from '../../core/models/movies/responses/upcoming.model';
+import { PaginatedMovies } from '../../core/models/movies/paginated-movies.model';
 import { PageLoaderService } from '../../core/services/page-loader.service';
 import { SectionLoaderService } from '../../core/services/section-loader.service';
 import { SectionLoaderComponent } from '../../shared/components/section-loader/section-loader.component';
@@ -37,11 +33,11 @@ export class MoviesComponent extends BaseComponent implements OnInit {
     topRated: Array<Movie> = [];
     upcoming: Array<Movie> = [];
 
-    trendingObservable = this.getTrending();
-    nowPlayingObservable = this.getNowPlaying();
-    popularObservable = this.getPopular();
-    topRatedObservable = this.getTopRated();
-    upcomingObservable = this.getUpcoming();
+    trending$ = this.getTrending();
+    nowPlaying$ = this.getNowPlaying();
+    popular$ = this.getPopular();
+    topRated$ = this.getTopRated();
+    upcoming$ = this.getUpcoming();
 
     isSectionloading = false;
 
@@ -71,13 +67,7 @@ export class MoviesComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        forkJoin([
-            this.trendingObservable,
-            this.nowPlayingObservable,
-            this.popularObservable,
-            this.topRatedObservable,
-            this.upcomingObservable,
-        ])
+        forkJoin([this.trending$, this.nowPlaying$, this.popular$, this.topRated$, this.upcoming$])
             .pipe(takeUntil(this.destroyed))
             .subscribe(([trending, nowPlaying, popular, topRated, upcoming]) => {
                 this.populateMovies(trending, nowPlaying, popular, topRated, upcoming);
@@ -85,23 +75,23 @@ export class MoviesComponent extends BaseComponent implements OnInit {
             });
     }
 
-    private getTrending(trendingFilter = this.trendingFilter): Observable<TrendingResponse> {
+    private getTrending(trendingFilter = this.trendingFilter): Observable<PaginatedMovies> {
         return this.movieService.getTrending(trendingFilter);
     }
 
-    private getNowPlaying(): Observable<NowPlayingResponse> {
-        return this.movieService.getNowPlaying();
+    private getNowPlaying(): Observable<PaginatedMovies> {
+        return this.movieService.getAiringToday();
     }
 
-    private getPopular(): Observable<PopularResponse> {
+    private getPopular(): Observable<PaginatedMovies> {
         return this.movieService.getPopular();
     }
 
-    private getTopRated(): Observable<TopRatedResponse> {
+    private getTopRated(): Observable<PaginatedMovies> {
         return this.movieService.getTopRated();
     }
 
-    private getUpcoming(): Observable<UpcomingResponse> {
+    private getUpcoming(): Observable<PaginatedMovies> {
         return this.movieService.getUpcoming();
     }
 
@@ -115,11 +105,11 @@ export class MoviesComponent extends BaseComponent implements OnInit {
     }
 
     private populateMovies(
-        trending: TrendingResponse,
-        nowPlaying: NowPlayingResponse,
-        popular: PopularResponse,
-        topRated: TopRatedResponse,
-        upcoming: UpcomingResponse,
+        trending: PaginatedMovies,
+        nowPlaying: PaginatedMovies,
+        popular: PaginatedMovies,
+        topRated: PaginatedMovies,
+        upcoming: PaginatedMovies,
     ): void {
         this.trending = trending.results.slice(0, 10);
 

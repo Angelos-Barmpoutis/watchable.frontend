@@ -1,7 +1,7 @@
-import { Movie } from '../movie.model';
+import { Movie } from './movie.model';
 
-export interface UpcomingResponse {
-    dates: {
+export interface PaginatedMovies {
+    dates?: {
         maximum: string;
         minimum: string;
     };
