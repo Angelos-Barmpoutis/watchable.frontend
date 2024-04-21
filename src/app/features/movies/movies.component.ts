@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, takeUntil } from 'rxjs';
 
 import { Movie } from '../../core/models/movies/movie.model';
 import { NowPlayingResponse } from '../../core/models/movies/responses/now-playing.model';
@@ -8,18 +8,21 @@ import { PopularResponse } from '../../core/models/movies/responses/popular.mode
 import { TopRatedResponse } from '../../core/models/movies/responses/top-rated.model';
 import { TrendingResponse } from '../../core/models/movies/responses/trending.model';
 import { UpcomingResponse } from '../../core/models/movies/responses/upcoming.model';
+import { PageLoaderService } from '../../core/services/page-loader.service';
+import { PageLoaderComponent } from '../../shared/components/page-loader/page-loader.component';
 import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
+import { BaseComponent } from '../../shared/helpers/base.component';
 import { MovieService } from '../../shared/services/movie.service';
 
 @Component({
     selector: 'app-movies',
     standalone: true,
-    imports: [CommonModule, PosterPathDirective],
     providers: [MovieService],
     templateUrl: './movies.component.html',
     styleUrl: './movies.component.scss',
+    imports: [CommonModule, PosterPathDirective, PageLoaderComponent],
 })
-export class MoviesComponent implements OnInit {
+export class MoviesComponent extends BaseComponent implements OnInit {
     trending: Array<Movie> = [];
     nowPlaying: Array<Movie> = [];
     popular: Array<Movie> = [];
@@ -30,7 +33,13 @@ export class MoviesComponent implements OnInit {
     popularObservable = this.getPopular();
     topRatedObservable = this.getTopRated();
     upcomingObservable = this.getUpcoming();
-    constructor(private movieService: MovieService) {}
+
+    constructor(
+        private movieService: MovieService,
+        private pageLoaderService: PageLoaderService,
+    ) {
+        super();
+    }
 
     ngOnInit(): void {
         forkJoin([
@@ -39,9 +48,12 @@ export class MoviesComponent implements OnInit {
             this.popularObservable,
             this.topRatedObservable,
             this.upcomingObservable,
-        ]).subscribe(([trending, nowPlaying, popular, topRated, upcoming]) => {
-            this.getMovies(trending, nowPlaying, popular, topRated, upcoming);
-        });
+        ])
+            .pipe(takeUntil(this.destroyed))
+            .subscribe(([trending, nowPlaying, popular, topRated, upcoming]) => {
+                this.populateMovies(trending, nowPlaying, popular, topRated, upcoming);
+                this.pageLoaderService.hideLoader();
+            });
     }
 
     getTrending(): Observable<TrendingResponse> {
@@ -64,7 +76,7 @@ export class MoviesComponent implements OnInit {
         return this.movieService.getUpcoming();
     }
 
-    private getMovies(
+    private populateMovies(
         trending: TrendingResponse,
         nowPlaying: NowPlayingResponse,
         popular: PopularResponse,

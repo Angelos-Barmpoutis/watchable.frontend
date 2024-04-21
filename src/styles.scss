@@ -1,6 +1,10 @@
 body {
     margin: 0;
     padding: 0;
+
+    &:has(app-page-loader) {
+        overflow-y: hidden;
+    }
 }
 
 app-movies,
