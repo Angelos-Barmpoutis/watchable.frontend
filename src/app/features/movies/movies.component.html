@@ -1,4 +1,5 @@
 <section class="media-section" id="trending">
+    <app-section-loader *ngIf="isSectionloading"></app-section-loader>
     <header>
         <h2>Trending</h2>
         <form [formGroup]="trendingForm">

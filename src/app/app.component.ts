@@ -8,12 +8,21 @@ import { PageLoaderService } from './core/services/page-loader.service';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { PageLoaderComponent } from './shared/components/page-loader/page-loader.component';
+import { SectionLoaderComponent } from './shared/components/section-loader/section-loader.component';
 import { BaseComponent } from './shared/helpers/base.component';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, HttpClientModule, CommonModule, HeaderComponent, FooterComponent, PageLoaderComponent],
+    imports: [
+        RouterOutlet,
+        HttpClientModule,
+        CommonModule,
+        HeaderComponent,
+        FooterComponent,
+        PageLoaderComponent,
+        SectionLoaderComponent,
+    ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
 })

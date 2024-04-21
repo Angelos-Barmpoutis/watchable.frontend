@@ -11,6 +11,8 @@ import { TopRatedResponse } from '../../core/models/movies/responses/top-rated.m
 import { TrendingResponse } from '../../core/models/movies/responses/trending.model';
 import { UpcomingResponse } from '../../core/models/movies/responses/upcoming.model';
 import { PageLoaderService } from '../../core/services/page-loader.service';
+import { SectionLoaderService } from '../../core/services/section-loader.service';
+import { SectionLoaderComponent } from '../../shared/components/section-loader/section-loader.component';
 import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
 import { BaseComponent } from '../../shared/helpers/base.component';
 import { MovieService } from '../../shared/services/movie.service';
@@ -18,10 +20,10 @@ import { MovieService } from '../../shared/services/movie.service';
 @Component({
     selector: 'app-movies',
     standalone: true,
-    providers: [MovieService],
+    providers: [MovieService, SectionLoaderService],
     templateUrl: './movies.component.html',
     styleUrl: './movies.component.scss',
-    imports: [CommonModule, PosterPathDirective, ReactiveFormsModule],
+    imports: [CommonModule, PosterPathDirective, ReactiveFormsModule, SectionLoaderComponent],
 })
 export class MoviesComponent extends BaseComponent implements OnInit {
     TRENDING_FILTER = TrendingFilter;
@@ -41,13 +43,20 @@ export class MoviesComponent extends BaseComponent implements OnInit {
     topRatedObservable = this.getTopRated();
     upcomingObservable = this.getUpcoming();
 
+    isSectionloading = false;
+
     constructor(
         private movieService: MovieService,
         private pageLoaderService: PageLoaderService,
+        private sectionLoaderService: SectionLoaderService,
         private formBuilder: FormBuilder,
     ) {
         super();
         this.pageLoaderService.showLoader();
+
+        this.sectionLoaderService.loading$.pipe(takeUntil(this.destroyed)).subscribe((isSectionloading) => {
+            this.isSectionloading = isSectionloading;
+        });
 
         this.trendingForm = this.formBuilder.group({
             filter: this.trendingFilter,
@@ -56,6 +65,7 @@ export class MoviesComponent extends BaseComponent implements OnInit {
         this.trendingForm.valueChanges
             .pipe(takeUntil(this.destroyed))
             .subscribe((formValue: { filter: TrendingFilter }) => {
+                this.sectionLoaderService.showLoader();
                 this.filterTrending(formValue.filter);
             });
     }
@@ -100,6 +110,7 @@ export class MoviesComponent extends BaseComponent implements OnInit {
             .pipe(takeUntil(this.destroyed))
             .subscribe((trending) => {
                 this.trending = trending.results.slice(0, 10);
+                this.sectionLoaderService.hideLoader();
             });
     }
 
