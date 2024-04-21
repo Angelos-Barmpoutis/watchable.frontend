@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { forkJoin, Observable, takeUntil } from 'rxjs';
 
+import { TrendingFilter } from '../../core/enumerations/trending-filter.enum';
 import { Movie } from '../../core/models/movies/movie.model';
 import { NowPlayingResponse } from '../../core/models/movies/responses/now-playing.model';
 import { PopularResponse } from '../../core/models/movies/responses/popular.model';
@@ -9,7 +11,6 @@ import { TopRatedResponse } from '../../core/models/movies/responses/top-rated.m
 import { TrendingResponse } from '../../core/models/movies/responses/trending.model';
 import { UpcomingResponse } from '../../core/models/movies/responses/upcoming.model';
 import { PageLoaderService } from '../../core/services/page-loader.service';
-import { PageLoaderComponent } from '../../shared/components/page-loader/page-loader.component';
 import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
 import { BaseComponent } from '../../shared/helpers/base.component';
 import { MovieService } from '../../shared/services/movie.service';
@@ -20,14 +21,20 @@ import { MovieService } from '../../shared/services/movie.service';
     providers: [MovieService],
     templateUrl: './movies.component.html',
     styleUrl: './movies.component.scss',
-    imports: [CommonModule, PosterPathDirective, PageLoaderComponent],
+    imports: [CommonModule, PosterPathDirective, ReactiveFormsModule],
 })
 export class MoviesComponent extends BaseComponent implements OnInit {
+    TRENDING_FILTER = TrendingFilter;
+
+    trendingFilter = TrendingFilter.Day;
+    trendingForm: FormGroup;
+
     trending: Array<Movie> = [];
     nowPlaying: Array<Movie> = [];
     popular: Array<Movie> = [];
     topRated: Array<Movie> = [];
     upcoming: Array<Movie> = [];
+
     trendingObservable = this.getTrending();
     nowPlayingObservable = this.getNowPlaying();
     popularObservable = this.getPopular();
@@ -37,8 +44,20 @@ export class MoviesComponent extends BaseComponent implements OnInit {
     constructor(
         private movieService: MovieService,
         private pageLoaderService: PageLoaderService,
+        private formBuilder: FormBuilder,
     ) {
         super();
+        this.pageLoaderService.showLoader();
+
+        this.trendingForm = this.formBuilder.group({
+            filter: this.trendingFilter,
+        });
+
+        this.trendingForm.valueChanges
+            .pipe(takeUntil(this.destroyed))
+            .subscribe((formValue: { filter: TrendingFilter }) => {
+                this.filterTrending(formValue.filter);
+            });
     }
 
     ngOnInit(): void {
@@ -56,24 +75,32 @@ export class MoviesComponent extends BaseComponent implements OnInit {
             });
     }
 
-    getTrending(): Observable<TrendingResponse> {
-        return this.movieService.getTrending();
+    private getTrending(trendingFilter = this.trendingFilter): Observable<TrendingResponse> {
+        return this.movieService.getTrending(trendingFilter);
     }
 
-    getNowPlaying(): Observable<NowPlayingResponse> {
+    private getNowPlaying(): Observable<NowPlayingResponse> {
         return this.movieService.getNowPlaying();
     }
 
-    getPopular(): Observable<PopularResponse> {
+    private getPopular(): Observable<PopularResponse> {
         return this.movieService.getPopular();
     }
 
-    getTopRated(): Observable<TopRatedResponse> {
+    private getTopRated(): Observable<TopRatedResponse> {
         return this.movieService.getTopRated();
     }
 
-    getUpcoming(): Observable<UpcomingResponse> {
+    private getUpcoming(): Observable<UpcomingResponse> {
         return this.movieService.getUpcoming();
+    }
+
+    private filterTrending(trendingFilter: TrendingFilter): void {
+        this.getTrending(trendingFilter)
+            .pipe(takeUntil(this.destroyed))
+            .subscribe((trending) => {
+                this.trending = trending.results.slice(0, 10);
+            });
     }
 
     private populateMovies(

@@ -1,5 +1,13 @@
-<section>
-    <h2>Trending</h2>
+<section class="media-section" id="trending">
+    <header>
+        <h2>Trending</h2>
+        <form [formGroup]="trendingForm">
+            <select formControlName="filter">
+                <option [value]="TRENDING_FILTER.Day">Day</option>
+                <option [value]="TRENDING_FILTER.Week">Week</option>
+            </select>
+        </form>
+    </header>
     <div class="media-container">
         <div *ngFor="let movie of trending" class="media-container__media">
             <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
@@ -16,8 +24,10 @@
     </div>
 </section>
 
-<section>
-    <h2>Now Playing</h2>
+<section class="media-section" id="now-playing">
+    <header>
+        <h2>Now Playing</h2>
+    </header>
     <div class="media-container">
         <div *ngFor="let movie of nowPlaying" class="media-container__media">
             <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
@@ -34,8 +44,10 @@
     </div>
 </section>
 
-<section>
-    <h2>Popular</h2>
+<section class="media-section" id="popular">
+    <header>
+        <h2>Popular</h2>
+    </header>
     <div class="media-container">
         <div *ngFor="let movie of popular" class="media-container__media">
             <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
@@ -52,8 +64,10 @@
     </div>
 </section>
 
-<section>
-    <h2>Top Rated</h2>
+<section class="media-section" id="top-rated">
+    <header>
+        <h2>Top Rated</h2>
+    </header>
     <div class="media-container">
         <div *ngFor="let movie of topRated" class="media-container__media">
             <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
@@ -70,8 +84,10 @@
     </div>
 </section>
 
-<section>
-    <h2>Upcoming</h2>
+<section class="media-section" id="upcoming">
+    <header>
+        <h2>Upcoming</h2>
+    </header>
     <div class="media-container">
         <div *ngFor="let movie of upcoming" class="media-container__media">
             <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />

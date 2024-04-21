@@ -16,8 +16,8 @@ export class MovieService {
         private urlService: UrlService,
     ) {}
 
-    getTrending(): Observable<TrendingResponse> {
-        return this.httpService.get<TrendingResponse>(this.urlService.urlFor(['trending', 'movie', 'day']));
+    getTrending(trendingFilter: string): Observable<TrendingResponse> {
+        return this.httpService.get<TrendingResponse>(this.urlService.urlFor(['trending', 'movie', trendingFilter]));
     }
 
     getNowPlaying(): Observable<NowPlayingResponse> {

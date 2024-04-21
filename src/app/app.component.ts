@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { takeUntil } from 'rxjs';
 
@@ -17,14 +17,12 @@ import { BaseComponent } from './shared/helpers/base.component';
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
 })
-export class AppComponent extends BaseComponent implements OnInit {
-    isPageLoading = true;
+export class AppComponent extends BaseComponent {
+    isPageLoading!: boolean;
 
     constructor(private loaderService: PageLoaderService) {
         super();
-    }
 
-    ngOnInit(): void {
         this.loaderService.loading$.pipe(takeUntil(this.destroyed)).subscribe((isLoading) => {
             this.isPageLoading = isLoading;
         });

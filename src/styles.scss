@@ -22,34 +22,42 @@ app-serie {
     flex-grow: 1;
 }
 
-.media-container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 48px 24px;
+section.media-section {
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-    &__media {
-        img {
-            border-radius: 24px;
-        }
+    .media-container {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 48px 24px;
 
-        &__details {
-            display: flex;
-            align-items: center;
-            font-weight: 500;
-
-            &__vote-average {
-                display: flex;
-                align-items: center;
-                width: fit-content;
-                padding-inline-end: 16px;
-                border-inline-end: 1px solid black;
+        &__media {
+            img {
+                border-radius: 24px;
             }
 
-            &__release-date {
+            &__details {
                 display: flex;
                 align-items: center;
-                width: fit-content;
-                padding-inline-start: 16px;
+                font-weight: 500;
+
+                &__vote-average {
+                    display: flex;
+                    align-items: center;
+                    width: fit-content;
+                    padding-inline-end: 16px;
+                    border-inline-end: 1px solid black;
+                }
+
+                &__release-date {
+                    display: flex;
+                    align-items: center;
+                    width: fit-content;
+                    padding-inline-start: 16px;
+                }
             }
         }
     }
