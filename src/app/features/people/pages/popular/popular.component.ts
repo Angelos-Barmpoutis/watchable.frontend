@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { takeUntil } from 'rxjs';
 
 import { PROFILE_SIZE } from '../../../../core/enumerations/profile-size.enum';
@@ -18,7 +19,7 @@ import { LimitToPipe } from '../../../../shared/pipes/limit-to.pipe';
     providers: [],
     templateUrl: './popular.component.html',
     styleUrl: './popular.component.scss',
-    imports: [CommonModule, ProfilePathDirective, LimitToPipe],
+    imports: [CommonModule, ProfilePathDirective, LimitToPipe, RouterLink],
 })
 export class PeoplePopularComponent extends BaseComponent implements OnInit {
     public profileSize: PROFILE_SIZE = PROFILE_SIZE.w185;

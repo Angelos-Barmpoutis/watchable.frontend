@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { takeUntil } from 'rxjs';
 
 import { POSTER_SIZE } from '../../core/enumerations/poster-size.enum';
@@ -14,7 +15,7 @@ import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
     providers: [],
     templateUrl: './tv-series.component.html',
     styleUrl: './tv-series.component.scss',
-    imports: [CommonModule, PosterPathDirective, LimitToPipe],
+    imports: [CommonModule, PosterPathDirective, LimitToPipe, RouterLink],
 })
 export class TvSeriesComponent extends BaseComponent implements OnInit {
     public posterSize: POSTER_SIZE = POSTER_SIZE.w185;

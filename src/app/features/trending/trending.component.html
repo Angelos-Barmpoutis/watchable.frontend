@@ -1,7 +1,9 @@
 <ng-container *ngIf="trendingMovies && trendingTvSeries">
     <section class="media-section" id="trending-movies">
         <header>
-            <h2>Movies</h2>
+            <h2>
+                <a [routerLink]="['movies']"> Movies </a>
+            </h2>
             <form [formGroup]="trendingForm">
                 <select formControlName="moviesFilter">
                     <option [value]="TRENDING_FILTER.Day">{{ TRENDING_FILTER.Day | titlecase }}</option>
@@ -25,9 +27,11 @@
         </div>
     </section>
 
-    <section class="media-section" id="trending-tv-series">
+    <section class="media-section" id="trending-series">
         <header>
-            <h2>Series</h2>
+            <h2>
+                <a [routerLink]="['series']"> Series </a>
+            </h2>
             <form [formGroup]="trendingForm">
                 <select formControlName="tvSeriesFilter">
                     <option [value]="TRENDING_FILTER.Day">{{ TRENDING_FILTER.Day | titlecase }}</option>

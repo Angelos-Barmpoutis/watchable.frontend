@@ -1,7 +1,9 @@
 <ng-container *ngIf="popularPeople">
     <section class="media-section" id="popular">
         <header>
-            <h2>Popular</h2>
+            <h2>
+                <a [routerLink]="['.']"> Popular </a>
+            </h2>
         </header>
         <div class="media-container">
             <div *ngFor="let person of popularPeople | limitTo: 20" class="media-container__media">

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { takeUntil } from 'rxjs';
 
 import { POSTER_SIZE } from '../../core/enumerations/poster-size.enum';
@@ -18,7 +19,7 @@ import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
     providers: [],
     templateUrl: './trending.component.html',
     styleUrl: './trending.component.scss',
-    imports: [CommonModule, PosterPathDirective, ReactiveFormsModule, LimitToPipe],
+    imports: [CommonModule, PosterPathDirective, ReactiveFormsModule, LimitToPipe, RouterLink],
 })
 export class TrendingComponent extends BaseComponent implements OnInit {
     public posterSize: POSTER_SIZE = POSTER_SIZE.w185;

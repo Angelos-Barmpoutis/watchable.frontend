@@ -1,7 +1,9 @@
-<ng-container *ngIf="allMovies as allMovies">
+<ng-container *ngIf="allMovies">
     <section class="media-section" id="now-playing">
         <header>
-            <h2>Now Playing</h2>
+            <h2>
+                <a [routerLink]="['now-playing']"> Now Playing </a>
+            </h2>
         </header>
         <div class="media-container">
             <div *ngFor="let movie of allMovies.nowPlaying.results | limitTo: 10" class="media-container__media">
@@ -21,7 +23,9 @@
 
     <section class="media-section" id="popular">
         <header>
-            <h2>Popular</h2>
+            <h2>
+                <a [routerLink]="['popular']"> Popular </a>
+            </h2>
         </header>
         <div class="media-container">
             <div *ngFor="let movie of allMovies.popular.results | limitTo: 10" class="media-container__media">
@@ -41,7 +45,9 @@
 
     <section class="media-section" id="top-rated">
         <header>
-            <h2>Top Rated</h2>
+            <h2>
+                <a [routerLink]="['top-rated']"> Top Rated </a>
+            </h2>
         </header>
         <div class="media-container">
             <div *ngFor="let movie of allMovies.topRated.results | limitTo: 10" class="media-container__media">
@@ -61,7 +67,9 @@
 
     <section class="media-section" id="upcoming">
         <header>
-            <h2>Upcoming</h2>
+            <h2>
+                <a [routerLink]="['upcoming']"> Upcoming </a>
+            </h2>
         </header>
         <div class="media-container">
             <div *ngFor="let movie of allMovies.upcoming.results | limitTo: 10" class="media-container__media">
