@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { TrendingFilter } from '../../core/enumerations/trending-filter.enum';
+import { TRENDING_FILTER } from '../../core/enumerations/trending-filter.enum';
 import { PaginatedMovies } from '../../core/models/movies/paginated-movies.model';
 import { PaginatedTvSeries } from '../../core/models/tv-series/paginated-tv-series.model';
 import { UrlService } from '../../core/services/url.service';
@@ -16,7 +16,7 @@ export class TrendingGateway {
         private urlService: UrlService,
     ) {}
 
-    getTrendingMovies(trendingFilter: TrendingFilter): Observable<PaginatedMovies> {
+    getTrendingMovies(trendingFilter: TRENDING_FILTER): Observable<PaginatedMovies> {
         return this.trendingDriver.getTrendingMovies(this.urlService.urlFor(['trending', 'movie', trendingFilter]));
     }
 

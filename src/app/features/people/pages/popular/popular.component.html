@@ -4,7 +4,7 @@
             <h2>Popular</h2>
         </header>
         <div class="media-container">
-            <div *ngFor="let person of popularPeople | limitTo: 10" class="media-container__media">
+            <div *ngFor="let person of popularPeople | limitTo: 20" class="media-container__media">
                 <img alt="Poster" size="w185" appPosterPath posterPath="{{ person.profile_path }}" />
                 <h3>{{ person.name }}</h3>
                 <div *ngIf="person.known_for" class="media-container__media__details">

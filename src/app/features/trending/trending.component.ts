@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntil } from 'rxjs';
 
-import { TrendingFilter } from '../../core/enumerations/trending-filter.enum';
+import { TRENDING_FILTER } from '../../core/enumerations/trending-filter.enum';
 import { Movie } from '../../core/models/movies/movie.model';
 import { TvSeries } from '../../core/models/tv-series/tv-series.model';
 import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
@@ -20,13 +20,13 @@ import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
     imports: [CommonModule, PosterPathDirective, ReactiveFormsModule, LimitToPipe],
 })
 export class TrendingComponent extends BaseComponent implements OnInit {
-    public TRENDING_FILTER = TrendingFilter;
+    public TRENDING_FILTER = TRENDING_FILTER;
     public trendingForm!: FormGroup;
     public isTrendingMoviesLoading = false;
     public isTrendingTvSeriesLoading = false;
     public trendingMovies: Array<Movie> = [];
     public trendingTvSeries: Array<TvSeries> = [];
-    private DEFAULT_TRENDING_FILTER: TrendingFilter = TrendingFilter.Day;
+    private DEFAULT_TRENDING_FILTER: TRENDING_FILTER = TRENDING_FILTER.Day;
 
     constructor(
         private trendingFacade: TrendingFacade,
@@ -42,7 +42,7 @@ export class TrendingComponent extends BaseComponent implements OnInit {
         this.onTrendingFilterChanges();
     }
 
-    private getTrendingMovies(trendingFilter: TrendingFilter = this.DEFAULT_TRENDING_FILTER): void {
+    private getTrendingMovies(trendingFilter: TRENDING_FILTER = this.DEFAULT_TRENDING_FILTER): void {
         this.isTrendingMoviesLoading = true;
 
         this.trendingFacade
@@ -54,7 +54,7 @@ export class TrendingComponent extends BaseComponent implements OnInit {
             });
     }
 
-    private getTrendingTvSeries(trendingFilter: TrendingFilter = this.DEFAULT_TRENDING_FILTER): void {
+    private getTrendingTvSeries(trendingFilter: TRENDING_FILTER = this.DEFAULT_TRENDING_FILTER): void {
         this.isTrendingTvSeriesLoading = true;
 
         this.trendingFacade
@@ -76,13 +76,13 @@ export class TrendingComponent extends BaseComponent implements OnInit {
     private onTrendingFilterChanges(): void {
         this.trendingMoviesFilterFormField.valueChanges
             .pipe(takeUntil(this.destroyed))
-            .subscribe((trendingFilter: TrendingFilter) => {
+            .subscribe((trendingFilter: TRENDING_FILTER) => {
                 this.getTrendingMovies(trendingFilter);
             });
 
         this.trendingTvSeriesFilterFormField.valueChanges
             .pipe(takeUntil(this.destroyed))
-            .subscribe((trendingFilter: TrendingFilter) => {
+            .subscribe((trendingFilter: TRENDING_FILTER) => {
                 this.getTrendingTvSeries(trendingFilter);
             });
     }

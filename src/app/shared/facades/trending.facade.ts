@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { TrendingFilter } from '../../core/enumerations/trending-filter.enum';
+import { TRENDING_FILTER } from '../../core/enumerations/trending-filter.enum';
 import { PaginatedMovies } from '../../core/models/movies/paginated-movies.model';
 import { PaginatedTvSeries } from '../../core/models/tv-series/paginated-tv-series.model';
 import { TrendingGateway } from '../gateways/trending.gateway';
@@ -12,11 +12,11 @@ import { TrendingGateway } from '../gateways/trending.gateway';
 export class TrendingFacade {
     constructor(private trendingGateway: TrendingGateway) {}
 
-    public getTrendingMovies(trendingFilter: TrendingFilter): Observable<PaginatedMovies> {
+    public getTrendingMovies(trendingFilter: TRENDING_FILTER): Observable<PaginatedMovies> {
         return this.trendingGateway.getTrendingMovies(trendingFilter);
     }
 
-    public getTrendingTvSeries(trendingFilter: TrendingFilter): Observable<PaginatedTvSeries> {
+    public getTrendingTvSeries(trendingFilter: TRENDING_FILTER): Observable<PaginatedTvSeries> {
         return this.trendingGateway.getTrendingTvSeries(trendingFilter);
     }
 }
