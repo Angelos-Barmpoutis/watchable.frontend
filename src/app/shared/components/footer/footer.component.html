@@ -1,11 +1,22 @@
 <footer>
     <div class="features-container">
         <div class="features-container__feature">
-            <h2>Movies</h2>
+            <h2>Trending</h2>
             <ul>
                 <li>
-                    <a [routerLink]="['/', 'movies', 'trending']">Trending</a>
+                    <a [routerLink]="['/', 'trending', 'movies']">Movies</a>
                 </li>
+                <li>
+                    <a [routerLink]="['/', 'trending', 'series']">Series</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/', 'trending', 'people']">People</a>
+                </li>
+            </ul>
+        </div>
+        <div class="features-container__feature">
+            <h2>Movies</h2>
+            <ul>
                 <li>
                     <a [routerLink]="['/', 'movies', 'now-playing']">Now Playing</a>
                 </li>
@@ -24,9 +35,6 @@
             <h2>Series</h2>
             <ul>
                 <li>
-                    <a [routerLink]="['/', 'series', 'trending']">Trending</a>
-                </li>
-                <li>
                     <a [routerLink]="['/', 'series', 'airing-today']">Airing Today</a>
                 </li>
                 <li>
@@ -40,9 +48,6 @@
         <div class="features-container__feature">
             <h2>People</h2>
             <ul>
-                <li>
-                    <a [routerLink]="['/', 'people', 'trending']">Trending</a>
-                </li>
                 <li>
                     <a [routerLink]="['/', 'people', 'popular']">Popular</a>
                 </li>

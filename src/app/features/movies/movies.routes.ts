@@ -7,26 +7,23 @@ export const routes: Routes = [
     },
     {
         path: 'movie/:id',
-        loadComponent: () => import('./pages/movie/movie.component').then((c) => c.MovieComponent),
+        loadComponent: () => import('./pages/movie/movie.component').then((c) => c.MoviesMovieComponent),
     },
     {
         path: 'now-playing',
-        loadComponent: () => import('./pages/now-playing/now-playing.component').then((c) => c.NowPlayingComponent),
+        loadComponent: () =>
+            import('./pages/now-playing/now-playing.component').then((c) => c.MoviesNowPlayingComponent),
     },
     {
         path: 'popular',
-        loadComponent: () => import('./pages/popular/popular.component').then((c) => c.PopularComponent),
+        loadComponent: () => import('./pages/popular/popular.component').then((c) => c.MoviesPopularComponent),
     },
     {
         path: 'top-rated',
-        loadComponent: () => import('./pages/top-rated/top-rated.component').then((c) => c.TopRatedComponent),
-    },
-    {
-        path: 'trending',
-        loadComponent: () => import('./pages/trending/trending.component').then((c) => c.TrendingComponent),
+        loadComponent: () => import('./pages/top-rated/top-rated.component').then((c) => c.MoviesTopRatedComponent),
     },
     {
         path: 'upcoming',
-        loadComponent: () => import('./pages/upcoming/upcoming.component').then((c) => c.UpcomingComponent),
+        loadComponent: () => import('./pages/upcoming/upcoming.component').then((c) => c.MoviesUpcomingComponent),
     },
 ];

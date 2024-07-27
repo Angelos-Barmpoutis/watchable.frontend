@@ -7,22 +7,19 @@ export const routes: Routes = [
     },
     {
         path: 'serie/:id',
-        loadComponent: () => import('./pages/tv-serie/tv-serie.component').then((c) => c.TvSerieComponent),
+        loadComponent: () => import('./pages/tv-serie/tv-serie.component').then((c) => c.TvSeriesTvSerieComponent),
     },
     {
         path: 'airing-today',
-        loadComponent: () => import('./pages/airing-today/airing-today.component').then((c) => c.AiringTodayComponent),
+        loadComponent: () =>
+            import('./pages/airing-today/airing-today.component').then((c) => c.TvSeriesAiringTodayComponent),
     },
     {
         path: 'popular',
-        loadComponent: () => import('./pages/popular/popular.component').then((c) => c.PopularComponent),
+        loadComponent: () => import('./pages/popular/popular.component').then((c) => c.TvSeriesPopularComponent),
     },
     {
         path: 'top-rated',
-        loadComponent: () => import('./pages/top-rated/top-rated.component').then((c) => c.TopRatedComponent),
-    },
-    {
-        path: 'trending',
-        loadComponent: () => import('./pages/trending/trending.component').then((c) => c.TrendingComponent),
+        loadComponent: () => import('./pages/top-rated/top-rated.component').then((c) => c.TvSeriesTopRatedComponent),
     },
 ];

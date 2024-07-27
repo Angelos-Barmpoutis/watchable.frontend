@@ -7,4 +7,4 @@ import { Component } from '@angular/core';
     templateUrl: './popular.component.html',
     styleUrl: './popular.component.scss',
 })
-export class PopularComponent {}
+export class TvSeriesPopularComponent {}

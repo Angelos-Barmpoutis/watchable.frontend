@@ -7,4 +7,4 @@ import { Component } from '@angular/core';
     templateUrl: './tv-serie.component.html',
     styleUrl: './tv-serie.component.scss',
 })
-export class TvSerieComponent {}
+export class TvSeriesTvSerieComponent {}

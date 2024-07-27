@@ -3,8 +3,12 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'movies',
+        redirectTo: 'trending',
         pathMatch: 'full',
+    },
+    {
+        path: 'trending',
+        loadChildren: () => import('./features/trending/trending.routes').then((m) => m.routes),
     },
     {
         path: 'movies',

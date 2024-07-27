@@ -7,4 +7,4 @@ import { Component } from '@angular/core';
     templateUrl: './upcoming.component.html',
     styleUrl: './upcoming.component.scss',
 })
-export class UpcomingComponent {}
+export class MoviesUpcomingComponent {}

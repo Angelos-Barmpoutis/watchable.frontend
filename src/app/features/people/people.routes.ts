@@ -7,14 +7,10 @@ export const routes: Routes = [
     },
     {
         path: 'person/:id',
-        loadComponent: () => import('./pages/person/person.component').then((c) => c.PersonComponent),
+        loadComponent: () => import('./pages/person/person.component').then((c) => c.PeoplePersonComponent),
     },
     {
         path: 'popular',
-        loadComponent: () => import('./pages/popular/popular.component').then((c) => c.PopularComponent),
-    },
-    {
-        path: 'trending',
-        loadComponent: () => import('./pages/trending/trending.component').then((c) => c.TrendingComponent),
+        loadComponent: () => import('./pages/popular/popular.component').then((c) => c.PeoplePopularComponent),
     },
 ];

@@ -7,4 +7,4 @@ import { Component } from '@angular/core';
     templateUrl: './top-rated.component.html',
     styleUrl: './top-rated.component.scss',
 })
-export class TopRatedComponent {}
+export class TvSeriesTopRatedComponent {}

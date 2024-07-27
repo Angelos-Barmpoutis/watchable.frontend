@@ -1,0 +1,53 @@
+<ng-container *ngIf="trendingMovies && trendingTvSeries">
+    <section class="media-section" id="trending-movies">
+        <header>
+            <h2>Movies</h2>
+            <form [formGroup]="trendingForm">
+                <select formControlName="moviesFilter">
+                    <option [value]="TRENDING_FILTER.Day">{{ TRENDING_FILTER.Day | titlecase }}</option>
+                    <option [value]="TRENDING_FILTER.Week">{{ TRENDING_FILTER.Week | titlecase }}</option>
+                </select>
+            </form>
+        </header>
+        <div class="media-container">
+            <div *ngFor="let movie of trendingMovies | limitTo: 10" class="media-container__media">
+                <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
+                <h3>{{ movie.title }}</h3>
+                <div class="media-container__media__details">
+                    <span class="media-container__media__details__vote-average">
+                        {{ +movie.vote_average | number: "1.1-1" }}
+                    </span>
+                    <span class="media-container__media__details__release-date">
+                        {{ movie.release_date | date: "yyyy" }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="media-section" id="trending-tv-series">
+        <header>
+            <h2>Series</h2>
+            <form [formGroup]="trendingForm">
+                <select formControlName="tvSeriesFilter" [disabled]="isTrendingTvSeriesLoading">
+                    <option [value]="TRENDING_FILTER.Day">{{ TRENDING_FILTER.Day | titlecase }}</option>
+                    <option [value]="TRENDING_FILTER.Week">{{ TRENDING_FILTER.Week | titlecase }}</option>
+                </select>
+            </form>
+        </header>
+        <div class="media-container">
+            <div *ngFor="let tvSerie of trendingTvSeries | limitTo: 10" class="media-container__media">
+                <img alt="Poster" size="w185" appPosterPath posterPath="{{ tvSerie.poster_path }}" />
+                <h3>{{ tvSerie.name }}</h3>
+                <div class="media-container__media__details">
+                    <span class="media-container__media__details__vote-average">
+                        {{ +tvSerie.vote_average | number: "1.1-1" }}
+                    </span>
+                    <span class="media-container__media__details__release-date">
+                        {{ tvSerie.first_air_date | date: "yyyy" }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+</ng-container>

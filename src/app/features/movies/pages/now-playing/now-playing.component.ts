@@ -7,4 +7,4 @@ import { Component } from '@angular/core';
     templateUrl: './now-playing.component.html',
     styleUrl: './now-playing.component.scss',
 })
-export class NowPlayingComponent {}
+export class MoviesNowPlayingComponent {}

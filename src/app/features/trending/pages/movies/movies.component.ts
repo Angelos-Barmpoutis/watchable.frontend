@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
     selector: 'app-movie',
     standalone: true,
     imports: [],
-    templateUrl: './movie.component.html',
-    styleUrl: './movie.component.scss',
+    templateUrl: './movies.component.html',
+    styleUrl: './movies.component.scss',
 })
-export class MoviesMovieComponent {}
+export class TrendingMoviesComponent {}

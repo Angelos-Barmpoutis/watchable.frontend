@@ -1,86 +1,61 @@
-<section class="media-section" id="trending">
-    <app-section-loader *ngIf="isSectionloading"></app-section-loader>
-    <header>
-        <h2>Trending</h2>
-        <form [formGroup]="trendingForm">
-            <select formControlName="filter">
-                <option [value]="TRENDING_FILTER.Day">Day</option>
-                <option [value]="TRENDING_FILTER.Week">Week</option>
-            </select>
-        </form>
-    </header>
-    <div class="media-container">
-        <div *ngFor="let tvSeries of trending" class="media-container__media">
-            <img alt="Poster" size="w185" appPosterPath posterPath="{{ tvSeries.poster_path }}" />
-            <h3>{{ tvSeries.name }}</h3>
-            <div class="media-container__media__details">
-                <span class="media-container__media__details__vote-average">
-                    {{ +tvSeries.vote_average | number: "1.1-1" }}
-                </span>
-                <span class="media-container__media__details__release-date">
-                    {{ tvSeries.first_air_date | date: "yyyy" }}
-                </span>
+<ng-container *ngIf="allTvSeries as allTvSeries">
+    <section class="media-section" id="now-playing">
+        <header>
+            <h2>Airing Today</h2>
+        </header>
+        <div class="media-container">
+            <div *ngFor="let tvSerie of allTvSeries.airingToday.results | limitTo: 10" class="media-container__media">
+                <img alt="Poster" size="w185" appPosterPath posterPath="{{ tvSerie.poster_path }}" />
+                <h3>{{ tvSerie.name }}</h3>
+                <div class="media-container__media__details">
+                    <span class="media-container__media__details__vote-average">
+                        {{ +tvSerie.vote_average | number: "1.1-1" }}
+                    </span>
+                    <span class="media-container__media__details__release-date">
+                        {{ tvSerie.first_air_date | date: "yyyy" }}
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="media-section" id="now-playing">
-    <header>
-        <h2>Airing Today</h2>
-    </header>
-    <div class="media-container">
-        <div *ngFor="let tvSeries of airingToday" class="media-container__media">
-            <img alt="Poster" size="w185" appPosterPath posterPath="{{ tvSeries.poster_path }}" />
-            <h3>{{ tvSeries.name }}</h3>
-            <div class="media-container__media__details">
-                <span class="media-container__media__details__vote-average">
-                    {{ +tvSeries.vote_average | number: "1.1-1" }}
-                </span>
-                <span class="media-container__media__details__release-date">
-                    {{ tvSeries.first_air_date | date: "yyyy" }}
-                </span>
+    <section class="media-section" id="popular">
+        <header>
+            <h2>Popular</h2>
+        </header>
+        <div class="media-container">
+            <div *ngFor="let tvSerie of allTvSeries.popular.results | limitTo: 10" class="media-container__media">
+                <img alt="Poster" size="w185" appPosterPath posterPath="{{ tvSerie.poster_path }}" />
+                <h3>{{ tvSerie.name }}</h3>
+                <div class="media-container__media__details">
+                    <span class="media-container__media__details__vote-average">
+                        {{ +tvSerie.vote_average | number: "1.1-1" }}
+                    </span>
+                    <span class="media-container__media__details__release-date">
+                        {{ tvSerie.first_air_date | date: "yyyy" }}
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="media-section" id="popular">
-    <header>
-        <h2>Popular</h2>
-    </header>
-    <div class="media-container">
-        <div *ngFor="let tvSeries of popular" class="media-container__media">
-            <img alt="Poster" size="w185" appPosterPath posterPath="{{ tvSeries.poster_path }}" />
-            <h3>{{ tvSeries.name }}</h3>
-            <div class="media-container__media__details">
-                <span class="media-container__media__details__vote-average">
-                    {{ +tvSeries.vote_average | number: "1.1-1" }}
-                </span>
-                <span class="media-container__media__details__release-date">
-                    {{ tvSeries.first_air_date | date: "yyyy" }}
-                </span>
+    <section class="media-section" id="top-rated">
+        <header>
+            <h2>Top Rated</h2>
+        </header>
+        <div class="media-container">
+            <div *ngFor="let tvSerie of allTvSeries.topRated.results | limitTo: 10" class="media-container__media">
+                <img alt="Poster" size="w185" appPosterPath posterPath="{{ tvSerie.poster_path }}" />
+                <h3>{{ tvSerie.name }}</h3>
+                <div class="media-container__media__details">
+                    <span class="media-container__media__details__vote-average">
+                        {{ +tvSerie.vote_average | number: "1.1-1" }}
+                    </span>
+                    <span class="media-container__media__details__release-date">
+                        {{ tvSerie.first_air_date | date: "yyyy" }}
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-
-<section class="media-section" id="top-rated">
-    <header>
-        <h2>Top Rated</h2>
-    </header>
-    <div class="media-container">
-        <div *ngFor="let tvSeries of topRated" class="media-container__media">
-            <img alt="Poster" size="w185" appPosterPath posterPath="{{ tvSeries.poster_path }}" />
-            <h3>{{ tvSeries.name }}</h3>
-            <div class="media-container__media__details">
-                <span class="media-container__media__details__vote-average">
-                    {{ +tvSeries.vote_average | number: "1.1-1" }}
-                </span>
-                <span class="media-container__media__details__release-date">
-                    {{ tvSeries.first_air_date | date: "yyyy" }}
-                </span>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
+</ng-container>
