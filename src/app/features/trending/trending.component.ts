@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntil } from 'rxjs';
 
+import { POSTER_SIZE } from '../../core/enumerations/poster-size.enum';
 import { TRENDING_FILTER } from '../../core/enumerations/trending-filter.enum';
 import { Movie } from '../../core/models/movies/movie.model';
 import { TvSeries } from '../../core/models/tv-series/tv-series.model';
@@ -20,6 +21,7 @@ import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
     imports: [CommonModule, PosterPathDirective, ReactiveFormsModule, LimitToPipe],
 })
 export class TrendingComponent extends BaseComponent implements OnInit {
+    public posterSize: POSTER_SIZE = POSTER_SIZE.w185;
     public TRENDING_FILTER = TRENDING_FILTER;
     public trendingForm!: FormGroup;
     public isTrendingMoviesLoading = false;

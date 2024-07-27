@@ -11,7 +11,7 @@
         </header>
         <div class="media-container">
             <div *ngFor="let movie of trendingMovies | limitTo: 10" class="media-container__media">
-                <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
+                <img alt="Poster" appPosterPath [size]="posterSize" posterPath="{{ movie.poster_path }}" />
                 <h3>{{ movie.title }}</h3>
                 <div class="media-container__media__details">
                     <span class="media-container__media__details__vote-average">
@@ -37,7 +37,7 @@
         </header>
         <div class="media-container">
             <div *ngFor="let tvSerie of trendingTvSeries | limitTo: 10" class="media-container__media">
-                <img alt="Poster" size="w185" appPosterPath posterPath="{{ tvSerie.poster_path }}" />
+                <img alt="Poster" appPosterPath [size]="posterSize" posterPath="{{ tvSerie.poster_path }}" />
                 <h3>{{ tvSerie.name }}</h3>
                 <div class="media-container__media__details">
                     <span class="media-container__media__details__vote-average">

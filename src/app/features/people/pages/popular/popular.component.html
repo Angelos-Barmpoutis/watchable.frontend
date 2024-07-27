@@ -5,7 +5,7 @@
         </header>
         <div class="media-container">
             <div *ngFor="let person of popularPeople | limitTo: 20" class="media-container__media">
-                <img alt="Poster" size="w185" appPosterPath posterPath="{{ person.profile_path }}" />
+                <img alt="Poster" appProfilePath [size]="profileSize" profilePath="{{ person.profile_path }}" />
                 <h3>{{ person.name }}</h3>
                 <div *ngIf="person.known_for" class="media-container__media__details">
                     <span *ngIf="isMovie(person.known_for[0])" class="media-container__media__details__known-for">

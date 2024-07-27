@@ -5,7 +5,7 @@
         </header>
         <div class="media-container">
             <div *ngFor="let movie of allMovies.nowPlaying.results | limitTo: 10" class="media-container__media">
-                <img alt="Poster" size="w185" appPosterPath [posterPath]="movie.poster_path" />
+                <img alt="Poster" appPosterPath [size]="posterSize" [posterPath]="movie.poster_path" />
                 <h3>{{ movie.title }}</h3>
                 <div class="media-container__media__details">
                     <span class="media-container__media__details__vote-average">
@@ -25,7 +25,7 @@
         </header>
         <div class="media-container">
             <div *ngFor="let movie of allMovies.popular.results | limitTo: 10" class="media-container__media">
-                <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
+                <img alt="Poster" appPosterPath [size]="posterSize" posterPath="{{ movie.poster_path }}" />
                 <h3>{{ movie.title }}</h3>
                 <div class="media-container__media__details">
                     <span class="media-container__media__details__vote-average">
@@ -45,7 +45,7 @@
         </header>
         <div class="media-container">
             <div *ngFor="let movie of allMovies.topRated.results | limitTo: 10" class="media-container__media">
-                <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
+                <img alt="Poster" appPosterPath [size]="posterSize" posterPath="{{ movie.poster_path }}" />
                 <h3>{{ movie.title }}</h3>
                 <div class="media-container__media__details">
                     <span class="media-container__media__details__vote-average">
@@ -65,7 +65,7 @@
         </header>
         <div class="media-container">
             <div *ngFor="let movie of allMovies.upcoming.results | limitTo: 10" class="media-container__media">
-                <img alt="Poster" size="w185" appPosterPath posterPath="{{ movie.poster_path }}" />
+                <img alt="Poster" appPosterPath [size]="posterSize" posterPath="{{ movie.poster_path }}" />
                 <h3>{{ movie.title }}</h3>
                 <div class="media-container__media__details">
                     <span class="media-container__media__details__vote-average">

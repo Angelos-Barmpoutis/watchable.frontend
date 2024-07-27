@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs';
 
+import { POSTER_SIZE } from '../../core/enumerations/poster-size.enum';
 import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
 import { AllTvSeries, TvSeriesFacade } from '../../shared/facades/tv-series.facade';
 import { BaseComponent } from '../../shared/helpers/base.component';
@@ -16,6 +17,7 @@ import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
     imports: [CommonModule, PosterPathDirective, LimitToPipe],
 })
 export class TvSeriesComponent extends BaseComponent implements OnInit {
+    public posterSize: POSTER_SIZE = POSTER_SIZE.w185;
     public allTvSeries!: AllTvSeries;
 
     constructor(private tvSeriesFacade: TvSeriesFacade) {
