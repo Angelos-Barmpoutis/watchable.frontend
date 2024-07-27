@@ -39,12 +39,11 @@ section.media-section {
         &__media {
             width: 100%;
             max-width: 185px;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
 
             img {
-                flex-grow: 1;
                 border-radius: 24px;
             }
 
@@ -58,6 +57,7 @@ section.media-section {
                 display: flex;
                 align-items: center;
                 font-weight: 500;
+                max-width: 185px;
 
                 &__vote-average {
                     display: flex;
@@ -72,6 +72,17 @@ section.media-section {
                     align-items: center;
                     width: fit-content;
                     padding-inline-start: 16px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: block;
+                }
+
+                &__known-for {
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: block;
                 }
             }
         }

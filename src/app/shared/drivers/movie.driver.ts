@@ -10,7 +10,19 @@ import { HttpService } from '../../core/services/http.service';
 export class MovieDriver {
     constructor(private httpService: HttpService) {}
 
-    get(url: string): Observable<PaginatedMovies> {
+    getNowPlaying(url: string): Observable<PaginatedMovies> {
+        return this.httpService.get(url);
+    }
+
+    getPopular(url: string): Observable<PaginatedMovies> {
+        return this.httpService.get(url);
+    }
+
+    getTopRated(url: string): Observable<PaginatedMovies> {
+        return this.httpService.get(url);
+    }
+
+    getUpcoming(url: string): Observable<PaginatedMovies> {
         return this.httpService.get(url);
     }
 }

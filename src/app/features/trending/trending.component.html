@@ -29,7 +29,7 @@
         <header>
             <h2>Series</h2>
             <form [formGroup]="trendingForm">
-                <select formControlName="tvSeriesFilter" [disabled]="isTrendingTvSeriesLoading">
+                <select formControlName="tvSeriesFilter">
                     <option [value]="TRENDING_FILTER.Day">{{ TRENDING_FILTER.Day | titlecase }}</option>
                     <option [value]="TRENDING_FILTER.Week">{{ TRENDING_FILTER.Week | titlecase }}</option>
                 </select>

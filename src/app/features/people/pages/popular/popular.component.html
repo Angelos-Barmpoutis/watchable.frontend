@@ -1,1 +1,21 @@
-<p>popular works!</p>
+<ng-container *ngIf="popularPeople">
+    <section class="media-section" id="popular">
+        <header>
+            <h2>Popular</h2>
+        </header>
+        <div class="media-container">
+            <div *ngFor="let person of popularPeople | limitTo: 10" class="media-container__media">
+                <img alt="Poster" size="w185" appPosterPath posterPath="{{ person.profile_path }}" />
+                <h3>{{ person.name }}</h3>
+                <div *ngIf="person.known_for" class="media-container__media__details">
+                    <span *ngIf="isMovie(person.known_for[0])" class="media-container__media__details__known-for">
+                        {{ person.known_for[0].title }}
+                    </span>
+                    <span *ngIf="!isMovie(person.known_for[0])" class="media-container__media__details__known-for">
+                        {{ person.known_for[0].name }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+</ng-container>

@@ -15,18 +15,18 @@ export class MovieGateway {
     ) {}
 
     getNowPlaying(): Observable<PaginatedMovies> {
-        return this.movieDriver.get(this.urlService.urlFor(['movie', 'now_playing']));
+        return this.movieDriver.getNowPlaying(this.urlService.urlFor(['movie', 'now_playing']));
     }
 
     getPopular(): Observable<PaginatedMovies> {
-        return this.movieDriver.get(this.urlService.urlFor(['movie', 'popular']));
+        return this.movieDriver.getPopular(this.urlService.urlFor(['movie', 'popular']));
     }
 
     getTopRated(): Observable<PaginatedMovies> {
-        return this.movieDriver.get(this.urlService.urlFor(['movie', 'top_rated']));
+        return this.movieDriver.getTopRated(this.urlService.urlFor(['movie', 'top_rated']));
     }
 
     getUpcoming(): Observable<PaginatedMovies> {
-        return this.movieDriver.get(this.urlService.urlFor(['movie', 'upcoming']));
+        return this.movieDriver.getUpcoming(this.urlService.urlFor(['movie', 'upcoming']));
     }
 }

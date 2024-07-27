@@ -1,10 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-people',
+    selector: 'app-movies',
     standalone: true,
-    imports: [],
+    providers: [],
     templateUrl: './people.component.html',
     styleUrl: './people.component.scss',
+    imports: [CommonModule],
 })
 export class PeopleComponent {}

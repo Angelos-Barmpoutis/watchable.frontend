@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { takeUntil } from 'rxjs';
 
 import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
@@ -14,7 +13,7 @@ import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
     providers: [],
     templateUrl: './movies.component.html',
     styleUrl: './movies.component.scss',
-    imports: [CommonModule, PosterPathDirective, ReactiveFormsModule, LimitToPipe],
+    imports: [CommonModule, PosterPathDirective, LimitToPipe],
 })
 export class MoviesComponent extends BaseComponent implements OnInit {
     public allMovies!: AllMovies;

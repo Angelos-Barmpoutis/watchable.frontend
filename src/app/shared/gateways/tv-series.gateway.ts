@@ -15,14 +15,14 @@ export class TvSeriesGateway {
     ) {}
 
     getAiringToday(): Observable<PaginatedTvSeries> {
-        return this.tvSeriesDriver.get(this.urlService.urlFor(['tv', 'airing_today']));
+        return this.tvSeriesDriver.getAiringToday(this.urlService.urlFor(['tv', 'airing_today']));
     }
 
     getPopular(): Observable<PaginatedTvSeries> {
-        return this.tvSeriesDriver.get(this.urlService.urlFor(['tv', 'popular']));
+        return this.tvSeriesDriver.getPopular(this.urlService.urlFor(['tv', 'popular']));
     }
 
     getTopRated(): Observable<PaginatedTvSeries> {
-        return this.tvSeriesDriver.get(this.urlService.urlFor(['tv', 'top_rated']));
+        return this.tvSeriesDriver.getTopRated(this.urlService.urlFor(['tv', 'top_rated']));
     }
 }

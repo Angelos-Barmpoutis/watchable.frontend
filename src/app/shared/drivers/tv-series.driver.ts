@@ -10,7 +10,15 @@ import { HttpService } from '../../core/services/http.service';
 export class TvSeriesDriver {
     constructor(private httpService: HttpService) {}
 
-    get(url: string): Observable<PaginatedTvSeries> {
+    getAiringToday(url: string): Observable<PaginatedTvSeries> {
+        return this.httpService.get<PaginatedTvSeries>(url);
+    }
+
+    getPopular(url: string): Observable<PaginatedTvSeries> {
+        return this.httpService.get<PaginatedTvSeries>(url);
+    }
+
+    getTopRated(url: string): Observable<PaginatedTvSeries> {
         return this.httpService.get<PaginatedTvSeries>(url);
     }
 }

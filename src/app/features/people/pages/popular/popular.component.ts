@@ -1,10 +1,46 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { takeUntil } from 'rxjs';
+
+import { Movie } from '../../../../core/models/movies/movie.model';
+import { Person } from '../../../../core/models/people/person.model';
+import { Media } from '../../../../core/models/shared/media.model';
+import { TvSeries } from '../../../../core/models/tv-series/tv-series.model';
+import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
+import { PeopleFacade } from '../../../../shared/facades/people.facade';
+import { BaseComponent } from '../../../../shared/helpers/base.component';
+import { LimitToPipe } from '../../../../shared/pipes/limit-to.pipe';
 
 @Component({
-    selector: 'app-popular',
+    selector: 'app-movies',
     standalone: true,
-    imports: [],
+    providers: [],
     templateUrl: './popular.component.html',
     styleUrl: './popular.component.scss',
+    imports: [CommonModule, PosterPathDirective, ReactiveFormsModule, LimitToPipe],
 })
-export class PeoplePopularComponent {}
+export class PeoplePopularComponent extends BaseComponent implements OnInit {
+    public popularPeople!: Array<Person>;
+
+    constructor(private peopleFacade: PeopleFacade) {
+        super();
+    }
+
+    ngOnInit(): void {
+        this.getPopularPeople();
+    }
+
+    public isMovie(item: Media | Movie | TvSeries): item is Movie {
+        return (item as Movie).title !== undefined;
+    }
+
+    private getPopularPeople(): void {
+        this.peopleFacade
+            .getPopular()
+            .pipe(takeUntil(this.destroyed))
+            .subscribe((popularPeople) => {
+                this.popularPeople = popularPeople.results;
+            });
+    }
+}
