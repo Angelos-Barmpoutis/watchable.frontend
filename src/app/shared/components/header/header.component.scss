@@ -1,5 +1,11 @@
 header {
     display: flex;
+    background-color: white;
+    padding: 16px 24px;
+
+    a {
+        flex-shrink: 0;
+    }
 
     ul {
         display: flex;
@@ -7,6 +13,8 @@ header {
         margin: 0;
         padding: 0;
         column-gap: 20px;
-        margin-inline: auto;
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
     }
 }

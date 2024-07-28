@@ -7,7 +7,14 @@
         </header>
         <div class="media-container">
             <div *ngFor="let person of popularPeople | limitTo: 20" class="media-container__media">
-                <img alt="Poster" appProfilePath [size]="profileSize" profilePath="{{ person.profile_path }}" />
+                <ng-container>
+                    <img appProfilePath [alt]="person.name" [size]="profileSize" [profilePath]="person.profile_path" />
+                    <img
+                        *ngIf="!person.profile_path"
+                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
+                        alt="Image not available"
+                    />
+                </ng-container>
                 <h3>{{ person.name }}</h3>
                 <div *ngIf="person.known_for" class="media-container__media__details">
                     <span *ngIf="isMovie(person.known_for[0])" class="media-container__media__details__known-for">

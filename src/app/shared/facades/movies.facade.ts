@@ -15,30 +15,32 @@ export interface AllMovies {
     providedIn: 'root',
 })
 export class MoviesFacade {
+    private DEFAULT_PAGE = 1;
+
     constructor(private movieGateway: MovieGateway) {}
 
-    public getNowPlaying(): Observable<PaginatedMovies> {
-        return this.movieGateway.getNowPlaying();
+    public getNowPlaying(page: number): Observable<PaginatedMovies> {
+        return this.movieGateway.getNowPlaying(page);
     }
 
-    public getPopular(): Observable<PaginatedMovies> {
-        return this.movieGateway.getPopular();
+    public getPopular(page: number): Observable<PaginatedMovies> {
+        return this.movieGateway.getPopular(page);
     }
 
-    public getTopRated(): Observable<PaginatedMovies> {
-        return this.movieGateway.getTopRated();
+    public getTopRated(page: number): Observable<PaginatedMovies> {
+        return this.movieGateway.getTopRated(page);
     }
 
-    public getUpcoming(): Observable<PaginatedMovies> {
-        return this.movieGateway.getUpcoming();
+    public getUpcoming(page: number): Observable<PaginatedMovies> {
+        return this.movieGateway.getUpcoming(page);
     }
 
     public getAllMovies(): Observable<AllMovies> {
         return forkJoin({
-            nowPlaying: this.getNowPlaying(),
-            popular: this.getPopular(),
-            topRated: this.getTopRated(),
-            upcoming: this.getUpcoming(),
+            nowPlaying: this.getNowPlaying(this.DEFAULT_PAGE),
+            popular: this.getPopular(this.DEFAULT_PAGE),
+            topRated: this.getTopRated(this.DEFAULT_PAGE),
+            upcoming: this.getUpcoming(this.DEFAULT_PAGE),
         });
     }
 }

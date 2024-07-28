@@ -1,10 +1,56 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { takeUntil } from 'rxjs';
+
+import { POSTER_SIZE } from '../../../../core/enumerations/poster-size.enum';
+import { Movie } from '../../../../core/models/movies/movie.model';
+import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
+import { MoviesFacade } from '../../../../shared/facades/movies.facade';
+import { BaseComponent } from '../../../../shared/helpers/base.component';
 
 @Component({
-    selector: 'app-top-rated',
+    selector: 'app-movies',
     standalone: true,
-    imports: [],
+    providers: [],
     templateUrl: './top-rated.component.html',
     styleUrl: './top-rated.component.scss',
+    imports: [CommonModule, PosterPathDirective, RouterLink],
 })
-export class MoviesTopRatedComponent {}
+export class MoviesTopRatedComponent extends BaseComponent implements OnInit {
+    public posterSize: POSTER_SIZE = POSTER_SIZE.w92;
+    public topRatedMovies: Array<Movie> = [];
+    public currentPage = 1;
+    public totalPages = 10;
+
+    constructor(private movieFacade: MoviesFacade) {
+        super();
+    }
+
+    ngOnInit(): void {
+        this.getTopRatedMovies();
+    }
+
+    public onLoadMore(): void {
+        if (this.currentPage < this.totalPages) {
+            this.currentPage++;
+            this.getTopRatedMovies(true);
+        }
+    }
+
+    private getTopRatedMovies(loadMore: boolean = false): void {
+        this.movieFacade
+            .getTopRated(this.currentPage)
+            .pipe(takeUntil(this.destroyed))
+            .subscribe((topRatedMovies) => {
+                if (loadMore) {
+                    this.topRatedMovies = [...this.topRatedMovies, ...topRatedMovies.results];
+                } else {
+                    this.topRatedMovies = topRatedMovies.results;
+                }
+
+                this.currentPage = +topRatedMovies.page;
+                this.totalPages = +topRatedMovies.total_pages;
+            });
+    }
+}

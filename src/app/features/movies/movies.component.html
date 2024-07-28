@@ -7,11 +7,18 @@
         </header>
         <div class="media-container">
             <div *ngFor="let movie of allMovies.nowPlaying.results | limitTo: 10" class="media-container__media">
-                <img alt="Poster" appPosterPath [size]="posterSize" [posterPath]="movie.poster_path" />
+                <ng-container>
+                    <img appPosterPath [size]="posterSize" [posterPath]="movie.poster_path" [alt]="movie.title" />
+                    <img
+                        *ngIf="!movie.poster_path"
+                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
+                        alt="Image not available"
+                    />
+                </ng-container>
                 <h3>{{ movie.title }}</h3>
                 <div class="media-container__media__details">
                     <span class="media-container__media__details__vote-average">
-                        {{ +movie.vote_average | number: "1.1-1" }}
+                        {{ +movie.vote_average | number: "1.0-1" }}
                     </span>
                     <span class="media-container__media__details__release-date">
                         {{ movie.release_date | date: "yyyy" }}
@@ -29,11 +36,18 @@
         </header>
         <div class="media-container">
             <div *ngFor="let movie of allMovies.popular.results | limitTo: 10" class="media-container__media">
-                <img alt="Poster" appPosterPath [size]="posterSize" posterPath="{{ movie.poster_path }}" />
+                <ng-container>
+                    <img appPosterPath [posterPath]="movie.poster_path" [alt]="movie.title" [size]="posterSize" />
+                    <img
+                        *ngIf="!movie.poster_path"
+                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
+                        alt="Image not available"
+                    />
+                </ng-container>
                 <h3>{{ movie.title }}</h3>
                 <div class="media-container__media__details">
                     <span class="media-container__media__details__vote-average">
-                        {{ +movie.vote_average | number: "1.1-1" }}
+                        {{ +movie.vote_average | number: "1.0-1" }}
                     </span>
                     <span class="media-container__media__details__release-date">
                         {{ movie.release_date | date: "yyyy" }}
@@ -51,11 +65,18 @@
         </header>
         <div class="media-container">
             <div *ngFor="let movie of allMovies.topRated.results | limitTo: 10" class="media-container__media">
-                <img alt="Poster" appPosterPath [size]="posterSize" posterPath="{{ movie.poster_path }}" />
+                <ng-container>
+                    <img appPosterPath [alt]="movie.title" [size]="posterSize" [posterPath]="movie.poster_path" />
+                    <img
+                        *ngIf="!movie.poster_path"
+                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
+                        alt="Image not available"
+                    />
+                </ng-container>
                 <h3>{{ movie.title }}</h3>
                 <div class="media-container__media__details">
                     <span class="media-container__media__details__vote-average">
-                        {{ +movie.vote_average | number: "1.1-1" }}
+                        {{ +movie.vote_average | number: "1.0-1" }}
                     </span>
                     <span class="media-container__media__details__release-date">
                         {{ movie.release_date | date: "yyyy" }}
@@ -73,11 +94,18 @@
         </header>
         <div class="media-container">
             <div *ngFor="let movie of allMovies.upcoming.results | limitTo: 10" class="media-container__media">
-                <img alt="Poster" appPosterPath [size]="posterSize" posterPath="{{ movie.poster_path }}" />
+                <ng-container>
+                    <img appPosterPath [alt]="movie.title" [size]="posterSize" [posterPath]="movie.poster_path" />
+                    <img
+                        *ngIf="!movie.poster_path"
+                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
+                        alt="Image not available"
+                    />
+                </ng-container>
                 <h3>{{ movie.title }}</h3>
                 <div class="media-container__media__details">
                     <span class="media-container__media__details__vote-average">
-                        {{ +movie.vote_average | number: "1.1-1" }}
+                        {{ +movie.vote_average | number: "1.0-1" }}
                     </span>
                     <span class="media-container__media__details__release-date">
                         {{ movie.release_date | date: "yyyy" }}

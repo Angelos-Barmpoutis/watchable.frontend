@@ -1,1 +1,49 @@
-<p>now-playing works!</p>
+<ng-container *ngIf="nowPlayingMovies">
+    <section class="media-items-section" id="now-playing">
+        <header>
+            <h1>Now Playing</h1>
+        </header>
+        <main>
+            <div class="media-item-container">
+                <div *ngFor="let movie of nowPlayingMovies" class="media-item-container__media">
+                    <a
+                        class="media-item-container__media__img-anchor"
+                        [routerLink]="['/', 'movies', 'movie', movie.id]"
+                    >
+                        <ng-container>
+                            <img
+                                *ngIf="movie.poster_path"
+                                appPosterPath
+                                [size]="posterSize"
+                                [posterPath]="movie.poster_path"
+                                [alt]="movie.title"
+                            />
+                            <img
+                                *ngIf="!movie.poster_path"
+                                src="https://placehold.co/92x138?text=Image\nNot+Available&font=roboto"
+                                alt="Image not available"
+                            />
+                        </ng-container>
+                    </a>
+                    <div class="media-item-container__media__content">
+                        <h3>
+                            <a [routerLink]="['/', 'movies', 'movie', movie.id]">{{ movie.title }}</a>
+                        </h3>
+                        <span class="media-item-container__media__content__vote-average">
+                            {{ +movie.vote_average | number: "1.0-1" }} ({{ +movie.vote_count | number }})
+                        </span>
+                        <span class="media-item-container__media__content__release-date">
+                            {{ movie.release_date | date }}
+                        </span>
+                    </div>
+                    <div class="media-item-container__media__info">
+                        <button [title]="'See more about ' + movie.title">i</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <button (click)="onLoadMore()">Load More</button>
+        </footer>
+    </section>
+</ng-container>

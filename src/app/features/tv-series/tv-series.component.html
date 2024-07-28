@@ -7,11 +7,18 @@
         </header>
         <div class="media-container">
             <div *ngFor="let tvSerie of allTvSeries.airingToday.results | limitTo: 10" class="media-container__media">
-                <img alt="Poster" appPosterPath [size]="posterSize" posterPath="{{ tvSerie.poster_path }}" />
+                <ng-container>
+                    <img appPosterPath [alt]="tvSerie.name" [size]="posterSize" [posterPath]="tvSerie.poster_path" />
+                    <img
+                        *ngIf="!tvSerie.poster_path"
+                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
+                        alt="Image not available"
+                    />
+                </ng-container>
                 <h3>{{ tvSerie.name }}</h3>
                 <div class="media-container__media__details">
                     <span class="media-container__media__details__vote-average">
-                        {{ +tvSerie.vote_average | number: "1.1-1" }}
+                        {{ +tvSerie.vote_average | number: "1.0-1" }}
                     </span>
                     <span class="media-container__media__details__release-date">
                         {{ tvSerie.first_air_date | date: "yyyy" }}
@@ -29,11 +36,18 @@
         </header>
         <div class="media-container">
             <div *ngFor="let tvSerie of allTvSeries.popular.results | limitTo: 10" class="media-container__media">
-                <img alt="Poster" appPosterPath [size]="posterSize" posterPath="{{ tvSerie.poster_path }}" />
+                <ng-container>
+                    <img appPosterPath [alt]="tvSerie.name" [size]="posterSize" [posterPath]="tvSerie.poster_path" />
+                    <img
+                        *ngIf="!tvSerie.poster_path"
+                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
+                        alt="Image not available"
+                    />
+                </ng-container>
                 <h3>{{ tvSerie.name }}</h3>
                 <div class="media-container__media__details">
                     <span class="media-container__media__details__vote-average">
-                        {{ +tvSerie.vote_average | number: "1.1-1" }}
+                        {{ +tvSerie.vote_average | number: "1.0-1" }}
                     </span>
                     <span class="media-container__media__details__release-date">
                         {{ tvSerie.first_air_date | date: "yyyy" }}
@@ -51,11 +65,18 @@
         </header>
         <div class="media-container">
             <div *ngFor="let tvSerie of allTvSeries.topRated.results | limitTo: 10" class="media-container__media">
-                <img alt="Poster" appPosterPath [size]="posterSize" posterPath="{{ tvSerie.poster_path }}" />
+                <ng-container>
+                    <img appPosterPath [alt]="tvSerie.name" [size]="posterSize" [posterPath]="tvSerie.poster_path" />
+                    <img
+                        *ngIf="!tvSerie.poster_path"
+                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
+                        alt="Image not available"
+                    />
+                </ng-container>
                 <h3>{{ tvSerie.name }}</h3>
                 <div class="media-container__media__details">
                     <span class="media-container__media__details__vote-average">
-                        {{ +tvSerie.vote_average | number: "1.1-1" }}
+                        {{ +tvSerie.vote_average | number: "1.0-1" }}
                     </span>
                     <span class="media-container__media__details__release-date">
                         {{ tvSerie.first_air_date | date: "yyyy" }}
