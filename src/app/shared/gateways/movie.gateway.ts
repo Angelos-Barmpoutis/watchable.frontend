@@ -14,19 +14,19 @@ export class MovieGateway {
         private urlService: UrlService,
     ) {}
 
-    getNowPlaying(page: number = 1): Observable<PaginatedMovies> {
+    getNowPlaying(page: number): Observable<PaginatedMovies> {
         return this.movieDriver.getNowPlaying(this.urlService.urlFor(['movie', `now_playing?page=${page}`]));
     }
 
-    getPopular(page: number = 1): Observable<PaginatedMovies> {
+    getPopular(page: number): Observable<PaginatedMovies> {
         return this.movieDriver.getPopular(this.urlService.urlFor(['movie', `popular?page=${page}`]));
     }
 
-    getTopRated(page: number = 1): Observable<PaginatedMovies> {
+    getTopRated(page: number): Observable<PaginatedMovies> {
         return this.movieDriver.getTopRated(this.urlService.urlFor(['movie', `top_rated?page=${page}`]));
     }
 
-    getUpcoming(page: number = 1): Observable<PaginatedMovies> {
+    getUpcoming(page: number): Observable<PaginatedMovies> {
         return this.movieDriver.getUpcoming(this.urlService.urlFor(['movie', `upcoming?page=${page}`]));
     }
 }

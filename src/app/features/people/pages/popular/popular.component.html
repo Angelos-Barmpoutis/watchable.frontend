@@ -1,30 +1,62 @@
 <ng-container *ngIf="popularPeople">
-    <section class="media-section" id="popular">
+    <section class="media-items-section" id="now-playing">
         <header>
-            <h2>
-                <a [routerLink]="['.']"> Popular </a>
-            </h2>
+            <h1>Popular</h1>
         </header>
-        <div class="media-container">
-            <div *ngFor="let person of popularPeople | limitTo: 20" class="media-container__media">
-                <ng-container>
-                    <img appProfilePath [alt]="person.name" [size]="profileSize" [profilePath]="person.profile_path" />
-                    <img
-                        *ngIf="!person.profile_path"
-                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
-                        alt="Image not available"
-                    />
-                </ng-container>
-                <h3>{{ person.name }}</h3>
-                <div *ngIf="person.known_for" class="media-container__media__details">
-                    <span *ngIf="isMovie(person.known_for[0])" class="media-container__media__details__known-for">
-                        {{ person.known_for[0].title }}
-                    </span>
-                    <span *ngIf="!isMovie(person.known_for[0])" class="media-container__media__details__known-for">
-                        {{ person.known_for[0].name }}
-                    </span>
+        <main>
+            <div class="media-item-container">
+                <div *ngFor="let person of popularPeople" class="media-item-container__media">
+                    <a
+                        class="media-item-container__media__img-anchor"
+                        [routerLink]="['/', 'movies', 'movie', person.id]"
+                    >
+                        <ng-container>
+                            <img
+                                *ngIf="person.profile_path"
+                                appPosterPath
+                                [size]="posterSize"
+                                [posterPath]="person.profile_path"
+                                [alt]="person.name"
+                            />
+                            <img *ngIf="!person.profile_path" alt="Image not available" [src]="posterFallback" />
+                        </ng-container>
+                    </a>
+                    <div class="media-item-container__media__content">
+                        <h3>
+                            <a [routerLink]="['/', 'movies', 'movie', person.id]">{{ person.name }}</a>
+                        </h3>
+                        <div class="media-item-container__media__content__details">
+                            <span class="media-item-container__media__content__details__known-for-department">
+                                {{ person.known_for_department }}
+                            </span>
+                            <ng-container *ngIf="person.known_for">
+                                <span
+                                    *ngIf="isMovie(person.known_for[0])"
+                                    class="media-item-container__media__content__details__known-for"
+                                >
+                                    {{ person.known_for[0].title }} ({{
+                                        person.known_for[0].release_date | date: "yyyy"
+                                    }})
+                                </span>
+                                <span
+                                    *ngIf="!isMovie(person.known_for[0])"
+                                    class="media-item-container__media__content__details__known-for"
+                                >
+                                    {{ person.known_for[0].name }} ({{
+                                        person.known_for[0].first_air_date | date: "yyyy"
+                                    }})
+                                </span>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="media-item-container__media__info">
+                        <button [title]="'See more about ' + person.name">i</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </main>
+        <footer>
+            <button (click)="onLoadMore()">Load More</button>
+        </footer>
     </section>
 </ng-container>

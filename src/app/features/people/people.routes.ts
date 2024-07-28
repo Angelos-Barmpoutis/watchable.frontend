@@ -3,8 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'popular',
-        pathMatch: 'full',
+        loadComponent: () => import('./people.component').then((c) => c.PeopleComponent),
     },
     {
         path: 'person/:id',

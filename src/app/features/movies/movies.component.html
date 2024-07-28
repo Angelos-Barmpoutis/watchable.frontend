@@ -9,11 +9,7 @@
             <div *ngFor="let movie of allMovies.nowPlaying.results | limitTo: 10" class="media-container__media">
                 <ng-container>
                     <img appPosterPath [size]="posterSize" [posterPath]="movie.poster_path" [alt]="movie.title" />
-                    <img
-                        *ngIf="!movie.poster_path"
-                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
-                        alt="Image not available"
-                    />
+                    <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
                 </ng-container>
                 <h3>{{ movie.title }}</h3>
                 <div class="media-container__media__details">
@@ -38,11 +34,7 @@
             <div *ngFor="let movie of allMovies.popular.results | limitTo: 10" class="media-container__media">
                 <ng-container>
                     <img appPosterPath [posterPath]="movie.poster_path" [alt]="movie.title" [size]="posterSize" />
-                    <img
-                        *ngIf="!movie.poster_path"
-                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
-                        alt="Image not available"
-                    />
+                    <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
                 </ng-container>
                 <h3>{{ movie.title }}</h3>
                 <div class="media-container__media__details">
@@ -67,11 +59,7 @@
             <div *ngFor="let movie of allMovies.topRated.results | limitTo: 10" class="media-container__media">
                 <ng-container>
                     <img appPosterPath [alt]="movie.title" [size]="posterSize" [posterPath]="movie.poster_path" />
-                    <img
-                        *ngIf="!movie.poster_path"
-                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
-                        alt="Image not available"
-                    />
+                    <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
                 </ng-container>
                 <h3>{{ movie.title }}</h3>
                 <div class="media-container__media__details">
@@ -96,11 +84,7 @@
             <div *ngFor="let movie of allMovies.upcoming.results | limitTo: 10" class="media-container__media">
                 <ng-container>
                     <img appPosterPath [alt]="movie.title" [size]="posterSize" [posterPath]="movie.poster_path" />
-                    <img
-                        *ngIf="!movie.poster_path"
-                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
-                        alt="Image not available"
-                    />
+                    <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
                 </ng-container>
                 <h3>{{ movie.title }}</h3>
                 <div class="media-container__media__details">

@@ -9,11 +9,7 @@
             <div *ngFor="let tvSerie of allTvSeries.airingToday.results | limitTo: 10" class="media-container__media">
                 <ng-container>
                     <img appPosterPath [alt]="tvSerie.name" [size]="posterSize" [posterPath]="tvSerie.poster_path" />
-                    <img
-                        *ngIf="!tvSerie.poster_path"
-                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
-                        alt="Image not available"
-                    />
+                    <img *ngIf="!tvSerie.poster_path" alt="Image not available" [src]="posterFallback" />
                 </ng-container>
                 <h3>{{ tvSerie.name }}</h3>
                 <div class="media-container__media__details">
@@ -38,11 +34,7 @@
             <div *ngFor="let tvSerie of allTvSeries.popular.results | limitTo: 10" class="media-container__media">
                 <ng-container>
                     <img appPosterPath [alt]="tvSerie.name" [size]="posterSize" [posterPath]="tvSerie.poster_path" />
-                    <img
-                        *ngIf="!tvSerie.poster_path"
-                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
-                        alt="Image not available"
-                    />
+                    <img *ngIf="!tvSerie.poster_path" alt="Image not available" [src]="posterFallback" />
                 </ng-container>
                 <h3>{{ tvSerie.name }}</h3>
                 <div class="media-container__media__details">
@@ -67,11 +59,7 @@
             <div *ngFor="let tvSerie of allTvSeries.topRated.results | limitTo: 10" class="media-container__media">
                 <ng-container>
                     <img appPosterPath [alt]="tvSerie.name" [size]="posterSize" [posterPath]="tvSerie.poster_path" />
-                    <img
-                        *ngIf="!tvSerie.poster_path"
-                        src="https://placehold.co/185x278?text=Image\nNot+Available&font=roboto"
-                        alt="Image not available"
-                    />
+                    <img *ngIf="!tvSerie.poster_path" alt="Image not available" [src]="posterFallback" />
                 </ng-container>
                 <h3>{{ tvSerie.name }}</h3>
                 <div class="media-container__media__details">

@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { takeUntil } from 'rxjs';
 
 import { POSTER_SIZE } from '../../core/enumerations/poster-size.enum';
+import { DEFAULT } from '../../shared/constants/defaults.constant';
 import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
 import { AllMovies, MoviesFacade } from '../../shared/facades/movies.facade';
 import { BaseComponent } from '../../shared/helpers/base.component';
@@ -18,7 +19,8 @@ import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
     imports: [CommonModule, PosterPathDirective, LimitToPipe, RouterLink],
 })
 export class MoviesComponent extends BaseComponent implements OnInit {
-    public posterSize: POSTER_SIZE = POSTER_SIZE.w185;
+    public posterSize: POSTER_SIZE = DEFAULT.mediumPosterSize;
+    public posterFallback = DEFAULT.mediumPosterFallback;
     public allMovies!: AllMovies;
 
     constructor(private movieFacade: MoviesFacade) {

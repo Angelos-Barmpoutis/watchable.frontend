@@ -38,9 +38,11 @@ section.media-section {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding-inline: 24px;
     }
 
     .media-container {
+        padding-inline: 24px;
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         gap: 48px 24px;
@@ -54,44 +56,50 @@ section.media-section {
 
             img {
                 border-radius: 24px;
+                flex-grow: 1;
             }
 
             h3 {
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
+                margin: 0;
+                line-height: 1.5;
             }
 
             &__details {
-                display: flex;
-                align-items: center;
                 font-weight: 500;
                 max-width: 185px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
 
                 &__vote-average {
-                    display: flex;
-                    align-items: center;
-                    width: fit-content;
-                    padding-inline-end: 16px;
-                    border-inline-end: 1px solid black;
+                    display: block;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
                 }
 
                 &__release-date {
-                    display: flex;
-                    align-items: center;
-                    width: fit-content;
-                    padding-inline-start: 16px;
+                    display: block;
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     overflow: hidden;
+                }
+
+                &__known-for-department {
                     display: block;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
                 }
 
                 &__known-for {
+                    display: block;
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     overflow: hidden;
-                    display: block;
                 }
             }
         }
@@ -106,88 +114,105 @@ section.media-items-section {
         padding-inline: 24px;
     }
 
-    .media-item-container {
-        padding-inline: 24px;
-        row-gap: 24px;
-        display: flex;
-        flex-direction: column;
-
-        &__media {
+    main {
+        .media-item-container {
+            padding-inline: 24px;
+            row-gap: 24px;
             display: flex;
-            column-gap: 24px;
-            border: 1px solid rgb(210, 210, 210);
-            background-color: whitesmoke;
-            border-radius: 8px;
+            flex-direction: column;
 
-            &__img-anchor {
-                line-height: 0;
-                flex-shrink: 0;
-                min-width: 92px;
-                min-height: 138px;
-
-                img {
-                    width: 100%;
-                    border-radius: 8px;
-                }
-            }
-
-            &__content {
-                flex-grow: 1;
+            &__media {
+                display: flex;
+                column-gap: 24px;
+                border: 1px solid rgb(210, 210, 210);
+                background-color: whitesmoke;
+                border-radius: 8px;
                 overflow: hidden;
-                padding-block: 8px;
 
-                h3 {
-                    margin: 0;
-                    font-size: 20px;
-                    line-height: 1.5;
-                    color: rgb(0, 123, 255);
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
+                &__img-anchor {
+                    line-height: 0;
+                    flex-shrink: 0;
+                    min-width: 92px;
+                    min-height: 138px;
+
+                    img {
+                        width: 100%;
+                        border-radius: 8px;
+                    }
+                }
+
+                &__content {
+                    flex-grow: 1;
                     overflow: hidden;
+                    padding-block: 8px;
 
-                    a {
+                    h3 {
+                        margin: 0;
+                        font-size: 20px;
+                        line-height: 1.5;
                         color: rgb(0, 123, 255);
                         white-space: nowrap;
                         text-overflow: ellipsis;
                         overflow: hidden;
-                        text-decoration: none;
+
+                        a {
+                            color: rgb(0, 123, 255);
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            text-decoration: none;
+                        }
+                    }
+
+                    &__details {
+                        &__known-for-department {
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            display: block;
+                        }
+
+                        &__known-for {
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            display: block;
+                        }
+                    }
+
+                    &__vote-average {
+                        display: block;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+
+                    &__release-date {
+                        display: block;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
                     }
                 }
 
-                &__vote-average {
-                    font-size: 16px;
-                    display: block;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                }
-
-                &__release-date {
-                    font-size: 16px;
-                    display: block;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                }
-            }
-
-            &__info {
-                display: flex;
-                align-items: center;
-                padding-inline-end: 24px;
-                flex-shrink: 0;
-
-                button {
-                    cursor: pointer;
-                    width: 32px;
-                    height: 32px;
-                    border-radius: 50%;
-                    background-color: rgb(205, 239, 255);
-                    border: 2px solid rgb(0, 123, 255);
-                    color: rgb(0, 123, 255);
+                &__info {
                     display: flex;
                     align-items: center;
-                    justify-content: center;
+                    padding-inline-end: 24px;
+                    flex-shrink: 0;
+
+                    button {
+                        cursor: pointer;
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 50%;
+                        background-color: rgb(205, 239, 255);
+                        border: 2px solid rgb(0, 123, 255);
+                        color: rgb(0, 123, 255);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
                 }
             }
         }

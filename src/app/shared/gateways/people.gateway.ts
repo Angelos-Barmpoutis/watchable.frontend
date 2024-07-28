@@ -14,7 +14,7 @@ export class PeopleGateway {
         private urlService: UrlService,
     ) {}
 
-    getPopular(): Observable<PaginatedPeople> {
-        return this.peopleDriver.getPopularPeople(this.urlService.urlFor(['person', 'popular']));
+    getPopular(page: number): Observable<PaginatedPeople> {
+        return this.peopleDriver.getPopularPeople(this.urlService.urlFor(['person', `popular?page=${page}`]));
     }
 }

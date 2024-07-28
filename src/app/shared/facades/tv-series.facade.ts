@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 
 import { PaginatedTvSeries } from '../../core/models/tv-series/paginated-tv-series.model';
+import { DEFAULT } from '../constants/defaults.constant';
 import { TvSeriesGateway } from '../gateways/tv-series.gateway';
 
 export interface AllTvSeries {
@@ -16,16 +17,16 @@ export interface AllTvSeries {
 export class TvSeriesFacade {
     constructor(private tvSeriesGateway: TvSeriesGateway) {}
 
-    public getAiringToday(): Observable<PaginatedTvSeries> {
-        return this.tvSeriesGateway.getAiringToday();
+    public getAiringToday(page: number = DEFAULT.page): Observable<PaginatedTvSeries> {
+        return this.tvSeriesGateway.getAiringToday(page);
     }
 
-    public getPopular(): Observable<PaginatedTvSeries> {
-        return this.tvSeriesGateway.getPopular();
+    public getPopular(page: number = DEFAULT.page): Observable<PaginatedTvSeries> {
+        return this.tvSeriesGateway.getPopular(page);
     }
 
-    public getTopRated(): Observable<PaginatedTvSeries> {
-        return this.tvSeriesGateway.getTopRated();
+    public getTopRated(page: number = DEFAULT.page): Observable<PaginatedTvSeries> {
+        return this.tvSeriesGateway.getTopRated(page);
     }
 
     public getAllTvSeries(): Observable<AllTvSeries> {
