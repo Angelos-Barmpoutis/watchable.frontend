@@ -7,7 +7,7 @@ body {
     }
 }
 
-app-header {
+header#header {
     position: sticky;
     top: 0;
     z-index: 1;
@@ -22,9 +22,10 @@ app-trending,
 app-upcoming,
 app-people,
 app-person,
-app-series,
+app-tv-series,
 app-airing-today,
-app-serie {
+app-tv-serie,
+app-search {
     flex-grow: 1;
 }
 
@@ -120,6 +121,7 @@ section.media-items-section {
             row-gap: 24px;
             display: flex;
             flex-direction: column;
+            flex-grow: 1;
 
             &__media {
                 display: flex;
@@ -132,8 +134,8 @@ section.media-items-section {
                 &__img-anchor {
                     line-height: 0;
                     flex-shrink: 0;
-                    min-width: 92px;
-                    min-height: 138px;
+                    width: 92px;
+                    height: 138px;
 
                     img {
                         width: 100%;
@@ -203,8 +205,8 @@ section.media-items-section {
 
                     button {
                         cursor: pointer;
-                        width: 32px;
-                        height: 32px;
+                        width: 24px;
+                        height: 24px;
                         border-radius: 50%;
                         background-color: rgb(205, 239, 255);
                         border: 2px solid rgb(0, 123, 255);

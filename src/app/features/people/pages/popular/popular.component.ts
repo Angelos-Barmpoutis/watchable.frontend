@@ -3,27 +3,25 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { takeUntil } from 'rxjs';
 
-import { POSTER_SIZE } from '../../../../core/enumerations/poster-size.enum';
-import { Movie } from '../../../../core/models/movies/movie.model';
+import { PROFILE_SIZE } from '../../../../core/enumerations/profile-size.enum';
 import { Person } from '../../../../core/models/people/person.model';
-import { Media } from '../../../../core/models/shared/media.model';
-import { TvSeries } from '../../../../core/models/tv-series/tv-series.model';
+import { KnownForItem } from '../../../../core/models/shared/known-for-item.model';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
-import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
+import { ProfilePathDirective } from '../../../../shared/directives/profile-path.directive';
 import { PeopleFacade } from '../../../../shared/facades/people.facade';
 import { BaseComponent } from '../../../../shared/helpers/base.component';
 
 @Component({
-    selector: 'app-movies',
+    selector: 'app-popular-people',
     standalone: true,
     providers: [],
     templateUrl: './popular.component.html',
     styleUrl: './popular.component.scss',
-    imports: [CommonModule, PosterPathDirective, RouterLink],
+    imports: [CommonModule, ProfilePathDirective, RouterLink],
 })
 export class PeoplePopularComponent extends BaseComponent implements OnInit {
-    public posterSize: POSTER_SIZE = DEFAULT.smallPosterSize;
-    public posterFallback = DEFAULT.smallPosterFallback;
+    public profileSize: PROFILE_SIZE = DEFAULT.mediumProfileSize;
+    public profileFallback = DEFAULT.mediumProfileFallback;
     public popularPeople: Array<Person> = [];
     public currentPage = DEFAULT.page;
     public totalPages = DEFAULT.totalPages;
@@ -43,8 +41,8 @@ export class PeoplePopularComponent extends BaseComponent implements OnInit {
         }
     }
 
-    public isMovie(item: Media | Movie | TvSeries): item is Movie {
-        return (item as Movie).title !== undefined;
+    public isMovie(item: KnownForItem): boolean {
+        return item.media_type === 'movie';
     }
 
     private getPopularPeople(loadMore: boolean = false): void {

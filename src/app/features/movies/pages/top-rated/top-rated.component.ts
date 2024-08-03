@@ -11,7 +11,7 @@ import { MoviesFacade } from '../../../../shared/facades/movies.facade';
 import { BaseComponent } from '../../../../shared/helpers/base.component';
 
 @Component({
-    selector: 'app-movies',
+    selector: 'app-top-rated-movies',
     standalone: true,
     providers: [],
     templateUrl: './top-rated.component.html',

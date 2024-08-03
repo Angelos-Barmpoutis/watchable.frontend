@@ -1,0 +1,117 @@
+.search-container {
+    position: relative;
+
+    &__form {
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        height: 35px;
+
+        select {
+            flex-shrink: 0;
+            width: max-content;
+            padding: 8px;
+        }
+
+        input {
+            flex-grow: 1;
+            padding: 8px;
+        }
+
+        button {
+            flex-shrink: 0;
+            padding: 8px;
+            background-color: rgb(0, 123, 255);
+            color: white;
+            height: 100%;
+            cursor: pointer;
+        }
+    }
+
+    &__items-container {
+        position: absolute;
+        top: 35px;
+        z-index: 1;
+        left: 0;
+        right: 0;
+
+        &__items {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+            border: 2px solid rgb(210, 210, 210);
+            width: 100%;
+
+            &__item {
+                padding: 8px;
+                column-gap: 24px;
+                border-bottom: 2px solid rgb(210, 210, 210);
+                background-color: whitesmoke;
+                overflow: hidden;
+
+                a {
+                    display: flex;
+                    column-gap: 12px;
+                    overflow: hidden;
+
+                    img {
+                        line-height: 0;
+                        flex-shrink: 0;
+                        border-radius: 8px;
+                        width: 45px;
+                        height: 68px;
+                    }
+
+                    .search-container__items-container__items__item__content {
+                        flex-grow: 1;
+                        overflow: hidden;
+
+                        &__title {
+                            margin: 0;
+                            font-size: 20px;
+                            line-height: 1.5;
+                            color: rgb(0, 123, 255);
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                        }
+
+                        &__known-for-department {
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            display: block;
+                        }
+
+                        &__known-for {
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            display: block;
+                        }
+
+                        &__vote-average {
+                            display: block;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                        }
+
+                        &__release-date {
+                            display: block;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                        }
+                    }
+                }
+
+                &:nth-last-child(1) {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+}

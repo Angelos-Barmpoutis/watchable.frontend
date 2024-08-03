@@ -1,6 +1,4 @@
-import { Movie } from '../movies/movie.model';
-import { Media } from '../shared/media.model';
-import { TvSeries } from '../tv-series/tv-series.model';
+import { KnownForItem } from '../shared/known-for-item.model';
 
 export interface Person {
     adult: boolean;
@@ -11,5 +9,5 @@ export interface Person {
     original_name: string;
     popularity: number;
     profile_path: string;
-    known_for?: Array<Media | Movie | TvSeries>;
+    known_for?: Array<KnownForItem>;
 }

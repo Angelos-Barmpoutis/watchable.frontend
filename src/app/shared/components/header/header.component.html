@@ -1,4 +1,4 @@
-<header>
+<div class="header-container">
     <a class="header-logo" [routerLink]="['/']">Watchable</a>
     <ul>
         <li><a [routerLink]="['/', 'trending']">Trending</a></li>
@@ -6,4 +6,5 @@
         <li><a [routerLink]="['/', 'series']">Series</a></li>
         <li><a [routerLink]="['/', 'people']">People</a></li>
     </ul>
-</header>
+    <app-search-bar></app-search-bar>
+</div>

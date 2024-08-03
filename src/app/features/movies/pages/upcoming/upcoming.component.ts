@@ -11,7 +11,7 @@ import { MoviesFacade } from '../../../../shared/facades/movies.facade';
 import { BaseComponent } from '../../../../shared/helpers/base.component';
 
 @Component({
-    selector: 'app-movies',
+    selector: 'app-upcoming-movies',
     standalone: true,
     providers: [],
     templateUrl: './upcoming.component.html',

@@ -11,7 +11,7 @@ import { TvSeriesFacade } from '../../../../shared/facades/tv-series.facade';
 import { BaseComponent } from '../../../../shared/helpers/base.component';
 
 @Component({
-    selector: 'app-movies',
+    selector: 'app-airing-today-tv-series',
     standalone: true,
     providers: [],
     templateUrl: './airing-today.component.html',

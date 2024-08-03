@@ -13,7 +13,7 @@ import { TrendingFacade } from '../../../../shared/facades/trending.facade';
 import { BaseComponent } from '../../../../shared/helpers/base.component';
 
 @Component({
-    selector: 'app-movies',
+    selector: 'app-trending-movies',
     standalone: true,
     providers: [],
     templateUrl: './movies.component.html',

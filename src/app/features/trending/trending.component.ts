@@ -9,7 +9,7 @@ import { PROFILE_SIZE } from '../../core/enumerations/profile-size.enum';
 import { TRENDING_FILTER } from '../../core/enumerations/trending-filter.enum';
 import { Movie } from '../../core/models/movies/movie.model';
 import { Person } from '../../core/models/people/person.model';
-import { Media } from '../../core/models/shared/media.model';
+import { KnownForItem } from '../../core/models/shared/known-for-item.model';
 import { TvSeries } from '../../core/models/tv-series/tv-series.model';
 import { DEFAULT } from '../../shared/constants/defaults.constant';
 import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
@@ -19,7 +19,7 @@ import { BaseComponent } from '../../shared/helpers/base.component';
 import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
 
 @Component({
-    selector: 'app-movies',
+    selector: 'app-trending',
     standalone: true,
     providers: [],
     templateUrl: './trending.component.html',
@@ -55,8 +55,8 @@ export class TrendingComponent extends BaseComponent implements OnInit {
         this.onTrendingFilterChanges();
     }
 
-    public isMovie(item: Media | Movie | TvSeries): item is Movie {
-        return (item as Movie).title !== undefined;
+    public isMovie(item: KnownForItem): boolean {
+        return item.media_type === 'movie';
     }
 
     private getTrendingMovies(): void {

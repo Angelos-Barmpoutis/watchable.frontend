@@ -1,7 +1,8 @@
-header {
+.header-container {
     display: flex;
     background-color: white;
     padding: 16px 24px;
+    align-items: center;
 
     a {
         flex-shrink: 0;

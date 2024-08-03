@@ -23,6 +23,10 @@ export const routes: Routes = [
         loadChildren: () => import('./features/people/people.routes').then((m) => m.routes),
     },
     {
+        path: 'search',
+        loadComponent: () => import('./features/search/search.component').then((c) => c.SearchComponent),
+    },
+    {
         path: '**',
         redirectTo: '/',
     },

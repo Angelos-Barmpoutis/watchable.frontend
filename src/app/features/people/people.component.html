@@ -16,7 +16,7 @@
                     <span class="media-container__media__details__known-for-department">
                         {{ person.known_for_department }}
                     </span>
-                    <ng-container *ngIf="person.known_for">
+                    <ng-container *ngIf="person.known_for && person.known_for.length > 0">
                         <span *ngIf="isMovie(person.known_for[0])" class="media-container__media__details__known-for">
                             {{ person.known_for[0].title }}
                         </span>
