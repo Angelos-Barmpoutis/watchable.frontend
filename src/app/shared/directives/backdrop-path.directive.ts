@@ -1,5 +1,6 @@
 import { Directive, HostBinding, Input } from '@angular/core';
 
+import { environment } from '../../../environments/environment';
 import { BACKDROP_SIZE } from '../../core/enumerations/backdrop-size.enum';
 
 @Directive({
@@ -8,7 +9,7 @@ import { BACKDROP_SIZE } from '../../core/enumerations/backdrop-size.enum';
 })
 export class BackdropPathDirective {
     @Input() backdropPath: string = '';
-    @Input() baseUrl: string = 'https://image.tmdb.org/t/p/';
+    @Input() baseUrl: string = environment.imageBaseUrl;
     @Input() size: BACKDROP_SIZE = BACKDROP_SIZE.original;
 
     @HostBinding('src') get imageUrl(): string {

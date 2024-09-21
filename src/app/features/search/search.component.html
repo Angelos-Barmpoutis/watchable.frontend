@@ -78,6 +78,7 @@
                                         <span class="media-item-container__media__content__release-date">
                                             {{ searchMultiItem.release_date | date }}
                                         </span>
+                                        <button type="button">Rate</button>
                                     </div>
                                     <div class="media-item-container__media__info">
                                         <button [title]="'See more about ' + searchMultiItem.title">i</button>
@@ -117,6 +118,7 @@
                                         <span class="media-item-container__media__content__release-date">
                                             {{ searchMultiItem.first_air_date | date }}
                                         </span>
+                                        <button type="button">Rate</button>
                                     </div>
                                     <div class="media-item-container__media__info">
                                         <button [title]="'See more about ' + searchMultiItem.name">i</button>
@@ -186,7 +188,7 @@
                             </ng-container>
                         </div>
                     </ng-container>
-                    <ng-container *ngIf="searchMulti.length === 0">
+                    <ng-container *ngIf="searchMulti && searchMulti.length === 0">
                         <span>No results matched your query.</span>
                     </ng-container>
                 </ng-container>
@@ -226,13 +228,14 @@
                                 <span class="media-item-container__media__content__release-date">
                                     {{ searchMovie.release_date | date }}
                                 </span>
+                                <button type="button">Rate</button>
                             </div>
                             <div class="media-item-container__media__info">
                                 <button [title]="'See more about ' + searchMovie.title">i</button>
                             </div>
                         </div>
                     </ng-container>
-                    <ng-container *ngIf="searchMovies.length === 0">
+                    <ng-container *ngIf="searchMovies && searchMovies.length === 0">
                         <span>No results matched your query.</span>
                     </ng-container>
                 </ng-container>
@@ -272,13 +275,14 @@
                                 <span class="media-item-container__media__content__release-date">
                                     {{ searchTvSerie.first_air_date | date }}
                                 </span>
+                                <button type="button">Rate</button>
                             </div>
                             <div class="media-item-container__media__info">
                                 <button [title]="'See more about ' + searchTvSerie.name">i</button>
                             </div>
                         </div>
                     </ng-container>
-                    <ng-container *ngIf="searchTvSeries.length === 0">
+                    <ng-container *ngIf="searchTvSeries && searchTvSeries.length === 0">
                         <span>No results matched your query.</span>
                     </ng-container>
                 </ng-container>
@@ -339,7 +343,7 @@
                             </div>
                         </div>
                     </ng-container>
-                    <ng-container *ngIf="searchPeople.length === 0">
+                    <ng-container *ngIf="searchPeople && searchPeople.length === 0">
                         <span>No results matched your query.</span>
                     </ng-container>
                 </ng-container>

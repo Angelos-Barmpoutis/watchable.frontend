@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 
+import { MovieDetails } from '../../core/models/movies/details.model';
 import { PaginatedMovies } from '../../core/models/movies/paginated-movies.model';
 import { DEFAULT } from '../constants/defaults.constant';
 import { MovieGateway } from '../gateways/movie.gateway';
@@ -32,6 +33,10 @@ export class MoviesFacade {
 
     public getUpcoming(page: number = DEFAULT.page): Observable<PaginatedMovies> {
         return this.movieGateway.getUpcoming(page);
+    }
+
+    public getDetails(id: number): Observable<MovieDetails> {
+        return this.movieGateway.getDetails(id);
     }
 
     public getAllMovies(): Observable<AllMovies> {

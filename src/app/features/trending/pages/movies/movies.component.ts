@@ -9,6 +9,7 @@ import { TRENDING_FILTER } from '../../../../core/enumerations/trending-filter.e
 import { Movie } from '../../../../core/models/movies/movie.model';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
+import { MoviesFacade } from '../../../../shared/facades/movies.facade';
 import { TrendingFacade } from '../../../../shared/facades/trending.facade';
 import { BaseComponent } from '../../../../shared/helpers/base.component';
 
@@ -31,6 +32,7 @@ export class TrendingMoviesComponent extends BaseComponent implements OnInit {
 
     constructor(
         private trendingFacade: TrendingFacade,
+        private moviesFacade: MoviesFacade,
         private formBuilder: FormBuilder,
     ) {
         super();
@@ -47,6 +49,13 @@ export class TrendingMoviesComponent extends BaseComponent implements OnInit {
             this.currentPage++;
             this.getTrendingMovies(true);
         }
+    }
+
+    public getDetails(id: number): void {
+        this.moviesFacade
+            .getDetails(id)
+            .pipe(takeUntil(this.destroyed))
+            .subscribe((details) => console.log(details));
     }
 
     private getTrendingMovies(loadMore: boolean = false): void {

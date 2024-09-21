@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { MovieDetails } from '../../core/models/movies/details.model';
 import { PaginatedMovies } from '../../core/models/movies/paginated-movies.model';
 import { UrlService } from '../../core/services/url.service';
 import { MovieDriver } from '../drivers/movie.driver';
@@ -28,5 +29,13 @@ export class MovieGateway {
 
     getUpcoming(page: number): Observable<PaginatedMovies> {
         return this.movieDriver.getUpcoming(this.urlService.urlFor(['movie', `upcoming?page=${page}`]));
+    }
+
+    getDetails(id: number): Observable<MovieDetails> {
+        const movieId = id.toString();
+
+        return this.movieDriver.getDetails(
+            this.urlService.urlFor(['movie', `${movieId}?append_to_response=videos,images,reviews`]),
+        );
     }
 }

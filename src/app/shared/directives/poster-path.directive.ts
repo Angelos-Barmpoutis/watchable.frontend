@@ -1,5 +1,6 @@
 import { Directive, HostBinding, Input } from '@angular/core';
 
+import { environment } from '../../../environments/environment';
 import { POSTER_SIZE } from '../../core/enumerations/poster-size.enum';
 
 @Directive({
@@ -8,7 +9,7 @@ import { POSTER_SIZE } from '../../core/enumerations/poster-size.enum';
 })
 export class PosterPathDirective {
     @Input() posterPath: string = '';
-    @Input() baseUrl: string = 'https://image.tmdb.org/t/p/';
+    @Input() baseUrl: string = environment.imageBaseUrl;
     @Input() size: POSTER_SIZE = POSTER_SIZE.original;
 
     @HostBinding('src') get imageUrl(): string {

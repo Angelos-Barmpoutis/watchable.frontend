@@ -1,6 +1,12 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
 
     &:has(app-page-loader) {
         overflow-y: hidden;
@@ -11,6 +17,7 @@ header#header {
     position: sticky;
     top: 0;
     z-index: 1;
+    background-color: #fff;
 }
 
 app-movies,
@@ -34,16 +41,27 @@ app-search {
     pointer-events: none;
 }
 
+.genre {
+    border: 1px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 24px;
+}
+
 section.media-section {
+    padding: 16px 24px;
+    max-width: 1440px;
+    margin-inline: auto;
+
     header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-inline: 24px;
     }
 
     .media-container {
-        padding-inline: 24px;
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         gap: 48px 24px;
@@ -108,16 +126,18 @@ section.media-section {
 }
 
 section.media-items-section {
+    padding: 16px 24px;
+    max-width: 1440px;
+    margin-inline: auto;
+
     header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-inline: 24px;
     }
 
     main {
         .media-item-container {
-            padding-inline: 24px;
             row-gap: 24px;
             display: flex;
             flex-direction: column;
@@ -235,6 +255,136 @@ section.media-items-section {
 
             &:hover {
                 border: 2px solid rgb(0, 123, 255);
+            }
+        }
+    }
+}
+
+.media-overview {
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-width: 1440px;
+    margin-inline: auto;
+
+    &__container {
+        width: 100%;
+
+        &__content {
+            background-color: rgba(28, 28, 28, 0.907);
+            max-width: 1440px;
+            margin-inline: auto;
+            padding: 48px 24px;
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+
+            & > img {
+                border-radius: 24px;
+            }
+
+            &__text {
+                color: #fff;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                flex-grow: 1;
+
+                &__title {
+                    font-size: 30px;
+                }
+
+                &__header {
+                    display: flex;
+                    align-items: baseline;
+                    justify-content: space-between;
+                    width: 100%;
+                    gap: 20px;
+
+                    &__facts {
+                        span + span::before {
+                            content: "•";
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding-inline: 12px;
+                        }
+                    }
+                }
+
+                &__genres {
+                    display: flex;
+                    align-items: baseline;
+                    gap: 20px;
+                }
+
+                &__actions {
+                    display: flex;
+                    align-items: baseline;
+                    gap: 20px;
+                }
+
+                &__overview {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+
+                    h2 {
+                        font-size: 20px;
+                    }
+
+                    p {
+                        line-height: 1.5;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-details {
+    max-width: 1440px;
+    margin-inline: auto;
+    padding: 16px 24px;
+
+    &__container {
+        &__reviews {
+            &__items {
+                row-gap: 24px;
+                display: flex;
+                flex-direction: column;
+
+                &__item {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 16px;
+                    border: 1px solid rgb(210, 210, 210);
+                    background-color: whitesmoke;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    padding: 8px;
+
+                    &__header {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+
+                        &__avatar {
+                            &__icon {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                object-fit: cover;
+                                width: 45px;
+                                height: 45px;
+                                border-radius: 50%;
+                                background-color: rgb(121, 54, 209);
+                                font-weight: 700;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
