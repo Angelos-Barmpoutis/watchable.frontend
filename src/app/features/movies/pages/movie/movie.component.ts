@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { YouTubePlayer } from '@angular/youtube-player';
 import { takeUntil } from 'rxjs';
 
 import { environment } from '../../../../../environments/environment';
@@ -30,7 +29,6 @@ import { TimePipe } from '../../../../shared/pipes/time.pipe';
         ProfilePathDirective,
         TimePipe,
         AvatarLetterPipe,
-        YouTubePlayer,
     ],
     templateUrl: './movie.component.html',
     styleUrl: './movie.component.scss',

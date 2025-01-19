@@ -3,11 +3,6 @@ body {
     padding: 0;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
-    * {
-        margin: 0;
-        padding: 0;
-    }
-
     &:has(app-page-loader) {
         overflow-y: hidden;
     }
