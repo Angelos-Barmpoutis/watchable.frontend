@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { TRENDING_FILTER } from '../../core/enumerations/trending-filter.enum';
-import { PaginatedMovies } from '../../core/models/movies/paginated-movies.model';
-import { PaginatedPeople } from '../../core/models/people/paginated-people.model';
-import { PaginatedTvSeries } from '../../core/models/tv-series/paginated-tv-series.model';
-import { UrlService } from '../../core/services/url.service';
 import { TrendingDriver } from '../drivers/trending.driver';
+import { TRENDING_FILTER } from '../enumerations/trending-filter.enum';
+import { PaginatedMovies } from '../models/movies/paginated-movies.model';
+import { PaginatedPeople } from '../models/people/paginated-people.model';
+import { PaginatedTvSeries } from '../models/tv-series/paginated-tv-series.model';
+import { UrlService } from '../services/url.service';
 
 @Injectable({
     providedIn: 'root',

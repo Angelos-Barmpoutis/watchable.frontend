@@ -3,7 +3,7 @@ import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { InterceptorService } from './core/services/interceptor.service';
+import { InterceptorService } from './shared/services/interceptor.service';
 
 export const appConfig: ApplicationConfig = {
     providers: [

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { GENDER } from '../../core/enumerations/gender.enum';
+import { GENDER } from '../enumerations/gender.enum';
 
 @Pipe({
     name: 'gender',

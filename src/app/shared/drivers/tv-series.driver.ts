@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { PaginatedTvSeries } from '../../core/models/tv-series/paginated-tv-series.model';
-import { HttpService } from '../../core/services/http.service';
+import { PaginatedTvSeries } from '../models/tv-series/paginated-tv-series.model';
+import { HttpService } from '../services/http.service';
 
 @Injectable({
     providedIn: 'root',

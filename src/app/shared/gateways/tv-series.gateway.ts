@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { PaginatedTvSeries } from '../../core/models/tv-series/paginated-tv-series.model';
-import { UrlService } from '../../core/services/url.service';
 import { TvSeriesDriver } from '../drivers/tv-series.driver';
+import { PaginatedTvSeries } from '../models/tv-series/paginated-tv-series.model';
+import { UrlService } from '../services/url.service';
 
 @Injectable({
     providedIn: 'root',

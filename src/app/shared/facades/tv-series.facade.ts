@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 
-import { PaginatedTvSeries } from '../../core/models/tv-series/paginated-tv-series.model';
 import { DEFAULT } from '../constants/defaults.constant';
 import { TvSeriesGateway } from '../gateways/tv-series.gateway';
+import { PaginatedTvSeries } from '../models/tv-series/paginated-tv-series.model';
 
 export interface AllTvSeries {
     airingToday: PaginatedTvSeries;

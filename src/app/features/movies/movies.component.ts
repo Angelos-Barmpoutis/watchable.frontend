@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
-import { POSTER_SIZE } from '../../core/enumerations/poster-size.enum';
 import { DEFAULT } from '../../shared/constants/defaults.constant';
 import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
+import { POSTER_SIZE } from '../../shared/enumerations/poster-size.enum';
 import { AllMovies, MoviesFacade } from '../../shared/facades/movies.facade';
-import { BaseComponent } from '../../shared/helpers/base.component';
 import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
 
 @Component({
@@ -18,14 +17,15 @@ import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
     styleUrl: './movies.component.scss',
     imports: [CommonModule, PosterPathDirective, LimitToPipe, RouterLink],
 })
-export class MoviesComponent extends BaseComponent implements OnInit {
+export class MoviesComponent implements OnInit {
     public posterSize: POSTER_SIZE = DEFAULT.mediumPosterSize;
     public posterFallback = DEFAULT.mediumPosterFallback;
     public allMovies!: AllMovies;
 
-    constructor(private movieFacade: MoviesFacade) {
-        super();
-    }
+    constructor(
+        private movieFacade: MoviesFacade,
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnInit(): void {
         this.getAllMovies();
@@ -34,7 +34,7 @@ export class MoviesComponent extends BaseComponent implements OnInit {
     private getAllMovies(): void {
         this.movieFacade
             .getAllMovies()
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((allMovies) => {
                 this.allMovies = allMovies;
             });

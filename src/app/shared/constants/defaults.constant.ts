@@ -1,8 +1,8 @@
-import { BACKDROP_SIZE } from '../../core/enumerations/backdrop-size.enum';
-import { POSTER_SIZE } from '../../core/enumerations/poster-size.enum';
-import { PROFILE_SIZE } from '../../core/enumerations/profile-size.enum';
-import { SEARCH_FILTER } from '../../core/enumerations/search-filter.enum';
-import { TRENDING_FILTER } from '../../core/enumerations/trending-filter.enum';
+import { BACKDROP_SIZE } from '../enumerations/backdrop-size.enum';
+import { POSTER_SIZE } from '../enumerations/poster-size.enum';
+import { PROFILE_SIZE } from '../enumerations/profile-size.enum';
+import { SEARCH_FILTER } from '../enumerations/search-filter.enum';
+import { TRENDING_FILTER } from '../enumerations/trending-filter.enum';
 
 export const DEFAULT = {
     page: 1,

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { MovieDetails } from '../../core/models/movies/details.model';
-import { PaginatedMovies } from '../../core/models/movies/paginated-movies.model';
-import { HttpService } from '../../core/services/http.service';
+import { MovieDetails } from '../models/movies/details.model';
+import { PaginatedMovies } from '../models/movies/paginated-movies.model';
+import { HttpService } from '../services/http.service';
 
 @Injectable({
     providedIn: 'root',

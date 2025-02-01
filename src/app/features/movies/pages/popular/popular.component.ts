@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
-import { POSTER_SIZE } from '../../../../core/enumerations/poster-size.enum';
-import { Movie } from '../../../../core/models/movies/movie.model';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
+import { POSTER_SIZE } from '../../../../shared/enumerations/poster-size.enum';
 import { MoviesFacade } from '../../../../shared/facades/movies.facade';
-import { BaseComponent } from '../../../../shared/helpers/base.component';
+import { Movie } from '../../../../shared/models/movies/movie.model';
 
 @Component({
     selector: 'app-popular-movies',
@@ -18,16 +17,17 @@ import { BaseComponent } from '../../../../shared/helpers/base.component';
     styleUrl: './popular.component.scss',
     imports: [CommonModule, PosterPathDirective, RouterLink],
 })
-export class MoviesPopularComponent extends BaseComponent implements OnInit {
+export class MoviesPopularComponent implements OnInit {
     public posterSize: POSTER_SIZE = DEFAULT.smallPosterSize;
     public posterFallback = DEFAULT.smallPosterFallback;
     public popularMovies: Array<Movie> = [];
     public currentPage = DEFAULT.page;
     public totalPages = DEFAULT.totalPages;
 
-    constructor(private movieFacade: MoviesFacade) {
-        super();
-    }
+    constructor(
+        private movieFacade: MoviesFacade,
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnInit(): void {
         this.getPopularMovies();
@@ -43,7 +43,7 @@ export class MoviesPopularComponent extends BaseComponent implements OnInit {
     private getPopularMovies(loadMore: boolean = false): void {
         this.movieFacade
             .getPopular(this.currentPage)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((popularMovies) => {
                 if (loadMore) {
                     this.popularMovies = [...this.popularMovies, ...popularMovies.results];
@@ -51,8 +51,8 @@ export class MoviesPopularComponent extends BaseComponent implements OnInit {
                     this.popularMovies = popularMovies.results;
                 }
 
-                this.currentPage = +popularMovies.page;
-                this.totalPages = +popularMovies.total_pages;
+                this.currentPage = popularMovies.page;
+                this.totalPages = popularMovies.total_pages;
             });
     }
 }

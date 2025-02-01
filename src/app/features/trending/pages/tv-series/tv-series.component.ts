@@ -1,16 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
-import { POSTER_SIZE } from '../../../../core/enumerations/poster-size.enum';
-import { TRENDING_FILTER } from '../../../../core/enumerations/trending-filter.enum';
-import { TvSeries } from '../../../../core/models/tv-series/tv-series.model';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
+import { POSTER_SIZE } from '../../../../shared/enumerations/poster-size.enum';
+import { TRENDING_FILTER } from '../../../../shared/enumerations/trending-filter.enum';
 import { TrendingFacade } from '../../../../shared/facades/trending.facade';
-import { BaseComponent } from '../../../../shared/helpers/base.component';
+import { TvSeries } from '../../../../shared/models/tv-series/tv-series.model';
 
 @Component({
     selector: 'app-people-tv-series',
@@ -20,7 +19,7 @@ import { BaseComponent } from '../../../../shared/helpers/base.component';
     styleUrl: './tv-series.component.scss',
     imports: [CommonModule, ReactiveFormsModule, PosterPathDirective, RouterLink],
 })
-export class TrendingTvSeriesComponent extends BaseComponent implements OnInit {
+export class TrendingTvSeriesComponent implements OnInit {
     public posterSize: POSTER_SIZE = DEFAULT.smallPosterSize;
     public posterFallback = DEFAULT.smallPosterFallback;
     public TRENDING_FILTER = TRENDING_FILTER;
@@ -32,9 +31,8 @@ export class TrendingTvSeriesComponent extends BaseComponent implements OnInit {
     constructor(
         private trendingFacade: TrendingFacade,
         private formBuilder: FormBuilder,
-    ) {
-        super();
-    }
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnInit(): void {
         this.initTrendingForm();
@@ -55,7 +53,7 @@ export class TrendingTvSeriesComponent extends BaseComponent implements OnInit {
 
         this.trendingFacade
             .getTrendingTvSeries(trendingFilter, this.currentPage)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((trendingTvSeries) => {
                 if (loadMore) {
                     this.trendingTvSeries = [...this.trendingTvSeries, ...trendingTvSeries.results];
@@ -63,8 +61,8 @@ export class TrendingTvSeriesComponent extends BaseComponent implements OnInit {
                     this.trendingTvSeries = trendingTvSeries.results;
                 }
 
-                this.currentPage = +trendingTvSeries.page;
-                this.totalPages = +trendingTvSeries.total_pages;
+                this.currentPage = trendingTvSeries.page;
+                this.totalPages = trendingTvSeries.total_pages;
             });
     }
 
@@ -75,7 +73,7 @@ export class TrendingTvSeriesComponent extends BaseComponent implements OnInit {
     }
 
     private onTrendingFilterChanges(): void {
-        this.trendingTvSeriesFilterFormField.valueChanges.pipe(takeUntil(this.destroyed)).subscribe(() => {
+        this.trendingTvSeriesFilterFormField.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.currentPage = DEFAULT.page;
             this.getTrendingTvSeries();
         });

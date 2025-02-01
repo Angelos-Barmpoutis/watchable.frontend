@@ -1,7 +1,7 @@
 import { Directive, HostBinding, Input } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
-import { BACKDROP_SIZE } from '../../core/enumerations/backdrop-size.enum';
+import { BACKDROP_SIZE } from '../enumerations/backdrop-size.enum';
 
 @Directive({
     selector: '[appBackdropPath]',

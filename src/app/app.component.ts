@@ -5,7 +5,6 @@ import { RouterOutlet } from '@angular/router';
 
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
-import { BaseComponent } from './shared/helpers/base.component';
 
 @Component({
     selector: 'app-root',
@@ -14,10 +13,8 @@ import { BaseComponent } from './shared/helpers/base.component';
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
 })
-export class AppComponent extends BaseComponent {
+export class AppComponent {
     isPageLoading!: boolean;
 
-    constructor() {
-        super();
-    }
+    constructor() {}
 }

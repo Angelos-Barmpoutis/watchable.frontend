@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
-import { POSTER_SIZE } from '../../../../core/enumerations/poster-size.enum';
-import { TvSeries } from '../../../../core/models/tv-series/tv-series.model';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
+import { POSTER_SIZE } from '../../../../shared/enumerations/poster-size.enum';
 import { TvSeriesFacade } from '../../../../shared/facades/tv-series.facade';
-import { BaseComponent } from '../../../../shared/helpers/base.component';
+import { TvSeries } from '../../../../shared/models/tv-series/tv-series.model';
 
 @Component({
     selector: 'app-top-rated-tv-series',
@@ -18,16 +17,17 @@ import { BaseComponent } from '../../../../shared/helpers/base.component';
     styleUrl: './top-rated.component.scss',
     imports: [CommonModule, PosterPathDirective, RouterLink],
 })
-export class TvSeriesTopRatedComponent extends BaseComponent implements OnInit {
+export class TvSeriesTopRatedComponent implements OnInit {
     public posterSize: POSTER_SIZE = DEFAULT.smallPosterSize;
     public posterFallback = DEFAULT.smallPosterFallback;
     public topRatedTvSeries: Array<TvSeries> = [];
     public currentPage = DEFAULT.page;
     public totalPages = DEFAULT.totalPages;
 
-    constructor(private tvSeriesFacade: TvSeriesFacade) {
-        super();
-    }
+    constructor(
+        private tvSeriesFacade: TvSeriesFacade,
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnInit(): void {
         this.getTopRatedTvSeries();
@@ -43,7 +43,7 @@ export class TvSeriesTopRatedComponent extends BaseComponent implements OnInit {
     private getTopRatedTvSeries(loadMore: boolean = false): void {
         this.tvSeriesFacade
             .getTopRated(this.currentPage)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((topRatedTvSeries) => {
                 if (loadMore) {
                     this.topRatedTvSeries = [...this.topRatedTvSeries, ...topRatedTvSeries.results];
@@ -51,8 +51,8 @@ export class TvSeriesTopRatedComponent extends BaseComponent implements OnInit {
                     this.topRatedTvSeries = topRatedTvSeries.results;
                 }
 
-                this.currentPage = +topRatedTvSeries.page;
-                this.totalPages = +topRatedTvSeries.total_pages;
+                this.currentPage = topRatedTvSeries.page;
+                this.totalPages = topRatedTvSeries.total_pages;
             });
     }
 }

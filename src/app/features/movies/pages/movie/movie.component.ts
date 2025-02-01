@@ -1,21 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
 import { environment } from '../../../../../environments/environment';
-import { BACKDROP_SIZE } from '../../../../core/enumerations/backdrop-size.enum';
-import { POSTER_SIZE } from '../../../../core/enumerations/poster-size.enum';
-import { PROFILE_SIZE } from '../../../../core/enumerations/profile-size.enum';
-import { MovieDetails } from '../../../../core/models/movies/details.model';
-import { Review } from '../../../../core/models/shared/review.model';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { BackdropPathDirective } from '../../../../shared/directives/backdrop-path.directive';
 import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
 import { ProfilePathDirective } from '../../../../shared/directives/profile-path.directive';
+import { BACKDROP_SIZE } from '../../../../shared/enumerations/backdrop-size.enum';
+import { POSTER_SIZE } from '../../../../shared/enumerations/poster-size.enum';
+import { PROFILE_SIZE } from '../../../../shared/enumerations/profile-size.enum';
 import { MoviesFacade } from '../../../../shared/facades/movies.facade';
 import { getBackgroundImageUrl } from '../../../../shared/helpers/background-image-url';
-import { BaseComponent } from '../../../../shared/helpers/base.component';
+import { MovieDetails } from '../../../../shared/models/movies/details.model';
+import { Review } from '../../../../shared/models/shared/review.model';
 import { AvatarLetterPipe } from '../../../../shared/pipes/avatar-letter.pipe';
 import { TimePipe } from '../../../../shared/pipes/time.pipe';
 
@@ -34,7 +33,7 @@ import { TimePipe } from '../../../../shared/pipes/time.pipe';
     styleUrl: './movie.component.scss',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class MoviesMovieComponent extends BaseComponent implements OnInit {
+export class MoviesMovieComponent implements OnInit {
     public movie!: MovieDetails;
     public reviews: Array<Review> = [];
     public profileSize = DEFAULT.mediumProfileSize;
@@ -48,15 +47,16 @@ export class MoviesMovieComponent extends BaseComponent implements OnInit {
     constructor(
         private movieSFacade: MoviesFacade,
         private route: ActivatedRoute,
-    ) {
-        super();
+        private destroyRef: DestroyRef,
+    ) {}
 
+    ngOnInit(): void {
         const movieId = this.route.snapshot.paramMap.get('id');
 
         if (movieId) {
             this.movieSFacade
                 .getDetails(+movieId)
-                .pipe(takeUntil(this.destroyed))
+                .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((movie) => {
                     console.log(movie);
                     this.movie = movie;
@@ -65,8 +65,6 @@ export class MoviesMovieComponent extends BaseComponent implements OnInit {
                 });
         }
     }
-
-    ngOnInit(): void {}
 
     public getBackgroundImageUrl(backdropSize: BACKDROP_SIZE | PROFILE_SIZE | POSTER_SIZE, path: string): string {
         return getBackgroundImageUrl(backdropSize, path);

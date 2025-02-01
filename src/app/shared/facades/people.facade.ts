@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { PaginatedPeople } from '../../core/models/people/paginated-people.model';
 import { DEFAULT } from '../constants/defaults.constant';
 import { PeopleGateway } from '../gateways/people.gateway';
+import { PaginatedPeople } from '../models/people/paginated-people.model';
 
 @Injectable({
     providedIn: 'root',

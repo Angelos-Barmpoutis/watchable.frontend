@@ -1,15 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
-import { PROFILE_SIZE } from '../../core/enumerations/profile-size.enum';
-import { Person } from '../../core/models/people/person.model';
-import { KnownForItem } from '../../core/models/shared/known-for-item.model';
 import { DEFAULT } from '../../shared/constants/defaults.constant';
 import { ProfilePathDirective } from '../../shared/directives/profile-path.directive';
+import { PROFILE_SIZE } from '../../shared/enumerations/profile-size.enum';
 import { PeopleFacade } from '../../shared/facades/people.facade';
-import { BaseComponent } from '../../shared/helpers/base.component';
+import { Person } from '../../shared/models/people/person.model';
+import { KnownForItem } from '../../shared/models/shared/known-for-item.model';
 import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
 
 @Component({
@@ -20,14 +19,15 @@ import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
     styleUrl: './people.component.scss',
     imports: [CommonModule, ProfilePathDirective, LimitToPipe, RouterLink],
 })
-export class PeopleComponent extends BaseComponent implements OnInit {
+export class PeopleComponent implements OnInit {
     public profileSize: PROFILE_SIZE = DEFAULT.mediumProfileSize;
     public profileFallback = DEFAULT.mediumProfileFallback;
     public popularPeople!: Array<Person>;
 
-    constructor(private peopleFacade: PeopleFacade) {
-        super();
-    }
+    constructor(
+        private peopleFacade: PeopleFacade,
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnInit(): void {
         this.getPopularPeople();
@@ -40,7 +40,7 @@ export class PeopleComponent extends BaseComponent implements OnInit {
     private getPopularPeople(): void {
         this.peopleFacade
             .getPopular()
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((popularPeople) => {
                 this.popularPeople = popularPeople.results;
             });

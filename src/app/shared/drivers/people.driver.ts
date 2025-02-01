@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { PaginatedPeople } from '../../core/models/people/paginated-people.model';
-import { HttpService } from '../../core/services/http.service';
+import { PaginatedPeople } from '../models/people/paginated-people.model';
+import { HttpService } from '../services/http.service';
 
 @Injectable({
     providedIn: 'root',

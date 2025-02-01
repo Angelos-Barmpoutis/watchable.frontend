@@ -1,17 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
-import { POSTER_SIZE } from '../../../../core/enumerations/poster-size.enum';
-import { TRENDING_FILTER } from '../../../../core/enumerations/trending-filter.enum';
-import { Movie } from '../../../../core/models/movies/movie.model';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
+import { POSTER_SIZE } from '../../../../shared/enumerations/poster-size.enum';
+import { TRENDING_FILTER } from '../../../../shared/enumerations/trending-filter.enum';
 import { MoviesFacade } from '../../../../shared/facades/movies.facade';
 import { TrendingFacade } from '../../../../shared/facades/trending.facade';
-import { BaseComponent } from '../../../../shared/helpers/base.component';
+import { Movie } from '../../../../shared/models/movies/movie.model';
 
 @Component({
     selector: 'app-trending-movies',
@@ -21,7 +20,7 @@ import { BaseComponent } from '../../../../shared/helpers/base.component';
     styleUrl: './movies.component.scss',
     imports: [CommonModule, ReactiveFormsModule, PosterPathDirective, RouterLink],
 })
-export class TrendingMoviesComponent extends BaseComponent implements OnInit {
+export class TrendingMoviesComponent implements OnInit {
     public posterSize: POSTER_SIZE = DEFAULT.smallPosterSize;
     public posterFallback = DEFAULT.smallPosterFallback;
     public TRENDING_FILTER = TRENDING_FILTER;
@@ -29,14 +28,16 @@ export class TrendingMoviesComponent extends BaseComponent implements OnInit {
     public trendingMovies: Array<Movie> = [];
     public currentPage = DEFAULT.page;
     public totalPages = DEFAULT.totalPages;
+    private get trendingMoviesFilterFormField(): FormControl {
+        return this.trendingMoviesForm.get('moviesFilter') as FormControl;
+    }
 
     constructor(
         private trendingFacade: TrendingFacade,
         private moviesFacade: MoviesFacade,
         private formBuilder: FormBuilder,
-    ) {
-        super();
-    }
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnInit(): void {
         this.initTrendingForm();
@@ -54,7 +55,7 @@ export class TrendingMoviesComponent extends BaseComponent implements OnInit {
     public getDetails(id: number): void {
         this.moviesFacade
             .getDetails(id)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((details) => console.log(details));
     }
 
@@ -64,7 +65,7 @@ export class TrendingMoviesComponent extends BaseComponent implements OnInit {
 
         this.trendingFacade
             .getTrendingMovies(trendingFilter, this.currentPage)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((trendingMovies) => {
                 if (loadMore) {
                     this.trendingMovies = [...this.trendingMovies, ...trendingMovies.results];
@@ -72,8 +73,8 @@ export class TrendingMoviesComponent extends BaseComponent implements OnInit {
                     this.trendingMovies = trendingMovies.results;
                 }
 
-                this.currentPage = +trendingMovies.page;
-                this.totalPages = +trendingMovies.total_pages;
+                this.currentPage = trendingMovies.page;
+                this.totalPages = trendingMovies.total_pages;
             });
     }
 
@@ -84,13 +85,9 @@ export class TrendingMoviesComponent extends BaseComponent implements OnInit {
     }
 
     private onTrendingFilterChanges(): void {
-        this.trendingMoviesFilterFormField.valueChanges.pipe(takeUntil(this.destroyed)).subscribe(() => {
+        this.trendingMoviesFilterFormField.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.currentPage = DEFAULT.page;
             this.getTrendingMovies();
         });
-    }
-
-    private get trendingMoviesFilterFormField(): FormControl {
-        return this.trendingMoviesForm.get('moviesFilter') as FormControl;
     }
 }

@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
-import { POSTER_SIZE } from '../../core/enumerations/poster-size.enum';
 import { DEFAULT } from '../../shared/constants/defaults.constant';
 import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
+import { POSTER_SIZE } from '../../shared/enumerations/poster-size.enum';
 import { AllTvSeries, TvSeriesFacade } from '../../shared/facades/tv-series.facade';
-import { BaseComponent } from '../../shared/helpers/base.component';
 import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
 
 @Component({
@@ -18,14 +17,15 @@ import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
     styleUrl: './tv-series.component.scss',
     imports: [CommonModule, PosterPathDirective, LimitToPipe, RouterLink],
 })
-export class TvSeriesComponent extends BaseComponent implements OnInit {
+export class TvSeriesComponent implements OnInit {
     public posterSize: POSTER_SIZE = DEFAULT.mediumPosterSize;
     public posterFallback = DEFAULT.mediumPosterFallback;
     public allTvSeries!: AllTvSeries;
 
-    constructor(private tvSeriesFacade: TvSeriesFacade) {
-        super();
-    }
+    constructor(
+        private tvSeriesFacade: TvSeriesFacade,
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnInit(): void {
         this.getAllTvSeries();
@@ -34,7 +34,7 @@ export class TvSeriesComponent extends BaseComponent implements OnInit {
     private getAllTvSeries(): void {
         this.tvSeriesFacade
             .getAllTvSeries()
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((allTvSeries) => {
                 this.allTvSeries = allTvSeries;
             });

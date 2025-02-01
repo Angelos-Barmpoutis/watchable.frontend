@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 
-import { PaginatedMovies } from '../../core/models/movies/paginated-movies.model';
-import { PaginatedPeople } from '../../core/models/people/paginated-people.model';
-import { PaginatedSearchItems } from '../../core/models/shared/paginated-search-items.model';
-import { PaginatedTvSeries } from '../../core/models/tv-series/paginated-tv-series.model';
+import { PaginatedMovies } from '../models/movies/paginated-movies.model';
+import { PaginatedPeople } from '../models/people/paginated-people.model';
+import { PaginatedSearchItems } from '../models/shared/paginated-search-items.model';
+import { PaginatedTvSeries } from '../models/tv-series/paginated-tv-series.model';
 import { DEFAULT } from '../constants/defaults.constant';
 import { SearchGateway } from '../gateways/search.gateway';
 

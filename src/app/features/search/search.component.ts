@@ -1,21 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Params, RouterLink } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
-import { POSTER_SIZE } from '../../core/enumerations/poster-size.enum';
-import { PROFILE_SIZE } from '../../core/enumerations/profile-size.enum';
-import { SEARCH_FILTER } from '../../core/enumerations/search-filter.enum';
-import { Movie } from '../../core/models/movies/movie.model';
-import { Person } from '../../core/models/people/person.model';
-import { KnownForItem } from '../../core/models/shared/known-for-item.model';
-import { SearchItem } from '../../core/models/shared/search-item.model';
-import { TvSeries } from '../../core/models/tv-series/tv-series.model';
 import { DEFAULT } from '../../shared/constants/defaults.constant';
 import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
 import { ProfilePathDirective } from '../../shared/directives/profile-path.directive';
+import { POSTER_SIZE } from '../../shared/enumerations/poster-size.enum';
+import { PROFILE_SIZE } from '../../shared/enumerations/profile-size.enum';
+import { SEARCH_FILTER } from '../../shared/enumerations/search-filter.enum';
 import { AllSearchItems, SearchFacade } from '../../shared/facades/search.facade';
-import { BaseComponent } from '../../shared/helpers/base.component';
+import { Movie } from '../../shared/models/movies/movie.model';
+import { Person } from '../../shared/models/people/person.model';
+import { KnownForItem } from '../../shared/models/shared/known-for-item.model';
+import { SearchItem } from '../../shared/models/shared/search-item.model';
+import { TvSeries } from '../../shared/models/tv-series/tv-series.model';
 
 @Component({
     selector: 'app-search',
@@ -24,7 +23,7 @@ import { BaseComponent } from '../../shared/helpers/base.component';
     templateUrl: './search.component.html',
     styleUrl: './search.component.scss',
 })
-export class SearchComponent extends BaseComponent implements OnInit {
+export class SearchComponent implements OnInit {
     public posterSize: POSTER_SIZE = DEFAULT.smallPosterSize;
     public posterFallback = DEFAULT.smallPosterFallback;
     public profileSize: PROFILE_SIZE = DEFAULT.mediumProfileSize;
@@ -43,9 +42,8 @@ export class SearchComponent extends BaseComponent implements OnInit {
     constructor(
         private searchFacade: SearchFacade,
         private route: ActivatedRoute,
-    ) {
-        super();
-    }
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnInit(): void {
         this.listenForUrlParamterers();
@@ -96,7 +94,7 @@ export class SearchComponent extends BaseComponent implements OnInit {
     }
 
     private listenForUrlParamterers(): void {
-        this.route.fragment.pipe(takeUntil(this.destroyed)).subscribe((filter) => {
+        this.route.fragment.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((filter) => {
             const searchFilter = filter;
 
             switch (searchFilter) {
@@ -118,7 +116,7 @@ export class SearchComponent extends BaseComponent implements OnInit {
             }
         });
 
-        this.route.queryParams.pipe(takeUntil(this.destroyed)).subscribe((params: Params) => {
+        this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params: Params) => {
             const queryParam = params['query'] as string;
 
             if (queryParam) {
@@ -134,7 +132,7 @@ export class SearchComponent extends BaseComponent implements OnInit {
     private getMulti(loadMore: boolean = false, query: string, page: number): void {
         this.searchFacade
             .getMulti(query, page)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((searchMulti) => {
                 if (loadMore) {
                     this.searchMulti = [...this.searchMulti, ...searchMulti.results];
@@ -142,15 +140,15 @@ export class SearchComponent extends BaseComponent implements OnInit {
                     this.searchMulti = searchMulti.results;
                 }
 
-                this.currentPage = +searchMulti.page;
-                this.totalPages = +searchMulti.total_pages;
+                this.currentPage = searchMulti.page;
+                this.totalPages = searchMulti.total_pages;
             });
     }
 
     private getMovies(loadMore: boolean = false, query: string, page: number): void {
         this.searchFacade
             .getMovies(query, page)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((searchMovies) => {
                 if (loadMore) {
                     this.searchMovies = [...this.searchMovies, ...searchMovies.results];
@@ -158,15 +156,15 @@ export class SearchComponent extends BaseComponent implements OnInit {
                     this.searchMovies = searchMovies.results;
                 }
 
-                this.currentPage = +searchMovies.page;
-                this.totalPages = +searchMovies.total_pages;
+                this.currentPage = searchMovies.page;
+                this.totalPages = searchMovies.total_pages;
             });
     }
 
     private getTvSeries(loadMore: boolean = false, query: string, page: number): void {
         this.searchFacade
             .getTvSeries(query, page)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((searchTvSeries) => {
                 if (loadMore) {
                     this.searchTvSeries = [...this.searchTvSeries, ...searchTvSeries.results];
@@ -174,15 +172,15 @@ export class SearchComponent extends BaseComponent implements OnInit {
                     this.searchTvSeries = searchTvSeries.results;
                 }
 
-                this.currentPage = +searchTvSeries.page;
-                this.totalPages = +searchTvSeries.total_pages;
+                this.currentPage = searchTvSeries.page;
+                this.totalPages = searchTvSeries.total_pages;
             });
     }
 
     private getPeople(loadMore: boolean = false, query: string, page: number): void {
         this.searchFacade
             .getPeople(query, page)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((searchPeople) => {
                 if (loadMore) {
                     this.searchPeople = [...this.searchPeople, ...searchPeople.results];
@@ -190,15 +188,15 @@ export class SearchComponent extends BaseComponent implements OnInit {
                     this.searchPeople = searchPeople.results;
                 }
 
-                this.currentPage = +searchPeople.page;
-                this.totalPages = +searchPeople.total_pages;
+                this.currentPage = searchPeople.page;
+                this.totalPages = searchPeople.total_pages;
             });
     }
 
     private getAll(query: string): void {
         this.searchFacade
             .getAll(query)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((allSearchItems) => {
                 this.allSearchItems = allSearchItems;
             });

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { PaginatedPeople } from '../../core/models/people/paginated-people.model';
-import { UrlService } from '../../core/services/url.service';
 import { PeopleDriver } from '../drivers/people.driver';
+import { PaginatedPeople } from '../models/people/paginated-people.model';
+import { UrlService } from '../services/url.service';
 
 @Injectable({
     providedIn: 'root',

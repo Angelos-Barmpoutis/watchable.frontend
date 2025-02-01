@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
-import { POSTER_SIZE } from '../../../../core/enumerations/poster-size.enum';
-import { Movie } from '../../../../core/models/movies/movie.model';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
+import { POSTER_SIZE } from '../../../../shared/enumerations/poster-size.enum';
 import { MoviesFacade } from '../../../../shared/facades/movies.facade';
-import { BaseComponent } from '../../../../shared/helpers/base.component';
+import { Movie } from '../../../../shared/models/movies/movie.model';
 
 @Component({
     selector: 'app-top-rated-movies',
@@ -18,16 +17,17 @@ import { BaseComponent } from '../../../../shared/helpers/base.component';
     styleUrl: './top-rated.component.scss',
     imports: [CommonModule, PosterPathDirective, RouterLink],
 })
-export class MoviesTopRatedComponent extends BaseComponent implements OnInit {
+export class MoviesTopRatedComponent implements OnInit {
     public posterSize: POSTER_SIZE = DEFAULT.smallPosterSize;
     public posterFallback = DEFAULT.smallPosterFallback;
     public topRatedMovies: Array<Movie> = [];
     public currentPage = DEFAULT.page;
     public totalPages = DEFAULT.totalPages;
 
-    constructor(private movieFacade: MoviesFacade) {
-        super();
-    }
+    constructor(
+        private movieFacade: MoviesFacade,
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnInit(): void {
         this.getTopRatedMovies();
@@ -43,7 +43,7 @@ export class MoviesTopRatedComponent extends BaseComponent implements OnInit {
     private getTopRatedMovies(loadMore: boolean = false): void {
         this.movieFacade
             .getTopRated(this.currentPage)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((topRatedMovies) => {
                 if (loadMore) {
                     this.topRatedMovies = [...this.topRatedMovies, ...topRatedMovies.results];
@@ -51,8 +51,8 @@ export class MoviesTopRatedComponent extends BaseComponent implements OnInit {
                     this.topRatedMovies = topRatedMovies.results;
                 }
 
-                this.currentPage = +topRatedMovies.page;
-                this.totalPages = +topRatedMovies.total_pages;
+                this.currentPage = topRatedMovies.page;
+                this.totalPages = topRatedMovies.total_pages;
             });
     }
 }

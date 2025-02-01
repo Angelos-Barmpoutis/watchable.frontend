@@ -1,17 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
-import { PROFILE_SIZE } from '../../../../core/enumerations/profile-size.enum';
-import { TRENDING_FILTER } from '../../../../core/enumerations/trending-filter.enum';
-import { Person } from '../../../../core/models/people/person.model';
-import { KnownForItem } from '../../../../core/models/shared/known-for-item.model';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { ProfilePathDirective } from '../../../../shared/directives/profile-path.directive';
+import { PROFILE_SIZE } from '../../../../shared/enumerations/profile-size.enum';
+import { TRENDING_FILTER } from '../../../../shared/enumerations/trending-filter.enum';
 import { TrendingFacade } from '../../../../shared/facades/trending.facade';
-import { BaseComponent } from '../../../../shared/helpers/base.component';
+import { Person } from '../../../../shared/models/people/person.model';
+import { KnownForItem } from '../../../../shared/models/shared/known-for-item.model';
 
 @Component({
     selector: 'app-trending-people',
@@ -21,7 +20,7 @@ import { BaseComponent } from '../../../../shared/helpers/base.component';
     styleUrl: './people.component.scss',
     imports: [CommonModule, ReactiveFormsModule, ProfilePathDirective, RouterLink],
 })
-export class TrendingPeopleComponent extends BaseComponent implements OnInit {
+export class TrendingPeopleComponent implements OnInit {
     public profileSize: PROFILE_SIZE = DEFAULT.mediumProfileSize;
     public profileFallback = DEFAULT.mediumProfileFallback;
     public TRENDING_FILTER = TRENDING_FILTER;
@@ -29,13 +28,15 @@ export class TrendingPeopleComponent extends BaseComponent implements OnInit {
     public trendingPeople: Array<Person> = [];
     public currentPage = DEFAULT.page;
     public totalPages = DEFAULT.totalPages;
+    private get trendingPeopleFilterFormField(): FormControl {
+        return this.trendingPeopleForm.get('peopleFilter') as FormControl;
+    }
 
     constructor(
         private trendingFacade: TrendingFacade,
         private formBuilder: FormBuilder,
-    ) {
-        super();
-    }
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnInit(): void {
         this.initTrendingForm();
@@ -60,7 +61,7 @@ export class TrendingPeopleComponent extends BaseComponent implements OnInit {
 
         this.trendingFacade
             .getTrendingPeople(trendingFilter, this.currentPage)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((trendingPeople) => {
                 if (loadMore) {
                     this.trendingPeople = [...this.trendingPeople, ...trendingPeople.results];
@@ -68,8 +69,8 @@ export class TrendingPeopleComponent extends BaseComponent implements OnInit {
                     this.trendingPeople = trendingPeople.results;
                 }
 
-                this.currentPage = +trendingPeople.page;
-                this.totalPages = +trendingPeople.total_pages;
+                this.currentPage = trendingPeople.page;
+                this.totalPages = trendingPeople.total_pages;
             });
     }
 
@@ -80,13 +81,9 @@ export class TrendingPeopleComponent extends BaseComponent implements OnInit {
     }
 
     private onTrendingFilterChanges(): void {
-        this.trendingPeopleFilterFormField.valueChanges.pipe(takeUntil(this.destroyed)).subscribe(() => {
+        this.trendingPeopleFilterFormField.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.currentPage = DEFAULT.page;
             this.getTrendingPeople();
         });
-    }
-
-    private get trendingPeopleFilterFormField(): FormControl {
-        return this.trendingPeopleForm.get('peopleFilter') as FormControl;
     }
 }

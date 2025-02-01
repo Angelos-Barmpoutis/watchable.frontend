@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
-import { POSTER_SIZE } from '../../../../core/enumerations/poster-size.enum';
-import { TvSeries } from '../../../../core/models/tv-series/tv-series.model';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
+import { POSTER_SIZE } from '../../../../shared/enumerations/poster-size.enum';
 import { TvSeriesFacade } from '../../../../shared/facades/tv-series.facade';
-import { BaseComponent } from '../../../../shared/helpers/base.component';
+import { TvSeries } from '../../../../shared/models/tv-series/tv-series.model';
 
 @Component({
     selector: 'app-popular-tv-series',
@@ -18,16 +17,17 @@ import { BaseComponent } from '../../../../shared/helpers/base.component';
     styleUrl: './popular.component.scss',
     imports: [CommonModule, PosterPathDirective, RouterLink],
 })
-export class TvSeriesPopularComponent extends BaseComponent implements OnInit {
+export class TvSeriesPopularComponent implements OnInit {
     public posterSize: POSTER_SIZE = DEFAULT.smallPosterSize;
     public posterFallback = DEFAULT.smallPosterFallback;
     public popularTvSeries: Array<TvSeries> = [];
     public currentPage = DEFAULT.page;
     public totalPages = DEFAULT.totalPages;
 
-    constructor(private tvSeriesFacade: TvSeriesFacade) {
-        super();
-    }
+    constructor(
+        private tvSeriesFacade: TvSeriesFacade,
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnInit(): void {
         this.getPopularTvSeries();
@@ -43,7 +43,7 @@ export class TvSeriesPopularComponent extends BaseComponent implements OnInit {
     private getPopularTvSeries(loadMore: boolean = false): void {
         this.tvSeriesFacade
             .getPopular(this.currentPage)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((popularTvSeries) => {
                 if (loadMore) {
                     this.popularTvSeries = [...this.popularTvSeries, ...popularTvSeries.results];
@@ -51,8 +51,8 @@ export class TvSeriesPopularComponent extends BaseComponent implements OnInit {
                     this.popularTvSeries = popularTvSeries.results;
                 }
 
-                this.currentPage = +popularTvSeries.page;
-                this.totalPages = +popularTvSeries.total_pages;
+                this.currentPage = popularTvSeries.page;
+                this.totalPages = popularTvSeries.total_pages;
             });
     }
 }

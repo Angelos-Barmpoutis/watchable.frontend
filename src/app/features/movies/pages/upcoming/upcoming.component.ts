@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { takeUntil } from 'rxjs';
 
-import { POSTER_SIZE } from '../../../../core/enumerations/poster-size.enum';
-import { Movie } from '../../../../core/models/movies/movie.model';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
+import { POSTER_SIZE } from '../../../../shared/enumerations/poster-size.enum';
 import { MoviesFacade } from '../../../../shared/facades/movies.facade';
-import { BaseComponent } from '../../../../shared/helpers/base.component';
+import { Movie } from '../../../../shared/models/movies/movie.model';
 
 @Component({
     selector: 'app-upcoming-movies',
@@ -18,16 +17,17 @@ import { BaseComponent } from '../../../../shared/helpers/base.component';
     styleUrl: './upcoming.component.scss',
     imports: [CommonModule, PosterPathDirective, RouterLink],
 })
-export class MoviesUpcomingComponent extends BaseComponent implements OnInit {
+export class MoviesUpcomingComponent implements OnInit {
     public posterSize: POSTER_SIZE = DEFAULT.smallPosterSize;
     public posterFallback = DEFAULT.smallPosterFallback;
     public upcomingMovies: Array<Movie> = [];
     public currentPage = DEFAULT.page;
     public totalPages = DEFAULT.totalPages;
 
-    constructor(private movieFacade: MoviesFacade) {
-        super();
-    }
+    constructor(
+        private movieFacade: MoviesFacade,
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnInit(): void {
         this.getUpcomingMovies();
@@ -43,7 +43,7 @@ export class MoviesUpcomingComponent extends BaseComponent implements OnInit {
     private getUpcomingMovies(loadMore: boolean = false): void {
         this.movieFacade
             .getUpcoming(this.currentPage)
-            .pipe(takeUntil(this.destroyed))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((upcomingMovies) => {
                 if (loadMore) {
                     this.upcomingMovies = [...this.upcomingMovies, ...upcomingMovies.results];
@@ -51,8 +51,8 @@ export class MoviesUpcomingComponent extends BaseComponent implements OnInit {
                     this.upcomingMovies = upcomingMovies.results;
                 }
 
-                this.currentPage = +upcomingMovies.page;
-                this.totalPages = +upcomingMovies.total_pages;
+                this.currentPage = upcomingMovies.page;
+                this.totalPages = upcomingMovies.total_pages;
             });
     }
 }

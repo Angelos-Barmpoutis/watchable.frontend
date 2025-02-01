@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 
-import { TRENDING_FILTER } from '../../core/enumerations/trending-filter.enum';
-import { PaginatedMovies } from '../../core/models/movies/paginated-movies.model';
-import { PaginatedPeople } from '../../core/models/people/paginated-people.model';
-import { PaginatedTvSeries } from '../../core/models/tv-series/paginated-tv-series.model';
 import { DEFAULT } from '../constants/defaults.constant';
+import { TRENDING_FILTER } from '../enumerations/trending-filter.enum';
 import { TrendingGateway } from '../gateways/trending.gateway';
+import { PaginatedMovies } from '../models/movies/paginated-movies.model';
+import { PaginatedPeople } from '../models/people/paginated-people.model';
+import { PaginatedTvSeries } from '../models/tv-series/paginated-tv-series.model';
 
+export interface AllTrending {
+    movies: PaginatedMovies;
+    tvSeries: PaginatedTvSeries;
+    people: PaginatedPeople;
+}
 @Injectable({
     providedIn: 'root',
 })
@@ -33,5 +38,13 @@ export class TrendingFacade {
         page: number = DEFAULT.page,
     ): Observable<PaginatedPeople> {
         return this.trendingGateway.getTrendingPeople(trendingFilter, page);
+    }
+
+    public getAllTrending(): Observable<AllTrending> {
+        return forkJoin({
+            movies: this.getTrendingMovies(),
+            tvSeries: this.getTrendingTvSeries(),
+            people: this.getTrendingPeople(),
+        });
     }
 }

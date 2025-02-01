@@ -1,7 +1,7 @@
 import { Directive, HostBinding, Input } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
-import { PROFILE_SIZE } from '../../core/enumerations/profile-size.enum';
+import { PROFILE_SIZE } from '../enumerations/profile-size.enum';
 
 @Directive({
     selector: '[appProfilePath]',

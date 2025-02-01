@@ -1,22 +1,22 @@
 import { CommonModule, TitleCasePipe } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostListener, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { debounceTime, filter, takeUntil } from 'rxjs';
+import { debounceTime, filter } from 'rxjs';
 
-import { POSTER_SIZE } from '../../../core/enumerations/poster-size.enum';
-import { PROFILE_SIZE } from '../../../core/enumerations/profile-size.enum';
-import { SEARCH_FILTER } from '../../../core/enumerations/search-filter.enum';
-import { Movie } from '../../../core/models/movies/movie.model';
-import { Person } from '../../../core/models/people/person.model';
-import { KnownForItem } from '../../../core/models/shared/known-for-item.model';
-import { SearchItem } from '../../../core/models/shared/search-item.model';
-import { TvSeries } from '../../../core/models/tv-series/tv-series.model';
 import { DEFAULT } from '../../constants/defaults.constant';
 import { PosterPathDirective } from '../../directives/poster-path.directive';
 import { ProfilePathDirective } from '../../directives/profile-path.directive';
+import { POSTER_SIZE } from '../../enumerations/poster-size.enum';
+import { PROFILE_SIZE } from '../../enumerations/profile-size.enum';
+import { SEARCH_FILTER } from '../../enumerations/search-filter.enum';
 import { SearchFacade } from '../../facades/search.facade';
-import { BaseComponent } from '../../helpers/base.component';
+import { Movie } from '../../models/movies/movie.model';
+import { Person } from '../../models/people/person.model';
+import { KnownForItem } from '../../models/shared/known-for-item.model';
+import { SearchItem } from '../../models/shared/search-item.model';
+import { TvSeries } from '../../models/tv-series/tv-series.model';
 
 @Component({
     selector: 'app-search-bar',
@@ -25,7 +25,7 @@ import { BaseComponent } from '../../helpers/base.component';
     templateUrl: './search-bar.component.html',
     styleUrl: './search-bar.component.scss',
 })
-export class SearchBarComponent extends BaseComponent implements OnInit {
+export class SearchBarComponent implements OnInit {
     @HostListener('document:click', ['$event'])
     onDocumentClick(): void {
         this.isSearching = false;
@@ -43,14 +43,20 @@ export class SearchBarComponent extends BaseComponent implements OnInit {
     public searchTvSeriesItems: Array<TvSeries> = [];
     public searchPeopleItems: Array<Person> = [];
     public searchString = '';
+    public get searchFilterFormField(): FormControl {
+        return this.searchForm.get('searchFilter') as FormControl;
+    }
+
+    public get searchQueryFormField(): FormControl {
+        return this.searchForm.get('searchQuery') as FormControl;
+    }
 
     constructor(
         private formBuilder: FormBuilder,
         private searchFacade: SearchFacade,
         private router: Router,
-    ) {
-        super();
-    }
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnInit(): void {
         this.initSearchForm();
@@ -66,7 +72,7 @@ export class SearchBarComponent extends BaseComponent implements OnInit {
         this.router.events
             .pipe(
                 filter((event) => event instanceof NavigationEnd),
-                takeUntil(this.destroyed),
+                takeUntilDestroyed(this.destroyRef),
             )
             .subscribe(() => {
                 this.searchForm.setValue({
@@ -85,7 +91,7 @@ export class SearchBarComponent extends BaseComponent implements OnInit {
 
     private listenForSearchFormChanges(): void {
         this.searchForm.valueChanges
-            .pipe(debounceTime(300), takeUntil(this.destroyed))
+            .pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
             .subscribe((form: { searchFilter: SEARCH_FILTER; searchQuery: string }) => {
                 this.searchString = this.searchQueryFormField.value as string;
 
@@ -103,7 +109,7 @@ export class SearchBarComponent extends BaseComponent implements OnInit {
             case SEARCH_FILTER.Multi:
                 this.searchFacade
                     .getMulti(this.searchQueryFormField.value as string)
-                    .pipe(takeUntil(this.destroyed))
+                    .pipe(takeUntilDestroyed(this.destroyRef))
                     .subscribe((paginatedSearchItems) => {
                         const searchItems = paginatedSearchItems.results.slice(0, DEFAULT.searchItemsCount);
                         this.searchMultiItems = searchItems;
@@ -112,7 +118,7 @@ export class SearchBarComponent extends BaseComponent implements OnInit {
             case SEARCH_FILTER.Movie:
                 this.searchFacade
                     .getMovies(this.searchQueryFormField.value as string)
-                    .pipe(takeUntil(this.destroyed))
+                    .pipe(takeUntilDestroyed(this.destroyRef))
                     .subscribe((paginatedSearchItems) => {
                         const searchItems = paginatedSearchItems.results.slice(0, DEFAULT.searchItemsCount);
                         this.searchMovieItems = searchItems;
@@ -121,7 +127,7 @@ export class SearchBarComponent extends BaseComponent implements OnInit {
             case SEARCH_FILTER.Tv:
                 this.searchFacade
                     .getTvSeries(this.searchQueryFormField.value as string)
-                    .pipe(takeUntil(this.destroyed))
+                    .pipe(takeUntilDestroyed(this.destroyRef))
                     .subscribe((paginatedSearchItems) => {
                         const searchItems = paginatedSearchItems.results.slice(0, DEFAULT.searchItemsCount);
                         this.searchTvSeriesItems = searchItems;
@@ -130,20 +136,12 @@ export class SearchBarComponent extends BaseComponent implements OnInit {
             case SEARCH_FILTER.Person:
                 this.searchFacade
                     .getPeople(this.searchQueryFormField.value as string)
-                    .pipe(takeUntil(this.destroyed))
+                    .pipe(takeUntilDestroyed(this.destroyRef))
                     .subscribe((paginatedSearchItems) => {
                         const searchItems = paginatedSearchItems.results.slice(0, DEFAULT.searchItemsCount);
                         this.searchPeopleItems = searchItems;
                     });
                 break;
         }
-    }
-
-    public get searchFilterFormField(): FormControl {
-        return this.searchForm.get('searchFilter') as FormControl;
-    }
-
-    public get searchQueryFormField(): FormControl {
-        return this.searchForm.get('searchQuery') as FormControl;
     }
 }

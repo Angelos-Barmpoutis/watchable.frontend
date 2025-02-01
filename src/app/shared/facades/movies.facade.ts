@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 
-import { MovieDetails } from '../../core/models/movies/details.model';
-import { PaginatedMovies } from '../../core/models/movies/paginated-movies.model';
 import { DEFAULT } from '../constants/defaults.constant';
 import { MovieGateway } from '../gateways/movie.gateway';
+import { MovieDetails } from '../models/movies/details.model';
+import { PaginatedMovies } from '../models/movies/paginated-movies.model';
 
 export interface AllMovies {
     nowPlaying: PaginatedMovies;
