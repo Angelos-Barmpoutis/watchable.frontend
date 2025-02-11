@@ -51,7 +51,7 @@ export class TvSeriesAiringTodayComponent implements OnInit {
                     this.airingTodayTvSeries = airingTodayTvSeries.results;
                 }
 
-                this.currentPage = +airingTodayTvSeries.page;
+                this.currentPage = airingTodayTvSeries.page;
                 this.totalPages = airingTodayTvSeries.total_pages;
             });
     }

@@ -1,9 +1,9 @@
 <section class="media-items-section" id="now-playing">
-    <header>
+    <header *ngIf="searchQuery">
         <h1>Search for "{{ searchQuery }}"</h1>
     </header>
     <main>
-        <aside>
+        <aside *ngIf="searchQuery">
             <ul>
                 <li [ngClass]="{ selected: searchFilter === SEARCH_FILTER.Multi }">
                     <button (click)="setSearchFilter(SEARCH_FILTER.Multi)">

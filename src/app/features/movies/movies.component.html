@@ -1,101 +1,99 @@
-<ng-container *ngIf="allMovies">
-    <section class="media-section" id="now-playing">
-        <header>
-            <h2>
-                <a [routerLink]="['now-playing']"> Now Playing </a>
-            </h2>
-        </header>
-        <div class="media-container">
-            <div *ngFor="let movie of allMovies.nowPlaying.results | limitTo: 10" class="media-container__media">
-                <ng-container>
-                    <img appPosterPath [size]="posterSize" [posterPath]="movie.poster_path" [alt]="movie.title" />
-                    <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
-                </ng-container>
-                <h3>{{ movie.title }}</h3>
-                <div class="media-container__media__details">
-                    <span class="media-container__media__details__vote-average">
-                        {{ +movie.vote_average | number: "1.0-1" }}
-                    </span>
-                    <span class="media-container__media__details__release-date">
-                        {{ movie.release_date | date: "yyyy" }}
-                    </span>
-                </div>
+<section class="media-section" id="now-playing">
+    <header>
+        <h2>
+            <a [routerLink]="['now-playing']"> Now Playing </a>
+        </h2>
+    </header>
+    <div class="media-container">
+        <div *ngFor="let movie of allMovies.nowPlaying.results | limitTo: 10" class="media-container__media">
+            <ng-container>
+                <img appPosterPath [size]="posterSize" [posterPath]="movie.poster_path" [alt]="movie.title" />
+                <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
+            </ng-container>
+            <h3>{{ movie.title }}</h3>
+            <div class="media-container__media__details">
+                <span class="media-container__media__details__vote-average">
+                    {{ +movie.vote_average | number: "1.0-1" }}
+                </span>
+                <span class="media-container__media__details__release-date">
+                    {{ movie.release_date | date: "yyyy" }}
+                </span>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="media-section" id="popular">
-        <header>
-            <h2>
-                <a [routerLink]="['popular']"> Popular </a>
-            </h2>
-        </header>
-        <div class="media-container">
-            <div *ngFor="let movie of allMovies.popular.results | limitTo: 10" class="media-container__media">
-                <ng-container>
-                    <img appPosterPath [posterPath]="movie.poster_path" [alt]="movie.title" [size]="posterSize" />
-                    <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
-                </ng-container>
-                <h3>{{ movie.title }}</h3>
-                <div class="media-container__media__details">
-                    <span class="media-container__media__details__vote-average">
-                        {{ +movie.vote_average | number: "1.0-1" }}
-                    </span>
-                    <span class="media-container__media__details__release-date">
-                        {{ movie.release_date | date: "yyyy" }}
-                    </span>
-                </div>
+<section class="media-section" id="popular">
+    <header>
+        <h2>
+            <a [routerLink]="['popular']"> Popular </a>
+        </h2>
+    </header>
+    <div class="media-container">
+        <div *ngFor="let movie of allMovies.popular.results | limitTo: 10" class="media-container__media">
+            <ng-container>
+                <img appPosterPath [posterPath]="movie.poster_path" [alt]="movie.title" [size]="posterSize" />
+                <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
+            </ng-container>
+            <h3>{{ movie.title }}</h3>
+            <div class="media-container__media__details">
+                <span class="media-container__media__details__vote-average">
+                    {{ +movie.vote_average | number: "1.0-1" }}
+                </span>
+                <span class="media-container__media__details__release-date">
+                    {{ movie.release_date | date: "yyyy" }}
+                </span>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="media-section" id="top-rated">
-        <header>
-            <h2>
-                <a [routerLink]="['top-rated']"> Top Rated </a>
-            </h2>
-        </header>
-        <div class="media-container">
-            <div *ngFor="let movie of allMovies.topRated.results | limitTo: 10" class="media-container__media">
-                <ng-container>
-                    <img appPosterPath [alt]="movie.title" [size]="posterSize" [posterPath]="movie.poster_path" />
-                    <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
-                </ng-container>
-                <h3>{{ movie.title }}</h3>
-                <div class="media-container__media__details">
-                    <span class="media-container__media__details__vote-average">
-                        {{ +movie.vote_average | number: "1.0-1" }}
-                    </span>
-                    <span class="media-container__media__details__release-date">
-                        {{ movie.release_date | date: "yyyy" }}
-                    </span>
-                </div>
+<section class="media-section" id="top-rated">
+    <header>
+        <h2>
+            <a [routerLink]="['top-rated']"> Top Rated </a>
+        </h2>
+    </header>
+    <div class="media-container">
+        <div *ngFor="let movie of allMovies.topRated.results | limitTo: 10" class="media-container__media">
+            <ng-container>
+                <img appPosterPath [alt]="movie.title" [size]="posterSize" [posterPath]="movie.poster_path" />
+                <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
+            </ng-container>
+            <h3>{{ movie.title }}</h3>
+            <div class="media-container__media__details">
+                <span class="media-container__media__details__vote-average">
+                    {{ +movie.vote_average | number: "1.0-1" }}
+                </span>
+                <span class="media-container__media__details__release-date">
+                    {{ movie.release_date | date: "yyyy" }}
+                </span>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="media-section" id="upcoming">
-        <header>
-            <h2>
-                <a [routerLink]="['upcoming']"> Upcoming </a>
-            </h2>
-        </header>
-        <div class="media-container">
-            <div *ngFor="let movie of allMovies.upcoming.results | limitTo: 10" class="media-container__media">
-                <ng-container>
-                    <img appPosterPath [alt]="movie.title" [size]="posterSize" [posterPath]="movie.poster_path" />
-                    <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
-                </ng-container>
-                <h3>{{ movie.title }}</h3>
-                <div class="media-container__media__details">
-                    <span class="media-container__media__details__vote-average">
-                        {{ +movie.vote_average | number: "1.0-1" }}
-                    </span>
-                    <span class="media-container__media__details__release-date">
-                        {{ movie.release_date | date: "yyyy" }}
-                    </span>
-                </div>
+<section class="media-section" id="upcoming">
+    <header>
+        <h2>
+            <a [routerLink]="['upcoming']"> Upcoming </a>
+        </h2>
+    </header>
+    <div class="media-container">
+        <div *ngFor="let movie of allMovies.upcoming.results | limitTo: 10" class="media-container__media">
+            <ng-container>
+                <img appPosterPath [alt]="movie.title" [size]="posterSize" [posterPath]="movie.poster_path" />
+                <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
+            </ng-container>
+            <h3>{{ movie.title }}</h3>
+            <div class="media-container__media__details">
+                <span class="media-container__media__details__vote-average">
+                    {{ +movie.vote_average | number: "1.0-1" }}
+                </span>
+                <span class="media-container__media__details__release-date">
+                    {{ movie.release_date | date: "yyyy" }}
+                </span>
             </div>
         </div>
-    </section>
-</ng-container>
+    </div>
+</section>

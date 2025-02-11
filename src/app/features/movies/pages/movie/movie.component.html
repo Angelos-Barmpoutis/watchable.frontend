@@ -1,112 +1,110 @@
-<ng-container *ngIf="movie">
-    <div class="media-overview" [style.background-image]="getBackgroundImageUrl(bgBackdropSize, movie.backdrop_path)">
-        <div class="media-overview__container">
-            <div class="media-overview__container__content">
-                <ng-container>
-                    <img appPosterPath [size]="posterSize" [posterPath]="movie.poster_path" [alt]="movie.title" />
-                    <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
-                </ng-container>
-                <div class="media-overview__container__content__text">
-                    <h1 class="media-overview__container__content__text__title">
-                        {{ movie.title }}
-                    </h1>
-                    <div class="media-overview__container__content__text__header">
-                        <div class="media-overview__container__content__text__header__facts">
-                            <span>
-                                {{ movie.release_date | date }}
-                            </span>
-                            <span>{{ movie.runtime | time }}</span>
-                            <span>{{ movie.origin_country[0] }}</span>
-                        </div>
+<div class="media-overview" [style.background-image]="getBackgroundImageUrl(bgBackdropSize, movie.backdrop_path)">
+    <div class="media-overview__container">
+        <div class="media-overview__container__content">
+            <ng-container>
+                <img appPosterPath [size]="posterSize" [posterPath]="movie.poster_path" [alt]="movie.title" />
+                <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
+            </ng-container>
+            <div class="media-overview__container__content__text">
+                <h1 class="media-overview__container__content__text__title">
+                    {{ movie.title }}
+                </h1>
+                <div class="media-overview__container__content__text__header">
+                    <div class="media-overview__container__content__text__header__facts">
                         <span>
-                            {{ +movie.vote_average | number: "1.0-1" }}
+                            {{ movie.release_date | date }}
                         </span>
+                        <span>{{ movie.runtime | time }}</span>
+                        <span>{{ movie.origin_country[0] }}</span>
                     </div>
-                    <div class="media-overview__container__content__text__genres">
-                        <span *ngFor="let genre of movie.genres" class="genre">{{ genre.name }}</span>
-                    </div>
-                    <div class="media-overview__container__content__text__actions">
-                        <button type="button">Add to list</button>
-                        <button type="button">Rate</button>
-                    </div>
-                    <span class="media-overview__container__content__text__tagline">
-                        <em>
-                            {{ movie.tagline }}
-                        </em>
+                    <span>
+                        {{ +movie.vote_average | number: "1.0-1" }}
                     </span>
-                    <div *ngIf="movie.overview" class="media-overview__container__content__text__overview">
-                        <h2>Overview</h2>
-                        <p>
-                            {{ movie.overview }}
-                        </p>
-                    </div>
+                </div>
+                <div class="media-overview__container__content__text__genres">
+                    <span *ngFor="let genre of movie.genres" class="genre">{{ genre.name }}</span>
+                </div>
+                <div class="media-overview__container__content__text__actions">
+                    <button type="button">Add to list</button>
+                    <button type="button">Rate</button>
+                </div>
+                <span class="media-overview__container__content__text__tagline">
+                    <em>
+                        {{ movie.tagline }}
+                    </em>
+                </span>
+                <div *ngIf="movie.overview" class="media-overview__container__content__text__overview">
+                    <h2>Overview</h2>
+                    <p>
+                        {{ movie.overview }}
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-    <section class="media-details">
-        <div class="media-details__container">
-            <div class="media-details__container__videos">
-                <h2>Videos</h2>
-                <swiper-container spaceBetween="20">
-                    <ng-container *ngFor="let video of movie.videos.results">
-                        <swiper-slide>
-                            <youtube-player *ngIf="video.site === 'YouTube'" [videoId]="video.key"></youtube-player>
-                        </swiper-slide>
-                    </ng-container>
-                </swiper-container>
-            </div>
-            <div class="media-details__container__photos">
-                <h2>Photos</h2>
-                <swiper-container spaceBetween="20">
-                    <swiper-slide *ngFor="let backdrop of movie.images.backdrops">
-                        <img
-                            appBackdropPath
-                            [size]="backdropSize"
-                            [backdropPath]="backdrop.file_path"
-                            [alt]="movie.title"
-                        />
+</div>
+<section class="media-details">
+    <div class="media-details__container">
+        <div class="media-details__container__videos">
+            <h2>Videos</h2>
+            <swiper-container spaceBetween="20">
+                <ng-container *ngFor="let video of movie.videos.results">
+                    <swiper-slide>
+                        <youtube-player *ngIf="video.site === 'YouTube'" [videoId]="video.key"></youtube-player>
                     </swiper-slide>
-                </swiper-container>
-            </div>
-            <div class="media-details__container__reviews">
-                <h2>Reviews</h2>
-                <div class="media-details__container__reviews__items">
-                    <div *ngFor="let review of reviews" class="media-details__container__reviews__items__item">
-                        <div class="media-details__container__reviews__items__item__header">
-                            <div class="media-details__container__reviews__items__item__header__avatar">
-                                <ng-container>
-                                    <img
-                                        *ngIf="review.author_details.avatar_path"
-                                        class="media-details__container__reviews__items__item__header__avatar__icon"
-                                        appProfilePath
-                                        [size]="profileSize"
-                                        [profilePath]="review.author_details.avatar_path"
-                                        [alt]="review.author"
-                                    />
-                                    <span
-                                        *ngIf="!review.author_details.avatar_path"
-                                        class="media-details__container__reviews__items__item__header__avatar__icon"
-                                    >
-                                        {{ review.author | avatarLetter }}
-                                    </span>
-                                </ng-container>
-                            </div>
-                            <div class="media-details__container__reviews__items__item__header__details">
-                                <h3>
-                                    {{ review.author }}
-                                </h3>
-                                <span>{{
-                                    review.updated_at ? (review.updated_at | date) : (review.created_at | date)
-                                }}</span>
-                            </div>
+                </ng-container>
+            </swiper-container>
+        </div>
+        <div class="media-details__container__photos">
+            <h2>Photos</h2>
+            <swiper-container spaceBetween="20">
+                <swiper-slide *ngFor="let backdrop of movie.images.backdrops">
+                    <img
+                        appBackdropPath
+                        [size]="backdropSize"
+                        [backdropPath]="backdrop.file_path"
+                        [alt]="movie.title"
+                    />
+                </swiper-slide>
+            </swiper-container>
+        </div>
+        <div class="media-details__container__reviews">
+            <h2>Reviews</h2>
+            <div class="media-details__container__reviews__items">
+                <div *ngFor="let review of reviews" class="media-details__container__reviews__items__item">
+                    <div class="media-details__container__reviews__items__item__header">
+                        <div class="media-details__container__reviews__items__item__header__avatar">
+                            <ng-container>
+                                <img
+                                    *ngIf="review.author_details.avatar_path"
+                                    class="media-details__container__reviews__items__item__header__avatar__icon"
+                                    appProfilePath
+                                    [size]="profileSize"
+                                    [profilePath]="review.author_details.avatar_path"
+                                    [alt]="review.author"
+                                />
+                                <span
+                                    *ngIf="!review.author_details.avatar_path"
+                                    class="media-details__container__reviews__items__item__header__avatar__icon"
+                                >
+                                    {{ review.author | avatarLetter }}
+                                </span>
+                            </ng-container>
                         </div>
-                        <p class="media-details__container__reviews__items__item__content">
-                            {{ review.content }}
-                        </p>
+                        <div class="media-details__container__reviews__items__item__header__details">
+                            <h3>
+                                {{ review.author }}
+                            </h3>
+                            <span>{{
+                                review.updated_at ? (review.updated_at | date) : (review.created_at | date)
+                            }}</span>
+                        </div>
                     </div>
+                    <p class="media-details__container__reviews__items__item__content">
+                        {{ review.content }}
+                    </p>
                 </div>
             </div>
         </div>
-    </section>
-</ng-container>
+    </div>
+</section>

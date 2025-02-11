@@ -1,52 +1,47 @@
-<ng-container *ngIf="trendingMovies">
-    <section class="media-items-section" id="now-playing">
-        <header>
-            <h1>Movies</h1>
-            <form [formGroup]="trendingMoviesForm">
-                <select formControlName="moviesFilter">
-                    <option [value]="TRENDING_FILTER.Day">{{ TRENDING_FILTER.Day | titlecase }}</option>
-                    <option [value]="TRENDING_FILTER.Week">{{ TRENDING_FILTER.Week | titlecase }}</option>
-                </select>
-            </form>
-        </header>
-        <main>
-            <div class="media-item-container">
-                <div *ngFor="let movie of trendingMovies" class="media-item-container__media">
-                    <a
-                        class="media-item-container__media__img-anchor"
-                        [routerLink]="['/', 'movies', 'movie', movie.id]"
-                    >
-                        <ng-container>
-                            <img
-                                *ngIf="movie.poster_path"
-                                appPosterPath
-                                [size]="posterSize"
-                                [posterPath]="movie.poster_path"
-                                [alt]="movie.title"
-                            />
-                            <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
-                        </ng-container>
-                    </a>
-                    <div class="media-item-container__media__content">
-                        <h3>
-                            <a [routerLink]="['/', 'movies', 'movie', movie.id]">{{ movie.title }}</a>
-                        </h3>
-                        <span class="media-item-container__media__content__vote-average">
-                            {{ +movie.vote_average | number: "1.0-1" }} ({{ +movie.vote_count | number }})
-                        </span>
-                        <span class="media-item-container__media__content__release-date">
-                            {{ movie.release_date | date }}
-                        </span>
-                        <button type="button">Rate</button>
-                    </div>
-                    <div class="media-item-container__media__info">
-                        <button [title]="'See more about ' + movie.title" (click)="getDetails(movie.id)">i</button>
-                    </div>
+<section class="media-items-section" id="now-playing">
+    <header>
+        <h1>Movies</h1>
+        <form [formGroup]="trendingMoviesForm">
+            <select formControlName="moviesFilter">
+                <option [value]="TRENDING_FILTER.Day">{{ TRENDING_FILTER.Day | titlecase }}</option>
+                <option [value]="TRENDING_FILTER.Week">{{ TRENDING_FILTER.Week | titlecase }}</option>
+            </select>
+        </form>
+    </header>
+    <main>
+        <div class="media-item-container">
+            <div *ngFor="let movie of trendingMovies" class="media-item-container__media">
+                <a class="media-item-container__media__img-anchor" [routerLink]="['/', 'movies', 'movie', movie.id]">
+                    <ng-container>
+                        <img
+                            *ngIf="movie.poster_path"
+                            appPosterPath
+                            [size]="posterSize"
+                            [posterPath]="movie.poster_path"
+                            [alt]="movie.title"
+                        />
+                        <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
+                    </ng-container>
+                </a>
+                <div class="media-item-container__media__content">
+                    <h3>
+                        <a [routerLink]="['/', 'movies', 'movie', movie.id]">{{ movie.title }}</a>
+                    </h3>
+                    <span class="media-item-container__media__content__vote-average">
+                        {{ +movie.vote_average | number: "1.0-1" }} ({{ +movie.vote_count | number }})
+                    </span>
+                    <span class="media-item-container__media__content__release-date">
+                        {{ movie.release_date | date }}
+                    </span>
+                    <button type="button">Rate</button>
+                </div>
+                <div class="media-item-container__media__info">
+                    <button [title]="'See more about ' + movie.title" (click)="getDetails(movie.id)">i</button>
                 </div>
             </div>
-        </main>
-        <footer>
-            <button *ngIf="this.currentPage < this.totalPages" (click)="onLoadMore()">Load More</button>
-        </footer>
-    </section>
-</ng-container>
+        </div>
+    </main>
+    <footer>
+        <button *ngIf="this.currentPage < this.totalPages" (click)="onLoadMore()">Load More</button>
+    </footer>
+</section>

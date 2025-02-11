@@ -1,12 +1,14 @@
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
 
 import { routes } from './app.routes';
 import { InterceptorService } from './shared/services/interceptor.service';
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        NG_EVENT_PLUGINS,
         provideRouter(routes),
         provideHttpClient(withInterceptorsFromDi()),
         { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },

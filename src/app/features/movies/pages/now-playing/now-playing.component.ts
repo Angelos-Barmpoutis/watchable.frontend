@@ -18,8 +18,8 @@ import { Movie } from '../../../../shared/models/movies/movie.model';
     imports: [CommonModule, PosterPathDirective, RouterLink],
 })
 export class MoviesNowPlayingComponent implements OnInit {
-    public posterSize: POSTER_SIZE = DEFAULT.smallPosterSize;
-    public posterFallback = DEFAULT.smallPosterFallback;
+    public posterSize: POSTER_SIZE = DEFAULT.mediumPosterSize;
+    public posterFallback = DEFAULT.mediumPosterFallback;
     public nowPlayingMovies: Array<Movie> = [];
     public currentPage = DEFAULT.page;
     public totalPages = DEFAULT.totalPages;

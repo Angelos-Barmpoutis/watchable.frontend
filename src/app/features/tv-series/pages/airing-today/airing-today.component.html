@@ -1,46 +1,41 @@
-<ng-container *ngIf="airingTodayTvSeries">
-    <section class="media-items-section" id="now-playing">
-        <header>
-            <h1>Airing Today</h1>
-        </header>
-        <main>
-            <div class="media-item-container">
-                <div *ngFor="let tvSerie of airingTodayTvSeries" class="media-item-container__media">
-                    <a
-                        class="media-item-container__media__img-anchor"
-                        [routerLink]="['/', 'series', 'serie', tvSerie.id]"
-                    >
-                        <ng-container>
-                            <img
-                                *ngIf="tvSerie.poster_path"
-                                appPosterPath
-                                [size]="posterSize"
-                                [posterPath]="tvSerie.poster_path"
-                                [alt]="tvSerie.name"
-                            />
-                            <img *ngIf="!tvSerie.poster_path" alt="Image not available" [src]="posterFallback" />
-                        </ng-container>
-                    </a>
-                    <div class="media-item-container__media__content">
-                        <h3>
-                            <a [routerLink]="['/', 'series', 'serie', tvSerie.id]">{{ tvSerie.name }}</a>
-                        </h3>
-                        <span class="media-item-container__media__content__vote-average">
-                            {{ +tvSerie.vote_average | number: "1.0-1" }} ({{ +tvSerie.vote_count | number }})
-                        </span>
-                        <span class="media-item-container__media__content__release-date">
-                            {{ tvSerie.first_air_date | date }}
-                        </span>
-                        <button type="button">Rate</button>
-                    </div>
-                    <div class="media-item-container__media__info">
-                        <button [title]="'See more about ' + tvSerie.name">i</button>
-                    </div>
+<section class="media-items-section" id="now-playing">
+    <header>
+        <h1>Airing Today</h1>
+    </header>
+    <main>
+        <div class="media-item-container">
+            <div *ngFor="let tvSerie of airingTodayTvSeries" class="media-item-container__media">
+                <a class="media-item-container__media__img-anchor" [routerLink]="['/', 'series', 'serie', tvSerie.id]">
+                    <ng-container>
+                        <img
+                            *ngIf="tvSerie.poster_path"
+                            appPosterPath
+                            [size]="posterSize"
+                            [posterPath]="tvSerie.poster_path"
+                            [alt]="tvSerie.name"
+                        />
+                        <img *ngIf="!tvSerie.poster_path" alt="Image not available" [src]="posterFallback" />
+                    </ng-container>
+                </a>
+                <div class="media-item-container__media__content">
+                    <h3>
+                        <a [routerLink]="['/', 'series', 'serie', tvSerie.id]">{{ tvSerie.name }}</a>
+                    </h3>
+                    <span class="media-item-container__media__content__vote-average">
+                        {{ +tvSerie.vote_average | number: "1.0-1" }} ({{ +tvSerie.vote_count | number }})
+                    </span>
+                    <span class="media-item-container__media__content__release-date">
+                        {{ tvSerie.first_air_date | date }}
+                    </span>
+                    <button type="button">Rate</button>
+                </div>
+                <div class="media-item-container__media__info">
+                    <button [title]="'See more about ' + tvSerie.name">i</button>
                 </div>
             </div>
-        </main>
-        <footer>
-            <button *ngIf="this.currentPage < this.totalPages" (click)="onLoadMore()">Load More</button>
-        </footer>
-    </section>
-</ng-container>
+        </div>
+    </main>
+    <footer>
+        <button *ngIf="this.currentPage < this.totalPages" (click)="onLoadMore()">Load More</button>
+    </footer>
+</section>

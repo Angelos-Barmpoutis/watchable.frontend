@@ -1,70 +1,63 @@
-<ng-container *ngIf="trendingPeople">
-    <section class="media-items-section" id="now-playing">
-        <header>
-            <h1>People</h1>
-            <form [formGroup]="trendingPeopleForm">
-                <select formControlName="peopleFilter">
-                    <option [value]="TRENDING_FILTER.Day">{{ TRENDING_FILTER.Day | titlecase }}</option>
-                    <option [value]="TRENDING_FILTER.Week">{{ TRENDING_FILTER.Week | titlecase }}</option>
-                </select>
-            </form>
-        </header>
-        <main>
-            <div class="media-item-container">
-                <div *ngFor="let person of trendingPeople" class="media-item-container__media">
-                    <a
-                        class="media-item-container__media__img-anchor"
-                        [routerLink]="['/', 'people', 'person', person.id]"
-                    >
-                        <ng-container>
-                            <img
-                                *ngIf="person.profile_path"
-                                appProfilePath
-                                [size]="profileSize"
-                                [profilePath]="person.profile_path"
-                                [alt]="person.name"
-                            />
-                            <img *ngIf="!person.profile_path" alt="Image not available" [src]="profileFallback" />
-                        </ng-container>
-                    </a>
-                    <div class="media-item-container__media__content">
-                        <h3>
-                            <a [routerLink]="['/', 'people', 'person', person.id]">{{ person.name }}</a>
-                        </h3>
-                        <div class="media-item-container__media__content__details">
-                            <span class="media-item-container__media__content__details__known-for-department">
-                                {{ person.known_for_department }}
+<section class="media-items-section" id="now-playing">
+    <header>
+        <h1>People</h1>
+        <form [formGroup]="trendingPeopleForm">
+            <select formControlName="peopleFilter">
+                <option [value]="TRENDING_FILTER.Day">{{ TRENDING_FILTER.Day | titlecase }}</option>
+                <option [value]="TRENDING_FILTER.Week">{{ TRENDING_FILTER.Week | titlecase }}</option>
+            </select>
+        </form>
+    </header>
+    <main>
+        <div class="media-item-container">
+            <div *ngFor="let person of trendingPeople" class="media-item-container__media">
+                <a class="media-item-container__media__img-anchor" [routerLink]="['/', 'people', 'person', person.id]">
+                    <ng-container>
+                        <img
+                            *ngIf="person.profile_path"
+                            appProfilePath
+                            [size]="profileSize"
+                            [profilePath]="person.profile_path"
+                            [alt]="person.name"
+                        />
+                        <img *ngIf="!person.profile_path" alt="Image not available" [src]="profileFallback" />
+                    </ng-container>
+                </a>
+                <div class="media-item-container__media__content">
+                    <h3>
+                        <a [routerLink]="['/', 'people', 'person', person.id]">{{ person.name }}</a>
+                    </h3>
+                    <div class="media-item-container__media__content__details">
+                        <span class="media-item-container__media__content__details__known-for-department">
+                            {{ person.known_for_department }}
+                        </span>
+                        <ng-container *ngIf="person.known_for && person.known_for.length > 0">
+                            <span
+                                *ngIf="isMovie(person.known_for[0])"
+                                class="media-item-container__media__content__details__known-for"
+                            >
+                                {{ person.known_for[0].title }} ({{
+                                    person.known_for[0].release_date
+                                        ? (person.known_for[0].release_date | date: "yyyy")
+                                        : "-"
+                                }})
                             </span>
-                            <ng-container *ngIf="person.known_for && person.known_for.length > 0">
-                                <span
-                                    *ngIf="isMovie(person.known_for[0])"
-                                    class="media-item-container__media__content__details__known-for"
-                                >
-                                    {{ person.known_for[0].title }} ({{
-                                        person.known_for[0].release_date
-                                            ? (person.known_for[0].release_date | date: "yyyy")
-                                            : "-"
-                                    }})
-                                </span>
-                                <span
-                                    *ngIf="!isMovie(person.known_for[0])"
-                                    class="media-item-container__media__content__details__known-for"
-                                >
-                                    {{ person.known_for[0].name }} ({{
-                                        person.known_for[0].first_air_date | date: "yyyy"
-                                    }})
-                                </span>
-                            </ng-container>
-                        </div>
-                    </div>
-                    <div class="media-item-container__media__info">
-                        <button [title]="'See more about ' + person.name">i</button>
+                            <span
+                                *ngIf="!isMovie(person.known_for[0])"
+                                class="media-item-container__media__content__details__known-for"
+                            >
+                                {{ person.known_for[0].name }} ({{ person.known_for[0].first_air_date | date: "yyyy" }})
+                            </span>
+                        </ng-container>
                     </div>
                 </div>
+                <div class="media-item-container__media__info">
+                    <button [title]="'See more about ' + person.name">i</button>
+                </div>
             </div>
-        </main>
-        <footer>
-            <button *ngIf="this.currentPage < this.totalPages" (click)="onLoadMore()">Load More</button>
-        </footer>
-    </section>
-</ng-container>
+        </div>
+    </main>
+    <footer>
+        <button *ngIf="this.currentPage < this.totalPages" (click)="onLoadMore()">Load More</button>
+    </footer>
+</section>
