@@ -126,7 +126,7 @@
 @media (max-width: map-get($breakpoints, "sm")) {
     .tv-show-list-item {
         .tv-show-main {
-            grid-template-columns: 88px 1fr;
+            grid-template-columns: 96px 1fr;
             padding: $spacing-sm;
             gap: $spacing-md;
 
@@ -152,7 +152,7 @@
     }
 
     .tv-show-list-item-loading {
-        height: 148px;
+        height: 160px;
         @include skeleton-loading;
     }
 }
