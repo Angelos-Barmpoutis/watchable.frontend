@@ -132,7 +132,7 @@
 @media (max-width: map-get($breakpoints, "sm")) {
     .person-list-item {
         .person-main {
-            grid-template-columns: 96px 1fr;
+            grid-template-columns: 112px 1fr;
             padding: $spacing-sm;
             gap: $spacing-md;
 
@@ -154,7 +154,7 @@
 
     .person-list-item.skeleton {
         .person-main {
-            grid-template-columns: 96px 1fr;
+            grid-template-columns: 112px 1fr;
             padding: $spacing-sm;
             gap: $spacing-md;
 
