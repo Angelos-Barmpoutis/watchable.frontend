@@ -1,4 +1,4 @@
-<section class="media-items-section" id="now-playing">
+<!-- <section class="media-items-section" id="now-playing">
     <header *ngIf="searchQuery">
         <h1>Search for "{{ searchQuery }}"</h1>
     </header>
@@ -22,7 +22,7 @@
                 <li [ngClass]="{ selected: searchFilter === SEARCH_FILTER.Tv }">
                     <button (click)="setSearchFilter(SEARCH_FILTER.Tv)">
                         <span>{{ SEARCH_FILTER.Tv | titlecase }}</span>
-                        <span *ngIf="allSearchItems">({{ allSearchItems.tvSeries.total_results | number }})</span>
+                        <span *ngIf="allSearchItems">({{ allSearchItems.tvShows.total_results | number }})</span>
                         <span *ngIf="!allSearchItems">(0)</span>
                     </button>
                 </li>
@@ -353,4 +353,4 @@
             </div>
         </div>
     </main>
-</section>
+</section> -->

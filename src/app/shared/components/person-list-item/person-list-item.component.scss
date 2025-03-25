@@ -1,0 +1,166 @@
+@import "../../../../styles.scss";
+
+.person-list-item {
+    background-color: $surface-color;
+    border-radius: $border-radius-xl;
+    border: 1px solid $border-color;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+    transition: all $transition-normal;
+
+    .person-main {
+        display: grid;
+        grid-template-columns: 128px 1fr;
+        gap: $spacing-md;
+        padding: $spacing-md;
+        cursor: pointer;
+
+        .person-avatar {
+            width: 100%;
+            aspect-ratio: 1/1;
+            transition: filter $transition-normal;
+            border-radius: 50%;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+                transition: transform $transition-normal;
+            }
+        }
+
+        .person-content {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+
+            .person-header {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: baseline;
+                gap: $spacing-sm;
+
+                .person-name {
+                    font-size: $font-size-md;
+                    font-weight: $font-weight-medium;
+                    color: $text-primary;
+                    margin: 0;
+                    @include text-clamp(1);
+                }
+
+                .person-department {
+                    font-weight: $font-weight-medium;
+                    color: $text-secondary;
+                    font-size: $font-size-sm;
+                }
+            }
+
+            .credits-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: $spacing-sm;
+            }
+        }
+    }
+
+    &:hover {
+        background-color: rgba($primary-color, 0.05);
+        border-color: rgba($primary-color, 0.2);
+
+        .person-avatar {
+            filter: brightness(0.85);
+
+            img {
+                transform: scale(1.05);
+            }
+        }
+    }
+}
+
+// Skeleton styles
+.person-list-item.skeleton {
+    pointer-events: none;
+
+    .person-main {
+        display: grid;
+        grid-template-columns: 128px 1fr;
+        gap: $spacing-md;
+        padding: $spacing-md;
+
+        .skeleton-avatar {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 50% !important;
+            @include skeleton-loading;
+        }
+
+        .skeleton-content {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+
+            .skeleton-header {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-xs;
+
+                .skeleton-name {
+                    height: 24px;
+                    width: 60%;
+                    @include skeleton-loading;
+                }
+
+                .skeleton-department {
+                    height: 16px;
+                    width: 40%;
+                    @include skeleton-loading;
+                }
+            }
+
+            .skeleton-credits {
+                height: 14px;
+                width: 60%;
+                @include skeleton-loading;
+            }
+        }
+    }
+}
+
+@media (max-width: map-get($breakpoints, "sm")) {
+    .person-list-item {
+        .person-main {
+            grid-template-columns: 80px 1fr;
+            padding: $spacing-sm;
+            gap: $spacing-md;
+
+            .person-content {
+                gap: $spacing-md;
+
+                .person-header {
+                    .person-name {
+                        font-size: $font-size-md;
+                    }
+
+                    .person-department {
+                        font-size: $font-size-sm;
+                    }
+                }
+            }
+        }
+    }
+
+    .person-list-item.skeleton {
+        .person-main {
+            grid-template-columns: 80px 1fr;
+            padding: $spacing-sm;
+            gap: $spacing-md;
+
+            .skeleton-content {
+                gap: $spacing-md;
+            }
+        }
+    }
+}

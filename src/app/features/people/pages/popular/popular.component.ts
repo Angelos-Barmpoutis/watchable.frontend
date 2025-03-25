@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { DEFAULT } from '../../../../shared/constants/defaults.constant';
-import { ProfilePathDirective } from '../../../../shared/directives/profile-path.directive';
-import { PROFILE_SIZE } from '../../../../shared/enumerations/profile-size.enum';
+import { BaseListItemComponent } from '../../../../shared/abstract/base-list-item.abstract';
+import { InfiniteScrollLoaderComponent } from '../../../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
+import { PersonListItemComponent } from '../../../../shared/components/person-list-item/person-list-item.component';
+import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { PeopleFacade } from '../../../../shared/facades/people.facade';
-import { Person } from '../../../../shared/models/people/person.model';
-import { KnownForItem } from '../../../../shared/models/shared/known-for-item.model';
+import { Person } from '../../../../shared/models/people.model';
 
 @Component({
     selector: 'app-popular-people',
@@ -16,48 +16,41 @@ import { KnownForItem } from '../../../../shared/models/shared/known-for-item.mo
     providers: [],
     templateUrl: './popular.component.html',
     styleUrl: './popular.component.scss',
-    imports: [CommonModule, ProfilePathDirective, RouterLink],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        SectionHeaderComponent,
+        PersonListItemComponent,
+        InfiniteScrollLoaderComponent,
+    ],
 })
-export class PeoplePopularComponent implements OnInit {
-    public profileSize: PROFILE_SIZE = DEFAULT.mediumProfileSize;
-    public profileFallback = DEFAULT.mediumProfileFallback;
-    public popularPeople: Array<Person> = [];
-    public currentPage = DEFAULT.page;
-    public totalPages = DEFAULT.totalPages;
+export class PeoplePopularComponent extends BaseListItemComponent<Person> implements OnInit {
+    override items: Array<Person> = [];
 
     constructor(
         private peopleFacade: PeopleFacade,
         private destroyRef: DestroyRef,
-    ) {}
+    ) {
+        super();
+    }
 
     ngOnInit(): void {
-        this.getPopularPeople();
+        this.getItems();
     }
 
-    public onLoadMore(): void {
-        if (this.currentPage < this.totalPages) {
-            this.currentPage++;
-            this.getPopularPeople(true);
-        }
+    trackByItemId(index: number, item: Person): number {
+        return item.id;
     }
 
-    public isMovie(item: KnownForItem): boolean {
-        return item.media_type === 'movie';
-    }
-
-    private getPopularPeople(loadMore: boolean = false): void {
+    getItems(): void {
         this.peopleFacade
             .getPopular(this.currentPage)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((popularPeople) => {
-                if (loadMore) {
-                    this.popularPeople = [...this.popularPeople, ...popularPeople.results];
-                } else {
-                    this.popularPeople = popularPeople.results;
-                }
-
-                this.currentPage = popularPeople.page;
-                this.totalPages = popularPeople.total_pages;
+            .subscribe(({ results, page, total_pages }) => {
+                this.items = [...this.items, ...results];
+                this.currentPage = page;
+                this.totalPages = total_pages;
+                this.isLoading = false;
             });
     }
 }

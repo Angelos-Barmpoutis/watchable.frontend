@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { PeopleDriver } from '../drivers/people.driver';
-import { PaginatedPeople } from '../models/people/paginated-people.model';
+import { PaginatedPeople } from '../models/people.model';
 import { UrlService } from '../services/url.service';
 
 @Injectable({
@@ -15,6 +15,6 @@ export class PeopleGateway {
     ) {}
 
     getPopular(page: number): Observable<PaginatedPeople> {
-        return this.peopleDriver.getPopularPeople(this.urlService.urlFor(['person', `popular?page=${page}`]));
+        return this.peopleDriver.getPopularPeople(this.urlService.createUrlForTMDB(['person', `popular?page=${page}`]));
     }
 }

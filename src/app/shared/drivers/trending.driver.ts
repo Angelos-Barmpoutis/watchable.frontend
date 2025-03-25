@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { PaginatedMovies } from '../models/movies/paginated-movies.model';
-import { PaginatedPeople } from '../models/people/paginated-people.model';
-import { PaginatedTvSeries } from '../models/tv-series/paginated-tv-series.model';
+import { PaginatedMovies } from '../models/movie.model';
+import { PaginatedPeople } from '../models/people.model';
+import { PaginatedTvShows } from '../models/tv-show.model';
 import { HttpService } from '../services/http.service';
 
 @Injectable({
@@ -12,15 +12,15 @@ import { HttpService } from '../services/http.service';
 export class TrendingDriver {
     constructor(private httpService: HttpService) {}
 
-    getTrendingMovies(url: string): Observable<PaginatedMovies> {
+    getMovies(url: string): Observable<PaginatedMovies> {
         return this.httpService.get<PaginatedMovies>(url);
     }
 
-    getTrendingTvSeries(url: string): Observable<PaginatedTvSeries> {
-        return this.httpService.get<PaginatedTvSeries>(url);
+    getTvShows(url: string): Observable<PaginatedTvShows> {
+        return this.httpService.get<PaginatedTvShows>(url);
     }
 
-    getTrendingPeople(url: string): Observable<PaginatedPeople> {
+    getPeople(url: string): Observable<PaginatedPeople> {
         return this.httpService.get<PaginatedPeople>(url);
     }
 }

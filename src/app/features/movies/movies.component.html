@@ -1,99 +1,45 @@
-<section class="media-section" id="now-playing">
+<section>
     <header>
-        <h2>
-            <a [routerLink]="['now-playing']"> Now Playing </a>
-        </h2>
+        <app-section-header redirectUrl="now-playing" title="Now Playing Movies"> </app-section-header>
     </header>
-    <div class="media-container">
-        <div *ngFor="let movie of allMovies.nowPlaying.results | limitTo: 10" class="media-container__media">
-            <ng-container>
-                <img appPosterPath [size]="posterSize" [posterPath]="movie.poster_path" [alt]="movie.title" />
-                <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
-            </ng-container>
-            <h3>{{ movie.title }}</h3>
-            <div class="media-container__media__details">
-                <span class="media-container__media__details__vote-average">
-                    {{ +movie.vote_average | number: "1.0-1" }}
-                </span>
-                <span class="media-container__media__details__release-date">
-                    {{ movie.release_date | date: "yyyy" }}
-                </span>
-            </div>
-        </div>
-    </div>
+    <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="nowPlaying" [isLoading]="isMainContentLoading">
+    </app-carousel-media>
 </section>
 
-<section class="media-section" id="popular">
+<section>
     <header>
-        <h2>
-            <a [routerLink]="['popular']"> Popular </a>
-        </h2>
+        <app-section-header redirectUrl="popular" title="Popular Movies Today"> </app-section-header>
     </header>
-    <div class="media-container">
-        <div *ngFor="let movie of allMovies.popular.results | limitTo: 10" class="media-container__media">
-            <ng-container>
-                <img appPosterPath [posterPath]="movie.poster_path" [alt]="movie.title" [size]="posterSize" />
-                <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
-            </ng-container>
-            <h3>{{ movie.title }}</h3>
-            <div class="media-container__media__details">
-                <span class="media-container__media__details__vote-average">
-                    {{ +movie.vote_average | number: "1.0-1" }}
-                </span>
-                <span class="media-container__media__details__release-date">
-                    {{ movie.release_date | date: "yyyy" }}
-                </span>
-            </div>
-        </div>
-    </div>
+    <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="popular" [isLoading]="isMainContentLoading">
+    </app-carousel-media>
 </section>
 
-<section class="media-section" id="top-rated">
+<section>
     <header>
-        <h2>
-            <a [routerLink]="['top-rated']"> Top Rated </a>
-        </h2>
+        <app-section-header redirectUrl="top-rated" title="Top Rated Movies"> </app-section-header>
     </header>
-    <div class="media-container">
-        <div *ngFor="let movie of allMovies.topRated.results | limitTo: 10" class="media-container__media">
-            <ng-container>
-                <img appPosterPath [alt]="movie.title" [size]="posterSize" [posterPath]="movie.poster_path" />
-                <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
-            </ng-container>
-            <h3>{{ movie.title }}</h3>
-            <div class="media-container__media__details">
-                <span class="media-container__media__details__vote-average">
-                    {{ +movie.vote_average | number: "1.0-1" }}
-                </span>
-                <span class="media-container__media__details__release-date">
-                    {{ movie.release_date | date: "yyyy" }}
-                </span>
-            </div>
-        </div>
-    </div>
+    <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="topRated" [isLoading]="isMainContentLoading">
+    </app-carousel-media>
 </section>
 
-<section class="media-section" id="upcoming">
+<section>
     <header>
-        <h2>
-            <a [routerLink]="['upcoming']"> Upcoming </a>
-        </h2>
+        <app-section-header redirectUrl="upcoming" title="Upcoming Movies"> </app-section-header>
     </header>
-    <div class="media-container">
-        <div *ngFor="let movie of allMovies.upcoming.results | limitTo: 10" class="media-container__media">
-            <ng-container>
-                <img appPosterPath [alt]="movie.title" [size]="posterSize" [posterPath]="movie.poster_path" />
-                <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
-            </ng-container>
-            <h3>{{ movie.title }}</h3>
-            <div class="media-container__media__details">
-                <span class="media-container__media__details__vote-average">
-                    {{ +movie.vote_average | number: "1.0-1" }}
-                </span>
-                <span class="media-container__media__details__release-date">
-                    {{ movie.release_date | date: "yyyy" }}
-                </span>
-            </div>
-        </div>
-    </div>
+    <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="upcoming" [isLoading]="isMainContentLoading">
+    </app-carousel-media>
 </section>
+
+<section *ngFor="let genre of loadedGenres">
+    <header>
+        <app-section-header [title]="genre.genreName + ' Movies'" [redirectUrl]="['discover', genre.genreName]">
+        </app-section-header>
+    </header>
+    <app-carousel-media [mediaType]="genre.type" [items]="genre.items" [isLoading]="false"> </app-carousel-media>
+</section>
+
+<app-infinite-scroll-loader
+    *ngIf="!allGenresLoaded"
+    [disabled]="isLoadingMoreGenres"
+    (scrolled)="loadMore()"
+></app-infinite-scroll-loader>

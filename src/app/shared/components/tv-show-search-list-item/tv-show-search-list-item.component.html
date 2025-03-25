@@ -1,0 +1,38 @@
+<ng-container *ngIf="!isLoading; else skeletonTemplate">
+    <a appFadeIn class="tv-show-list-item" [routerLink]="['/', 'tv-shows', 'tv-show', tvShow.id]">
+        <div class="tv-show-main">
+            <div class="poster-wrapper">
+                <ng-container *ngIf="tvShow.poster_path; else altPosterPath">
+                    <img appPosterPath [size]="posterSize" [posterPath]="tvShow.poster_path" />
+                </ng-container>
+            </div>
+
+            <div class="info">
+                <div class="info-header">
+                    <h3 class="title">{{ tvShow.name }}</h3>
+                    <span class="year">{{ tvShow.first_air_date | date: "yyyy" }}</span>
+                </div>
+
+                <div class="rating">
+                    <div
+                        class="rating-badge"
+                        [class.rating-low]="tvShow.vote_average < 5.0"
+                        [class.rating-medium]="tvShow.vote_average >= 5.0 && tvShow.vote_average < 7.0"
+                        [class.rating-high]="tvShow.vote_average >= 7.0 && tvShow.vote_average < 8.5"
+                        [class.rating-top]="tvShow.vote_average >= 8.5"
+                    >
+                        {{ tvShow.vote_average | number: "1.0-1" }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</ng-container>
+
+<ng-template #skeletonTemplate>
+    <div appFadeIn class="tv-show-list-item-loading"></div>
+</ng-template>
+
+<ng-template #altPosterPath>
+    <img [src]="posterFallback" />
+</ng-template>

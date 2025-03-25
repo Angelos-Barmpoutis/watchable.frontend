@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { MovieDetails } from '../models/movies/details.model';
-import { PaginatedMovies } from '../models/movies/paginated-movies.model';
+import { MovieDetails, PaginatedMovies } from '../models/movie.model';
 import { HttpService } from '../services/http.service';
 
 @Injectable({

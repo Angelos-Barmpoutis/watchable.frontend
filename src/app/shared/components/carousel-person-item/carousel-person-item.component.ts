@@ -1,0 +1,24 @@
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
+import { DEFAULT } from '../../constants/defaults.constant';
+import { FadeInDirective } from '../../directives/fade-in.directive';
+import { ProfilePathDirective } from '../../directives/profile-path.directive';
+import { PROFILE_SIZE } from '../../enumerations/profile-size.enum';
+import { Person } from '../../models/people.model';
+
+@Component({
+    selector: 'app-carousel-person-item',
+    standalone: true,
+    imports: [CommonModule, RouterLink, FadeInDirective, ProfilePathDirective],
+    templateUrl: './carousel-person-item.component.html',
+    styleUrls: ['./carousel-person-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class CarouselPersonItemComponent {
+    @Input() item!: Person;
+    @Input() isLoading = false;
+    profileSize: PROFILE_SIZE = DEFAULT.mediumProfileSize;
+    profileFallback = DEFAULT.mediumProfileFallback;
+}

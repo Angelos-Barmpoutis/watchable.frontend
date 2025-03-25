@@ -1,0 +1,20 @@
+// Form Controls
+.input {
+    width: 100%;
+    padding: $spacing-md;
+    border: 1px solid $border-color;
+    border-radius: $border-radius-xl;
+    background-color: $surface-color;
+    color: $text-primary;
+    font-size: $font-size-md;
+    transition: border-color $transition-normal;
+
+    &:focus {
+        border-color: $primary-color;
+        outline: none;
+    }
+
+    &-error {
+        border-color: $error-color;
+    }
+}

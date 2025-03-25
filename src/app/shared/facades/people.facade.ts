@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { DEFAULT } from '../constants/defaults.constant';
 import { PeopleGateway } from '../gateways/people.gateway';
-import { PaginatedPeople } from '../models/people/paginated-people.model';
+import { PaginatedPeople } from '../models/people.model';
 
 @Injectable({
     providedIn: 'root',

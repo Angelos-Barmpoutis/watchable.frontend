@@ -1,57 +1,63 @@
-<div class="footer-container">
-    <div class="features-container">
-        <div class="features-container__feature">
-            <h2>Trending</h2>
-            <ul>
-                <li>
-                    <a [routerLink]="['/', 'trending', 'movies']">Movies</a>
-                </li>
-                <li>
-                    <a [routerLink]="['/', 'trending', 'series']">Series</a>
-                </li>
-                <li>
-                    <a [routerLink]="['/', 'trending', 'people']">People</a>
-                </li>
-            </ul>
-        </div>
-        <div class="features-container__feature">
-            <h2>Movies</h2>
-            <ul>
-                <li>
-                    <a [routerLink]="['/', 'movies', 'now-playing']">Now Playing</a>
-                </li>
-                <li>
-                    <a [routerLink]="['/', 'movies', 'popular']">Popular</a>
-                </li>
-                <li>
-                    <a [routerLink]="['/', 'movies', 'top-rated']">Top Rated</a>
-                </li>
-                <li>
-                    <a [routerLink]="['/', 'movies', 'upcoming']">Upcoming</a>
-                </li>
-            </ul>
-        </div>
-        <div class="features-container__feature">
-            <h2>Series</h2>
-            <ul>
-                <li>
-                    <a [routerLink]="['/', 'series', 'airing-today']">Airing Today</a>
-                </li>
-                <li>
-                    <a [routerLink]="['/', 'series', 'popular']">Popular</a>
-                </li>
-                <li>
-                    <a [routerLink]="['/', 'series', 'top-rated']">Top Rated</a>
-                </li>
-            </ul>
-        </div>
-        <div class="features-container__feature">
-            <h2>People</h2>
-            <ul>
-                <li>
-                    <a [routerLink]="['/', 'people', 'popular']">Popular</a>
-                </li>
-            </ul>
+<footer appFadeIn>
+    <div class="wrapper">
+        <!-- <div class="footer-grid">
+            <div class="footer-section">
+                <h3 class="footer-title">Movies</h3>
+                <ul class="footer-links">
+                    <li>
+                        <a [routerLink]="['/', 'trending', 'movies']">Trending</a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/', 'movies', 'now-playing']">Now Playing</a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/', 'movies', 'popular']">Popular</a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/', 'movies', 'top-rated']">Top Rated</a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/', 'movies', 'upcoming']">Upcoming</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">TV Shows</h3>
+                <ul class="footer-links">
+                    <li>
+                        <a [routerLink]="['/', 'trending', 'tv-shows']">Trending</a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/', 'tv-shows', 'airing-today']">Airing Today</a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/', 'tv-shows', 'popular']">Popular</a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/', 'tv-shows', 'top-rated']">Top Rated</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">People</h3>
+                <ul class="footer-links">
+                    <li>
+                        <a [routerLink]="['/', 'trending', 'people']">Trending</a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/', 'people', 'popular']">Popular</a>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+
+        <div class="footer-bottom">
+            <p class="copyright">© 2025 Watchable</p>
+            <div class="powered-by">
+                Powered by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>
+            </div>
         </div>
     </div>
-</div>
+</footer>

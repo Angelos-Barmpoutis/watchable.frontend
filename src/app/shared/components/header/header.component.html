@@ -1,10 +1,65 @@
-<div class="header-container">
-    <a class="header-logo" [routerLink]="['/']">Watchable</a>
-    <ul>
-        <li><a [routerLink]="['/', 'trending']">Trending</a></li>
-        <li><a [routerLink]="['/', 'movies']">Movies</a></li>
-        <li><a [routerLink]="['/', 'series']">Series</a></li>
-        <li><a [routerLink]="['/', 'people']">People</a></li>
-    </ul>
-    <app-search-bar></app-search-bar>
-</div>
+<header appFadeIn>
+    <div class="wrapper">
+        <nav>
+            <div class="nav-start">
+                <a class="header-logo" [routerLink]="['/']">Watchable</a>
+                <ul class="nav-links">
+                    <li><a routerLinkActive="active" [routerLink]="['/', 'movies']">Movies</a></li>
+                    <li><a routerLinkActive="active" [routerLink]="['/', 'tv-shows']">TV Shows</a></li>
+                    <li><a routerLinkActive="active" [routerLink]="['/', 'people']">People</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-end">
+                <button class="search-trigger" aria-label="Search" (click)="toggleSearch()">
+                    <i class="fas fa-search"></i>
+                </button>
+
+                <div class="profile-dropdown" [class.active]="isProfileDropdownOpen">
+                    <button class="profile-button" aria-label="User profile" (click)="toggleProfileDropdown($event)">
+                        <i class="fas fa-user"></i>
+                    </button>
+
+                    <div *ngIf="isProfileDropdownOpen" class="dropdown-menu">
+                        <div class="dropdown-header">
+                            <span>Account</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-heart"></i>
+                                    <span>Favorites</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-bookmark"></i>
+                                    <span>Watchlist</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-star"></i>
+                                    <span>Ratings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-list"></i>
+                                    <span>Lists</span>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    <span>Sign in</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>

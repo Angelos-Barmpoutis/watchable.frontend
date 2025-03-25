@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 
-import { PaginatedMovies } from '../models/movies/paginated-movies.model';
-import { PaginatedPeople } from '../models/people/paginated-people.model';
-import { PaginatedSearchItems } from '../models/shared/paginated-search-items.model';
-import { PaginatedTvSeries } from '../models/tv-series/paginated-tv-series.model';
 import { DEFAULT } from '../constants/defaults.constant';
 import { SearchGateway } from '../gateways/search.gateway';
+import { PaginatedMovies } from '../models/movie.model';
+import { PaginatedPeople } from '../models/people.model';
+import { PaginatedSearchResults } from '../models/search.model';
+import { PaginatedTvShows } from '../models/tv-show.model';
 
 export interface AllSearchItems {
-    multi: PaginatedSearchItems;
+    multi: PaginatedSearchResults;
     movies: PaginatedMovies;
-    tvSeries: PaginatedTvSeries;
+    tvShows: PaginatedTvShows;
     people: PaginatedPeople;
 }
 
@@ -21,7 +21,7 @@ export interface AllSearchItems {
 export class SearchFacade {
     constructor(private searchGateway: SearchGateway) {}
 
-    public getMulti(query: string = '', page: number = DEFAULT.page): Observable<PaginatedSearchItems> {
+    public getMulti(query: string = '', page: number = DEFAULT.page): Observable<PaginatedSearchResults> {
         return this.searchGateway.getMulti(query, page);
     }
 
@@ -29,8 +29,8 @@ export class SearchFacade {
         return this.searchGateway.getMovies(query, page);
     }
 
-    public getTvSeries(query: string = '', page: number = DEFAULT.page): Observable<PaginatedTvSeries> {
-        return this.searchGateway.getTvSeries(query, page);
+    public getTvSeries(query: string = '', page: number = DEFAULT.page): Observable<PaginatedTvShows> {
+        return this.searchGateway.getTvShows(query, page);
     }
 
     public getPeople(query: string = '', page: number = DEFAULT.page): Observable<PaginatedPeople> {
@@ -41,7 +41,7 @@ export class SearchFacade {
         return forkJoin({
             multi: this.getMulti(query),
             movies: this.getMovies(query),
-            tvSeries: this.getTvSeries(query),
+            tvShows: this.getTvSeries(query),
             people: this.getPeople(query),
         });
     }

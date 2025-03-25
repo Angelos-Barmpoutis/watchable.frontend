@@ -1,0 +1,28 @@
+<nav class="bottom-nav">
+    <div class="bottom-nav__container">
+        <a
+            routerLink="/"
+            routerLinkActive="active"
+            class="bottom-nav__item"
+            [routerLinkActiveOptions]="{ exact: true }"
+        >
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+
+        <a routerLink="/movies" routerLinkActive="active" class="bottom-nav__item">
+            <i class="fas fa-film"></i>
+            <span>Movies</span>
+        </a>
+
+        <a routerLink="/tv-shows" routerLinkActive="active" class="bottom-nav__item">
+            <i class="fas fa-tv"></i>
+            <span>TV Shows</span>
+        </a>
+
+        <a routerLink="/people" routerLinkActive="active" class="bottom-nav__item">
+            <i class="fas fa-users"></i>
+            <span>People</span>
+        </a>
+    </div>
+</nav>

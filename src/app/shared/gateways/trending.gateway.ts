@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { TrendingDriver } from '../drivers/trending.driver';
-import { TRENDING_FILTER } from '../enumerations/trending-filter.enum';
-import { PaginatedMovies } from '../models/movies/paginated-movies.model';
-import { PaginatedPeople } from '../models/people/paginated-people.model';
-import { PaginatedTvSeries } from '../models/tv-series/paginated-tv-series.model';
+import { TIME_OPTION } from '../enumerations/time-option.enum';
+import { PaginatedMovies } from '../models/movie.model';
+import { PaginatedPeople } from '../models/people.model';
+import { PaginatedTvShows } from '../models/tv-show.model';
 import { UrlService } from '../services/url.service';
 
 @Injectable({
@@ -17,21 +17,21 @@ export class TrendingGateway {
         private urlService: UrlService,
     ) {}
 
-    getTrendingMovies(trendingFilter: TRENDING_FILTER, page: number): Observable<PaginatedMovies> {
-        return this.trendingDriver.getTrendingMovies(
-            this.urlService.urlFor(['trending', 'movie', `${trendingFilter}?page=${page}`]),
+    getMovies(trendingFilter: TIME_OPTION, page: number): Observable<PaginatedMovies> {
+        return this.trendingDriver.getMovies(
+            this.urlService.createUrlForTMDB(['trending', 'movie', `${trendingFilter}?page=${page}`]),
         );
     }
 
-    getTrendingTvSeries(trendingFilter: string, page: number): Observable<PaginatedTvSeries> {
-        return this.trendingDriver.getTrendingTvSeries(
-            this.urlService.urlFor(['trending', 'tv', `${trendingFilter}?page=${page}`]),
+    getTvShows(trendingFilter: TIME_OPTION, page: number): Observable<PaginatedTvShows> {
+        return this.trendingDriver.getTvShows(
+            this.urlService.createUrlForTMDB(['trending', 'tv', `${trendingFilter}?page=${page}`]),
         );
     }
 
-    getTrendingPeople(trendingFilter: TRENDING_FILTER, page: number): Observable<PaginatedPeople> {
-        return this.trendingDriver.getTrendingPeople(
-            this.urlService.urlFor(['trending', 'person', `${trendingFilter}?page=${page}`]),
+    getPeople(trendingFilter: TIME_OPTION, page: number): Observable<PaginatedPeople> {
+        return this.trendingDriver.getPeople(
+            this.urlService.createUrlForTMDB(['trending', 'person', `${trendingFilter}?page=${page}`]),
         );
     }
 }

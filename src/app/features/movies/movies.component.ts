@@ -1,42 +1,63 @@
+// movies.component.ts
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { Component, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
+import { Observable } from 'rxjs';
 
-import { DEFAULT } from '../../shared/constants/defaults.constant';
-import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
-import { POSTER_SIZE } from '../../shared/enumerations/poster-size.enum';
-import { AllMovies, MoviesFacade } from '../../shared/facades/movies.facade';
-import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
+import { AbstractGenreLoaderComponent } from '../../shared/abstract/genre-loader.abstract';
+import { CarouselMediaComponent } from '../../shared/components/carousel-media/carousel-media.component';
+import { InfiniteScrollLoaderComponent } from '../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
+import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
+import { MEDIA_TYPE } from '../../shared/enumerations/media-type.enum';
+import { MovieFacade } from '../../shared/facades/movie.facade';
+import { filterMediaItems } from '../../shared/helpers/filter-items.helper';
+import { Movie, PaginatedMovies } from '../../shared/models/movie.model';
+import { LocalStorageService } from '../../shared/services/local-storage.service';
 
 @Component({
     selector: 'app-movies',
     standalone: true,
-    providers: [],
     templateUrl: './movies.component.html',
     styleUrl: './movies.component.scss',
-    imports: [CommonModule, PosterPathDirective, LimitToPipe, RouterLink],
+    imports: [CommonModule, SectionHeaderComponent, CarouselMediaComponent, InfiniteScrollLoaderComponent],
 })
-export class MoviesComponent implements OnInit {
-    public posterSize: POSTER_SIZE = DEFAULT.mediumPosterSize;
-    public posterFallback = DEFAULT.mediumPosterFallback;
-    public allMovies!: AllMovies;
+export class MoviesComponent extends AbstractGenreLoaderComponent<Movie> {
+    readonly MEDIA_TYPE = MEDIA_TYPE;
+    nowPlaying: Array<Movie> = [];
+    popular: Array<Movie> = [];
+    topRated: Array<Movie> = [];
+    upcoming: Array<Movie> = [];
+    isMainContentLoading = false;
+
+    protected mediaType = MEDIA_TYPE.Movie;
+    protected genreStorageKey = 'movieGenres';
 
     constructor(
-        private movieFacade: MoviesFacade,
-        private destroyRef: DestroyRef,
-    ) {}
-
-    ngOnInit(): void {
-        this.getAllMovies();
+        private movieFacade: MovieFacade,
+        destroyRef: DestroyRef,
+        localStorageService: LocalStorageService,
+    ) {
+        super(destroyRef, localStorageService);
     }
 
-    private getAllMovies(): void {
+    protected loadInitialContent(): void {
+        this.isMainContentLoading = true;
         this.movieFacade
             .getAllMovies()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((allMovies) => {
-                this.allMovies = allMovies;
+                this.nowPlaying = filterMediaItems(allMovies.nowPlaying.results) as Array<Movie>;
+                this.popular = filterMediaItems(allMovies.popular.results) as Array<Movie>;
+                this.topRated = filterMediaItems(allMovies.topRated.results) as Array<Movie>;
+                this.upcoming = filterMediaItems(allMovies.upcoming.results) as Array<Movie>;
+                this.isMainContentLoading = false;
             });
+    }
+
+    protected getItemsByGenreIds(
+        currentGenreIndex: number,
+        genresPerBatch: number,
+    ): Observable<Record<string, PaginatedMovies>> {
+        return this.movieFacade.getMoviesByGenreIds(currentGenreIndex, genresPerBatch);
     }
 }

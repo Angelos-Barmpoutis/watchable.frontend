@@ -11,10 +11,10 @@ import { ProfilePathDirective } from '../../../../shared/directives/profile-path
 import { BACKDROP_SIZE } from '../../../../shared/enumerations/backdrop-size.enum';
 import { POSTER_SIZE } from '../../../../shared/enumerations/poster-size.enum';
 import { PROFILE_SIZE } from '../../../../shared/enumerations/profile-size.enum';
-import { MoviesFacade } from '../../../../shared/facades/movies.facade';
+import { MovieFacade } from '../../../../shared/facades/movie.facade';
 import { getBackgroundImageUrl } from '../../../../shared/helpers/background-image-url';
-import { MovieDetails } from '../../../../shared/models/movies/details.model';
-import { Review } from '../../../../shared/models/shared/review.model';
+import { MovieDetails } from '../../../../shared/models/movie.model';
+import { Review } from '../../../../shared/models/review.model';
 import { AvatarLetterPipe } from '../../../../shared/pipes/avatar-letter.pipe';
 import { TimePipe } from '../../../../shared/pipes/time.pipe';
 
@@ -45,7 +45,7 @@ export class MoviesMovieComponent implements OnInit {
     public imageBaseUrl = environment.imageBaseUrl;
 
     constructor(
-        private movieSFacade: MoviesFacade,
+        private movieSFacade: MovieFacade,
         private route: ActivatedRoute,
         private destroyRef: DestroyRef,
     ) {}
@@ -60,7 +60,6 @@ export class MoviesMovieComponent implements OnInit {
                 .subscribe((movie) => {
                     console.log(movie);
                     this.movie = movie;
-
                     this.reviews = movie.reviews.results;
                 });
         }

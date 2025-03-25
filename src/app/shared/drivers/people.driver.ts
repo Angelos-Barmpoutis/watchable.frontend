@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { PaginatedPeople } from '../models/people/paginated-people.model';
+import { PaginatedPeople } from '../models/people.model';
 import { HttpService } from '../services/http.service';
 
 @Injectable({

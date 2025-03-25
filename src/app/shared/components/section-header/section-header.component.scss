@@ -1,0 +1,97 @@
+@import "../../../../styles.scss";
+
+:host {
+    flex-grow: 1;
+}
+
+.section-header {
+    .title-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 6px;
+    }
+
+    .title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-regular;
+        color: $text-primary;
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        margin: 0;
+        width: 100%;
+
+        // &::before {
+        //     content: "";
+        //     display: block;
+        //     width: 6px;
+        //     height: $font-size-lg;
+        //     background-color: $primary-color;
+        //     border-radius: $spacing-sm;
+        //     font-size: $font-size-lg;
+        // }
+
+        .title-link {
+            gap: $spacing-md;
+            display: flex;
+            align-items: baseline;
+            line-height: 1;
+            width: fit-content;
+
+            .explore-all {
+                font-size: $font-size-md;
+                font-weight: $font-weight-medium;
+                display: flex;
+                align-items: baseline;
+                gap: $spacing-xs;
+                transition: all $transition-normal;
+                color: $primary-color;
+                opacity: 0;
+                text-decoration: none;
+                cursor: pointer;
+
+                .chevron-icon {
+                    color: inherit;
+                    font-size: $font-size-sm;
+                }
+
+                &:hover {
+                    color: lighten($primary-color, 10%);
+                }
+            }
+        }
+    }
+
+    &:hover {
+        .title .title-link .explore-all {
+            opacity: 1;
+        }
+    }
+}
+
+@media (max-width: map-get($breakpoints, "sm")) {
+    :host {
+        width: 100%;
+    }
+
+    .section-header {
+        .title {
+            font-size: $font-size-md;
+
+            .title-link {
+                width: 100%;
+                justify-content: space-between;
+
+                .explore-all {
+                    opacity: 1;
+                    font-size: $font-size-sm;
+                    margin-left: auto;
+
+                    .chevron-icon {
+                        font-size: $font-size-sm;
+                    }
+                }
+            }
+        }
+    }
+}

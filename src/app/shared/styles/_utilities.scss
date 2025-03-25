@@ -1,0 +1,43 @@
+.wrapper {
+    max-width: $container-2xl;
+    margin: 0 auto;
+    padding: 0 $spacing-lg;
+}
+
+.list-container {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+}
+
+.reviews-container {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+}
+
+.genre {
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-sm;
+    background-color: rgba($primary-color, 0.1);
+    color: $primary-color;
+    border-radius: $border-radius-full;
+}
+
+@media (max-width: map-get($breakpoints, "sm")) {
+    .wrapper {
+        padding: 0 $spacing-md;
+    }
+
+    .list-container {
+        gap: $spacing-md;
+    }
+
+    .reviews-container {
+        gap: $spacing-sm;
+    }
+
+    .genre {
+        @include text-clamp(1);
+    }
+}

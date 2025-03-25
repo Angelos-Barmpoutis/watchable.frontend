@@ -1,0 +1,68 @@
+@import "../../../../styles.scss";
+
+.bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: $background-color;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    z-index: map-get($z-layers, "header");
+    border-top: 1px solid rgba($border-color, 0.3);
+    padding: $spacing-md 0;
+
+    &__container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        color: $text-secondary;
+        text-decoration: none;
+        transition: color $transition-normal;
+        position: relative;
+
+        i {
+            font-size: $font-size-md;
+            margin-bottom: $spacing-xs;
+        }
+
+        span {
+            font-size: $font-size-xs;
+            font-weight: $font-weight-medium;
+        }
+
+        &.active {
+            color: $primary-color;
+        }
+
+        &:hover,
+        &:focus {
+            color: $primary-color;
+        }
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, $background-color, 0%, rgba(15, 29, 82, 1) 100%);
+    }
+}
+
+@media (max-width: map-get($breakpoints, "sm")) {
+    .bottom-nav {
+        display: block;
+    }
+}

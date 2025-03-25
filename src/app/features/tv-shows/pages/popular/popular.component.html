@@ -1,0 +1,24 @@
+<section>
+    <header>
+        <app-section-header title="Popular TV Shows"> </app-section-header>
+    </header>
+    <div class="list-container">
+        <ng-container *ngIf="items.length; else loadingState">
+            <app-tv-show-list-item
+                *ngFor="let tvShow of items; trackBy: trackByItemId"
+                [tvShow]="tvShow"
+                [isLoading]="false"
+            >
+            </app-tv-show-list-item>
+        </ng-container>
+    </div>
+    <app-infinite-scroll-loader
+        [disabled]="isLoading || currentPage >= totalPages"
+        (scrolled)="loadMore()"
+    ></app-infinite-scroll-loader>
+</section>
+
+<ng-template #loadingState>
+    <app-tv-show-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
+    </app-tv-show-list-item>
+</ng-template>

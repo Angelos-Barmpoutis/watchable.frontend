@@ -1,145 +1,140 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
+import { CarouselMediaComponent } from '../../shared/components/carousel-media/carousel-media.component';
+import { CarouselPersonComponent } from '../../shared/components/carousel-person/carousel-person.component';
+import { InfiniteScrollLoaderComponent } from '../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
+import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
 import { DEFAULT } from '../../shared/constants/defaults.constant';
-import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
-import { ProfilePathDirective } from '../../shared/directives/profile-path.directive';
-import { POSTER_SIZE } from '../../shared/enumerations/poster-size.enum';
-import { PROFILE_SIZE } from '../../shared/enumerations/profile-size.enum';
-import { TRENDING_FILTER } from '../../shared/enumerations/trending-filter.enum';
+import { MEDIA_TYPE } from '../../shared/enumerations/media-type.enum';
 import { TrendingFacade } from '../../shared/facades/trending.facade';
-import { Movie } from '../../shared/models/movies/movie.model';
-import { Person } from '../../shared/models/people/person.model';
-import { KnownForItem } from '../../shared/models/shared/known-for-item.model';
-import { TvSeries } from '../../shared/models/tv-series/tv-series.model';
-import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
+import { filterMediaItems, filterPersonItems } from '../../shared/helpers/filter-items.helper';
+import { Genre } from '../../shared/models/genre.model';
+import { Movie } from '../../shared/models/movie.model';
+import { Person } from '../../shared/models/people.model';
+import { TvShow } from '../../shared/models/tv-show.model';
+import { LocalStorageService } from '../../shared/services/local-storage.service';
 
 @Component({
     selector: 'app-trending',
     standalone: true,
-    providers: [],
     templateUrl: './trending.component.html',
     styleUrl: './trending.component.scss',
-    imports: [CommonModule, PosterPathDirective, ProfilePathDirective, ReactiveFormsModule, LimitToPipe, RouterLink],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        SectionHeaderComponent,
+        CarouselMediaComponent,
+        CarouselPersonComponent,
+        InfiniteScrollLoaderComponent,
+    ],
 })
 export class TrendingComponent implements OnInit {
-    posterSize: POSTER_SIZE = DEFAULT.mediumPosterSize;
-    posterFallback = DEFAULT.mediumPosterFallback;
-    profileSize: PROFILE_SIZE = DEFAULT.mediumProfileSize;
-    profileFallback = DEFAULT.mediumProfileFallback;
-    TRENDING_FILTER = TRENDING_FILTER;
-    trendingForm!: FormGroup;
-    isLoading = false;
+    readonly MEDIA_TYPE = MEDIA_TYPE;
+    currentMovieGenreIndex = 0;
+    currentTvShowGenreIndex = 0;
+    genresPerBatch = DEFAULT.genresBatchSize;
+    isMainContentLoading = false;
+    isLoadingMoreGenres = false;
+    allGenresLoaded = false;
     trendingMovies: Array<Movie> = [];
-    trendingTvSeries: Array<TvSeries> = [];
+    trendingTvShows: Array<TvShow> = [];
     trendingPeople: Array<Person> = [];
-    private get trendingMoviesFilterFormField(): FormControl {
-        return this.trendingForm.get('moviesFilter') as FormControl;
-    }
-
-    private get trendingTvSeriesFilterFormField(): FormControl {
-        return this.trendingForm.get('tvSeriesFilter') as FormControl;
-    }
-
-    private get trendingPeopleFilterFormField(): FormControl {
-        return this.trendingForm.get('peopleFilter') as FormControl;
-    }
+    movieGenres: Array<Genre> = [];
+    tvShowGenres: Array<Genre> = [];
+    loadedGenres: Array<{
+        type: MEDIA_TYPE.Movie | MEDIA_TYPE.TvShow;
+        genreName: string;
+        genreId: number;
+        items: Array<Movie | TvShow>;
+    }> = [];
 
     constructor(
         private trendingFacade: TrendingFacade,
-        private formBuilder: FormBuilder,
         private destroyRef: DestroyRef,
+        private localStorageService: LocalStorageService,
     ) {}
 
     ngOnInit(): void {
-        this.initTrendingForm();
+        this.getStoredGenres();
         this.getAllTrending();
-        this.onTrendingFilterChanges();
     }
 
-    isMovie(item: KnownForItem): boolean {
-        return item.media_type === 'movie';
-    }
-
-    private getTrendingMovies(): void {
-        this.isLoading = true;
-        const trendingFilter: TRENDING_FILTER =
-            (this.trendingMoviesFilterFormField?.value as TRENDING_FILTER) ?? DEFAULT.trendingFilter;
-
-        this.trendingFacade
-            .getTrendingMovies(trendingFilter)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((trendingMovies) => {
-                this.trendingMovies = trendingMovies.results;
-                this.isLoading = false;
-            });
-    }
-
-    private getTrendingTvSeries(): void {
-        this.isLoading = true;
-        const trendingFilter: TRENDING_FILTER =
-            (this.trendingTvSeriesFilterFormField?.value as TRENDING_FILTER) ?? DEFAULT.trendingFilter;
-
-        this.trendingFacade
-            .getTrendingTvSeries(trendingFilter)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((trendingTvSeries) => {
-                this.trendingTvSeries = trendingTvSeries.results;
-                this.isLoading = false;
-            });
-    }
-
-    private getTrendingPeople(): void {
-        this.isLoading = true;
-        const trendingFilter: TRENDING_FILTER =
-            (this.trendingPeopleFilterFormField?.value as TRENDING_FILTER) ?? DEFAULT.trendingFilter;
-
-        this.trendingFacade
-            .getTrendingPeople(trendingFilter)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((trendingPeople) => {
-                this.trendingPeople = trendingPeople.results;
-                this.isLoading = false;
-            });
+    private getStoredGenres(): void {
+        this.movieGenres = this.localStorageService.getItem<Array<Genre>>('movieGenres') ?? [];
+        this.tvShowGenres = this.localStorageService.getItem<Array<Genre>>('tvShowGenres') ?? [];
     }
 
     private getAllTrending(): void {
-        this.isLoading = true;
+        this.isMainContentLoading = true;
 
         this.trendingFacade
             .getAllTrending()
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((allTrending) => {
-                this.trendingMovies = allTrending.movies.results;
-                this.trendingTvSeries = allTrending.tvSeries.results;
-                this.trendingPeople = allTrending.people.results;
-
-                this.isLoading = false;
+            .subscribe((results) => {
+                this.trendingMovies = filterMediaItems(results.movies.results) as Array<Movie>;
+                this.trendingTvShows = filterMediaItems(results.tvShows.results) as Array<TvShow>;
+                this.trendingPeople = filterPersonItems(results.people.results);
+                this.isMainContentLoading = false;
             });
     }
 
-    private initTrendingForm(): void {
-        this.trendingForm = this.formBuilder.group({
-            moviesFilter: DEFAULT.trendingFilter,
-            tvSeriesFilter: DEFAULT.trendingFilter,
-            peopleFilter: DEFAULT.trendingFilter,
-        });
+    loadMore(): void {
+        if (
+            this.currentMovieGenreIndex >= this.movieGenres.length &&
+            this.currentTvShowGenreIndex >= this.tvShowGenres.length
+        ) {
+            this.allGenresLoaded = true;
+            return;
+        }
+
+        this.loadMoreGenres();
     }
 
-    private onTrendingFilterChanges(): void {
-        this.trendingMoviesFilterFormField.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-            this.getTrendingMovies();
-        });
+    private loadMoreGenres(): void {
+        this.isLoadingMoreGenres = true;
 
-        this.trendingTvSeriesFilterFormField.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-            this.getTrendingTvSeries();
-        });
+        this.trendingFacade
+            .getMoviesAndTvShowsByGenreIds(
+                this.currentMovieGenreIndex,
+                this.currentTvShowGenreIndex,
+                this.genresPerBatch,
+            )
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((results) => {
+                Object.entries(results).forEach(([key, value]) => {
+                    const [type, genreName] = key.split('_');
+                    const items = filterMediaItems(value.results);
 
-        this.trendingPeopleFilterFormField.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-            this.getTrendingPeople();
-        });
+                    if (items.length > 0) {
+                        const genreId =
+                            type === 'movie'
+                                ? this.movieGenres.find((g) => g.name === genreName)?.id
+                                : this.tvShowGenres.find((g) => g.name === genreName)?.id;
+
+                        if (genreId) {
+                            this.loadedGenres.push({
+                                type: type as MEDIA_TYPE.Movie | MEDIA_TYPE.TvShow,
+                                genreName,
+                                genreId,
+                                items: items,
+                            });
+                        }
+                    }
+                });
+
+                // Update indices for next batch
+                this.currentMovieGenreIndex += Math.ceil(this.genresPerBatch / 2);
+                this.currentTvShowGenreIndex += Math.ceil(this.genresPerBatch / 2);
+
+                // Check if we've loaded all genres
+                this.allGenresLoaded =
+                    this.currentMovieGenreIndex >= this.movieGenres.length &&
+                    this.currentTvShowGenreIndex >= this.tvShowGenres.length;
+
+                this.isLoadingMoreGenres = false;
+            });
     }
 }

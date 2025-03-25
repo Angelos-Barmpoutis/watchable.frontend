@@ -1,0 +1,45 @@
+@import "../../../../styles.scss";
+
+.person {
+    width: 100%;
+    height: 100%;
+
+    .person-profile {
+        width: 100%;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        overflow: hidden;
+        transition: filter $transition-normal;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform $transition-normal;
+        }
+    }
+
+    &:hover {
+        .person-profile {
+            img {
+                transform: scale(1.05);
+            }
+        }
+    }
+}
+
+// Skeleton styles
+.skeleton-person {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    .skeleton-profile {
+        width: 100%;
+        aspect-ratio: 1/1;
+        @include skeleton-loading;
+        border-radius: 50%;
+    }
+}

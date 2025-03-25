@@ -1,17 +1,19 @@
-<tui-root>
-    <header id="header">
+<ng-container *ngIf="isAppReady$ | async; else loading">
+    <div class="app">
         <app-header></app-header>
-    </header>
-    <main>
-        <router-outlet />
-    </main>
-    <footer>
+        <main>
+            <app-search-bar *ngIf="searchService.isSearchOpen$ | async"></app-search-bar>
+            <app-page>
+                <router-outlet />
+            </app-page>
+        </main>
         <app-footer></app-footer>
-    </footer>
-    <!-- <tui-notifications></tui-notifications>
-    <tui-dialog-host></tui-dialog-host>
-    <tui-popup-host></tui-popup-host>
-    <tui-tooltip-host></tui-tooltip-host>
-    <tui-loader-host></tui-loader-host>
-    <tui-spinner-host></tui-spinner -->
-</tui-root>
+        <app-mobile-navigation></app-mobile-navigation>
+    </div>
+</ng-container>
+
+<ng-template #loading>
+    <div class="loading-container">
+        <div class="loading-spinner"></div>
+    </div>
+</ng-template>

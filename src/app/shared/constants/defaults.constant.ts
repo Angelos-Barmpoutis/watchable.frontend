@@ -1,27 +1,34 @@
+import { environment } from '../../../environments/environment';
 import { BACKDROP_SIZE } from '../enumerations/backdrop-size.enum';
 import { POSTER_SIZE } from '../enumerations/poster-size.enum';
 import { PROFILE_SIZE } from '../enumerations/profile-size.enum';
-import { SEARCH_FILTER } from '../enumerations/search-filter.enum';
-import { TRENDING_FILTER } from '../enumerations/trending-filter.enum';
+import { SEARCH_OPTION } from '../enumerations/search-option.enum';
+import { TIME_OPTION } from '../enumerations/time-option.enum';
+
+const placeholdQueryParameters = 'text=Image\\nNot+Available&font=roboto';
 
 export const DEFAULT = {
     page: 1,
-    totalPages: 10,
-    searchFilter: SEARCH_FILTER.Multi,
-    searchItemsCount: 5,
-    trendingFilter: TRENDING_FILTER.Day,
+    totalPages: 0,
+    itemsPerPage: 20,
+    selectedTabId: 0,
+    genresBatchSize: 3,
+    infiniteScrollThreshold: 0.1,
+    infiniteScrollRootMargin: 278,
+    searchOption: SEARCH_OPTION.Multi,
+    timeOption: TIME_OPTION.Day,
     smallPosterSize: POSTER_SIZE.w92,
-    smallPosterFallback: 'https://placehold.co/92x138?text=Image\\nNot+Available&font=roboto',
     mediumPosterSize: POSTER_SIZE.w185,
-    mediumPosterFallback: 'https://placehold.co/185x278?text=Image\\nNot+Available&font=roboto',
     largePosterSize: POSTER_SIZE.w342,
-    largePosterFallback: 'https://placehold.co/342x513?text=Image\\nNot+Available&font=roboto',
     smallProfileSize: PROFILE_SIZE.w45,
-    smallProfileFallback: 'https://placehold.co/45x68?text=Image\\nNot+Available&font=roboto',
     mediumProfileSize: PROFILE_SIZE.w185,
-    mediumProfileFallback: 'https://placehold.co/185x278?text=Image\\nNot+Available&font=roboto',
     mediumBackdropSize: BACKDROP_SIZE.w780,
-    mediumBackdropFallback: 'https://placehold.co/300x720?text=Image\\nNot+Available&font=roboto',
     largeBackdropSize: BACKDROP_SIZE.original,
-    largeBackdropFallback: 'https://placehold.co/1280x720?text=Image\\nNot+Available&font=roboto',
+    smallPosterFallback: `${environment.placeholdBaseUrl}92x138?${placeholdQueryParameters}`,
+    mediumPosterFallback: `${environment.placeholdBaseUrl}185x278?${placeholdQueryParameters}`,
+    largePosterFallback: `${environment.placeholdBaseUrl}342x513?${placeholdQueryParameters}`,
+    smallProfileFallback: `${environment.placeholdBaseUrl}45x68?${placeholdQueryParameters}`,
+    mediumProfileFallback: `${environment.placeholdBaseUrl}185x278?${placeholdQueryParameters}`,
+    mediumBackdropFallback: `${environment.placeholdBaseUrl}300x720?${placeholdQueryParameters}`,
+    largeBackdropFallback: `${environment.placeholdBaseUrl}1280x720?${placeholdQueryParameters}`,
 };

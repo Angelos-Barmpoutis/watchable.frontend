@@ -3,18 +3,19 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
     {
         path: '',
+        pathMatch: 'full',
         loadComponent: () => import('./trending.component').then((c) => c.TrendingComponent),
     },
     {
-        path: 'movies',
+        path: 'trending/movies',
         loadComponent: () => import('./pages/movies/movies.component').then((c) => c.TrendingMoviesComponent),
     },
     {
-        path: 'series',
-        loadComponent: () => import('./pages/tv-series/tv-series.component').then((c) => c.TrendingTvSeriesComponent),
+        path: 'trending/tv-shows',
+        loadComponent: () => import('./pages/tv-shows/tv-shows.component').then((c) => c.TrendingTvShowsComponent),
     },
     {
-        path: 'people',
+        path: 'trending/people',
         loadComponent: () => import('./pages/people/people.component').then((c) => c.TrendingPeopleComponent),
     },
 ];

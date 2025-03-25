@@ -1,25 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Params, RouterLink } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { DEFAULT } from '../../shared/constants/defaults.constant';
-import { PosterPathDirective } from '../../shared/directives/poster-path.directive';
-import { ProfilePathDirective } from '../../shared/directives/profile-path.directive';
+import { MEDIA_TYPE } from '../../shared/enumerations/media-type.enum';
 import { POSTER_SIZE } from '../../shared/enumerations/poster-size.enum';
 import { PROFILE_SIZE } from '../../shared/enumerations/profile-size.enum';
-import { SEARCH_FILTER } from '../../shared/enumerations/search-filter.enum';
+import { SEARCH_OPTION } from '../../shared/enumerations/search-option.enum';
 import { AllSearchItems, SearchFacade } from '../../shared/facades/search.facade';
-import { Movie } from '../../shared/models/movies/movie.model';
-import { Person } from '../../shared/models/people/person.model';
-import { KnownForItem } from '../../shared/models/shared/known-for-item.model';
-import { SearchItem } from '../../shared/models/shared/search-item.model';
-import { TvSeries } from '../../shared/models/tv-series/tv-series.model';
+import { KnownForItem } from '../../shared/models/known-for-item.model';
+import { Movie } from '../../shared/models/movie.model';
+import { Person } from '../../shared/models/people.model';
+import { SearchResult } from '../../shared/models/search.model';
+import { TvShow } from '../../shared/models/tv-show.model';
 
 @Component({
     selector: 'app-search',
     standalone: true,
-    imports: [CommonModule, PosterPathDirective, ProfilePathDirective, RouterLink],
+    imports: [CommonModule],
     templateUrl: './search.component.html',
     styleUrl: './search.component.scss',
 })
@@ -28,16 +27,16 @@ export class SearchComponent implements OnInit {
     public posterFallback = DEFAULT.smallPosterFallback;
     public profileSize: PROFILE_SIZE = DEFAULT.mediumProfileSize;
     public profileFallback = DEFAULT.mediumProfileFallback;
-    public SEARCH_FILTER = SEARCH_FILTER;
+    public SEARCH_FILTER = SEARCH_OPTION;
     public allSearchItems!: AllSearchItems;
-    public searchMulti: Array<SearchItem> = [];
+    public searchMulti: Array<SearchResult> = [];
     public searchMovies: Array<Movie> = [];
-    public searchTvSeries: Array<TvSeries> = [];
+    public searchTvSeries: Array<TvShow> = [];
     public searchPeople: Array<Person> = [];
     public currentPage = DEFAULT.page;
     public totalPages = DEFAULT.totalPages;
     public searchQuery: string = '';
-    public searchFilter = DEFAULT.searchFilter;
+    public searchFilter = DEFAULT.searchOption;
 
     constructor(
         private searchFacade: SearchFacade,
@@ -50,44 +49,44 @@ export class SearchComponent implements OnInit {
     }
 
     public isMovie(item: KnownForItem): boolean {
-        return item.media_type === 'movie';
+        return item.media_type === MEDIA_TYPE.Movie;
     }
 
     public onLoadMore(): void {
         this.currentPage++;
 
         switch (this.searchFilter) {
-            case SEARCH_FILTER.Multi:
+            case SEARCH_OPTION.Multi:
                 this.getMulti(true, this.searchQuery, this.currentPage);
                 break;
-            case SEARCH_FILTER.Movie:
+            case SEARCH_OPTION.Movie:
                 this.getMovies(true, this.searchQuery, this.currentPage);
                 break;
-            case SEARCH_FILTER.Tv:
+            case SEARCH_OPTION.Tv:
                 this.getTvSeries(true, this.searchQuery, this.currentPage);
                 break;
-            case SEARCH_FILTER.Person:
+            case SEARCH_OPTION.Person:
                 this.getPeople(true, this.searchQuery, this.currentPage);
                 break;
         }
     }
 
-    public setSearchFilter(filter: SEARCH_FILTER): void {
+    public setSearchFilter(filter: SEARCH_OPTION): void {
         this.currentPage = DEFAULT.page;
         this.totalPages = DEFAULT.totalPages;
         this.searchFilter = filter;
 
         switch (this.searchFilter) {
-            case SEARCH_FILTER.Multi:
+            case SEARCH_OPTION.Multi:
                 this.getMulti(false, this.searchQuery, this.currentPage);
                 break;
-            case SEARCH_FILTER.Movie:
+            case SEARCH_OPTION.Movie:
                 this.getMovies(false, this.searchQuery, this.currentPage);
                 break;
-            case SEARCH_FILTER.Tv:
+            case SEARCH_OPTION.Tv:
                 this.getTvSeries(false, this.searchQuery, this.currentPage);
                 break;
-            case SEARCH_FILTER.Person:
+            case SEARCH_OPTION.Person:
                 this.getPeople(false, this.searchQuery, this.currentPage);
                 break;
         }
@@ -98,20 +97,20 @@ export class SearchComponent implements OnInit {
             const searchFilter = filter;
 
             switch (searchFilter) {
-                case SEARCH_FILTER.Multi:
-                    this.setSearchFilter(SEARCH_FILTER.Multi);
+                case SEARCH_OPTION.Multi:
+                    this.setSearchFilter(SEARCH_OPTION.Multi);
                     break;
-                case SEARCH_FILTER.Movie:
-                    this.setSearchFilter(SEARCH_FILTER.Movie);
+                case SEARCH_OPTION.Movie:
+                    this.setSearchFilter(SEARCH_OPTION.Movie);
                     break;
-                case SEARCH_FILTER.Tv:
-                    this.setSearchFilter(SEARCH_FILTER.Tv);
+                case SEARCH_OPTION.Tv:
+                    this.setSearchFilter(SEARCH_OPTION.Tv);
                     break;
-                case SEARCH_FILTER.Person:
-                    this.setSearchFilter(SEARCH_FILTER.Person);
+                case SEARCH_OPTION.Person:
+                    this.setSearchFilter(SEARCH_OPTION.Person);
                     break;
                 default:
-                    this.setSearchFilter(DEFAULT.searchFilter);
+                    this.setSearchFilter(DEFAULT.searchOption);
                     break;
             }
         });

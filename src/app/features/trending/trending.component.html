@@ -1,115 +1,40 @@
-<section class="media-section" id="trending-movies">
+<section>
     <header>
-        <h2>
-            <a [routerLink]="['movies']"> Movies </a>
-        </h2>
-        <form [formGroup]="trendingForm">
-            <select formControlName="moviesFilter">
-                <option [value]="TRENDING_FILTER.Day">{{ TRENDING_FILTER.Day | titlecase }}</option>
-                <option [value]="TRENDING_FILTER.Week">{{ TRENDING_FILTER.Week | titlecase }}</option>
-            </select>
-        </form>
+        <app-section-header title="Trending Movies Today" [redirectUrl]="['trending', 'movies']"> </app-section-header>
     </header>
-    <div class="media-container">
-        <div *ngFor="let movie of trendingMovies | limitTo: 10" class="media-container__media">
-            <ng-container>
-                <img
-                    *ngIf="movie.poster_path"
-                    appPosterPath
-                    [alt]="movie.title"
-                    [size]="posterSize"
-                    [posterPath]="movie.poster_path"
-                />
-                <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
-            </ng-container>
-            <h3>{{ movie.title }}</h3>
-            <div class="media-container__media__details">
-                <span class="media-container__media__details__vote-average">
-                    {{ +movie.vote_average | number: "1.0-1" }}
-                </span>
-                <span class="media-container__media__details__release-date">
-                    {{ movie.release_date | date: "yyyy" }}
-                </span>
-            </div>
-        </div>
-    </div>
+    <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="trendingMovies" [isLoading]="isMainContentLoading">
+    </app-carousel-media>
 </section>
 
-<section class="media-section" id="trending-series">
+<section>
     <header>
-        <h2>
-            <a [routerLink]="['series']"> Series </a>
-        </h2>
-        <form [formGroup]="trendingForm">
-            <select formControlName="tvSeriesFilter">
-                <option [value]="TRENDING_FILTER.Day">{{ TRENDING_FILTER.Day | titlecase }}</option>
-                <option [value]="TRENDING_FILTER.Week">{{ TRENDING_FILTER.Week | titlecase }}</option>
-            </select>
-        </form>
+        <app-section-header title="Trending TV Shows Today" [redirectUrl]="['trending', 'tv-shows']">
+        </app-section-header>
     </header>
-    <div class="media-container">
-        <div *ngFor="let tvSerie of trendingTvSeries | limitTo: 10" class="media-container__media">
-            <ng-container>
-                <img
-                    *ngIf="tvSerie.poster_path"
-                    appPosterPath
-                    [alt]="tvSerie.name"
-                    [size]="posterSize"
-                    [posterPath]="tvSerie.poster_path"
-                />
-                <img *ngIf="!tvSerie.poster_path" alt="Image not available" [src]="posterFallback" />
-            </ng-container>
-            <h3>{{ tvSerie.name }}</h3>
-            <div class="media-container__media__details">
-                <span class="media-container__media__details__vote-average">
-                    {{ +tvSerie.vote_average | number: "1.0-1" }}
-                </span>
-                <span class="media-container__media__details__release-date">
-                    {{ tvSerie.first_air_date | date: "yyyy" }}
-                </span>
-            </div>
-        </div>
-    </div>
+    <app-carousel-media [mediaType]="MEDIA_TYPE.TvShow" [items]="trendingTvShows" [isLoading]="isMainContentLoading">
+    </app-carousel-media>
 </section>
 
-<section class="media-section" id="trending-people">
+<section>
     <header>
-        <h2>
-            <a [routerLink]="['people']"> People </a>
-        </h2>
-        <form [formGroup]="trendingForm">
-            <select formControlName="peopleFilter">
-                <option [value]="TRENDING_FILTER.Day">{{ TRENDING_FILTER.Day | titlecase }}</option>
-                <option [value]="TRENDING_FILTER.Week">{{ TRENDING_FILTER.Week | titlecase }}</option>
-            </select>
-        </form>
+        <app-section-header title="Trending People Today" [redirectUrl]="['trending', 'people']"> </app-section-header>
     </header>
-    <div class="media-container">
-        <div *ngFor="let person of trendingPeople | limitTo: 10" class="media-container__media">
-            <ng-container>
-                <img
-                    *ngIf="person.profile_path"
-                    appProfilePath
-                    [alt]="person.name"
-                    [size]="profileSize"
-                    [profilePath]="person.profile_path"
-                />
-                <img *ngIf="!person.profile_path" alt="Image not available" [src]="profileFallback" />
-            </ng-container>
-            <h3>{{ person.name }}</h3>
-            <div class="media-container__media__details">
-                <span class="media-container__media__details__known-for-department">
-                    {{ person.known_for_department }}
-                </span>
-                <ng-container *ngIf="person.known_for && person.known_for.length > 0">
-                    <span *ngIf="isMovie(person.known_for[0])" class="media-container__media__details__known-for">
-                        {{ person.known_for[0].title }}
-                    </span>
-                    <span *ngIf="!isMovie(person.known_for[0])" class="media-container__media__details__known-for">
-                        {{ person.known_for[0].name }}
-                    </span>
-                </ng-container>
-            </div>
-        </div>
-    </div>
+    <app-carousel-person [items]="trendingPeople" [isLoading]="isMainContentLoading"> </app-carousel-person>
 </section>
+
+<section *ngFor="let genre of loadedGenres">
+    <header>
+        <app-section-header
+            [title]="genre.genreName + ' ' + (genre.type === MEDIA_TYPE.Movie ? 'Movies' : 'TV Shows')"
+            [redirectUrl]="[genre.type === MEDIA_TYPE.Movie ? 'movies' : 'tv-shows', 'discover', genre.genreName]"
+        >
+        </app-section-header>
+    </header>
+    <app-carousel-media [mediaType]="genre.type" [items]="genre.items" [isLoading]="false"> </app-carousel-media>
+</section>
+
+<app-infinite-scroll-loader
+    *ngIf="!allGenresLoaded"
+    [disabled]="isLoadingMoreGenres"
+    (scrolled)="loadMore()"
+></app-infinite-scroll-loader>

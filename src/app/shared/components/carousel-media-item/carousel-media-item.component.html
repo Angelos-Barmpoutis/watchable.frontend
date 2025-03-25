@@ -1,0 +1,29 @@
+<ng-container *ngIf="!isLoading; else skeletonTemplate">
+    <a
+        appFadeIn
+        class="media"
+        [title]="title"
+        [routerLink]="[
+            '/',
+            mediaType === MEDIA_TYPE.Movie ? 'movies' : 'tv-shows',
+            mediaType === MEDIA_TYPE.Movie ? 'movie' : 'tv-show',
+            item.id
+        ]"
+    >
+        <div class="media-poster">
+            <ng-container *ngIf="item.poster_path; else altPosterPath">
+                <img appPosterPath [size]="posterSize" [posterPath]="item.poster_path" />
+            </ng-container>
+        </div>
+    </a>
+</ng-container>
+
+<ng-template #skeletonTemplate>
+    <div appFadeIn class="skeleton-media">
+        <div class="skeleton-poster"></div>
+    </div>
+</ng-template>
+
+<ng-template #altPosterPath>
+    <img [src]="posterFallback" />
+</ng-template>

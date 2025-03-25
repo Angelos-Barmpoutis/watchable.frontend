@@ -1,58 +1,67 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { Component, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { DEFAULT } from '../../../../shared/constants/defaults.constant';
-import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
-import { POSTER_SIZE } from '../../../../shared/enumerations/poster-size.enum';
-import { MoviesFacade } from '../../../../shared/facades/movies.facade';
-import { Movie } from '../../../../shared/models/movies/movie.model';
+import { BaseMediaListItemComponent } from '../../../../shared/abstract/base-media-list-item.abstract';
+import { InfiniteScrollLoaderComponent } from '../../../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
+import { MovieListItemComponent } from '../../../../shared/components/movie-list-item/movie-list-item.component';
+import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
+import { MovieFacade } from '../../../../shared/facades/movie.facade';
+import { mapMoviesWithGenres } from '../../../../shared/helpers/map-items-with-genres.helper';
+import { Genre } from '../../../../shared/models/genre.model';
+import { Movie, MovieItem } from '../../../../shared/models/movie.model';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-/now-playing-movies',
+    selector: 'app-now-playing-movies',
     standalone: true,
     providers: [],
     templateUrl: './now-playing.component.html',
     styleUrl: './now-playing.component.scss',
-    imports: [CommonModule, PosterPathDirective, RouterLink],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        SectionHeaderComponent,
+        MovieListItemComponent,
+        InfiniteScrollLoaderComponent,
+    ],
 })
-export class MoviesNowPlayingComponent implements OnInit {
-    public posterSize: POSTER_SIZE = DEFAULT.mediumPosterSize;
-    public posterFallback = DEFAULT.mediumPosterFallback;
-    public nowPlayingMovies: Array<Movie> = [];
-    public currentPage = DEFAULT.page;
-    public totalPages = DEFAULT.totalPages;
+export class NowPlayingMoviesComponent extends BaseMediaListItemComponent<MovieItem> {
+    override items: Array<MovieItem> = [];
 
     constructor(
-        private movieFacade: MoviesFacade,
-        private destroyRef: DestroyRef,
-    ) {}
-
-    ngOnInit(): void {
-        this.getNowPlayingMovies();
+        private movieFacade: MovieFacade,
+        private localStorageService: LocalStorageService,
+        destroyRef: DestroyRef,
+    ) {
+        super(destroyRef);
     }
 
-    public onLoadMore(): void {
-        if (this.currentPage < this.totalPages) {
-            this.currentPage++;
-            this.getNowPlayingMovies(true);
-        }
+    trackByItemId(index: number, item: MovieItem): number {
+        return item.id;
     }
 
-    private getNowPlayingMovies(loadMore: boolean = false): void {
+    mapItemsWithGenres(items: Array<Movie>, genres: Array<Genre>): Array<MovieItem> {
+        return mapMoviesWithGenres(items, genres);
+    }
+
+    getGenres(): void {
+        const storedMovieGenres = this.localStorageService.getItem<Array<Genre>>('movieGenres') ?? [];
+        this.genres = storedMovieGenres;
+    }
+
+    getItems(): void {
+        this.isLoading = true;
         this.movieFacade
             .getNowPlaying(this.currentPage)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((nowPlayingMovies) => {
-                if (loadMore) {
-                    this.nowPlayingMovies = [...this.nowPlayingMovies, ...nowPlayingMovies.results];
-                } else {
-                    this.nowPlayingMovies = nowPlayingMovies.results;
-                }
-
-                this.currentPage = nowPlayingMovies.page;
-                this.totalPages = nowPlayingMovies.total_pages;
+            .subscribe(({ results, page, total_pages }) => {
+                const moviesWithGenres = this.mapItemsWithGenres(results, this.genres);
+                this.items = [...this.items, ...moviesWithGenres];
+                this.currentPage = page;
+                this.totalPages = total_pages;
+                this.isLoading = false;
             });
     }
 }

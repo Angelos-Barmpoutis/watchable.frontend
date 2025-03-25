@@ -1,16 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { Component, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
+import { BaseMediaListItemComponent } from '../../../../shared/abstract/base-media-list-item.abstract';
+import { InfiniteScrollLoaderComponent } from '../../../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
+import { MovieListItemComponent } from '../../../../shared/components/movie-list-item/movie-list-item.component';
+import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
+import { TabItem, TabsComponent } from '../../../../shared/components/tabs/tabs.component';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
-import { PosterPathDirective } from '../../../../shared/directives/poster-path.directive';
-import { POSTER_SIZE } from '../../../../shared/enumerations/poster-size.enum';
-import { TRENDING_FILTER } from '../../../../shared/enumerations/trending-filter.enum';
-import { MoviesFacade } from '../../../../shared/facades/movies.facade';
+import { TIME_OPTION } from '../../../../shared/enumerations/time-option.enum';
 import { TrendingFacade } from '../../../../shared/facades/trending.facade';
-import { Movie } from '../../../../shared/models/movies/movie.model';
+import { mapMoviesWithGenres } from '../../../../shared/helpers/map-items-with-genres.helper';
+import { Genre } from '../../../../shared/models/genre.model';
+import { Movie, MovieItem } from '../../../../shared/models/movie.model';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
     selector: 'app-trending-movies',
@@ -18,76 +22,62 @@ import { Movie } from '../../../../shared/models/movies/movie.model';
     providers: [],
     templateUrl: './movies.component.html',
     styleUrl: './movies.component.scss',
-    imports: [CommonModule, ReactiveFormsModule, PosterPathDirective, RouterLink],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        SectionHeaderComponent,
+        MovieListItemComponent,
+        TabsComponent,
+        InfiniteScrollLoaderComponent,
+    ],
 })
-export class TrendingMoviesComponent implements OnInit {
-    public posterSize: POSTER_SIZE = DEFAULT.smallPosterSize;
-    public posterFallback = DEFAULT.smallPosterFallback;
-    public TRENDING_FILTER = TRENDING_FILTER;
-    public trendingMoviesForm!: FormGroup;
-    public trendingMovies: Array<Movie> = [];
-    public currentPage = DEFAULT.page;
-    public totalPages = DEFAULT.totalPages;
-    private get trendingMoviesFilterFormField(): FormControl {
-        return this.trendingMoviesForm.get('moviesFilter') as FormControl;
-    }
+export class TrendingMoviesComponent extends BaseMediaListItemComponent<MovieItem> {
+    override items: Array<MovieItem> = [];
+    timeOption = DEFAULT.timeOption;
+    timeTabs: Array<TabItem<TIME_OPTION>> = [
+        { id: 0, value: TIME_OPTION.Day, label: 'Today' },
+        { id: 1, value: TIME_OPTION.Week, label: 'This Week' },
+    ];
 
     constructor(
         private trendingFacade: TrendingFacade,
-        private moviesFacade: MoviesFacade,
-        private formBuilder: FormBuilder,
-        private destroyRef: DestroyRef,
-    ) {}
-
-    ngOnInit(): void {
-        this.initTrendingForm();
-        this.getTrendingMovies();
-        this.onTrendingFilterChanges();
+        private localStorageService: LocalStorageService,
+        destroyRef: DestroyRef,
+    ) {
+        super(destroyRef);
     }
 
-    public onLoadMore(): void {
-        if (this.currentPage < this.totalPages) {
-            this.currentPage++;
-            this.getTrendingMovies(true);
-        }
+    trackByItemId(index: number, item: MovieItem): number {
+        return item.id;
     }
 
-    public getDetails(id: number): void {
-        this.moviesFacade
-            .getDetails(id)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((details) => console.log(details));
+    mapItemsWithGenres(items: Array<Movie>, genres: Array<Genre>): Array<MovieItem> {
+        return mapMoviesWithGenres(items, genres);
     }
 
-    private getTrendingMovies(loadMore: boolean = false): void {
-        const trendingFilter: TRENDING_FILTER =
-            (this.trendingMoviesFilterFormField?.value as TRENDING_FILTER) ?? DEFAULT.trendingFilter;
+    getGenres(): void {
+        const storedMovieGenres = this.localStorageService.getItem<Array<Genre>>('movieGenres') ?? [];
+        this.genres = storedMovieGenres;
+    }
 
+    getItems(): void {
+        this.isLoading = true;
         this.trendingFacade
-            .getTrendingMovies(trendingFilter, this.currentPage)
+            .getMovies(this.timeOption, this.currentPage)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((trendingMovies) => {
-                if (loadMore) {
-                    this.trendingMovies = [...this.trendingMovies, ...trendingMovies.results];
-                } else {
-                    this.trendingMovies = trendingMovies.results;
-                }
-
-                this.currentPage = trendingMovies.page;
-                this.totalPages = trendingMovies.total_pages;
+            .subscribe(({ results, page, total_pages }) => {
+                const moviesWithGenres = this.mapItemsWithGenres(results, this.genres);
+                this.items = [...this.items, ...moviesWithGenres];
+                this.currentPage = page;
+                this.totalPages = total_pages;
+                this.isLoading = false;
             });
     }
 
-    private initTrendingForm(): void {
-        this.trendingMoviesForm = this.formBuilder.group({
-            moviesFilter: DEFAULT.trendingFilter,
-        });
-    }
-
-    private onTrendingFilterChanges(): void {
-        this.trendingMoviesFilterFormField.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-            this.currentPage = DEFAULT.page;
-            this.getTrendingMovies();
-        });
+    changeTimeOption(timeOption: TIME_OPTION): void {
+        this.timeOption = timeOption;
+        this.currentPage = DEFAULT.page;
+        this.items = [];
+        this.getItems();
     }
 }

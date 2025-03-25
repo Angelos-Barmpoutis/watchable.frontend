@@ -1,41 +1,24 @@
-<section class="media-items-section" id="now-playing">
+<section>
     <header>
-        <h1>Now Playing</h1>
+        <app-section-header title="Now Playing Movies"> </app-section-header>
     </header>
-    <main>
-        <div class="media-item-container">
-            <div *ngFor="let movie of nowPlayingMovies" class="media-item-container__media">
-                <a class="media-item-container__media__img-anchor" [routerLink]="['/', 'movies', 'movie', movie.id]">
-                    <ng-container>
-                        <img
-                            *ngIf="movie.poster_path"
-                            appPosterPath
-                            [size]="posterSize"
-                            [posterPath]="movie.poster_path"
-                            [alt]="movie.title"
-                        />
-                        <img *ngIf="!movie.poster_path" alt="Image not available" [src]="posterFallback" />
-                    </ng-container>
-                </a>
-                <div class="media-item-container__media__content">
-                    <h3>
-                        <a [routerLink]="['/', 'movies', 'movie', movie.id]">{{ movie.title }}</a>
-                    </h3>
-                    <span class="media-item-container__media__content__vote-average">
-                        {{ +movie.vote_average | number: "1.0-1" }} ({{ +movie.vote_count | number }})
-                    </span>
-                    <span class="media-item-container__media__content__release-date">
-                        {{ movie.release_date | date }}
-                    </span>
-                    <button type="button">Rate</button>
-                </div>
-                <div class="media-item-container__media__info">
-                    <button [title]="'See more about ' + movie.title">i</button>
-                </div>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <button *ngIf="this.currentPage < this.totalPages" (click)="onLoadMore()">Load More</button>
-    </footer>
+    <div class="list-container">
+        <ng-container *ngIf="items.length; else loadingState">
+            <app-movie-list-item
+                *ngFor="let movie of items; trackBy: trackByItemId"
+                [movie]="movie"
+                [isLoading]="false"
+            >
+            </app-movie-list-item>
+        </ng-container>
+    </div>
+    <app-infinite-scroll-loader
+        [disabled]="isLoading || currentPage >= totalPages"
+        (scrolled)="loadMore()"
+    ></app-infinite-scroll-loader>
 </section>
+
+<ng-template #loadingState>
+    <app-movie-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
+    </app-movie-list-item>
+</ng-template>

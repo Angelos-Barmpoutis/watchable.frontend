@@ -1,0 +1,59 @@
+// tabs.component.scss
+@import "../../../../styles.scss";
+
+:host {
+    flex-shrink: 0;
+}
+
+.tabs-container {
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-group {
+        display: flex;
+        background-color: $surface-color;
+        border-radius: $border-radius-xl;
+        padding: $spacing-xs;
+        border: 1px solid $border-color;
+    }
+
+    .tab {
+        background: none;
+        border: none;
+        border-radius: $border-radius-lg;
+        color: $text-secondary;
+        cursor: pointer;
+        font-size: $font-size-md;
+        font-weight: $font-weight-medium;
+        padding: $spacing-xs $spacing-md;
+        transition: all $transition-normal;
+
+        &.active {
+            background-color: $primary-color;
+            color: $text-primary;
+        }
+
+        &:hover {
+            color: $text-primary;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+@media (max-width: map-get($breakpoints, "sm")) {
+    :host {
+        width: 100%;
+    }
+
+    .tab {
+        width: 100%;
+    }
+}

@@ -1,0 +1,14 @@
+<div appFadeIn class="section-header">
+    <div class="title-container">
+        <h2 class="title">
+            <div class="title-link">
+                <span>
+                    {{ title }}
+                </span>
+                <a *ngIf="redirectUrl" [routerLink]="redirectUrl">
+                    <span class="explore-all">Explore All <i class="fas fa-chevron-right chevron-icon"></i></span>
+                </a>
+            </div>
+        </h2>
+    </div>
+</div>

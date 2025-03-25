@@ -1,0 +1,30 @@
+// Brand Colors
+$primary-color: #2d58f5;
+$secondary-color: #09123a;
+$accent-color: #ff4081;
+
+// State Colors
+$success-color: #4caf50;
+$error-color: #e63946;
+$warning-color: #ff9800;
+$info-color: #2196f3;
+
+// Neutral Colors
+$background-color: #0f0f0f;
+$surface-color: #0b0b0b;
+$border-color: #222222;
+
+// Text Colors
+$text-primary: #ffffff;
+$text-secondary: #8b8da5;
+$text-disabled: rgba(255, 255, 255, 0.38);
+
+// Overlay Colors
+$overlay-light: #222222;
+$overlay-dark: rgba(0, 0, 0, 0.5);
+
+// Gradient Maps
+$gradients: (
+    primary: linear-gradient(45deg, $primary-color, lighten($primary-color, 20%)),
+    accent: linear-gradient(45deg, $accent-color, lighten($accent-color, 15%)),
+);

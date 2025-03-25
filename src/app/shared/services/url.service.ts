@@ -6,10 +6,10 @@ import { environment } from '../../../environments/environment';
     providedIn: 'root',
 })
 export class UrlService {
-    private baseUrl = environment.baseUrl;
+    private TMDBBaseUrl = environment.TMDBBaseUrl;
 
-    urlFor(path: Array<string>, queryParams?: { [key: string]: string | number }): string {
-        let url = this.baseUrl + '/' + path.join('/');
+    createUrlForTMDB(path: Array<string>, queryParams?: { [key: string]: string | number }): string {
+        let url = this.TMDBBaseUrl + path.join('/');
 
         if (queryParams) {
             const params = new URLSearchParams();

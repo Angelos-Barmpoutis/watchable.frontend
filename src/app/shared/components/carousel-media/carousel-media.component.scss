@@ -1,0 +1,95 @@
+@import "../../../../styles.scss";
+
+.carousel {
+    height: 100%;
+    min-height: 192px;
+
+    .carousel-wrapper {
+        position: relative;
+
+        &:hover {
+            .nav-button {
+                opacity: 1;
+            }
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            z-index: 10;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity $transition-normal;
+            color: $text-primary;
+            font-size: $font-size-lg;
+
+            &.nav-prev {
+                left: 0;
+                background: linear-gradient(to right, rgba($background-color, 0.6), transparent);
+                justify-content: flex-start;
+                padding-left: $spacing-sm;
+            }
+
+            &.nav-next {
+                right: 0;
+                background: linear-gradient(to left, rgba($background-color, 0.6), transparent);
+                justify-content: flex-end;
+                padding-right: $spacing-sm;
+            }
+        }
+
+        swiper-slide {
+            width: 128px !important;
+            height: 192px !important;
+        }
+    }
+
+    // Skeleton loading state
+    .skeleton-carousel {
+        width: 100%;
+
+        .skeleton-wrapper {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow: hidden;
+            gap: 8px;
+
+            .skeleton-slide {
+                flex: 0 0 auto;
+                width: 128px !important;
+                height: 192px !important;
+            }
+        }
+    }
+}
+
+@media (max-width: map-get($breakpoints, "sm")) {
+    .carousel {
+        min-height: 120px;
+
+        .carousel-wrapper {
+            .nav-button {
+                display: none;
+            }
+
+            swiper-slide {
+                width: 80px !important;
+                height: 120px !important;
+            }
+        }
+
+        .skeleton-carousel .skeleton-wrapper {
+            .skeleton-slide {
+                width: 80px !important;
+                height: 120px !important;
+            }
+        }
+    }
+}

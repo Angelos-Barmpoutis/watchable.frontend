@@ -1,0 +1,44 @@
+<ng-container *ngIf="!isLoading; else skeletonTemplate">
+    <a appFadeIn class="movie-list-item" [routerLink]="['/', 'movies', 'movie', movie.id]">
+        <div class="movie-main">
+            <div class="poster-wrapper">
+                <ng-container *ngIf="movie.poster_path; else altPosterPath">
+                    <img appPosterPath [size]="posterSize" [posterPath]="movie.poster_path" />
+                </ng-container>
+            </div>
+
+            <div class="info">
+                <div class="info-header">
+                    <h3 class="title">{{ movie.title }}</h3>
+                    <span class="year">{{ movie.release_date | date: "yyyy" }}</span>
+                </div>
+
+                <div class="genres">
+                    <span *ngFor="let genre of movie.genres" class="genre">{{ genre.name }}</span>
+                </div>
+
+                <div class="rating">
+                    <div
+                        class="rating-badge"
+                        [class.rating-low]="movie.vote_average < 5.0"
+                        [class.rating-medium]="movie.vote_average >= 5.0 && movie.vote_average < 7.0"
+                        [class.rating-high]="movie.vote_average >= 7.0 && movie.vote_average < 8.5"
+                        [class.rating-top]="movie.vote_average >= 8.5"
+                    >
+                        {{ movie.vote_average | number: "1.0-1" }}
+                    </div>
+                </div>
+
+                <p class="overview">{{ movie.overview }}</p>
+            </div>
+        </div>
+    </a>
+</ng-container>
+
+<ng-template #skeletonTemplate>
+    <div appFadeIn class="movie-list-item-loading"></div>
+</ng-template>
+
+<ng-template #altPosterPath>
+    <img [src]="posterFallback" />
+</ng-template>

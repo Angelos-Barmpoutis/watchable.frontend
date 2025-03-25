@@ -1,0 +1,29 @@
+<div appFadeIn class="carousel">
+    <ng-container *ngIf="!isLoading; else skeletonTemplate">
+        <div class="carousel-wrapper">
+            <button type="button" class="nav-button nav-prev" [class]="prevButtonClass">
+                <i class="fas fa-chevron-left chevron-icon"></i>
+            </button>
+
+            <button type="button" class="nav-button nav-next" [class]="nextButtonClass">
+                <i class="fas fa-chevron-right chevron-icon"></i>
+            </button>
+
+            <swiper-container #swiperEl init="false">
+                <swiper-slide *ngFor="let item of items; trackBy: trackByItemId">
+                    <app-carousel-person-item [item]="item" [isLoading]="false"></app-carousel-person-item>
+                </swiper-slide>
+            </swiper-container>
+        </div>
+    </ng-container>
+</div>
+
+<ng-template #skeletonTemplate>
+    <div class="skeleton-carousel">
+        <div class="skeleton-wrapper">
+            <div *ngFor="let item of skeletonArray; trackBy: trackByIndex" class="skeleton-slide">
+                <app-carousel-person-item [isLoading]="true"></app-carousel-person-item>
+            </div>
+        </div>
+    </div>
+</ng-template>

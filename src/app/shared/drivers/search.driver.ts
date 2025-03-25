@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { PaginatedMovies } from '../models/movies/paginated-movies.model';
-import { PaginatedPeople } from '../models/people/paginated-people.model';
-import { PaginatedSearchItems } from '../models/shared/paginated-search-items.model';
-import { PaginatedTvSeries } from '../models/tv-series/paginated-tv-series.model';
+import { PaginatedMovies } from '../models/movie.model';
+import { PaginatedPeople } from '../models/people.model';
+import { PaginatedSearchResults } from '../models/search.model';
+import { PaginatedTvShows } from '../models/tv-show.model';
 import { HttpService } from '../services/http.service';
 
 @Injectable({
@@ -13,7 +13,7 @@ import { HttpService } from '../services/http.service';
 export class SearchDriver {
     constructor(private httpService: HttpService) {}
 
-    getMulti(url: string): Observable<PaginatedSearchItems> {
+    getMulti(url: string): Observable<PaginatedSearchResults> {
         return this.httpService.get(url);
     }
 
@@ -21,7 +21,7 @@ export class SearchDriver {
         return this.httpService.get(url);
     }
 
-    getTvSeries(url: string): Observable<PaginatedTvSeries> {
+    getTvShows(url: string): Observable<PaginatedTvShows> {
         return this.httpService.get(url);
     }
 

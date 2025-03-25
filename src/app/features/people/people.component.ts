@@ -1,15 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
 
-import { DEFAULT } from '../../shared/constants/defaults.constant';
-import { ProfilePathDirective } from '../../shared/directives/profile-path.directive';
-import { PROFILE_SIZE } from '../../shared/enumerations/profile-size.enum';
+import { CarouselPersonComponent } from '../../shared/components/carousel-person/carousel-person.component';
+import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
 import { PeopleFacade } from '../../shared/facades/people.facade';
-import { Person } from '../../shared/models/people/person.model';
-import { KnownForItem } from '../../shared/models/shared/known-for-item.model';
-import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
+import { filterPersonItems } from '../../shared/helpers/filter-items.helper';
+import { Person } from '../../shared/models/people.model';
 
 @Component({
     selector: 'app-people',
@@ -17,12 +14,11 @@ import { LimitToPipe } from '../../shared/pipes/limit-to.pipe';
     providers: [],
     templateUrl: './people.component.html',
     styleUrl: './people.component.scss',
-    imports: [CommonModule, ProfilePathDirective, LimitToPipe, RouterLink],
+    imports: [CommonModule, SectionHeaderComponent, CarouselPersonComponent],
 })
 export class PeopleComponent implements OnInit {
-    public profileSize: PROFILE_SIZE = DEFAULT.mediumProfileSize;
-    public profileFallback = DEFAULT.mediumProfileFallback;
-    public popularPeople!: Array<Person>;
+    people: Array<Person> = [];
+    isLoading = false;
 
     constructor(
         private peopleFacade: PeopleFacade,
@@ -30,19 +26,21 @@ export class PeopleComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.getPopularPeople();
+        this.getItems();
     }
 
-    public isMovie(item: KnownForItem): boolean {
-        return item.media_type === 'movie';
+    trackByItemId(index: number, person: Person): number {
+        return person.id;
     }
 
-    private getPopularPeople(): void {
+    getItems(): void {
+        this.isLoading = true;
         this.peopleFacade
             .getPopular()
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((popularPeople) => {
-                this.popularPeople = popularPeople.results;
+            .subscribe(({ results }) => {
+                this.people = filterPersonItems(results);
+                this.isLoading = false;
             });
     }
 }
