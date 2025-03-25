@@ -72,7 +72,7 @@
 
 @media (max-width: map-get($breakpoints, "sm")) {
     .carousel {
-        min-height: 80px;
+        min-height: 88px;
 
         .carousel-wrapper {
             .nav-button {
@@ -80,15 +80,15 @@
             }
 
             swiper-slide {
-                width: 80px !important;
-                height: 80px !important;
+                width: 88px !important;
+                height: 88px !important;
             }
         }
 
         .skeleton-carousel .skeleton-wrapper {
             .skeleton-slide {
-                width: 80px !important;
-                height: 80px !important;
+                width: 88px !important;
+                height: 88px !important;
             }
         }
     }
