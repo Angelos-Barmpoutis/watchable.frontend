@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 
 import { AbstractGenreLoaderComponent } from '../../shared/abstract/genre-loader.abstract';
 import { CarouselMediaComponent } from '../../shared/components/carousel-media/carousel-media.component';
+import { FeaturedBannerComponent } from '../../shared/components/featured-banner/featured-banner.component';
 import { InfiniteScrollLoaderComponent } from '../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
 import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
 import { MEDIA_TYPE } from '../../shared/enumerations/media-type.enum';
@@ -19,7 +20,13 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
     standalone: true,
     templateUrl: './tv-shows.component.html',
     styleUrl: './tv-shows.component.scss',
-    imports: [CommonModule, SectionHeaderComponent, CarouselMediaComponent, InfiniteScrollLoaderComponent],
+    imports: [
+        CommonModule,
+        SectionHeaderComponent,
+        CarouselMediaComponent,
+        InfiniteScrollLoaderComponent,
+        FeaturedBannerComponent,
+    ],
 })
 export class TvShowsComponent extends AbstractGenreLoaderComponent<TvShow> {
     readonly MEDIA_TYPE = MEDIA_TYPE;

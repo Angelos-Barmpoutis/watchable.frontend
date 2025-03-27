@@ -3,9 +3,7 @@
         <app-header></app-header>
         <main>
             <app-search-bar *ngIf="searchService.isSearchOpen$ | async"></app-search-bar>
-            <app-page>
-                <router-outlet />
-            </app-page>
+            <router-outlet />
         </main>
         <app-footer></app-footer>
         <app-mobile-navigation></app-mobile-navigation>

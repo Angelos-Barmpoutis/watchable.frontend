@@ -11,7 +11,7 @@ import { TvShowListItemComponent } from '../../../../shared/components/tv-show-l
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { TIME_OPTION } from '../../../../shared/enumerations/time-option.enum';
 import { TrendingFacade } from '../../../../shared/facades/trending.facade';
-import { mapTvShowsWithGenres } from '../../../../shared/helpers/map-items-with-genres.helper';
+import { mapTvShowsWithGenres } from '../../../../shared/helpers/genres.helper';
 import { Genre } from '../../../../shared/models/genre.model';
 import { TvShow, TvShowItem } from '../../../../shared/models/tv-show.model';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';

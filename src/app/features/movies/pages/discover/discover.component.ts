@@ -9,7 +9,7 @@ import { InfiniteScrollLoaderComponent } from '../../../../shared/components/inf
 import { MovieListItemComponent } from '../../../../shared/components/movie-list-item/movie-list-item.component';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { MovieFacade } from '../../../../shared/facades/movie.facade';
-import { mapMoviesWithGenres } from '../../../../shared/helpers/map-items-with-genres.helper';
+import { mapMoviesWithGenres } from '../../../../shared/helpers/genres.helper';
 import { MovieItem } from '../../../../shared/models/movie.model';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 

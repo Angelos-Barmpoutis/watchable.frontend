@@ -1,11 +1,13 @@
-<section>
-    <header>
-        <app-section-header
-            redirectUrl="popular"
-            title="Popular"
-            description="Trending stars and filmmakers captivating audiences worldwide"
-        >
-        </app-section-header>
-    </header>
-    <app-carousel-person [items]="people" [isLoading]="isLoading"> </app-carousel-person>
-</section>
+<div class="wrapper">
+    <section>
+        <header>
+            <app-section-header
+                redirectUrl="popular"
+                title="Popular"
+                description="Trending stars and filmmakers captivating audiences worldwide"
+            >
+            </app-section-header>
+        </header>
+        <app-carousel-person [items]="people" [isLoading]="isLoading"> </app-carousel-person>
+    </section>
+</div>

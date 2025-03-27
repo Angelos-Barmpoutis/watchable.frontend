@@ -1,22 +1,24 @@
-<section>
-    <header>
-        <app-section-header title="Popular People"> </app-section-header>
-    </header>
-    <div class="list-container">
-        <ng-container *ngIf="items.length; else loadingState">
-            <app-person-list-item
-                *ngFor="let person of items; trackBy: trackByItemId"
-                [person]="person"
-                [isLoading]="false"
-            >
-            </app-person-list-item>
-        </ng-container>
-    </div>
-    <app-infinite-scroll-loader
-        [disabled]="isLoading || currentPage >= totalPages"
-        (scrolled)="loadMore()"
-    ></app-infinite-scroll-loader>
-</section>
+<div class="wrapper">
+    <section>
+        <header>
+            <app-section-header title="Popular People"> </app-section-header>
+        </header>
+        <div class="list-container">
+            <ng-container *ngIf="items.length; else loadingState">
+                <app-person-list-item
+                    *ngFor="let person of items; trackBy: trackByItemId"
+                    [person]="person"
+                    [isLoading]="false"
+                >
+                </app-person-list-item>
+            </ng-container>
+        </div>
+        <app-infinite-scroll-loader
+            [disabled]="isLoading || currentPage >= totalPages"
+            (scrolled)="loadMore()"
+        ></app-infinite-scroll-loader>
+    </section>
+</div>
 
 <ng-template #loadingState>
     <app-person-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">

@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { CarouselMediaComponent } from '../../shared/components/carousel-media/carousel-media.component';
 import { CarouselPersonComponent } from '../../shared/components/carousel-person/carousel-person.component';
+import { FeaturedBannerComponent } from '../../shared/components/featured-banner/featured-banner.component';
 import { InfiniteScrollLoaderComponent } from '../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
 import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
 import { DEFAULT } from '../../shared/constants/defaults.constant';
@@ -29,6 +30,7 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
         CarouselMediaComponent,
         CarouselPersonComponent,
         InfiniteScrollLoaderComponent,
+        FeaturedBannerComponent,
     ],
 })
 export class TrendingComponent implements OnInit {

@@ -19,3 +19,12 @@ export function mapTvShowsWithGenres(tvShows: Array<TvShow>, genres: Array<Genre
             .filter((genre): genre is Genre => genre !== undefined),
     }));
 }
+
+export function mapGenres(genreIds: Array<number> = [], allGenres: Array<Genre>): string {
+    return genreIds
+        .map((id) => allGenres.find((g) => g.id === id))
+        .filter((genre): genre is Genre => genre !== undefined)
+        .map((g) => g.name)
+        .slice(0, 3)
+        .join(', ');
+}

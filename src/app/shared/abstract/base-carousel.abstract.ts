@@ -32,7 +32,11 @@ export abstract class BaseCarouselComponent<T> implements AfterViewInit {
         spaceBetween: 8,
         loop: true,
         speed: 500,
-        freeMode: true,
+        slidesPerGroupAuto: true,
+        freeMode: {
+            sticky: true,
+            enabled: true,
+        },
         navigation: {
             nextEl: `.${this.nextButtonClass}`,
             prevEl: `.${this.prevButtonClass}`,

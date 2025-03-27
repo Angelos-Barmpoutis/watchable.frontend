@@ -11,7 +11,7 @@ import { TabItem, TabsComponent } from '../../../../shared/components/tabs/tabs.
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { TIME_OPTION } from '../../../../shared/enumerations/time-option.enum';
 import { TrendingFacade } from '../../../../shared/facades/trending.facade';
-import { mapMoviesWithGenres } from '../../../../shared/helpers/map-items-with-genres.helper';
+import { mapMoviesWithGenres } from '../../../../shared/helpers/genres.helper';
 import { Genre } from '../../../../shared/models/genre.model';
 import { Movie, MovieItem } from '../../../../shared/models/movie.model';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';

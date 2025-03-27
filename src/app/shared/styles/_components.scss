@@ -18,3 +18,43 @@
         border-color: $error-color;
     }
 }
+
+.button {
+    @media (max-width: map-get($breakpoints, "md")) {
+        padding: $spacing-sm;
+    }
+
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-lg;
+    border-radius: $border-radius-lg;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: all $transition-normal;
+
+    i {
+        font-size: $font-size-sm;
+    }
+}
+
+.button-primary {
+    background: linear-gradient(45deg, $primary-color, lighten($primary-color, 10%));
+    color: $text-primary;
+    border: 1px solid transparent;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba($primary-color, 0.4);
+    }
+}
+
+.button-secondary {
+    background: rgba($text-primary, 0.1);
+    color: $text-primary;
+    border: 1px solid rgba($text-primary, 0.2);
+
+    &:hover {
+        background: rgba($text-primary, 0.15);
+    }
+}

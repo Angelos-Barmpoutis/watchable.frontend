@@ -1,42 +1,53 @@
 <section>
-    <header>
-        <app-section-header redirectUrl="now-playing" title="Now Playing Movies"> </app-section-header>
-    </header>
-    <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="nowPlaying" [isLoading]="isMainContentLoading">
-    </app-carousel-media>
+    <app-featured-banner
+        [featuredItem]="nowPlaying[0]"
+        [mediaType]="MEDIA_TYPE.Movie"
+        [isLoading]="isMainContentLoading"
+    >
+    </app-featured-banner>
 </section>
 
-<section>
-    <header>
-        <app-section-header redirectUrl="popular" title="Popular Movies Today"> </app-section-header>
-    </header>
-    <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="popular" [isLoading]="isMainContentLoading">
-    </app-carousel-media>
-</section>
+<div class="wrapper">
+    <section>
+        <header>
+            <app-section-header redirectUrl="now-playing" title="Now Playing Movies"> </app-section-header>
+        </header>
+        <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="nowPlaying" [isLoading]="isMainContentLoading">
+        </app-carousel-media>
+    </section>
 
-<section>
-    <header>
-        <app-section-header redirectUrl="top-rated" title="Top Rated Movies"> </app-section-header>
-    </header>
-    <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="topRated" [isLoading]="isMainContentLoading">
-    </app-carousel-media>
-</section>
+    <section>
+        <header>
+            <app-section-header redirectUrl="popular" title="Popular Movies Today"> </app-section-header>
+        </header>
+        <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="popular" [isLoading]="isMainContentLoading">
+        </app-carousel-media>
+    </section>
 
-<section>
-    <header>
-        <app-section-header redirectUrl="upcoming" title="Upcoming Movies"> </app-section-header>
-    </header>
-    <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="upcoming" [isLoading]="isMainContentLoading">
-    </app-carousel-media>
-</section>
+    <section>
+        <header>
+            <app-section-header redirectUrl="top-rated" title="Top Rated Movies"> </app-section-header>
+        </header>
+        <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="topRated" [isLoading]="isMainContentLoading">
+        </app-carousel-media>
+    </section>
 
-<section *ngFor="let genre of loadedGenres">
-    <header>
-        <app-section-header [title]="genre.genreName + ' Movies'" [redirectUrl]="['discover', genre.genreName]">
-        </app-section-header>
-    </header>
-    <app-carousel-media [mediaType]="genre.type" [items]="genre.items" [isLoading]="false"> </app-carousel-media>
-</section>
+    <section>
+        <header>
+            <app-section-header redirectUrl="upcoming" title="Upcoming Movies"> </app-section-header>
+        </header>
+        <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="upcoming" [isLoading]="isMainContentLoading">
+        </app-carousel-media>
+    </section>
+
+    <section *ngFor="let genre of loadedGenres">
+        <header>
+            <app-section-header [title]="genre.genreName + ' Movies'" [redirectUrl]="['discover', genre.genreName]">
+            </app-section-header>
+        </header>
+        <app-carousel-media [mediaType]="genre.type" [items]="genre.items" [isLoading]="false"> </app-carousel-media>
+    </section>
+</div>
 
 <app-infinite-scroll-loader
     *ngIf="!allGenresLoaded"

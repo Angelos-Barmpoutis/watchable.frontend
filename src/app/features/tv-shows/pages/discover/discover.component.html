@@ -1,24 +1,26 @@
-<section>
-    <header>
-        <app-section-header [title]="genreName + ' TV Shows'"> </app-section-header>
-    </header>
+<div class="wrapper">
+    <section>
+        <header>
+            <app-section-header [title]="genreName + ' TV Shows'"> </app-section-header>
+        </header>
 
-    <div class="list-container">
-        <ng-container *ngIf="items.length; else loadingState">
-            <app-tv-show-list-item
-                *ngFor="let tvShow of items; trackBy: trackByItemId"
-                [tvShow]="tvShow"
-                [isLoading]="false"
-            >
-            </app-tv-show-list-item>
-        </ng-container>
-    </div>
+        <div class="list-container">
+            <ng-container *ngIf="items.length; else loadingState">
+                <app-tv-show-list-item
+                    *ngFor="let tvShow of items; trackBy: trackByItemId"
+                    [tvShow]="tvShow"
+                    [isLoading]="false"
+                >
+                </app-tv-show-list-item>
+            </ng-container>
+        </div>
 
-    <app-infinite-scroll-loader
-        [disabled]="isLoading || currentPage >= totalPages"
-        (scrolled)="loadMore()"
-    ></app-infinite-scroll-loader>
-</section>
+        <app-infinite-scroll-loader
+            [disabled]="isLoading || currentPage >= totalPages"
+            (scrolled)="loadMore()"
+        ></app-infinite-scroll-loader>
+    </section>
+</div>
 
 <ng-template #loadingState>
     <app-tv-show-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">

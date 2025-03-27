@@ -9,7 +9,7 @@ import { InfiniteScrollLoaderComponent } from '../../../../shared/components/inf
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { TvShowListItemComponent } from '../../../../shared/components/tv-show-list-item/tv-show-list-item.component';
 import { TvShowFacade } from '../../../../shared/facades/tv-show.facade';
-import { mapTvShowsWithGenres } from '../../../../shared/helpers/map-items-with-genres.helper';
+import { mapTvShowsWithGenres } from '../../../../shared/helpers/genres.helper';
 import { TvShowItem } from '../../../../shared/models/tv-show.model';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
