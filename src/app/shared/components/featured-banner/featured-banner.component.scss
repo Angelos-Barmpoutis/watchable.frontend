@@ -34,6 +34,7 @@
 
             .rating {
                 color: $text-primary;
+                flex-shrink: 0;
 
                 &.rating-low {
                     color: rgba($error-color, 0.9);
@@ -66,6 +67,11 @@
                     content: "•";
                     margin-right: $spacing-md;
                 }
+            }
+
+            .genres {
+                flex-shrink: 0;
+                @include text-clamp(1);
             }
         }
 
@@ -168,6 +174,9 @@
 
         .overlay {
             align-items: flex-end;
+            .overlay {
+                background: linear-gradient(to top, $background-color, transparent);
+            }
         }
 
         .featured-details {
@@ -179,13 +188,13 @@
             }
 
             .featured-meta {
-                gap: $spacing-md;
+                gap: $spacing-sm;
 
                 .genres,
                 .year {
                     &:before {
                         content: "•";
-                        margin-right: $spacing-md;
+                        margin-right: $spacing-sm;
                     }
                 }
             }
