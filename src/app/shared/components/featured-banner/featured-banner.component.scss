@@ -170,7 +170,7 @@
 
 @media (max-width: map-get($breakpoints, "md")) {
     .featured-banner {
-        height: 60dvh;
+        height: calc(100dvh - $mobile-nav-height - $mobile-header-height - $spacing-md);
 
         .overlay {
             align-items: flex-end;
@@ -206,7 +206,7 @@
     }
 
     .featured-banner-skeleton {
-        height: 60dvh;
+        height: calc(100dvh - $mobile-nav-height - $mobile-header-height - $spacing-md);
 
         .overlay {
             align-items: flex-end;
