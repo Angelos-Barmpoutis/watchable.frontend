@@ -36,7 +36,7 @@
 
 @media (max-width: map-get($breakpoints, "sm")) {
     .app {
-        padding-bottom: $bottom-nav-height;
+        padding-bottom: $mobile-nav-height;
     }
 
     app-footer {
