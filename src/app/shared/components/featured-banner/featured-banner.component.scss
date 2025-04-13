@@ -208,7 +208,6 @@
 
         .overlay {
             align-items: flex-end;
-            background: linear-gradient(to top, $background-color, transparent);
         }
 
         .featured-details {
@@ -226,7 +225,7 @@
     }
 
     .featured-banner-skeleton {
-        height: calc(100dvh - $mobile-nav-height - $mobile-header-height - $spacing-md);
+        height: calc(100dvh - $mobile-nav-height - $mobile-header-height);
 
         .overlay {
             align-items: flex-end;
@@ -253,13 +252,13 @@
 @media (max-width: map-get($breakpoints, "sm")) {
     .featured-banner {
         .featured-details {
-            margin-bottom: $spacing-lg;
+            margin-bottom: $spacing-md;
         }
     }
 
     .featured-banner-skeleton {
         .featured-details {
-            margin-bottom: $spacing-lg;
+            margin-bottom: $spacing-md;
         }
     }
 }

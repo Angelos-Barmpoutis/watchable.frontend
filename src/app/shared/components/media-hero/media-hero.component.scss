@@ -152,7 +152,6 @@
 
         .overlay {
             align-items: flex-end;
-            background: linear-gradient(to top, $background-color, transparent);
         }
 
         .media-content {
@@ -185,7 +184,7 @@
 
     @media (max-width: map-get($breakpoints, "sm")) {
         .media-content {
-            margin-bottom: $spacing-lg;
+            margin-bottom: $spacing-md;
 
             .media-poster {
                 display: none;
@@ -393,7 +392,7 @@
 
     @media (max-width: map-get($breakpoints, "sm")) {
         .skeleton-media-content {
-            margin-bottom: $spacing-lg;
+            margin-bottom: $spacing-md;
 
             .skeleton-media-poster {
                 display: none;
