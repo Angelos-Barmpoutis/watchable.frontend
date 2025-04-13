@@ -31,8 +31,7 @@ export abstract class BaseCarouselComponent<T> implements AfterViewInit {
         slidesPerView: 'auto',
         spaceBetween: 8,
         loop: true,
-        speed: 500,
-        slidesPerGroupAuto: true,
+        speed: 400,
         freeMode: {
             sticky: true,
             enabled: true,

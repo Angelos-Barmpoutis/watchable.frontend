@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { PaginatedTvShows } from '../models/tv-show.model';
+import { PaginatedTvShows, TvShowDetails } from '../models/tv-show.model';
 import { HttpService } from '../services/http.service';
 
 @Injectable({
@@ -20,5 +20,9 @@ export class TvShowDriver {
 
     getTopRated(url: string): Observable<PaginatedTvShows> {
         return this.httpService.get<PaginatedTvShows>(url);
+    }
+
+    getDetails(url: string): Observable<TvShowDetails> {
+        return this.httpService.get<TvShowDetails>(url);
     }
 }

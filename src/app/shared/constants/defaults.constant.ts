@@ -13,6 +13,8 @@ export const DEFAULT = {
     itemsPerPage: 20,
     selectedTabId: 0,
     genresBatchSize: 3,
+    gridItemsCount: 6,
+    reviewsCount: 3,
     infiniteScrollThreshold: 0.1,
     infiniteScrollRootMargin: 278,
     searchOption: SEARCH_OPTION.Multi,

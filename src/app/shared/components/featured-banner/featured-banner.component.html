@@ -5,28 +5,45 @@
                 <div class="featured-details">
                     <h2 class="featured-title">{{ featuredTitle }}</h2>
                     <div class="featured-meta">
-                        <span
-                            class="rating"
-                            [class.rating-low]="featuredItem.vote_average < 5.0"
-                            [class.rating-medium]="featuredItem.vote_average >= 5.0 && featuredItem.vote_average < 7.0"
-                            [class.rating-high]="featuredItem.vote_average >= 7.0 && featuredItem.vote_average < 8.5"
-                            [class.rating-top]="featuredItem.vote_average >= 8.5"
-                        >
-                            <i class="fas fa-star"></i> {{ featuredItem.vote_average | number: "1.1-1" }}
-                        </span>
-                        <span class="year">
+                        <span *ngIf="featuredDate" class="movie-year">
                             {{ featuredDate | date: "yyyy" }}
                         </span>
                         <span *ngIf="genresList.length" class="genres">
                             {{ genresList }}
                         </span>
                     </div>
-                    <p class="featured-overview">{{ featuredItem.overview }}</p>
+                    <div *ngIf="featuredItem.vote_average !== 0" class="rating-container">
+                        <div class="rating">
+                            <div class="rating-badge">
+                                <span
+                                    class="rating-value"
+                                    [class.rating-low]="featuredItem.vote_average < 5"
+                                    [class.rating-medium]="
+                                        featuredItem.vote_average >= 5 && featuredItem.vote_average < 7
+                                    "
+                                    [class.rating-high]="
+                                        featuredItem.vote_average >= 7 && featuredItem.vote_average < 8.5
+                                    "
+                                    [class.rating-top]="featuredItem.vote_average >= 8.5"
+                                >
+                                    {{ featuredItem.vote_average | number: "1.1-1" }}
+                                </span>
+                                <span class="rating-total">/10</span>
+                            </div>
+                            <div class="rating-details">
+                                <span class="vote-count">{{ featuredItem.vote_count }} votes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="overview">
+                        <p>{{ featuredItem.overview }}</p>
+                    </div>
+
                     <div class="featured-actions">
                         <a class="button button-primary" [routerLink]="[mediaRoute, featuredItem.id]">
                             <i class="fas fa-play"></i> Watch Trailer
                         </a>
-                        <button class="button button-secondary"><i class="fas fa-plus"></i> Add to Watchlist</button>
                     </div>
                 </div>
             </div>
@@ -46,6 +63,10 @@
                         <div class="skeleton-meta-item"></div>
                         <div class="skeleton-meta-item"></div>
                     </div>
+                    <div class="skeleton-rating-container">
+                        <div class="skeleton-rating"></div>
+                        <div class="skeleton-rating-details"></div>
+                    </div>
                     <div class="skeleton-overview">
                         <div class="skeleton-line"></div>
                         <div class="skeleton-line"></div>
@@ -53,7 +74,6 @@
                     </div>
                     <div class="skeleton-actions">
                         <div class="skeleton-button-primary"></div>
-                        <div class="skeleton-button-secondary"></div>
                     </div>
                 </div>
             </div>

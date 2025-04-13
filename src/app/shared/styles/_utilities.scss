@@ -3,18 +3,63 @@
     max-width: $container-2xl;
     margin: 0 auto;
     padding: 0 $spacing-lg;
+
+    @media (max-width: map-get($breakpoints, "sm")) {
+        padding: 0 $spacing-md;
+    }
 }
 
 .list-container {
     display: flex;
     flex-direction: column;
     gap: $spacing-lg;
+
+    @media (max-width: map-get($breakpoints, "sm")) {
+        gap: $spacing-md;
+    }
 }
 
 .reviews-container {
     display: flex;
     flex-direction: column;
     gap: $spacing-md;
+
+    @media (max-width: map-get($breakpoints, "sm")) {
+        gap: $spacing-sm;
+    }
+}
+
+.media-details-grid {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: $spacing-xl;
+
+    @media (max-width: map-get($breakpoints, "lg")) {
+        gap: 0;
+        grid-template-columns: 1fr;
+    }
+
+    aside {
+        @media (min-width: map-get($breakpoints, "lg")) {
+            position: sticky;
+            top: $spacing-lg;
+            height: fit-content;
+        }
+
+        @media (max-width: map-get($breakpoints, "lg")) {
+            order: -1;
+        }
+    }
+}
+
+.cast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: $spacing-md;
+
+    @media (max-width: map-get($breakpoints, "sm")) {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
 }
 
 .genre {
@@ -23,22 +68,8 @@
     background-color: rgba($primary-color, 0.1);
     color: $primary-color;
     border-radius: $border-radius-full;
-}
 
-@media (max-width: map-get($breakpoints, "sm")) {
-    .wrapper {
-        padding: 0 $spacing-md;
-    }
-
-    .list-container {
-        gap: $spacing-md;
-    }
-
-    .reviews-container {
-        gap: $spacing-sm;
-    }
-
-    .genre {
+    @media (max-width: map-get($breakpoints, "sm")) {
         @include text-clamp(1);
     }
 }

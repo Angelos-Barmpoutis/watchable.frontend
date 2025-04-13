@@ -6,7 +6,7 @@ import { MEDIA_TYPE } from '../enumerations/media-type.enum';
 import { DiscoverGateway } from '../gateways/discover.gateway';
 import { TvShowGateway } from '../gateways/tv-show.gateway';
 import { Genre } from '../models/genre.model';
-import { PaginatedTvShows } from '../models/tv-show.model';
+import { PaginatedTvShows, TvShowDetails } from '../models/tv-show.model';
 import { LocalStorageService } from '../services/local-storage.service';
 
 export interface AllTvShows {
@@ -39,6 +39,10 @@ export class TvShowFacade {
 
     public getTopRated(page: number = DEFAULT.page): Observable<PaginatedTvShows> {
         return this.tvShowGateway.getTopRated(page);
+    }
+
+    public getDetails(id: number): Observable<TvShowDetails> {
+        return this.tvShowGateway.getDetails(id);
     }
 
     public getAllTvShows(): Observable<AllTvShows> {

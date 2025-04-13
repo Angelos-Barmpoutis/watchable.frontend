@@ -1,0 +1,219 @@
+@import "../../../../styles.scss";
+
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: $spacing-md;
+
+    @media (max-width: map-get($breakpoints, "md")) {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    @media (max-width: map-get($breakpoints, "sm")) {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .image-item {
+        position: relative;
+        border-radius: $border-radius-md;
+        overflow: hidden;
+        cursor: pointer;
+        aspect-ratio: 16/9;
+
+        .grid-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform $transition-normal;
+        }
+
+        &:hover .grid-image {
+            transform: scale(1.02);
+        }
+
+        .more-images {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba($surface-color, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color $transition-normal;
+
+            &:hover {
+                background: rgba($surface-color, 0.8);
+            }
+
+            .counter {
+                font-size: $font-size-md;
+                font-weight: $font-weight-semibold;
+                color: $text-primary;
+            }
+        }
+    }
+}
+
+.image-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    background: rgba($surface-color, 0.95);
+
+    .viewer-content {
+        position: relative;
+        width: 90%;
+        max-width: 1200px;
+        height: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: $border-radius-lg;
+        overflow: hidden;
+
+        .image-container {
+            position: relative;
+            flex: 1;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            .viewer-image {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+                border-radius: $border-radius-lg;
+            }
+
+            .viewer-overlay {
+                position: absolute;
+                inset: 0;
+                transition: opacity $transition-normal;
+
+                .close-button {
+                    position: absolute;
+                    top: 44px;
+                }
+
+                .navigation-buttons {
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    right: 0;
+                    transform: translateY(-50%);
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0 $spacing-sm;
+                    pointer-events: none;
+
+                    @media (max-width: map-get($breakpoints, "sm")) {
+                        display: none;
+                    }
+
+                    .nav-button {
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 50%;
+                        background-color: rgba($surface-color, 0.8);
+                        border: none;
+                        color: $text-primary;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all $transition-normal;
+                        pointer-events: auto;
+
+                        @media (max-width: map-get($breakpoints, "sm")) {
+                            width: 28px;
+                            height: 28px;
+                        }
+
+                        &:hover:not(.disabled) {
+                            background-color: rgba($surface-color, 1);
+                        }
+
+                        &.disabled {
+                            opacity: 0.5;
+                            cursor: not-allowed;
+                        }
+
+                        i {
+                            font-size: $font-size-sm;
+                        }
+                    }
+                }
+            }
+        }
+
+        .preview-strip {
+            width: 100%;
+            display: flex;
+            gap: $spacing-sm;
+            overflow-x: auto;
+            scrollbar-width: none;
+
+            swiper-slide {
+                flex: 0 0 150px;
+                height: 84.375px;
+                overflow: hidden;
+                border-radius: $border-radius-md;
+                border: 1px solid transparent;
+                cursor: pointer;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: all $transition-normal;
+                }
+
+                &.active {
+                    border-color: $primary-color;
+                }
+
+                &:hover img {
+                    transform: scale(1.05);
+                }
+            }
+        }
+    }
+}
+
+.skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: $spacing-md !important;
+    margin: $spacing-md 0;
+
+    @media (max-width: map-get($breakpoints, "md")) {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    @media (max-width: map-get($breakpoints, "sm")) {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .skeleton-image-item {
+        aspect-ratio: 16/9;
+        border-radius: $border-radius-md;
+        overflow: hidden;
+
+        .skeleton-image {
+            width: 100%;
+            height: 100%;
+            @include skeleton-loading;
+        }
+    }
+}

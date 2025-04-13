@@ -27,6 +27,10 @@ body {
     color: $text-primary;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    * {
+        font-family: $font-family;
+    }
 }
 
 // Typography

@@ -1,0 +1,91 @@
+@import "../../../../styles.scss";
+
+.details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    li {
+        display: flex;
+        gap: $spacing-md;
+        font-size: $font-size-sm;
+
+        .detail-label {
+            @media (max-width: map-get($breakpoints, "lg")) {
+                min-width: 200px;
+            }
+
+            color: $text-secondary;
+            font-weight: $font-weight-medium;
+            min-width: 140px;
+        }
+
+        .detail-value {
+            color: $text-primary;
+
+            .detail-link {
+                color: $primary-color;
+                text-decoration: none;
+                transition: color $transition-normal;
+                font-weight: $font-weight-medium;
+
+                &:hover {
+                    color: lighten($primary-color, 10%);
+                }
+            }
+        }
+    }
+}
+
+.external-links {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    margin-top: $spacing-xl;
+}
+
+// skeleton loading
+.skeleton-media-details {
+    .skeleton-media-content {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xl;
+    }
+
+    .skeleton-media-list {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-sm;
+    }
+
+    .skeleton-media-item {
+        display: flex;
+        gap: $spacing-md;
+    }
+
+    .skeleton-media-label {
+        @include skeleton-loading;
+        height: $font-size-sm;
+        width: 120px;
+    }
+
+    .skeleton-media-value {
+        @include skeleton-loading;
+        flex: 1;
+        height: $font-size-sm;
+    }
+
+    .skeleton-media-links {
+        display: flex;
+        gap: $spacing-md;
+    }
+
+    .skeleton-media-button {
+        @include skeleton-loading;
+        width: 160px;
+        height: 40px;
+    }
+}

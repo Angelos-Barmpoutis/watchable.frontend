@@ -3,8 +3,10 @@ import { Country } from './country,model';
 import { ExternalIds } from './external-ids.model';
 import { Genre } from './genre.model';
 import { Language } from './language.model';
+import { Backdrop, MediaCredits, MediaCreditsCrewPerson, Poster, Video } from './media.model';
 import { Network } from './network.model';
-import { CreatorPerson, CrewPerson, GuestStarPerson, Person, PersonRole } from './people.model';
+import { CreatorPerson, GuestStarPerson, Person, PersonRole } from './people.model';
+import { PaginatedReviewItems } from './review.model';
 
 export interface TvShow {
     backdrop_path: string;
@@ -67,8 +69,18 @@ export interface TvShowDetails {
     status: string;
     tagline: string;
     type: string;
-    vote_avergae: number;
+    vote_average: number;
     vote_count: number;
+    videos: { results: Array<Video> };
+    images: {
+        backdrops: Array<Backdrop>;
+        posters: Array<Poster>;
+    };
+    reviews: PaginatedReviewItems;
+    credits: MediaCredits;
+    similar: PaginatedTvShows;
+    recommendations: PaginatedTvShows;
+    external_ids: TvShowExternalIds;
 }
 
 export interface TvShowSeason {
@@ -119,7 +131,7 @@ export interface TvShowEpisode {
 
 export interface TvShowEpisodeDetails {
     air_date: string;
-    crew: Array<CrewPerson>;
+    crew: Array<MediaCreditsCrewPerson>;
     episode_number: number;
     guest_stars: Array<GuestStarPerson>;
     name: string;
@@ -137,49 +149,4 @@ export interface TvShowEpisodeCreditsPerson extends Person {
     character: string;
     credit_id: string;
     order: number;
-}
-
-export interface TvShowCredits {
-    cast: Array<TvShowCreditsCastPerson>;
-    crew: Array<TvShowCreditsCrewPerson>;
-}
-
-export interface TvShowCreditsCrewPerson {
-    adult: boolean;
-    backdrop_path: string;
-    genre_ids: Array<number>;
-    id: number;
-    origin_country: Array<string>;
-    original_language: string;
-    original_name: string;
-    overview: string;
-    popularity: number;
-    poster_path: string;
-    first_air_date: string;
-    name: string;
-    vote_average: number;
-    vote_count: number;
-    credit_id: string;
-    department: string;
-    job: string;
-}
-
-export interface TvShowCreditsCastPerson {
-    adult: boolean;
-    backdrop_path: string;
-    genre_ids: Array<number>;
-    id: number;
-    origin_country: Array<string>;
-    original_language: string;
-    original_name: string;
-    overview: string;
-    popularity: number;
-    poster_path: string;
-    first_air_date: string;
-    name: string;
-    vote_average: number;
-    vote_count: number;
-    character: string;
-    credit_id: string;
-    episode_count: number;
 }

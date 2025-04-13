@@ -7,7 +7,7 @@ export const routes: Routes = [
     },
     {
         path: 'movie/:id',
-        loadComponent: () => import('./pages/movie/movie.component').then((c) => c.MoviesMovieComponent),
+        loadComponent: () => import('./pages/movie/movie.component').then((c) => c.MovieComponent),
     },
     {
         path: 'discover/:genre',

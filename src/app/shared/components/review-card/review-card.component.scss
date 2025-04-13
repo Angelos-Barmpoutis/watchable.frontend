@@ -1,0 +1,184 @@
+@import "../../../../styles.scss";
+
+.review-card {
+    background-color: rgba($surface-color, 0.6);
+    border-radius: $border-radius-lg;
+    padding: $spacing-md;
+    display: flex;
+    flex-direction: column;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: rgba($surface-color, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    i {
+        font-size: $font-size-xl;
+        color: $text-secondary;
+    }
+}
+
+.reviewer-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+
+    .reviewer-name {
+        font-weight: $font-weight-semibold;
+        font-size: $font-size-sm;
+        color: $text-primary;
+    }
+
+    .review-date {
+        font-size: $font-size-xs;
+        color: $text-secondary;
+    }
+}
+
+.reviewer-rating {
+    .rating-badge {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        padding: $spacing-xs $spacing-sm;
+        background-color: rgba($surface-color, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: $border-radius-md;
+
+        .rating-value {
+            font-weight: $font-weight-bold;
+            font-size: $font-size-sm;
+
+            &.rating-low {
+                color: $error-color;
+            }
+
+            &.rating-medium {
+                color: $warning-color;
+            }
+
+            &.rating-high {
+                color: $success-color;
+            }
+
+            &.rating-top {
+                color: $primary-color;
+            }
+        }
+
+        .rating-total {
+            color: $text-secondary;
+            font-size: $font-size-xs;
+        }
+    }
+}
+
+.review-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    p {
+        font-size: $font-size-sm;
+        color: $text-secondary;
+        margin-bottom: $spacing-sm;
+        line-height: 1.5;
+        @include text-clamp(4);
+    }
+
+    .read-more {
+        font-size: $font-size-xs;
+        color: $primary-color;
+        text-decoration: none;
+        margin-top: auto;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// Skeleton styles
+.skeleton-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: $surface-color;
+    @include skeleton-loading;
+}
+
+.skeleton-reviewer-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+}
+
+.skeleton-reviewer-name {
+    width: 120px;
+    height: $font-size-sm;
+    background-color: $surface-color;
+    border-radius: $border-radius-sm;
+    @include skeleton-loading;
+}
+
+.skeleton-review-date {
+    width: 80px;
+    height: $font-size-xs;
+    background-color: $surface-color;
+    border-radius: $border-radius-sm;
+    @include skeleton-loading;
+}
+
+.skeleton-reviewer-rating {
+    width: 60px;
+    height: 28px;
+    background-color: $surface-color;
+    border-radius: $border-radius-full;
+    @include skeleton-loading;
+}
+
+.skeleton-review-content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+}
+
+.skeleton-review-text {
+    height: $font-size-sm;
+    background-color: $surface-color;
+    border-radius: $border-radius-sm;
+    @include skeleton-loading;
+
+    &:nth-child(1) {
+        width: 100%;
+    }
+
+    &:nth-child(2) {
+        width: 95%;
+    }
+
+    &:nth-child(3) {
+        width: 90%;
+    }
+}

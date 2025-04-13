@@ -1,0 +1,81 @@
+<ng-container *ngIf="!isLoading; else loadingTemplate">
+    <div appFadeIn class="images-grid">
+        <div
+            *ngFor="let image of images | slice: 0 : DEFAULT.gridItemsCount; let i = index"
+            class="image-item"
+            (click)="openViewer(image, i)"
+        >
+            <img
+                appBackdropPath
+                class="grid-image"
+                alt="Media image"
+                [backdropPath]="image.file_path"
+                [size]="BACKDROP_SIZE.w780"
+            />
+            <div
+                *ngIf="i === DEFAULT.gridItemsCount - 1 && images.length > DEFAULT.gridItemsCount"
+                class="more-images"
+                (click)="openViewer(image, i, true)"
+            >
+                <span class="counter">+{{ images.length - DEFAULT.gridItemsCount }} more</span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="showViewer" appFadeIn class="image-viewer" (click)="closeViewer()">
+        <div class="viewer-content" (click)="$event.stopPropagation()">
+            <div class="image-container">
+                <img
+                    *ngIf="selectedImage"
+                    appBackdropPath
+                    class="viewer-image"
+                    alt="Media image"
+                    [backdropPath]="selectedImage.file_path"
+                    [size]="BACKDROP_SIZE.original"
+                />
+                <div class="viewer-overlay">
+                    <button class="close-button" (click)="closeViewer()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="navigation-buttons">
+                        <button class="nav-button" [class.disabled]="selectedImageIndex === 0" (click)="prevImage()">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button
+                            class="nav-button"
+                            [class.disabled]="selectedImageIndex === images.length - 1"
+                            (click)="nextImage()"
+                        >
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <swiper-container
+                #previewStrip
+                class="preview-strip"
+                [initialSlide]="selectedImageIndex"
+                [spaceBetween]="8"
+                [slidesPerView]="'auto'"
+                (slideChange)="onSlideChange($event)"
+            >
+                <swiper-slide
+                    *ngFor="let image of images; let i = index"
+                    [class.active]="i === selectedImageIndex"
+                    (click)="selectImage(image, i)"
+                >
+                    <img appBackdropPath alt="Thumbnail" [backdropPath]="image.file_path" [size]="BACKDROP_SIZE.w300" />
+                </swiper-slide>
+            </swiper-container>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #loadingTemplate>
+    <div appFadeIn class="skeleton-grid">
+        <div *ngFor="let i of skeletonArray" class="skeleton-image-item">
+            <div class="skeleton-image"></div>
+        </div>
+    </div>
+</ng-template>

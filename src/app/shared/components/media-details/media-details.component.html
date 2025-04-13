@@ -1,0 +1,155 @@
+<ng-container *ngIf="!isLoading; else loadingTemplate">
+    <div appFadeIn>
+        <ul class="details-list">
+            <!-- Movie Details -->
+            <ng-container *ngIf="isMovie">
+                <li *ngIf="movieDetails?.status">
+                    <span class="detail-label">Status:</span>
+                    <span class="detail-value">{{ movieDetails?.status }}</span>
+                </li>
+                <li *ngIf="movieDetails?.release_date">
+                    <span class="detail-label">Release Date:</span>
+                    <span class="detail-value">{{ movieDetails?.release_date | date: "longDate" }}</span>
+                </li>
+                <li *ngIf="movieDetails?.runtime">
+                    <span class="detail-label">Runtime:</span>
+                    <span class="detail-value">{{ movieDetails?.runtime }} minutes</span>
+                </li>
+                <li *ngIf="movieDetails?.budget">
+                    <span class="detail-label">Budget:</span>
+                    <span class="detail-value">{{ movieDetails?.budget | currency }}</span>
+                </li>
+                <li *ngIf="movieDetails?.revenue">
+                    <span class="detail-label">Revenue:</span>
+                    <span class="detail-value">{{ movieDetails?.revenue | currency }}</span>
+                </li>
+            </ng-container>
+
+            <!-- TV Show Details -->
+            <ng-container *ngIf="isTvShow">
+                <li *ngIf="tvShowDetails?.status">
+                    <span class="detail-label">Status:</span>
+                    <span class="detail-value">{{ tvShowDetails?.status }}</span>
+                </li>
+                <li *ngIf="tvShowDetails?.type">
+                    <span class="detail-label">Type:</span>
+                    <span class="detail-value">{{ tvShowDetails?.type }}</span>
+                </li>
+                <li *ngIf="tvShowDetails?.first_air_date">
+                    <span class="detail-label">First Air Date:</span>
+                    <span class="detail-value">{{ tvShowDetails?.first_air_date | date: "longDate" }}</span>
+                </li>
+                <li *ngIf="tvShowDetails?.last_air_date">
+                    <span class="detail-label">Last Air Date:</span>
+                    <span class="detail-value">{{ tvShowDetails?.last_air_date | date: "longDate" }}</span>
+                </li>
+                <li *ngIf="tvShowDetails?.next_episode_to_air?.air_date">
+                    <span class="detail-label">Next Episode:</span>
+                    <span class="detail-value">{{
+                        tvShowDetails?.next_episode_to_air?.air_date | date: "longDate"
+                    }}</span>
+                </li>
+                <li *ngIf="tvShowDetails?.episode_run_time?.length">
+                    <span class="detail-label">Episode Runtime:</span>
+                    <span class="detail-value">{{ tvShowDetails?.episode_run_time?.[0] }} minutes</span>
+                </li>
+                <li *ngIf="tvShowDetails?.number_of_seasons">
+                    <span class="detail-label">Seasons:</span>
+                    <span class="detail-value">{{ tvShowDetails?.number_of_seasons }}</span>
+                </li>
+                <li *ngIf="tvShowDetails?.number_of_episodes">
+                    <span class="detail-label">Episodes:</span>
+                    <span class="detail-value">{{ tvShowDetails?.number_of_episodes }}</span>
+                </li>
+                <li *ngIf="tvShowDetails?.created_by?.length">
+                    <span class="detail-label">Created By:</span>
+                    <span class="detail-value">
+                        <span *ngFor="let creator of tvShowDetails?.created_by; let last = last">
+                            <a class="detail-link" [routerLink]="['/', 'people', 'person', creator?.id]">
+                                {{ creator?.name }}</a
+                            >{{ !last ? ", " : "" }}
+                        </span>
+                    </span>
+                </li>
+            </ng-container>
+
+            <!-- Common Details -->
+            <li *ngIf="mediaDetails?.spoken_languages?.length">
+                <span class="detail-label">Languages:</span>
+                <span class="detail-value">
+                    <span *ngFor="let language of mediaDetails?.spoken_languages; let last = last">
+                        {{ language?.english_name }}{{ !last ? ", " : "" }}
+                    </span>
+                </span>
+            </li>
+            <li *ngIf="mediaDetails?.origin_country?.length">
+                <span class="detail-label">Origin Country:</span>
+                <span class="detail-value">
+                    <span *ngFor="let country of mediaDetails?.origin_country; let last = last">
+                        {{ country }}{{ !last ? ", " : "" }}
+                    </span>
+                </span>
+            </li>
+            <li *ngIf="mediaDetails?.production_companies?.length">
+                <span class="detail-label">Production Companies:</span>
+                <span class="detail-value">
+                    <span *ngFor="let company of mediaDetails?.production_companies; let last = last">
+                        {{ company?.name }}{{ !last ? ", " : "" }}
+                    </span>
+                </span>
+            </li>
+            <li *ngIf="mediaDetails?.genres?.length">
+                <span class="detail-label">Genres:</span>
+                <span class="detail-value">
+                    <span *ngFor="let genre of mediaDetails?.genres; let last = last">
+                        <a
+                            class="detail-link"
+                            [routerLink]="['/', isMovie ? 'movies' : 'tv-shows', 'discover', genre?.name]"
+                        >
+                            {{ genre?.name }}</a
+                        >{{ !last ? ", " : "" }}
+                    </span>
+                </span>
+            </li>
+        </ul>
+
+        <div class="external-links">
+            <a
+                *ngIf="mediaDetails.homepage"
+                target="_blank"
+                class="button website-button"
+                [href]="mediaDetails.homepage"
+            >
+                <i class="fas fa-globe"></i> Official Website
+            </a>
+            <a
+                *ngIf="isMovie ? movieDetails?.imdb_id : tvShowDetails?.external_ids?.imdb_id"
+                target="_blank"
+                class="button imdb-button"
+                [href]="
+                    'https://www.imdb.com/title/' +
+                    (isMovie ? movieDetails?.imdb_id : tvShowDetails?.external_ids?.imdb_id)
+                "
+            >
+                <i class="fab fa-imdb"></i> View on IMDb
+            </a>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #loadingTemplate>
+    <div appFadeIn class="skeleton-media-details">
+        <div class="skeleton-media-content">
+            <div class="skeleton-media-list">
+                <div *ngFor="let i of skeletonArray" class="skeleton-media-item">
+                    <div class="skeleton-media-label"></div>
+                    <div class="skeleton-media-value"></div>
+                </div>
+            </div>
+            <div class="skeleton-media-links">
+                <div class="skeleton-media-button"></div>
+                <div class="skeleton-media-button"></div>
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,27 @@
+<ng-container *ngIf="!isLoading; else skeleton">
+    <a class="cast-person" [routerLink]="['/', 'people', 'person', person.id]">
+        <div class="cast-photo">
+            <img
+                *ngIf="person.profile_path"
+                appProfilePath
+                [profilePath]="person.profile_path"
+                [size]="PROFILE_SIZE.w185"
+            />
+            <img *ngIf="!person.profile_path" [src]="DEFAULT.mediumProfileFallback" />
+        </div>
+        <div class="cast-info">
+            <span class="cast-name">{{ person.name }}</span>
+            <span class="cast-character">{{ person.character }}</span>
+        </div>
+    </a>
+</ng-container>
+
+<ng-template #skeleton>
+    <div class="cast-person-skeleton">
+        <div class="cast-photo"></div>
+        <div class="cast-info">
+            <span class="cast-name"></span>
+            <span class="cast-character"></span>
+        </div>
+    </div>
+</ng-template>

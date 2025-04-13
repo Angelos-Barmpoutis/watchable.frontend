@@ -1,1 +1,77 @@
-<p>serie works!</p>
+<app-media-hero [mediaDetails]="tvShowDetails" [mediaType]="MEDIA_TYPE.TvShow" [isLoading]="isLoading"></app-media-hero>
+
+<div class="wrapper">
+    <div class="media-details-grid">
+        <div>
+            <div *ngIf="tvShowDetails?.credits?.cast?.length">
+                <section>
+                    <header>
+                        <app-section-header title="Top Cast"></app-section-header>
+                    </header>
+                    <div class="cast-grid">
+                        <app-cast-person
+                            *ngFor="let person of tvShowDetails?.credits?.cast"
+                            [person]="person"
+                            [isLoading]="isLoading"
+                        ></app-cast-person>
+                    </div>
+                </section>
+
+                <section *ngIf="tvShowDetails?.images?.backdrops?.length">
+                    <header>
+                        <app-section-header title="Photos"></app-section-header>
+                    </header>
+                    <app-images-viewer
+                        [images]="tvShowDetails?.images?.backdrops ?? []"
+                        [isLoading]="isLoading"
+                    ></app-images-viewer>
+                </section>
+
+                <section *ngIf="tvShowDetails?.videos?.results?.length">
+                    <header>
+                        <app-section-header title="Videos"></app-section-header>
+                    </header>
+                    <app-videos-viewer
+                        [videos]="tvShowDetails?.videos?.results ?? []"
+                        [isLoading]="isLoading"
+                    ></app-videos-viewer>
+                </section>
+
+                <section *ngIf="tvShowDetails?.reviews?.results?.length">
+                    <header>
+                        <app-section-header title="Reviews"></app-section-header>
+                    </header>
+                    <app-reviews
+                        [reviews]="tvShowDetails?.reviews?.results ?? []"
+                        [isLoading]="isLoading"
+                    ></app-reviews>
+                </section>
+            </div>
+        </div>
+
+        <aside *ngIf="tvShowDetails">
+            <section>
+                <header>
+                    <app-section-header title="TV Show Info"></app-section-header>
+                </header>
+                <app-media-details
+                    [mediaDetails]="tvShowDetails"
+                    [mediaType]="MEDIA_TYPE.TvShow"
+                    [isLoading]="isLoading"
+                ></app-media-details>
+            </section>
+        </aside>
+    </div>
+
+    <section *ngIf="tvShowDetails?.similar?.results?.length">
+        <header>
+            <app-section-header title="Similar TV Shows"> </app-section-header>
+        </header>
+        <app-carousel-media
+            [mediaType]="MEDIA_TYPE.TvShow"
+            [items]="tvShowDetails?.similar?.results ?? []"
+            [isLoading]="isLoading"
+        >
+        </app-carousel-media>
+    </section>
+</div>

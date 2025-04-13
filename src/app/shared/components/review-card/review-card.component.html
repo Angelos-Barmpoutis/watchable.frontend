@@ -1,0 +1,56 @@
+<ng-container *ngIf="!isLoading; else loadingTemplate">
+    <div class="review-card" appFadeIn>
+        <div class="review-header">
+            <div class="avatar">
+                <img
+                    *ngIf="review.author_details.avatar_path"
+                    alt="Reviewer avatar"
+                    [src]="review.author_details.avatar_path | avatarUrl"
+                />
+                <i *ngIf="!review.author_details.avatar_path" class="fas fa-user"></i>
+            </div>
+            <div class="reviewer-info">
+                <span class="reviewer-name">{{ review.author }}</span>
+                <span class="review-date">{{ review.created_at | date: "mediumDate" }}</span>
+            </div>
+            <div *ngIf="review.author_details.rating" class="reviewer-rating">
+                <div class="rating-badge">
+                    <span
+                        class="rating-value"
+                        [class.rating-low]="review.author_details.rating < 5"
+                        [class.rating-medium]="review.author_details.rating >= 5 && review.author_details.rating < 7"
+                        [class.rating-high]="review.author_details.rating >= 7 && review.author_details.rating < 8.5"
+                        [class.rating-top]="review.author_details.rating >= 8.5"
+                    >
+                        {{ review.author_details.rating | number: "1.1-1" }}
+                    </span>
+                    <span class="rating-total">/10</span>
+                </div>
+            </div>
+        </div>
+        <div class="review-content">
+            <p>
+                {{ review.content.length > 300 ? (review.content | slice: 0 : 300) + "..." : review.content }}
+            </p>
+            <a target="_blank" class="read-more" [href]="review.url">Read full review</a>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #loadingTemplate>
+    <div class="review-card" appFadeIn>
+        <div class="review-header">
+            <div class="skeleton-avatar"></div>
+            <div class="skeleton-reviewer-info">
+                <div class="skeleton-reviewer-name"></div>
+                <div class="skeleton-review-date"></div>
+            </div>
+            <div class="skeleton-reviewer-rating"></div>
+        </div>
+        <div class="skeleton-review-content">
+            <div class="skeleton-review-text"></div>
+            <div class="skeleton-review-text"></div>
+            <div class="skeleton-review-text"></div>
+        </div>
+    </div>
+</ng-template>

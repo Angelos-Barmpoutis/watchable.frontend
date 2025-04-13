@@ -1,0 +1,22 @@
+<ng-container *ngIf="!isLoading; else loadingTemplate">
+    <div appFadeIn class="reviews-grid">
+        <app-review-card
+            *ngFor="let review of reviews | slice: 0 : (showAll ? reviews.length : DEFAULT.gridItemsCount)"
+            [review]="review"
+            [isLoading]="isLoading"
+        ></app-review-card>
+    </div>
+
+    <div *ngIf="hasMoreReviews" class="view-all-container">
+        <button class="button button-secondary" (click)="toggleShowAll()">
+            {{ showAll ? "Show Less" : "View All Reviews" }}
+            <i class="fas" [class.fa-chevron-down]="!showAll" [class.fa-chevron-up]="showAll"></i>
+        </button>
+    </div>
+</ng-container>
+
+<ng-template #loadingTemplate>
+    <div appFadeIn class="reviews-grid">
+        <app-review-card *ngFor="let i of skeletonArray" [review]="defaultReview" [isLoading]="true"></app-review-card>
+    </div>
+</ng-template>

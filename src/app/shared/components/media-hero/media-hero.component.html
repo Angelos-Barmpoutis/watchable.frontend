@@ -1,0 +1,122 @@
+<ng-container *ngIf="!isLoading; else loadingTemplate">
+    <div appFadeIn class="media-hero" [style.background-image]="backdropUrl">
+        <div class="overlay">
+            <div class="wrapper">
+                <div class="media-content">
+                    <div class="media-poster">
+                        <img
+                            *ngIf="mediaDetails?.poster_path"
+                            appPosterPath
+                            [posterPath]="mediaDetails?.poster_path ?? ''"
+                            [size]="POSTER_SIZE.w342"
+                        />
+                        <img *ngIf="!mediaDetails?.poster_path" [src]="DEFAULT.largePosterFallback" />
+                    </div>
+                    <div class="media-info">
+                        <h2 class="media-title">
+                            {{ title }}
+                        </h2>
+                        <div class="media-meta">
+                            <span *ngIf="releaseDate" class="media-year">
+                                {{ releaseDate | date: "yyyy" }}
+                            </span>
+                            <span *ngIf="runtime" class="runtime">
+                                {{ runtime | time }}
+                            </span>
+                            <span *ngIf="mediaDetails?.genres?.length" class="genres">
+                                <span *ngFor="let genre of mediaDetails?.genres; let last = last">
+                                    {{ genre?.name }}{{ !last ? ", " : "" }}
+                                </span>
+                            </span>
+                        </div>
+
+                        <div *ngIf="voteAverage !== 0" class="rating-container">
+                            <div class="rating">
+                                <div class="rating-badge">
+                                    <span
+                                        class="rating-value"
+                                        [class.rating-low]="voteAverage < 5"
+                                        [class.rating-medium]="voteAverage >= 5 && voteAverage < 7"
+                                        [class.rating-high]="voteAverage >= 7 && voteAverage < 8.5"
+                                        [class.rating-top]="voteAverage >= 8.5"
+                                    >
+                                        {{ voteAverage | number: "1.1-1" }}
+                                    </span>
+                                    <span class="rating-total">/10</span>
+                                </div>
+                                <div class="rating-details">
+                                    <span class="vote-count">{{ voteCount }} votes</span>
+                                </div>
+                            </div>
+                            <button class="button button-secondary"><i class="fas fa-star"></i> Rate</button>
+                        </div>
+
+                        <div *ngIf="tagline" class="tagline">
+                            <em>"{{ tagline }}"</em>
+                        </div>
+
+                        <div class="overview">
+                            <p>{{ mediaDetails?.overview }}</p>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button *ngIf="trailerUrl" class="button button-primary" (click)="toggleTrailer()">
+                                <i class="fas fa-play"></i> Watch Trailer
+                            </button>
+                            <button class="button button-secondary">
+                                <i class="fas fa-plus"></i> Add to Watchlist
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="showTrailer && trailerUrl" class="trailer-modal" (click)="toggleTrailer()">
+        <div class="trailer-container">
+            <button class="close-button" (click)="toggleTrailer()">
+                <i class="fas fa-times"></i>
+            </button>
+            <iframe
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                [src]="trailerUrl"
+            >
+            </iframe>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #loadingTemplate>
+    <div appFadeIn class="skeleton-media-hero">
+        <div class="wrapper">
+            <div class="skeleton-media-content">
+                <div class="skeleton-media-poster"></div>
+                <div class="skeleton-media-info">
+                    <div class="skeleton-media-title"></div>
+                    <div class="skeleton-media-meta">
+                        <div class="skeleton-media-meta-item"></div>
+                        <div class="skeleton-media-meta-item"></div>
+                        <div class="skeleton-media-meta-item"></div>
+                    </div>
+                    <div class="skeleton-media-rating-container">
+                        <div class="skeleton-media-rating"></div>
+                        <div class="skeleton-media-rating-details"></div>
+                    </div>
+                    <div class="skeleton-media-tagline"></div>
+                    <div class="skeleton-media-overview">
+                        <div class="skeleton-media-overview-line"></div>
+                        <div class="skeleton-media-overview-line"></div>
+                        <div class="skeleton-media-overview-line"></div>
+                    </div>
+                    <div class="skeleton-media-buttons">
+                        <div class="skeleton-media-button"></div>
+                        <div class="skeleton-media-button"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

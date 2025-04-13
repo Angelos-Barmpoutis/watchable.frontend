@@ -1,0 +1,95 @@
+<ng-container *ngIf="!isLoading; else loadingTemplate">
+    <div appFadeIn class="videos-grid">
+        <div
+            *ngFor="let video of videos | slice: 0 : DEFAULT.gridItemsCount; let i = index"
+            class="video-item"
+            (click)="openViewer(video, i)"
+        >
+            <div class="video-thumbnail">
+                <img
+                    class="thumbnail-image"
+                    [src]="'https://img.youtube.com/vi/' + video.key + '/maxresdefault.jpg'"
+                    alt="{{ video.name }}"
+                />
+                <div class="play-button">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div
+                *ngIf="i === DEFAULT.gridItemsCount - 1 && videos.length > DEFAULT.gridItemsCount"
+                class="more-videos"
+                (click)="openViewer(video, i, true)"
+            >
+                <span class="counter">+{{ videos.length - DEFAULT.gridItemsCount }} more</span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="showViewer" appFadeIn class="video-viewer" (click)="closeViewer()">
+        <div class="viewer-content" (click)="$event.stopPropagation()">
+            <div class="video-container">
+                <iframe
+                    *ngIf="videoUrl"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    class="viewer-video"
+                    autoplay
+                    title=""
+                    [src]="videoUrl"
+                ></iframe>
+                <div class="viewer-overlay">
+                    <button class="close-button" (click)="closeViewer()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="navigation-buttons">
+                        <button class="nav-button" [class.disabled]="selectedVideoIndex === 0" (click)="prevVideo()">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button
+                            class="nav-button"
+                            [class.disabled]="selectedVideoIndex === videos.length - 1"
+                            (click)="nextVideo()"
+                        >
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <swiper-container
+                #previewStrip
+                class="preview-strip"
+                [initialSlide]="selectedVideoIndex"
+                [spaceBetween]="8"
+                [slidesPerView]="'auto'"
+                (slideChange)="onSlideChange($event)"
+            >
+                <swiper-slide
+                    *ngFor="let video of videos; let i = index"
+                    [class.active]="i === selectedVideoIndex"
+                    (click)="selectVideo(video, i)"
+                >
+                    <div class="thumbnail-container">
+                        <img
+                            class="thumbnail-image"
+                            [src]="'https://img.youtube.com/vi/' + video.key + '/default.jpg'"
+                            alt="{{ video.name }}"
+                        />
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                </swiper-slide>
+            </swiper-container>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #loadingTemplate>
+    <div appFadeIn class="skeleton-grid">
+        <div *ngFor="let i of skeletonArray" class="skeleton-video-item">
+            <div class="skeleton-thumbnail"></div>
+        </div>
+    </div>
+</ng-template>

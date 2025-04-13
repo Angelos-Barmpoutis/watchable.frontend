@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { TvShowDriver } from '../drivers/tv-show.driver';
-import { PaginatedTvShows } from '../models/tv-show.model';
+import { PaginatedTvShows, TvShowDetails } from '../models/tv-show.model';
 import { UrlService } from '../services/url.service';
 
 @Injectable({
@@ -14,15 +14,25 @@ export class TvShowGateway {
         private urlService: UrlService,
     ) {}
 
-    getAiringToday(page: number): Observable<PaginatedTvShows> {
-        return this.tvShowDriver.getAiringToday(this.urlService.createUrlForTMDB(['tv', `airing_today?page=${page}`]));
+    getAiringToday(page: number = 1): Observable<PaginatedTvShows> {
+        const url = this.urlService.createUrlForTMDB(['tv', 'airing_today'], { page });
+        return this.tvShowDriver.getAiringToday(url);
     }
 
-    getPopular(page: number): Observable<PaginatedTvShows> {
-        return this.tvShowDriver.getPopular(this.urlService.createUrlForTMDB(['tv', `popular?page=${page}`]));
+    getPopular(page: number = 1): Observable<PaginatedTvShows> {
+        const url = this.urlService.createUrlForTMDB(['tv', 'popular'], { page });
+        return this.tvShowDriver.getPopular(url);
     }
 
-    getTopRated(page: number): Observable<PaginatedTvShows> {
-        return this.tvShowDriver.getTopRated(this.urlService.createUrlForTMDB(['tv', `top_rated?page=${page}`]));
+    getTopRated(page: number = 1): Observable<PaginatedTvShows> {
+        const url = this.urlService.createUrlForTMDB(['tv', 'top_rated'], { page });
+        return this.tvShowDriver.getTopRated(url);
+    }
+
+    getDetails(id: number): Observable<TvShowDetails> {
+        const url = this.urlService.createUrlForTMDB(['tv', id.toString()], {
+            append_to_response: 'credits,videos,images,reviews,similar,external_ids',
+        });
+        return this.tvShowDriver.getDetails(url);
     }
 }

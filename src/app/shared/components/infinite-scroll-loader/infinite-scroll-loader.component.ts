@@ -28,11 +28,17 @@ export class InfiniteScrollLoaderComponent implements OnInit, OnDestroy {
             return;
         }
 
+        const options = {
+            root: null,
+            rootMargin: '400px',
+            threshold: 0.1,
+        };
+
         this.observer = new IntersectionObserver(([entry]) => {
             if (entry.isIntersecting && !this.disabled) {
                 this.scrolled.emit();
             }
-        });
+        }, options);
 
         this.observer.observe(this.element.nativeElement as Element);
     }

@@ -34,7 +34,10 @@ export class MovieGateway {
         const movieId = id.toString();
 
         return this.movieDriver.getDetails(
-            this.urlService.createUrlForTMDB(['movie', `${movieId}?append_to_response=videos,images,reviews`]),
+            this.urlService.createUrlForTMDB([
+                'movie',
+                `${movieId}?append_to_response=videos,images,reviews,credits,similar,recommendations`,
+            ]),
         );
     }
 }
