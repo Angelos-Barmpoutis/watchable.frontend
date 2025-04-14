@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isLoading; else loadingTemplate">
-    <a class="tv-show-list-item" [routerLink]="['/tv', tvShow.id]">
+    <a class="tv-show-list-item" [routerLink]="['/', 'tv-shows', 'tv-show', tvShow.id]">
         <div class="tv-show-main">
             <div class="poster-wrapper">
                 <img
