@@ -63,6 +63,7 @@ export interface MovieDetails {
     credits: MediaCredits;
     similar: PaginatedMovies;
     recommendations: PaginatedMovies;
+    external_ids: MovieExternalIds;
 }
 
 export interface PaginatedMovies {

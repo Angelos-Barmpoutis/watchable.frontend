@@ -1,11 +1,11 @@
 @import "../../../../styles.scss";
 
 .tv-show-list-item {
-    background-color: $surface-color;
-    border-radius: $border-radius-xl;
-    border: 1px solid $border-color;
-    overflow: hidden;
-    display: block;
+    background-color: rgba($surface-color, 0.6);
+    border-radius: $border-radius-lg;
+    padding: $spacing-md;
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
     transition: all $transition-normal;
 
@@ -13,13 +13,13 @@
         display: grid;
         grid-template-columns: 128px 1fr;
         gap: $spacing-md;
-        padding: $spacing-md;
         cursor: pointer;
 
         .poster-wrapper {
             width: 100%;
             aspect-ratio: 2/3;
-            border-radius: $border-radius-xl;
+            transition: filter $transition-normal;
+            border-radius: $border-radius-lg;
             overflow: hidden;
 
             img {
@@ -33,80 +33,99 @@
         .info {
             display: flex;
             flex-direction: column;
-            gap: $spacing-md;
+            gap: $spacing-sm;
 
             .info-header {
                 display: flex;
-                flex-wrap: wrap;
-                align-items: baseline;
-                gap: $spacing-sm;
+                justify-content: space-between;
+                align-items: flex-start;
 
                 .title {
                     font-size: $font-size-md;
-                    font-weight: $font-weight-medium;
+                    font-weight: $font-weight-semibold;
                     color: $text-primary;
                     margin: 0;
                     @include text-clamp(1);
                 }
 
-                .year {
-                    color: $text-secondary;
-                    font-size: $font-size-sm;
-                    font-weight: $font-weight-medium;
+                .rating-container {
+                    flex-shrink: 0;
+                    margin-left: $spacing-md;
+
+                    .rating {
+                        .rating-badge {
+                            display: flex;
+                            align-items: center;
+                            gap: $spacing-xs;
+                            padding: $spacing-xs $spacing-sm;
+                            background-color: rgba($background-color, 0.6);
+                            backdrop-filter: blur(10px);
+                            border-radius: $border-radius-md;
+                            transition: transform $transition-normal;
+
+                            .rating-value {
+                                font-size: $font-size-sm;
+                                font-weight: $font-weight-bold;
+
+                                &.rating-low {
+                                    color: $error-color;
+                                }
+
+                                &.rating-medium {
+                                    color: $warning-color;
+                                }
+
+                                &.rating-high {
+                                    color: $success-color;
+                                }
+
+                                &.rating-top {
+                                    color: $primary-color;
+                                }
+                            }
+
+                            .rating-total {
+                                font-size: $font-size-xs;
+                                color: $text-secondary;
+                            }
+                        }
+                    }
                 }
             }
 
-            .genres {
-                display: flex;
-                flex-wrap: wrap;
-                gap: $spacing-sm;
-            }
+            .meta {
+                color: $text-secondary;
+                font-size: $font-size-sm;
+                margin: $spacing-xs 0;
 
-            .rating {
-                width: 33px;
-                height: 33px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border: 1px solid $border-color;
-                border-radius: $border-radius-lg;
-                background-color: $surface-color;
+                > span {
+                    position: relative;
 
-                .rating-badge {
-                    font-size: $font-size-sm;
-                    font-weight: $font-weight-medium;
-                    color: $text-secondary;
+                    &:not(:first-child)::before {
+                        content: "•";
+                        margin-inline: $spacing-xs;
+                        opacity: 0.5;
+                    }
                 }
 
-                .rating-low {
-                    color: rgba($error-color, 0.9);
-                }
-
-                .rating-medium {
-                    color: rgba($warning-color, 0.9);
-                }
-
-                .rating-high {
-                    color: rgba($success-color, 0.9);
-                }
-
-                .rating-top {
-                    color: rgba($primary-color, 0.9);
+                .genres {
+                    display: inline;
                 }
             }
 
             .overview {
-                font-size: $font-size-sm;
                 color: $text-secondary;
+                font-size: $font-size-sm;
                 margin: 0;
+                line-height: 1.5;
                 @include text-clamp(3);
             }
         }
     }
 
     &:hover {
-        background-color: rgba($primary-color, 0.05);
-        border-color: rgba($primary-color, 0.2);
+        background-color: rgba($surface-color, 0.8);
+        transform: translateY(-2px);
 
         .poster-wrapper {
             filter: brightness(0.85);
@@ -114,6 +133,10 @@
             img {
                 transform: scale(1.05);
             }
+        }
+
+        .rating-badge {
+            transform: scale(1.05);
         }
     }
 }
@@ -125,34 +148,43 @@
 
 @media (max-width: map-get($breakpoints, "sm")) {
     .tv-show-list-item {
+        padding: $spacing-sm;
+
         .tv-show-main {
-            grid-template-columns: 112px 1fr;
-            padding: $spacing-sm;
-            gap: $spacing-md;
+            grid-template-columns: 96px 1fr;
+            gap: $spacing-sm;
 
             .info {
-                gap: $spacing-md;
+                gap: $spacing-xs;
 
                 .info-header {
+                    flex-direction: row;
+                    align-items: center;
+
                     .title {
-                        font-size: $font-size-md;
+                        font-size: $font-size-sm;
                     }
 
-                    .year {
-                        font-size: $font-size-sm;
+                    .rating-container {
+                        margin-left: $spacing-sm;
                     }
                 }
 
+                .meta {
+                    margin: 0;
+                    font-size: $font-size-xs;
+                }
+
                 .overview {
-                    display: none;
-                    font-size: $font-size-sm;
+                    font-size: $font-size-xs;
+                    // @include text-clamp(2);
                 }
             }
         }
     }
 
     .tv-show-list-item-loading {
-        height: 184px;
+        height: 150px;
         @include skeleton-loading;
     }
 }

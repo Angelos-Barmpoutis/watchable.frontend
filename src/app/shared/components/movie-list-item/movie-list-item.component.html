@@ -10,23 +10,31 @@
             <div class="info">
                 <div class="info-header">
                     <h3 class="title">{{ movie.title }}</h3>
-                    <span class="year">{{ movie.release_date | date: "yyyy" }}</span>
-                </div>
-
-                <div class="genres">
-                    <span *ngFor="let genre of movie.genres" class="genre">{{ genre.name }}</span>
-                </div>
-
-                <div class="rating">
-                    <div
-                        class="rating-badge"
-                        [class.rating-low]="movie.vote_average < 5.0"
-                        [class.rating-medium]="movie.vote_average >= 5.0 && movie.vote_average < 7.0"
-                        [class.rating-high]="movie.vote_average >= 7.0 && movie.vote_average < 8.5"
-                        [class.rating-top]="movie.vote_average >= 8.5"
-                    >
-                        {{ movie.vote_average | number: "1.0-1" }}
+                    <div class="rating-container">
+                        <div class="rating">
+                            <div class="rating-badge">
+                                <span
+                                    class="rating-value"
+                                    [class.rating-low]="movie.vote_average < 5.0"
+                                    [class.rating-medium]="movie.vote_average >= 5.0 && movie.vote_average < 7.0"
+                                    [class.rating-high]="movie.vote_average >= 7.0 && movie.vote_average < 8.5"
+                                    [class.rating-top]="movie.vote_average >= 8.5"
+                                >
+                                    {{ movie.vote_average | number: "1.1-1" }}
+                                </span>
+                                <span class="rating-total">/10</span>
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+                <div class="meta">
+                    <span class="year">{{ movie.release_date | date: "yyyy" }}</span>
+                    <span *ngIf="movie.genres?.length" class="genres">
+                        <span *ngFor="let genre of movie.genres; let last = last">
+                            {{ genre.name }}{{ !last ? ", " : "" }}
+                        </span>
+                    </span>
                 </div>
 
                 <p class="overview">{{ movie.overview }}</p>

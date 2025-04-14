@@ -59,7 +59,8 @@
                     align-items: center;
                     gap: $spacing-xs;
                     padding: $spacing-xs $spacing-sm;
-                    background-color: rgba($surface-color, 0.6);
+                    background-color: rgba($background-color, 0.6);
+                    backdrop-filter: blur(10px);
                     border-radius: $border-radius-md;
 
                     .rating-value {
@@ -204,7 +205,7 @@
 
 @media (max-width: map-get($breakpoints, "md")) {
     .featured-banner {
-        height: calc(100dvh - $mobile-nav-height - $mobile-header-height);
+        height: calc(80vh - $mobile-nav-height - $mobile-header-height);
 
         .overlay {
             align-items: flex-end;
@@ -214,7 +215,7 @@
             max-width: 100%;
 
             .featured-title {
-                font-size: $font-size-xl;
+                font-size: $font-size-lg;
             }
 
             .overview {
@@ -225,7 +226,7 @@
     }
 
     .featured-banner-skeleton {
-        height: calc(100dvh - $mobile-nav-height - $mobile-header-height);
+        height: calc(80vh - $mobile-nav-height - $mobile-header-height);
 
         .overlay {
             align-items: flex-end;
@@ -235,7 +236,7 @@
             max-width: 100%;
 
             .skeleton-title {
-                height: $font-size-xl;
+                height: $font-size-lg;
                 width: 60%;
             }
 

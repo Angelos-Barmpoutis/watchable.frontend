@@ -32,9 +32,16 @@
     border-radius: $border-radius-lg;
     font-weight: $font-weight-medium;
     cursor: pointer;
+    color: $text-primary;
     transition: all $transition-normal;
     font-size: $font-size-sm;
     line-height: 1.2;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+        transform: translateY(-2px);
+    }
 
     i {
         font-size: $font-size-sm;
@@ -72,22 +79,38 @@
     }
 
     &.imdb-button {
-        background: rgba(245, 197, 24, 0.1);
-        color: $text-primary;
-        border: 1px solid rgba(245, 197, 24, 0.2);
+        background: #f5c518;
+        color: #000;
+        border: none;
 
         &:hover {
-            background: rgba(245, 197, 24, 0.2);
+            background: #e6b70e;
         }
     }
 
-    &.website-button {
-        background: rgba($primary-color, 0.1);
-        color: $text-primary;
-        border: 1px solid rgba($primary-color, 0.2);
+    &.facebook-button {
+        background: #1877f2;
+        border: none;
 
         &:hover {
-            background: rgba($primary-color, 0.2);
+            background: #166fe5;
+        }
+    }
+
+    &.instagram-button {
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        background-size: 200% 200%;
+        animation: gradient 3s ease infinite;
+        border: none;
+    }
+
+    &.twitter-button {
+        background: #1da1f2;
+        border: none;
+
+        &:hover {
+            background: #1a91da;
+            transform: translateY(-2px);
         }
     }
 }

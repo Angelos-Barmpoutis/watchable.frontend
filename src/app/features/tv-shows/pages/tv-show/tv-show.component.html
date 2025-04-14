@@ -4,7 +4,17 @@
     <div class="media-details-grid">
         <div>
             <div *ngIf="tvShowDetails?.credits?.cast?.length">
-                <section>
+                <section *ngIf="tvShowDetails?.reviews?.results?.length">
+                    <header>
+                        <app-section-header title="Reviews"></app-section-header>
+                    </header>
+                    <app-reviews
+                        [reviews]="tvShowDetails?.reviews?.results ?? []"
+                        [isLoading]="isLoading"
+                    ></app-reviews>
+                </section>
+
+                <section *ngIf="tvShowDetails?.credits?.cast?.length">
                     <header>
                         <app-section-header title="Top Cast"></app-section-header>
                     </header>
@@ -36,16 +46,6 @@
                         [isLoading]="isLoading"
                     ></app-videos-viewer>
                 </section>
-
-                <section *ngIf="tvShowDetails?.reviews?.results?.length">
-                    <header>
-                        <app-section-header title="Reviews"></app-section-header>
-                    </header>
-                    <app-reviews
-                        [reviews]="tvShowDetails?.reviews?.results ?? []"
-                        [isLoading]="isLoading"
-                    ></app-reviews>
-                </section>
             </div>
         </div>
 
@@ -60,6 +60,46 @@
                     [isLoading]="isLoading"
                 ></app-media-details>
             </section>
+
+            <section *ngIf="tvShowDetails?.external_ids">
+                <header>
+                    <app-section-header title="Media"></app-section-header>
+                </header>
+                <div class="social-links">
+                    <a
+                        *ngIf="tvShowDetails.external_ids.imdb_id"
+                        target="_blank"
+                        class="button imdb-button"
+                        [href]="'https://www.imdb.com/title/' + tvShowDetails.external_ids.imdb_id"
+                    >
+                        <i class="fab fa-imdb"></i> IMDb
+                    </a>
+                    <a
+                        *ngIf="tvShowDetails.external_ids.facebook_id"
+                        target="_blank"
+                        class="button facebook-button"
+                        [href]="'https://www.facebook.com/' + tvShowDetails.external_ids.facebook_id"
+                    >
+                        <i class="fab fa-facebook"></i> Facebook
+                    </a>
+                    <a
+                        *ngIf="tvShowDetails.external_ids.instagram_id"
+                        target="_blank"
+                        class="button instagram-button"
+                        [href]="'https://www.instagram.com/' + tvShowDetails.external_ids.instagram_id"
+                    >
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a
+                        *ngIf="tvShowDetails.external_ids.twitter_id"
+                        target="_blank"
+                        class="button twitter-button"
+                        [href]="'https://twitter.com/' + tvShowDetails.external_ids.twitter_id"
+                    >
+                        <i class="fab fa-twitter"></i> Twitter
+                    </a>
+                </div>
+            </section>
         </aside>
     </div>
 
@@ -70,6 +110,18 @@
         <app-carousel-media
             [mediaType]="MEDIA_TYPE.TvShow"
             [items]="tvShowDetails?.similar?.results ?? []"
+            [isLoading]="isLoading"
+        >
+        </app-carousel-media>
+    </section>
+
+    <section *ngIf="tvShowDetails?.recommendations?.results?.length">
+        <header>
+            <app-section-header title="Recommendations"></app-section-header>
+        </header>
+        <app-carousel-media
+            [mediaType]="MEDIA_TYPE.TvShow"
+            [items]="tvShowDetails?.recommendations?.results ?? []"
             [isLoading]="isLoading"
         >
         </app-carousel-media>

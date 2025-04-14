@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="featured-actions">
-                        <a class="button button-primary" [routerLink]="[mediaRoute, featuredItem?.id]">
+                        <a class="button button-primary" [routerLink]="[mediaRoute, featuredItem.id]">
                             <i [class]="mediaType === 'movie' ? 'fas fa-film' : 'fas fa-tv'"></i>
                             {{ mediaType === "movie" ? "Movie" : "TV Show" }} Details
                         </a>

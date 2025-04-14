@@ -6,6 +6,7 @@
     padding: $spacing-md;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .review-header {
@@ -61,7 +62,7 @@
         align-items: center;
         gap: $spacing-xs;
         padding: $spacing-xs $spacing-sm;
-        background-color: rgba($surface-color, 0.1);
+        background-color: rgba($background-color, 0.6);
         backdrop-filter: blur(10px);
         border-radius: $border-radius-md;
 

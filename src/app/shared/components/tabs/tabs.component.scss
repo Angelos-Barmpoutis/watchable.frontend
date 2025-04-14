@@ -16,10 +16,9 @@
 
     .tab-group {
         display: flex;
-        background-color: $surface-color;
+        background-color: rgba($surface-color, 0.6);
         border-radius: $border-radius-xl;
         padding: $spacing-xs;
-        border: 1px solid $border-color;
     }
 
     .tab {

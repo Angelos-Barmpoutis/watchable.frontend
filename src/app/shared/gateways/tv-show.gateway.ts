@@ -31,7 +31,7 @@ export class TvShowGateway {
 
     getDetails(id: number): Observable<TvShowDetails> {
         const url = this.urlService.createUrlForTMDB(['tv', id.toString()], {
-            append_to_response: 'credits,videos,images,reviews,similar,external_ids',
+            append_to_response: 'credits,videos,images,reviews,similar,external_ids,recommendations',
         });
         return this.tvShowDriver.getDetails(url);
     }

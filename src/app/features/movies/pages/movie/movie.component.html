@@ -4,7 +4,14 @@
     <div class="media-details-grid">
         <div>
             <div *ngIf="movieDetails?.credits?.cast?.length">
-                <section>
+                <section *ngIf="movieDetails?.reviews?.results?.length">
+                    <header>
+                        <app-section-header title="Reviews"></app-section-header>
+                    </header>
+                    <app-reviews [reviews]="movieDetails?.reviews?.results ?? []" [isLoading]="isLoading"></app-reviews>
+                </section>
+
+                <section *ngIf="movieDetails?.credits?.cast?.length">
                     <header>
                         <app-section-header title="Top Cast"></app-section-header>
                     </header>
@@ -36,13 +43,6 @@
                         [isLoading]="isLoading"
                     ></app-videos-viewer>
                 </section>
-
-                <section *ngIf="movieDetails?.reviews?.results?.length">
-                    <header>
-                        <app-section-header title="Reviews"></app-section-header>
-                    </header>
-                    <app-reviews [reviews]="movieDetails?.reviews?.results ?? []" [isLoading]="isLoading"></app-reviews>
-                </section>
             </div>
         </div>
 
@@ -57,6 +57,46 @@
                     [isLoading]="isLoading"
                 ></app-media-details>
             </section>
+
+            <section *ngIf="movieDetails?.external_ids">
+                <header>
+                    <app-section-header title="Media"></app-section-header>
+                </header>
+                <div class="social-links">
+                    <a
+                        *ngIf="movieDetails.external_ids.imdb_id"
+                        target="_blank"
+                        class="button imdb-button"
+                        [href]="'https://www.imdb.com/title/' + movieDetails.external_ids.imdb_id"
+                    >
+                        <i class="fab fa-imdb"></i> IMDb
+                    </a>
+                    <a
+                        *ngIf="movieDetails.external_ids.facebook_id"
+                        target="_blank"
+                        class="button facebook-button"
+                        [href]="'https://www.facebook.com/' + movieDetails.external_ids.facebook_id"
+                    >
+                        <i class="fab fa-facebook"></i> Facebook
+                    </a>
+                    <a
+                        *ngIf="movieDetails.external_ids.instagram_id"
+                        target="_blank"
+                        class="button instagram-button"
+                        [href]="'https://www.instagram.com/' + movieDetails.external_ids.instagram_id"
+                    >
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a
+                        *ngIf="movieDetails.external_ids.twitter_id"
+                        target="_blank"
+                        class="button twitter-button"
+                        [href]="'https://twitter.com/' + movieDetails.external_ids.twitter_id"
+                    >
+                        <i class="fab fa-twitter"></i> Twitter
+                    </a>
+                </div>
+            </section>
         </aside>
     </div>
 
@@ -67,6 +107,18 @@
         <app-carousel-media
             [mediaType]="MEDIA_TYPE.Movie"
             [items]="movieDetails?.similar?.results ?? []"
+            [isLoading]="isLoading"
+        >
+        </app-carousel-media>
+    </section>
+
+    <section *ngIf="movieDetails?.recommendations?.results?.length">
+        <header>
+            <app-section-header title="Recommendations"></app-section-header>
+        </header>
+        <app-carousel-media
+            [mediaType]="MEDIA_TYPE.Movie"
+            [items]="movieDetails?.recommendations?.results ?? []"
             [isLoading]="isLoading"
         >
         </app-carousel-media>
