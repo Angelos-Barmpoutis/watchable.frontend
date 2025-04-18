@@ -21,7 +21,7 @@
     height: 48px;
     border-radius: 50%;
     overflow: hidden;
-    background-color: rgba($surface-color, 0.3);
+    background-color: $surface-color;
     display: flex;
     align-items: center;
     justify-content: center;

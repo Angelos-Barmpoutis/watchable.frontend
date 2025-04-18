@@ -7,8 +7,8 @@
     position: relative;
 
     .overlay {
-        background: linear-gradient(to right, rgba($background-color, 0.4), transparent),
-            linear-gradient(to top, $background-color, rgba($background-color, 0.4));
+        background: linear-gradient(to right, rgba($background-color, 0.2), transparent),
+            linear-gradient(to top, $background-color, rgba($background-color, 0.2));
         width: 100%;
         height: 100%;
         display: flex;
@@ -28,6 +28,7 @@
         }
 
         .featured-meta {
+            margin-block-start: $spacing-sm;
             color: $text-secondary;
             font-size: $font-size-sm;
 
@@ -59,7 +60,7 @@
                     align-items: center;
                     gap: $spacing-xs;
                     padding: $spacing-xs $spacing-sm;
-                    background-color: rgba($background-color, 0.6);
+                    background-color: rgba($background-color, 0.8);
                     backdrop-filter: blur(10px);
                     border-radius: $border-radius-md;
 
@@ -140,7 +141,7 @@
         }
 
         .skeleton-meta {
-            margin-top: $spacing-sm;
+            margin-block-start: $spacing-sm;
             display: flex;
             gap: $spacing-sm;
 

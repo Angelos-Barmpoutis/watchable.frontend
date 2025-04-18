@@ -18,6 +18,6 @@ export class TvShowListItemComponent {
     @Input() tvShow!: TvShowItem;
     @Input() isLoading: boolean = false;
 
-    protected readonly POSTER_SIZE = POSTER_SIZE;
-    protected readonly DEFAULT = DEFAULT;
+    posterSize: POSTER_SIZE = DEFAULT.mediumPosterSize;
+    posterFallback = DEFAULT.mediumPosterFallback;
 }

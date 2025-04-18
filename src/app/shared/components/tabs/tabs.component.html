@@ -2,9 +2,9 @@
     <div class="tab-group" role="tablist">
         <button
             *ngFor="let tab of tabs"
-            class="tab"
+            class="tab button"
             role="tab"
-            [class.active]="selectedTabId === tab.id"
+            [class.button-primary]="selectedTabId === tab.id"
             [attr.aria-selected]="selectedTabId === tab.id"
             (click)="selectTab(tab.value)"
         >

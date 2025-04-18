@@ -5,9 +5,9 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: $spacing-md;
 
-    @media (max-width: map-get($breakpoints, "md")) {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
+    // @media (max-width: map-get($breakpoints, "md")) {
+    //     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    // }
 
     @media (max-width: map-get($breakpoints, "sm")) {
         grid-template-columns: 1fr;

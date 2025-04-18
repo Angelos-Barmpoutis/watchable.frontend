@@ -7,8 +7,8 @@
     position: relative;
 
     .overlay {
-        background: linear-gradient(to right, rgba($background-color, 0.4), transparent),
-            linear-gradient(to top, $background-color, rgba($background-color, 0.4));
+        background: linear-gradient(to right, rgba($background-color, 0.2), transparent),
+            linear-gradient(to top, $background-color, rgba($background-color, 0.2));
         width: 100%;
         height: 100%;
         display: flex;
@@ -53,6 +53,7 @@
             }
 
             .media-meta {
+                margin-block-start: $spacing-sm;
                 color: $text-secondary;
                 font-size: $font-size-sm;
 
@@ -84,7 +85,7 @@
                         align-items: center;
                         gap: $spacing-xs;
                         padding: $spacing-xs $spacing-sm;
-                        background-color: rgba($background-color, 0.6);
+                        background-color: rgba($background-color, 0.8);
                         backdrop-filter: blur(10px);
                         border-radius: $border-radius-md;
 
@@ -120,13 +121,6 @@
                         color: $text-secondary;
                     }
                 }
-            }
-
-            .tagline {
-                margin-block-start: $spacing-md;
-                color: $text-secondary;
-                font-style: italic;
-                font-size: $font-size-sm;
             }
 
             .overview {
@@ -169,10 +163,6 @@
 
                 .media-title {
                     font-size: $font-size-lg;
-                }
-
-                .tagline {
-                    font-size: $font-size-sm;
                 }
 
                 .overview {
@@ -285,7 +275,7 @@
             }
 
             .skeleton-media-meta {
-                margin-top: $spacing-sm;
+                margin-block-start: $spacing-sm;
                 display: flex;
                 gap: $spacing-sm;
 
@@ -314,14 +304,6 @@
                     height: 20px;
                     @include skeleton-loading;
                 }
-            }
-
-            .skeleton-media-tagline {
-                margin-block-start: $spacing-md;
-                height: $font-size-sm;
-                width: 30%;
-                @include skeleton-loading;
-                border-radius: $border-radius-sm;
             }
 
             .skeleton-media-overview {
@@ -374,11 +356,6 @@
                 .skeleton-media-title {
                     height: $font-size-lg;
                     width: 60%;
-                }
-
-                .skeleton-media-tagline {
-                    height: $font-size-sm;
-                    width: 40%;
                 }
 
                 .skeleton-media-overview {

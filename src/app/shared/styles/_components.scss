@@ -20,15 +20,11 @@
 }
 
 .button {
-    @media (max-width: map-get($breakpoints, "md")) {
-        padding: $spacing-sm;
-    }
-
     justify-content: center;
     display: flex;
     align-items: center;
     gap: $spacing-sm;
-    padding: $spacing-sm $spacing-lg;
+    padding: calc($spacing-sm * 1.5) $spacing-lg;
     border-radius: $border-radius-lg;
     font-weight: $font-weight-medium;
     cursor: pointer;
@@ -38,6 +34,8 @@
     line-height: 1.2;
     position: relative;
     overflow: hidden;
+    border: 1px solid transparent;
+    background: none;
 
     &:hover {
         transform: translateY(-2px);
@@ -50,17 +48,16 @@
     &.button-primary {
         background: $primary-color;
         color: $text-primary;
-        border: 1px solid transparent;
 
         &:hover {
-            background: lighten($primary-color, 10%);
+            background: darken($primary-color, 5%);
         }
     }
 
     &.button-secondary {
         background: rgba($text-primary, 0.1);
         color: $text-primary;
-        border: 1px solid rgba($text-primary, 0.2);
+        border-color: rgba($text-primary, 0.2);
 
         &:hover {
             background: rgba($text-primary, 0.15);
@@ -69,7 +66,7 @@
 
     &.button-outlined {
         background: transparent;
-        border: 1px solid $text-secondary;
+        border-color: $text-secondary;
         color: $text-secondary;
 
         &:hover {
@@ -81,7 +78,6 @@
     &.imdb-button {
         background: #f5c518;
         color: #000;
-        border: none;
 
         &:hover {
             background: #e6b70e;
@@ -90,7 +86,6 @@
 
     &.facebook-button {
         background: #1877f2;
-        border: none;
 
         &:hover {
             background: #166fe5;
@@ -101,12 +96,10 @@
         background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
         background-size: 200% 200%;
         animation: gradient 3s ease infinite;
-        border: none;
     }
 
     &.twitter-button {
         background: #1da1f2;
-        border: none;
 
         &:hover {
             background: #1a91da;

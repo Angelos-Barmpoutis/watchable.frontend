@@ -20,31 +20,6 @@
         border-radius: $border-radius-xl;
         padding: $spacing-xs;
     }
-
-    .tab {
-        background: none;
-        border: none;
-        border-radius: $border-radius-lg;
-        color: $text-secondary;
-        cursor: pointer;
-        font-size: $font-size-md;
-        font-weight: $font-weight-medium;
-        padding: $spacing-xs $spacing-md;
-        transition: all $transition-normal;
-
-        &.active {
-            background-color: $primary-color;
-            color: $text-primary;
-        }
-
-        &:hover {
-            color: $text-primary;
-        }
-
-        &:focus {
-            outline: none;
-        }
-    }
 }
 
 @media (max-width: map-get($breakpoints, "sm")) {

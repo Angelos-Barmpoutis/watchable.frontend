@@ -6,8 +6,9 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: $background-color;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    background-color: rgba($background-color, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 -2px 10px rgba($surface-color, 0.5);
     z-index: map-get($z-layers, "header");
 
     &__container {
@@ -47,16 +48,6 @@
         &:focus {
             color: $primary-color;
         }
-    }
-
-    &::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, $background-color, 0%, rgba(15, 29, 82, 1) 100%);
     }
 }
 

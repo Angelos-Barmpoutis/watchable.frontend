@@ -1,18 +1,25 @@
-<ng-container *ngIf="!isLoading; else loadingTemplate">
+<ng-container *ngIf="!isLoading; else skeletonTemplate">
     <a class="tv-show-list-item" [routerLink]="['/', 'tv-shows', 'tv-show', tvShow.id]">
         <div class="tv-show-main">
             <div class="poster-wrapper">
-                <img
-                    *ngIf="tvShow.poster_path"
-                    appPosterPath
-                    [posterPath]="tvShow.poster_path"
-                    [size]="POSTER_SIZE.w342"
-                />
-                <img *ngIf="!tvShow.poster_path" [src]="DEFAULT.largePosterFallback" />
+                <img *ngIf="tvShow.poster_path" appPosterPath [posterPath]="tvShow.poster_path" [size]="posterSize" />
+                <img *ngIf="!tvShow.poster_path" [src]="posterFallback" />
             </div>
             <div class="info">
                 <div class="info-header">
-                    <h3 class="title">{{ tvShow.name }}</h3>
+                    <div class="title-container">
+                        <h3 class="title">{{ tvShow.name }}</h3>
+                        <div class="meta">
+                            <span *ngIf="tvShow.first_air_date" class="year">
+                                {{ tvShow.first_air_date | date: "yyyy" }}
+                            </span>
+                            <span *ngIf="tvShow.genres?.length" class="genres">
+                                <span *ngFor="let genre of tvShow.genres; let last = last">
+                                    {{ genre.name }}{{ !last ? ", " : "" }}
+                                </span>
+                            </span>
+                        </div>
+                    </div>
                     <div class="rating-container">
                         <div class="rating">
                             <div class="rating-badge">
@@ -30,22 +37,34 @@
                         </div>
                     </div>
                 </div>
-                <div class="meta">
-                    <span *ngIf="tvShow.first_air_date" class="year">
-                        {{ tvShow.first_air_date | date: "yyyy" }}
-                    </span>
-                    <span *ngIf="tvShow.genres?.length" class="genres">
-                        <span *ngFor="let genre of tvShow.genres; let last = last">
-                            {{ genre.name }}{{ !last ? ", " : "" }}
-                        </span>
-                    </span>
-                </div>
                 <p class="overview">{{ tvShow.overview }}</p>
             </div>
         </div>
     </a>
 </ng-container>
 
-<ng-template #loadingTemplate>
-    <div class="tv-show-list-item-loading"></div>
+<ng-template #skeletonTemplate>
+    <div appFadeIn class="tv-show-list-item-loading">
+        <div class="tv-show-main">
+            <div class="poster-skeleton"></div>
+            <div class="info-skeleton">
+                <div class="header-skeleton">
+                    <div class="title-container-skeleton">
+                        <div class="title-skeleton"></div>
+                        <div class="meta-skeleton"></div>
+                    </div>
+                    <div class="rating-skeleton"></div>
+                </div>
+                <div class="overview-skeleton">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #altPosterPath>
+    <img [src]="posterFallback" />
 </ng-template>

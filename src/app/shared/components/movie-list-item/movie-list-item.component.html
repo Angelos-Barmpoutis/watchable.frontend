@@ -9,7 +9,18 @@
 
             <div class="info">
                 <div class="info-header">
-                    <h3 class="title">{{ movie.title }}</h3>
+                    <div class="title-container">
+                        <h3 class="title">{{ movie.title }}</h3>
+                        <div class="meta">
+                            <span class="year">{{ movie.release_date | date: "yyyy" }}</span>
+                            <span *ngIf="movie.genres?.length" class="genres">
+                                <span *ngFor="let genre of movie.genres; let last = last">
+                                    {{ genre.name }}{{ !last ? ", " : "" }}
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
                     <div class="rating-container">
                         <div class="rating">
                             <div class="rating-badge">
@@ -28,15 +39,6 @@
                     </div>
                 </div>
 
-                <div class="meta">
-                    <span class="year">{{ movie.release_date | date: "yyyy" }}</span>
-                    <span *ngIf="movie.genres?.length" class="genres">
-                        <span *ngFor="let genre of movie.genres; let last = last">
-                            {{ genre.name }}{{ !last ? ", " : "" }}
-                        </span>
-                    </span>
-                </div>
-
                 <p class="overview">{{ movie.overview }}</p>
             </div>
         </div>
@@ -44,7 +46,25 @@
 </ng-container>
 
 <ng-template #skeletonTemplate>
-    <div appFadeIn class="movie-list-item-loading"></div>
+    <div appFadeIn class="movie-list-item-loading">
+        <div class="movie-main">
+            <div class="poster-skeleton"></div>
+            <div class="info-skeleton">
+                <div class="header-skeleton">
+                    <div class="title-container-skeleton">
+                        <div class="title-skeleton"></div>
+                        <div class="meta-skeleton"></div>
+                    </div>
+                    <div class="rating-skeleton"></div>
+                </div>
+                <div class="overview-skeleton">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </ng-template>
 
 <ng-template #altPosterPath>

@@ -4,7 +4,7 @@ header {
     padding: $spacing-md 0;
     position: relative;
     width: 100%;
-    background-color: $background-color;
+    background-color: rgba($surface-color, 0.4);
     z-index: map-get($z-layers, "header");
 
     nav {
