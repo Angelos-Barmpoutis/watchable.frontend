@@ -87,3 +87,31 @@
         }
     }
 }
+
+@media (max-width: map-get($breakpoints, "sm")) {
+    .cast-person {
+        gap: $spacing-sm;
+
+        .cast-photo {
+            width: 60px;
+            height: 90px;
+        }
+
+        .cast-info {
+            padding: $spacing-xs $spacing-xs $spacing-xs 0;
+        }
+    }
+
+    .cast-person-skeleton {
+        gap: $spacing-sm;
+
+        .cast-photo {
+            width: 60px;
+            height: 90px;
+        }
+
+        .cast-info {
+            gap: $spacing-xs;
+        }
+    }
+}
