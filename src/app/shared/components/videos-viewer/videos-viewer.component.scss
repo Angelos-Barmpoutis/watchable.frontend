@@ -87,7 +87,7 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    background: rgba($surface-color, 0.95);
+    background: rgba($background-color, 0.95);
 
     .viewer-content {
         position: relative;
@@ -109,7 +109,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            background-color: $surface-color;
+            background-color: $background-color;
             border-radius: $border-radius-lg;
 
             .viewer-video {
