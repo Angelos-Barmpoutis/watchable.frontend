@@ -17,7 +17,8 @@ import { VideosViewerComponent } from '../../../../shared/components/videos-view
 import { BACKDROP_SIZE } from '../../../../shared/enumerations/backdrop-size.enum';
 import { MEDIA_TYPE } from '../../../../shared/enumerations/media-type.enum';
 import { TvShowGateway } from '../../../../shared/gateways/tv-show.gateway';
-import { TvShowDetails } from '../../../../shared/models/tv-show.model';
+import { filterMediaItems } from '../../../../shared/helpers/filter-items.helper';
+import { TvShow, TvShowDetails } from '../../../../shared/models/tv-show.model';
 
 @Component({
     selector: 'app-tv-show',
@@ -64,8 +65,18 @@ export class TvShowComponent implements OnInit {
                 }),
             )
             .subscribe({
-                next: (tvShow) => {
-                    this.tvShowDetails = tvShow;
+                next: (tvShowDetails) => {
+                    this.tvShowDetails = {
+                        ...tvShowDetails,
+                        similar: {
+                            ...tvShowDetails.similar,
+                            results: filterMediaItems(tvShowDetails.similar.results) as Array<TvShow>,
+                        },
+                        recommendations: {
+                            ...tvShowDetails.recommendations,
+                            results: filterMediaItems(tvShowDetails.recommendations.results) as Array<TvShow>,
+                        },
+                    };
                     this.isLoading = false;
                 },
             });

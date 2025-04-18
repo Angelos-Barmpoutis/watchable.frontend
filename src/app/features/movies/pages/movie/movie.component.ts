@@ -19,7 +19,8 @@ import { MEDIA_TYPE } from '../../../../shared/enumerations/media-type.enum';
 import { POSTER_SIZE } from '../../../../shared/enumerations/poster-size.enum';
 import { PROFILE_SIZE } from '../../../../shared/enumerations/profile-size.enum';
 import { MovieGateway } from '../../../../shared/gateways/movie.gateway';
-import { MovieDetails } from '../../../../shared/models/movie.model';
+import { filterMediaItems } from '../../../../shared/helpers/filter-items.helper';
+import { Movie, MovieDetails } from '../../../../shared/models/movie.model';
 
 @Component({
     selector: 'app-movie',
@@ -68,8 +69,18 @@ export class MovieComponent implements OnInit {
                 }),
             )
             .subscribe({
-                next: (movie) => {
-                    this.movieDetails = movie;
+                next: (movieDetails) => {
+                    this.movieDetails = {
+                        ...movieDetails,
+                        similar: {
+                            ...movieDetails.similar,
+                            results: filterMediaItems(movieDetails.similar.results) as Array<Movie>,
+                        },
+                        recommendations: {
+                            ...movieDetails.recommendations,
+                            results: filterMediaItems(movieDetails.recommendations.results) as Array<Movie>,
+                        },
+                    };
                     this.isLoading = false;
                 },
             });
