@@ -86,6 +86,10 @@ section {
         align-items: baseline;
         gap: $spacing-md;
         margin-block: $spacing-md;
+
+        &:has(app-tabs) {
+            margin-bottom: $spacing-xl;
+        }
     }
 }
 
@@ -97,7 +101,10 @@ section {
             flex-direction: column;
             align-items: flex-start;
             gap: calc($spacing-sm * 1.5);
-            margin-block: $spacing-md calc($spacing-sm * 1.5);
+
+            &:has(app-tabs) {
+                margin-bottom: $spacing-lg;
+            }
         }
     }
 }
