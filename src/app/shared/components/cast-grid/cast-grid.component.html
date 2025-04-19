@@ -1,0 +1,22 @@
+<ng-container *ngIf="!isLoading; else loadingTemplate">
+    <div appFadeIn class="cast-grid">
+        <app-cast-person
+            *ngFor="let person of cast | slice: 0 : (showAll ? cast.length : DEFAULT.castCount)"
+            [person]="person"
+            [isLoading]="isLoading"
+        ></app-cast-person>
+    </div>
+
+    <div *ngIf="hasMoreCast" class="view-all-container">
+        <button class="button button-secondary" (click)="toggleShowAll()">
+            {{ showAll ? "Show Less" : "View All Cast" }}
+            <i class="fas" [class.fa-chevron-down]="!showAll" [class.fa-chevron-up]="showAll"></i>
+        </button>
+    </div>
+</ng-container>
+
+<ng-template #loadingTemplate>
+    <div appFadeIn class="cast-grid">
+        <app-cast-person *ngFor="let i of skeletonArray" [isLoading]="true"></app-cast-person>
+    </div>
+</ng-template>

@@ -42,7 +42,12 @@ export class ImagesViewerComponent {
         this.selectedImage = image;
         this.selectedImageIndex = isCounter ? 5 : index;
         this.showViewer = true;
-        this.scrollToActiveThumbnail();
+
+        requestAnimationFrame(() => {
+            if (this.previewStrip?.nativeElement?.swiper !== undefined) {
+                this.scrollToActiveThumbnail();
+            }
+        });
     }
 
     closeViewer(): void {
@@ -80,8 +85,18 @@ export class ImagesViewerComponent {
     }
 
     private scrollToActiveThumbnail(): void {
-        if (this.previewStrip?.nativeElement) {
-            this.previewStrip.nativeElement.swiper.slideTo(this.selectedImageIndex);
+        if (this.previewStrip?.nativeElement?.swiper) {
+            const swiper = this.previewStrip.nativeElement.swiper;
+            // Ensure the slide is visible by scrolling to it
+            swiper.slideTo(this.selectedImageIndex, 0, false);
+
+            // If on mobile, ensure the slide is centered
+            if (window.innerWidth <= 768) {
+                const slideWidth = swiper.slides[0]?.offsetWidth || 0;
+                const containerWidth = swiper.el.offsetWidth;
+                const scrollPosition = slideWidth * this.selectedImageIndex - (containerWidth - slideWidth) / 2;
+                swiper.wrapperEl.style.transform = `translate3d(${-scrollPosition}px, 0, 0)`;
+            }
         }
     }
 

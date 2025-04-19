@@ -1,7 +1,7 @@
 <ng-container *ngIf="!isLoading; else loadingTemplate">
     <div appFadeIn class="reviews-grid">
         <app-review-card
-            *ngFor="let review of reviews | slice: 0 : (showAll ? reviews.length : DEFAULT.gridItemsCount)"
+            *ngFor="let review of reviews | slice: 0 : (showAll ? reviews.length : DEFAULT.reviewsCount)"
             [review]="review"
             [isLoading]="isLoading"
         ></app-review-card>

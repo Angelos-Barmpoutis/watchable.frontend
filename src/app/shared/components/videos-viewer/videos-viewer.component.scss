@@ -8,72 +8,81 @@
     @media (max-width: map-get($breakpoints, "sm")) {
         grid-template-columns: 1fr;
     }
-}
 
-.video-item {
-    position: relative;
-    aspect-ratio: 16/9;
-    border-radius: $border-radius-md;
-    overflow: hidden;
-    cursor: pointer;
-
-    .video-thumbnail {
+    .video-item {
         position: relative;
-        width: 100%;
-        height: 100%;
+        border-radius: $border-radius-md;
+        overflow: hidden;
+        cursor: pointer;
+        aspect-ratio: 16/9;
 
-        .thumbnail-image {
+        .video-thumbnail {
+            position: relative;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform $transition-normal;
-        }
 
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 48px;
-            height: 48px;
-            background-color: rgba($surface-color, 0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all $transition-normal;
-
-            i {
-                color: $text-primary;
-                font-size: $font-size-lg;
-            }
-        }
-
-        &:hover {
             .thumbnail-image {
-                transform: scale(1.02);
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform $transition-normal;
             }
 
             .play-button {
-                background-color: rgba($surface-color, 1);
-                transform: translate(-50%, -50%) scale(1.1);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 48px;
+                height: 48px;
+                background-color: rgba($surface-color, 0.8);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all $transition-normal;
+
+                i {
+                    color: $text-primary;
+                    font-size: $font-size-lg;
+                }
+            }
+
+            &:hover {
+                .thumbnail-image {
+                    transform: scale(1.02);
+                }
+
+                .play-button {
+                    background-color: rgba($surface-color, 1);
+                    transform: translate(-50%, -50%) scale(1.1);
+                }
             }
         }
-    }
 
-    .video-title {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: $spacing-sm;
-        background: linear-gradient(to top, rgba($surface-color, 0.9), transparent);
-        color: $text-primary;
-        font-size: $font-size-sm;
-        font-weight: $font-weight-medium;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        .more-videos {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba($background-color, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color $transition-normal;
+
+            &:hover {
+                background: rgba($background-color, 0.8);
+            }
+
+            .counter {
+                font-size: $font-size-md;
+                font-weight: $font-weight-semibold;
+                color: $text-primary;
+            }
+        }
     }
 }
 
@@ -99,7 +108,6 @@
         align-items: center;
         border-radius: $border-radius-lg;
         overflow: hidden;
-        z-index: 1001;
 
         .video-container {
             position: relative;
@@ -116,26 +124,17 @@
                 width: 100%;
                 height: 100%;
                 border: none;
-                z-index: 1;
-            }
-
-            iframe {
-                width: 100%;
-                height: 100%;
-                z-index: 1;
             }
 
             .viewer-overlay {
                 position: absolute;
                 inset: 0;
                 transition: opacity $transition-normal;
-                z-index: 2;
-                pointer-events: none;
 
                 .close-button {
                     position: absolute;
-                    top: $spacing-md;
-                    right: $spacing-md;
+                    top: 44px;
+                    right: 44px;
                     width: 32px;
                     height: 32px;
                     border-radius: 50%;
@@ -147,8 +146,6 @@
                     align-items: center;
                     justify-content: center;
                     transition: all $transition-normal;
-                    z-index: 3;
-                    pointer-events: auto;
 
                     &:hover {
                         background-color: rgba($surface-color, 1);
@@ -169,7 +166,6 @@
                     justify-content: space-between;
                     padding: 0 $spacing-sm;
                     pointer-events: none;
-                    z-index: 3;
 
                     @media (max-width: map-get($breakpoints, "sm")) {
                         display: none;
@@ -226,18 +222,43 @@
                 border: 1px solid transparent;
                 cursor: pointer;
 
-                img {
+                .thumbnail-container {
+                    position: relative;
                     width: 100%;
                     height: 100%;
-                    object-fit: cover;
-                    transition: all $transition-normal;
+
+                    .thumbnail-image {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        transition: all $transition-normal;
+                    }
+
+                    .play-button {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 24px;
+                        height: 24px;
+                        background-color: rgba($surface-color, 0.8);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        i {
+                            color: $text-primary;
+                            font-size: $font-size-sm;
+                        }
+                    }
                 }
 
                 &.active {
                     border-color: $primary-color;
                 }
 
-                &:hover img {
+                &:hover .thumbnail-image {
                     transform: scale(1.05);
                 }
             }
@@ -248,7 +269,8 @@
 .skeleton-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: $spacing-md;
+    gap: $spacing-md !important;
+    margin: $spacing-md 0;
 
     @media (max-width: map-get($breakpoints, "md")) {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -257,25 +279,16 @@
     @media (max-width: map-get($breakpoints, "sm")) {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
-}
 
-.skeleton-video-item {
-    aspect-ratio: 16/9;
-    border-radius: $border-radius-md;
-    overflow: hidden;
+    .skeleton-video-item {
+        aspect-ratio: 16/9;
+        border-radius: $border-radius-md;
+        overflow: hidden;
 
-    .skeleton-thumbnail {
-        width: 100%;
-        height: 100%;
-        @include skeleton-loading;
-    }
-
-    .skeleton-title {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 20px;
-        @include skeleton-loading;
+        .skeleton-thumbnail {
+            width: 100%;
+            height: 100%;
+            @include skeleton-loading;
+        }
     }
 }

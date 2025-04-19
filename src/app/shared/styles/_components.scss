@@ -20,6 +20,10 @@
 }
 
 .button {
+    @media (max-width: map-get($breakpoints, "sm")) {
+        padding: calc($spacing-sm * 1.5);
+    }
+
     justify-content: center;
     display: flex;
     align-items: center;

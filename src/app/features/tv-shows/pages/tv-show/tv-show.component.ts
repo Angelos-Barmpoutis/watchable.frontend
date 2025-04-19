@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { CarouselMediaComponent } from '../../../../shared/components/carousel-media/carousel-media.component';
-import { CastPersonComponent } from '../../../../shared/components/cast-person/cast-person.component';
+import { CastGridComponent } from '../../../../shared/components/cast-grid/cast-grid.component';
 import { ImagesViewerComponent } from '../../../../shared/components/images-viewer/images-viewer.component';
 import { MediaDetailsComponent } from '../../../../shared/components/media-details/media-details.component';
 import { MediaHeroComponent } from '../../../../shared/components/media-hero/media-hero.component';
@@ -25,14 +25,14 @@ import { TvShow, TvShowDetails } from '../../../../shared/models/tv-show.model';
     standalone: true,
     imports: [
         CommonModule,
-        MediaHeroComponent,
-        MediaDetailsComponent,
-        CastPersonComponent,
-        SectionHeaderComponent,
-        ImagesViewerComponent,
-        ReviewsComponent,
-        VideosViewerComponent,
         CarouselMediaComponent,
+        CastGridComponent,
+        ImagesViewerComponent,
+        MediaDetailsComponent,
+        MediaHeroComponent,
+        ReviewsComponent,
+        SectionHeaderComponent,
+        VideosViewerComponent,
     ],
     templateUrl: './tv-show.component.html',
     styleUrls: ['./tv-show.component.scss'],
@@ -47,7 +47,6 @@ export class TvShowComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private tvShowGateway: TvShowGateway,
-        private sanitizer: DomSanitizer,
         private destroyRef: DestroyRef,
     ) {}
 

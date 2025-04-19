@@ -52,20 +52,6 @@
     }
 }
 
-.cast-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: $spacing-md;
-
-    @media (max-width: map-get($breakpoints, "md")) {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-
-    @media (max-width: map-get($breakpoints, "sm")) {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    }
-}
-
 .genre {
     padding: $spacing-xs $spacing-sm;
     font-size: $font-size-sm;
@@ -76,4 +62,10 @@
     @media (max-width: map-get($breakpoints, "sm")) {
         @include text-clamp(1);
     }
+}
+
+.view-all-container {
+    display: flex;
+    justify-content: center;
+    margin-top: $spacing-lg;
 }

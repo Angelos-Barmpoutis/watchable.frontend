@@ -22,21 +22,26 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        gap: 4px;
         flex: 1;
         color: $text-secondary;
         padding-block: $spacing-md;
         text-decoration: none;
         transition: color $transition-normal;
         position: relative;
+        min-width: 0;
 
         i {
-            font-size: $font-size-md;
-            margin-bottom: $spacing-xs;
+            font-size: 18px;
+            display: block;
         }
 
         span {
-            font-size: $font-size-xs;
-            font-weight: $font-weight-semibold;
+            font-size: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
         }
 
         &.active {
@@ -47,6 +52,10 @@
         &:focus {
             color: $primary-color;
         }
+    }
+
+    &--has-bottom-bar {
+        padding-bottom: 16px;
     }
 }
 

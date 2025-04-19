@@ -2,7 +2,7 @@
 
 <div class="wrapper">
     <div class="media-details-grid">
-        <div>
+        <ng-container>
             <div *ngIf="tvShowDetails?.credits?.cast?.length">
                 <section *ngIf="tvShowDetails?.reviews?.results?.length">
                     <header>
@@ -18,13 +18,7 @@
                     <header>
                         <app-section-header title="Top Cast"></app-section-header>
                     </header>
-                    <div class="cast-grid">
-                        <app-cast-person
-                            *ngFor="let person of tvShowDetails?.credits?.cast"
-                            [person]="person"
-                            [isLoading]="isLoading"
-                        ></app-cast-person>
-                    </div>
+                    <app-cast-grid [cast]="tvShowDetails?.credits?.cast ?? []" [isLoading]="isLoading"></app-cast-grid>
                 </section>
 
                 <section *ngIf="tvShowDetails?.images?.backdrops?.length">
@@ -47,7 +41,7 @@
                     ></app-videos-viewer>
                 </section>
             </div>
-        </div>
+        </ng-container>
 
         <aside *ngIf="tvShowDetails">
             <section>

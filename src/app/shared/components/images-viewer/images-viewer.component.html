@@ -1,7 +1,7 @@
 <ng-container *ngIf="!isLoading; else loadingTemplate">
     <div appFadeIn class="images-grid">
         <div
-            *ngFor="let image of images | slice: 0 : DEFAULT.gridItemsCount; let i = index"
+            *ngFor="let image of images | slice: 0 : DEFAULT.imagesCount; let i = index"
             class="image-item"
             (click)="openViewer(image, i)"
         >
@@ -13,11 +13,11 @@
                 [size]="BACKDROP_SIZE.w780"
             />
             <div
-                *ngIf="i === DEFAULT.gridItemsCount - 1 && images.length > DEFAULT.gridItemsCount"
+                *ngIf="i === DEFAULT.imagesCount - 1 && images.length > DEFAULT.imagesCount"
                 class="more-images"
                 (click)="openViewer(image, i, true)"
             >
-                <span class="counter">+{{ images.length - DEFAULT.gridItemsCount }} more</span>
+                <span class="counter">+{{ images.length - DEFAULT.imagesCount }} more</span>
             </div>
         </div>
     </div>
@@ -55,9 +55,9 @@
             <swiper-container
                 #previewStrip
                 class="preview-strip"
-                [initialSlide]="selectedImageIndex"
                 [spaceBetween]="8"
                 [slidesPerView]="'auto'"
+                [initialSlide]="selectedImageIndex"
                 (slideChange)="onSlideChange($event)"
             >
                 <swiper-slide

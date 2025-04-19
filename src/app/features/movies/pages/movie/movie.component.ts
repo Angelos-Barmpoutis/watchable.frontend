@@ -6,7 +6,7 @@ import { EMPTY } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { CarouselMediaComponent } from '../../../../shared/components/carousel-media/carousel-media.component';
-import { CastPersonComponent } from '../../../../shared/components/cast-person/cast-person.component';
+import { CastGridComponent } from '../../../../shared/components/cast-grid/cast-grid.component';
 import { ImagesViewerComponent } from '../../../../shared/components/images-viewer/images-viewer.component';
 import { MediaDetailsComponent } from '../../../../shared/components/media-details/media-details.component';
 import { MediaHeroComponent } from '../../../../shared/components/media-hero/media-hero.component';
@@ -27,14 +27,14 @@ import { Movie, MovieDetails } from '../../../../shared/models/movie.model';
     standalone: true,
     imports: [
         CommonModule,
-        MediaHeroComponent,
-        MediaDetailsComponent,
-        CastPersonComponent,
-        SectionHeaderComponent,
-        ImagesViewerComponent,
-        ReviewsComponent,
-        VideosViewerComponent,
         CarouselMediaComponent,
+        CastGridComponent,
+        ImagesViewerComponent,
+        MediaDetailsComponent,
+        MediaHeroComponent,
+        ReviewsComponent,
+        SectionHeaderComponent,
+        VideosViewerComponent,
     ],
     templateUrl: './movie.component.html',
     styleUrls: ['./movie.component.scss'],

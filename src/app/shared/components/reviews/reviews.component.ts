@@ -37,7 +37,7 @@ export class ReviewsComponent {
     };
 
     get hasMoreReviews(): boolean {
-        return this.reviews.length > DEFAULT.gridItemsCount;
+        return this.reviews.length > DEFAULT.castCount;
     }
 
     get skeletonArray(): Array<number> {
