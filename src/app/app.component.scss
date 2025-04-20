@@ -9,6 +9,12 @@
 
     main {
         flex: 1;
+
+        &:not(:has(app-trending)):not(:has(app-movie)):not(:has(app-movies)):not(:has(app-tv-show)):not(
+                :has(app-tv-shows)
+            ) {
+            padding-block-start: $desktop-header-height;
+        }
     }
 }
 
@@ -37,6 +43,16 @@
 @media (max-width: map-get($breakpoints, "sm")) {
     .app {
         padding-bottom: calc($mobile-nav-height + min(env(safe-area-inset-bottom), 16px));
+    }
+
+    main {
+        flex: 1;
+
+        &:not(:has(app-trending)):not(:has(app-movie)):not(:has(app-movies)):not(:has(app-tv-show)):not(
+                :has(app-tv-shows)
+            ) {
+            padding-block-start: $mobile-header-height;
+        }
     }
 
     app-footer {

@@ -42,7 +42,7 @@
     aside {
         @media (min-width: map-get($breakpoints, "lg")) {
             position: sticky;
-            top: $spacing-lg;
+            top: $spacing-lg + $desktop-header-height;
             height: fit-content;
         }
 

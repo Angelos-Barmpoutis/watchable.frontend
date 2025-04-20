@@ -59,12 +59,13 @@
     }
 
     &.button-secondary {
-        background: rgba($text-primary, 0.1);
+        background-color: rgba($surface-color, 0.6);
+        backdrop-filter: blur(14px);
         color: $text-primary;
         border-color: rgba($text-primary, 0.2);
 
         &:hover {
-            background: rgba($text-primary, 0.15);
+            background-color: rgba($surface-color, 0.8);
         }
     }
 

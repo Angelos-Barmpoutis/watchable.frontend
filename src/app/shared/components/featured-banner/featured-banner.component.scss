@@ -1,7 +1,7 @@
 @import "../../../../styles.scss";
 
 .featured-banner {
-    height: calc(80dvh - $desktop-header-height);
+    height: 80vh;
     background-size: cover;
     background-position: center 10%;
     position: relative;
@@ -22,7 +22,7 @@
 
         .featured-title {
             font-size: $font-size-2xl;
-            font-weight: $font-weight-bold;
+            font-weight: $font-weight-semibold;
             margin: 0;
             line-height: 1.2;
         }
@@ -118,7 +118,7 @@
 }
 
 .featured-banner-skeleton {
-    height: calc(80dvh - $desktop-header-height);
+    height: 80dvh;
     background-color: $background-color;
     position: relative;
     margin-bottom: $spacing-2xl;
@@ -206,7 +206,7 @@
 
 @media (max-width: map-get($breakpoints, "md")) {
     .featured-banner {
-        height: calc(80vh - $mobile-nav-height - $mobile-header-height);
+        height: calc(80vh - $mobile-nav-height);
 
         .overlay {
             align-items: flex-end;
@@ -227,7 +227,7 @@
     }
 
     .featured-banner-skeleton {
-        height: calc(80vh - $mobile-nav-height - $mobile-header-height);
+        height: calc(80vh - $mobile-nav-height);
 
         .overlay {
             align-items: flex-end;
