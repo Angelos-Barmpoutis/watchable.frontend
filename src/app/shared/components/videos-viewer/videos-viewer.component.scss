@@ -272,12 +272,8 @@
     gap: $spacing-md !important;
     margin: $spacing-md 0;
 
-    @media (max-width: map-get($breakpoints, "md")) {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-
     @media (max-width: map-get($breakpoints, "sm")) {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: 1fr;
     }
 
     .skeleton-video-item {
