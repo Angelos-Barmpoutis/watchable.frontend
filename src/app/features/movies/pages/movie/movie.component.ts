@@ -46,7 +46,7 @@ export class MovieComponent implements OnInit {
     readonly PROFILE_SIZE = PROFILE_SIZE;
     readonly DEFAULT = DEFAULT;
     movieId!: number;
-    movieDetails?: MovieDetails;
+    movieDetails!: MovieDetails;
     isLoading = true;
 
     constructor(

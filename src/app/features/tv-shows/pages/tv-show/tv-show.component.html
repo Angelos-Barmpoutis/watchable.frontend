@@ -3,8 +3,8 @@
 <div class="wrapper">
     <div class="media-details-grid">
         <ng-container>
-            <div *ngIf="tvShowDetails?.credits?.cast?.length">
-                <section *ngIf="tvShowDetails?.reviews?.results?.length">
+            <div>
+                <section *ngIf="tvShowDetails?.reviews?.results?.length || isLoading">
                     <header>
                         <app-section-header title="Reviews"></app-section-header>
                     </header>
@@ -14,14 +14,14 @@
                     ></app-reviews>
                 </section>
 
-                <section *ngIf="tvShowDetails?.credits?.cast?.length">
+                <section *ngIf="tvShowDetails?.credits?.cast?.length || isLoading">
                     <header>
                         <app-section-header title="Top Cast"></app-section-header>
                     </header>
                     <app-cast-grid [cast]="tvShowDetails?.credits?.cast ?? []" [isLoading]="isLoading"></app-cast-grid>
                 </section>
 
-                <section *ngIf="tvShowDetails?.images?.backdrops?.length">
+                <section *ngIf="tvShowDetails?.images?.backdrops?.length || isLoading">
                     <header>
                         <app-section-header title="Photos"></app-section-header>
                     </header>
@@ -31,7 +31,7 @@
                     ></app-images-viewer>
                 </section>
 
-                <section *ngIf="tvShowDetails?.videos?.results?.length">
+                <section *ngIf="tvShowDetails?.videos?.results?.length || isLoading">
                     <header>
                         <app-section-header title="Videos"></app-section-header>
                     </header>
@@ -43,8 +43,8 @@
             </div>
         </ng-container>
 
-        <aside *ngIf="tvShowDetails">
-            <section>
+        <aside>
+            <section *ngIf="tvShowDetails || isLoading">
                 <header>
                     <app-section-header title="TV Show Info"></app-section-header>
                 </header>
@@ -55,40 +55,40 @@
                 ></app-media-details>
             </section>
 
-            <section *ngIf="tvShowDetails?.external_ids">
+            <section *ngIf="tvShowDetails?.external_ids || isLoading">
                 <header>
                     <app-section-header title="Media"></app-section-header>
                 </header>
                 <div class="social-links">
                     <a
-                        *ngIf="tvShowDetails.external_ids.imdb_id"
+                        *ngIf="tvShowDetails?.external_ids?.imdb_id"
                         target="_blank"
                         class="button imdb-button"
-                        [href]="'https://www.imdb.com/title/' + tvShowDetails.external_ids.imdb_id"
+                        [href]="'https://www.imdb.com/title/' + tvShowDetails?.external_ids?.imdb_id"
                     >
                         <i class="fab fa-imdb"></i> IMDb
                     </a>
                     <a
-                        *ngIf="tvShowDetails.external_ids.facebook_id"
+                        *ngIf="tvShowDetails?.external_ids?.facebook_id"
                         target="_blank"
                         class="button facebook-button"
-                        [href]="'https://www.facebook.com/' + tvShowDetails.external_ids.facebook_id"
+                        [href]="'https://www.facebook.com/' + tvShowDetails?.external_ids?.facebook_id"
                     >
                         <i class="fab fa-facebook"></i> Facebook
                     </a>
                     <a
-                        *ngIf="tvShowDetails.external_ids.instagram_id"
+                        *ngIf="tvShowDetails?.external_ids?.instagram_id"
                         target="_blank"
                         class="button instagram-button"
-                        [href]="'https://www.instagram.com/' + tvShowDetails.external_ids.instagram_id"
+                        [href]="'https://www.instagram.com/' + tvShowDetails?.external_ids?.instagram_id"
                     >
                         <i class="fab fa-instagram"></i> Instagram
                     </a>
                     <a
-                        *ngIf="tvShowDetails.external_ids.twitter_id"
+                        *ngIf="tvShowDetails?.external_ids?.twitter_id"
                         target="_blank"
                         class="button twitter-button"
-                        [href]="'https://twitter.com/' + tvShowDetails.external_ids.twitter_id"
+                        [href]="'https://twitter.com/' + tvShowDetails?.external_ids?.twitter_id"
                     >
                         <i class="fab fa-twitter"></i> Twitter
                     </a>
@@ -97,7 +97,7 @@
         </aside>
     </div>
 
-    <section *ngIf="tvShowDetails?.similar?.results?.length">
+    <section *ngIf="tvShowDetails?.similar?.results?.length || isLoading">
         <header>
             <app-section-header title="Similar TV Shows"> </app-section-header>
         </header>
@@ -109,7 +109,7 @@
         </app-carousel-media>
     </section>
 
-    <section *ngIf="tvShowDetails?.recommendations?.results?.length">
+    <section *ngIf="tvShowDetails?.recommendations?.results?.length || isLoading">
         <header>
             <app-section-header title="Recommendations"></app-section-header>
         </header>

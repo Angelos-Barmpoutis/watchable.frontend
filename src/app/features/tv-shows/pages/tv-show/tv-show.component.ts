@@ -38,7 +38,7 @@ import { TvShow, TvShowDetails } from '../../../../shared/models/tv-show.model';
     styleUrls: ['./tv-show.component.scss'],
 })
 export class TvShowComponent implements OnInit {
-    tvShowDetails?: TvShowDetails;
+    tvShowDetails!: TvShowDetails;
     isLoading = true;
     trailerUrl: SafeResourceUrl | null = null;
     readonly MEDIA_TYPE = MEDIA_TYPE;

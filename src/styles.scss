@@ -78,7 +78,7 @@ img {
 }
 
 section {
-    margin-bottom: $spacing-xl;
+    margin-bottom: $spacing-2xl;
 
     header {
         display: flex;
@@ -91,11 +91,9 @@ section {
             margin-bottom: $spacing-xl;
         }
     }
-}
 
-@media (max-width: map-get($breakpoints, "sm")) {
-    section {
-        margin-bottom: $spacing-xl;
+    @media (max-width: map-get($breakpoints, "sm")) {
+        margin-bottom: $spacing-lg;
 
         header {
             flex-direction: column;

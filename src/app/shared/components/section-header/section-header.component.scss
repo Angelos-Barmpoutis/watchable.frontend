@@ -11,7 +11,7 @@
     }
 
     .title {
-        font-size: $font-size-lg;
+        font-size: $font-size-lg * 1.2;
         font-weight: $font-weight-regular;
         color: $text-primary;
         display: flex;
@@ -39,7 +39,7 @@
             width: 100%;
             justify-content: space-between;
 
-            .explore-all {
+            .see-all {
                 font-size: $font-size-md;
                 font-weight: $font-weight-medium;
                 display: flex;
@@ -70,7 +70,7 @@
 
     .section-header {
         .title {
-            font-size: $font-size-md;
+            font-size: 18px;
 
             .title-link {
                 .explore-all {

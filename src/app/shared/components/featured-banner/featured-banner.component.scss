@@ -21,7 +21,7 @@
         flex-direction: column;
 
         .featured-title {
-            font-size: $font-size-2xl;
+            font-size: $font-size-3xl;
             font-weight: $font-weight-semibold;
             margin: 0;
             line-height: 1.2;
@@ -134,7 +134,7 @@
         max-width: 60%;
 
         .skeleton-title {
-            height: $font-size-2xl;
+            height: $font-size-3xl;
             width: 40%;
             @include skeleton-loading;
             border-radius: $border-radius-md;
@@ -216,7 +216,7 @@
             max-width: 100%;
 
             .featured-title {
-                font-size: $font-size-lg;
+                font-size: $font-size-xl;
             }
 
             .overview {
@@ -237,7 +237,7 @@
             max-width: 100%;
 
             .skeleton-title {
-                height: $font-size-lg;
+                height: $font-size-xl;
                 width: 60%;
             }
 
