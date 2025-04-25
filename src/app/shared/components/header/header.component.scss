@@ -160,8 +160,6 @@ header {
 
 @media (max-width: map-get($breakpoints, "md")) {
     header {
-        padding: 8px 0;
-
         nav {
             gap: $spacing-md;
 
