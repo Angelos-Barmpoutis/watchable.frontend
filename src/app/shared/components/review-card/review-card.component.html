@@ -32,7 +32,10 @@
             <p>
                 {{ review.content.length > 300 ? (review.content | slice: 0 : 300) + "..." : review.content }}
             </p>
-            <a target="_blank" class="read-more" [href]="review.url">Read full review</a>
+            <a target="_blank" class="read-more" [href]="review.url">
+                Read full review
+                <i class="fas fa-external-link-alt"></i>
+            </a>
         </div>
     </div>
 </ng-container>

@@ -12,7 +12,7 @@
 
     .title {
         font-size: 22px;
-        font-weight: $font-weight-regular;
+        font-weight: $font-weight-medium;
         color: $text-primary;
         display: flex;
         align-items: center;
@@ -39,14 +39,14 @@
             width: 100%;
             justify-content: space-between;
 
-            .see-all {
+            .view-more {
                 font-size: $font-size-md;
                 font-weight: $font-weight-medium;
                 display: flex;
                 align-items: baseline;
                 gap: $spacing-xs;
                 transition: all $transition-normal;
-                color: $text-secondary;
+                color: $primary-color;
                 text-decoration: none;
                 cursor: pointer;
 
@@ -56,7 +56,7 @@
                 }
 
                 &:hover {
-                    color: $text-primary;
+                    color: lighten($primary-color, 10%);
                 }
             }
         }
@@ -70,10 +70,10 @@
 
     .section-header {
         .title {
-            font-size: $font-size-md;
+            font-size: 18px;
 
             .title-link {
-                .see-all {
+                .view-more {
                     opacity: 1;
                     font-size: $font-size-sm;
                     margin-left: auto;

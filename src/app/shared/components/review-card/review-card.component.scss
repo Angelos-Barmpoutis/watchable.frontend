@@ -103,19 +103,29 @@
     p {
         font-size: $font-size-sm;
         color: $text-primary;
-        margin-bottom: $spacing-sm;
+        margin-bottom: $spacing-md;
         line-height: 1.5;
         @include text-clamp(4);
     }
 
     .read-more {
-        font-size: $font-size-xs;
+        font-size: $font-size-sm;
         color: $primary-color;
+        font-weight: $font-weight-medium;
         text-decoration: none;
         margin-top: auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: $spacing-xs;
+        transition: color $transition-normal;
+
+        i {
+            font-size: $font-size-sm;
+        }
 
         &:hover {
-            text-decoration: underline;
+            color: lighten($primary-color, 10%);
         }
     }
 }
