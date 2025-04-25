@@ -29,7 +29,7 @@ export abstract class BaseCarouselComponent<T> implements AfterViewInit {
     readonly itemsPerPage = DEFAULT.itemsPerPage;
     readonly swiperOptions: SwiperOptions = {
         slidesPerView: 'auto',
-        spaceBetween: 16,
+        spaceBetween: 8,
         loop: true,
         speed: 400,
         freeMode: {

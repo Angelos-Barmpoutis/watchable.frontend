@@ -1,7 +1,14 @@
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideRouter, TitleStrategy, withInMemoryScrolling, withViewTransitions } from '@angular/router';
+import {
+    PreloadAllModules,
+    provideRouter,
+    TitleStrategy,
+    withInMemoryScrolling,
+    withPreloading,
+    withViewTransitions,
+} from '@angular/router';
 import { register } from 'swiper/element';
 
 import { routes } from './app.routes';
@@ -16,13 +23,13 @@ export const appConfig: ApplicationConfig = {
         provideRouter(
             routes,
             withViewTransitions(),
+            withPreloading(PreloadAllModules),
             withInMemoryScrolling({
                 scrollPositionRestoration: 'top',
                 anchorScrolling: 'enabled',
             }),
         ),
         { provide: TitleStrategy, useClass: TitleService },
-
         provideHttpClient(withInterceptorsFromDi()),
         { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     ],

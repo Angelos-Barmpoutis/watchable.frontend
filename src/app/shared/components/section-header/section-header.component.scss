@@ -11,7 +11,7 @@
     }
 
     .title {
-        font-size: $font-size-lg * 1.2;
+        font-size: 22px;
         font-weight: $font-weight-regular;
         color: $text-primary;
         display: flex;
@@ -73,7 +73,7 @@
             font-size: 18px;
 
             .title-link {
-                .explore-all {
+                .see-all {
                     opacity: 1;
                     font-size: $font-size-sm;
                     margin-left: auto;

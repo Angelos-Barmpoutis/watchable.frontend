@@ -72,7 +72,7 @@
 
 @media (max-width: map-get($breakpoints, "sm")) {
     .carousel {
-        min-height: 168px;
+        min-height: 144px;
 
         .carousel-wrapper {
             .nav-button {

@@ -85,7 +85,7 @@ section {
         justify-content: space-between;
         align-items: baseline;
         gap: $spacing-md;
-        margin-block: $spacing-md;
+        margin-block: 12px;
 
         &:has(app-tabs) {
             margin-bottom: $spacing-xl;
@@ -93,7 +93,7 @@ section {
     }
 
     @media (max-width: map-get($breakpoints, "sm")) {
-        margin-bottom: $spacing-lg;
+        margin-bottom: $spacing-xl;
 
         header {
             flex-direction: column;
