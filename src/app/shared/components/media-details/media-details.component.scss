@@ -29,9 +29,6 @@
                 transition: color $transition-normal;
                 font-weight: $font-weight-medium;
                 line-break: anywhere;
-                display: flex;
-                align-items: center;
-                gap: $spacing-xs;
 
                 i {
                     font-size: $font-size-sm;
