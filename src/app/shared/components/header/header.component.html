@@ -11,55 +11,60 @@
             </div>
 
             <div class="nav-end">
-                <button class="search-trigger" aria-label="Search" (click)="toggleSearch()">
+                <button
+                    type="button"
+                    class="search-trigger"
+                    aria-label="Search"
+                    [class.active]="isSearchVisible"
+                    (click)="toggleSearch($event)"
+                >
                     <i class="fas fa-search"></i>
                 </button>
 
                 <div class="profile-dropdown" [class.active]="isProfileDropdownOpen">
                     <button class="profile-button" aria-label="User profile" (click)="toggleProfileDropdown($event)">
-                        <i class="fas fa-user"></i>
+                        <i class="fa-regular fa-user"></i>
                     </button>
 
                     <div *ngIf="isProfileDropdownOpen" class="dropdown-menu">
-                        <div class="dropdown-header">
-                            <span>Account</span>
-                        </div>
+                        <div class="dropdown-header">Account</div>
                         <ul class="dropdown-list">
                             <li>
-                                <a href="#">
-                                    <i class="fas fa-heart"></i>
-                                    <span>Favorites</span>
-                                </a>
+                                <a [routerLink]="['/', 'profile']">Profile</a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <i class="fas fa-bookmark"></i>
-                                    <span>Watchlist</span>
-                                </a>
+                                <a [routerLink]="['/', 'settings']">Settings</a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <i class="fas fa-star"></i>
-                                    <span>Ratings</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fas fa-list"></i>
-                                    <span>Lists</span>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <i class="fas fa-sign-in-alt"></i>
-                                    <span>Sign in</span>
-                                </a>
+                                <a [routerLink]="['/', 'logout']">Logout</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </nav>
+
+        <div class="search-container" [class.expanded]="isSearchVisible">
+            <form class="search-form" [formGroup]="searchForm">
+                <div class="input-wrapper">
+                    <input
+                        #searchInput
+                        class="input"
+                        type="text"
+                        placeholder="Search for Movies, TV Shows, People..."
+                        formControlName="searchQuery"
+                    />
+                    <button
+                        *ngIf="searchQueryFormField?.value"
+                        type="button"
+                        class="close-button"
+                        type="button"
+                        (click)="clearSearch()"
+                    >
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </header>

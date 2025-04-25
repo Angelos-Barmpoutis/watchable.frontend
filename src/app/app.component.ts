@@ -7,7 +7,6 @@ import { BehaviorSubject, forkJoin, take } from 'rxjs';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { MobileNavigationComponent } from './shared/components/mobile-navigation/mobile-navigation.component';
-import { SearchBarComponent } from './shared/components/search-bar/search-bar.component';
 import { GenreFacade } from './shared/facades/genre.facade';
 import { Genre } from './shared/models/genre.model';
 import { LocalStorageService } from './shared/services/local-storage.service';
@@ -23,7 +22,6 @@ import { SearchService } from './shared/services/search.service';
         HeaderComponent,
         MobileNavigationComponent,
         FooterComponent,
-        SearchBarComponent,
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',

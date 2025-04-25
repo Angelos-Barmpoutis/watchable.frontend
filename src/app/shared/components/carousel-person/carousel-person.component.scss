@@ -2,7 +2,7 @@
 
 .carousel {
     height: 100%;
-    min-height: 128px;
+    min-height: 157px;
 
     .carousel-wrapper {
         position: relative;
@@ -47,7 +47,7 @@
 
         swiper-slide {
             width: 128px !important;
-            height: 128px !important;
+            height: 157px !important;
         }
     }
 
@@ -64,7 +64,7 @@
             .skeleton-slide {
                 flex: 0 0 auto;
                 width: 128px !important;
-                height: 128px !important;
+                height: 157px !important;
             }
         }
     }
@@ -72,7 +72,7 @@
 
 @media (max-width: map-get($breakpoints, "sm")) {
     .carousel {
-        min-height: 96px;
+        min-height: 128px;
 
         .carousel-wrapper {
             .nav-button {
@@ -81,14 +81,14 @@
 
             swiper-slide {
                 width: 96px !important;
-                height: 96px !important;
+                height: 128px !important;
             }
         }
 
         .skeleton-carousel .skeleton-wrapper {
             .skeleton-slide {
                 width: 96px !important;
-                height: 96px !important;
+                height: 128px !important;
             }
         }
     }

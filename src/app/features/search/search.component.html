@@ -1,356 +1,75 @@
-<!-- <section class="media-items-section" id="now-playing">
-    <header *ngIf="searchQuery">
-        <h1>Search for "{{ searchQuery }}"</h1>
-    </header>
-    <main>
-        <aside *ngIf="searchQuery">
-            <ul>
-                <li [ngClass]="{ selected: searchFilter === SEARCH_FILTER.Multi }">
-                    <button (click)="setSearchFilter(SEARCH_FILTER.Multi)">
-                        <span>{{ SEARCH_FILTER.Multi | titlecase }}</span>
-                        <span *ngIf="allSearchItems">({{ allSearchItems.multi.total_results | number }})</span>
-                        <span *ngIf="!allSearchItems">(0)</span>
-                    </button>
-                </li>
-                <li [ngClass]="{ selected: searchFilter === SEARCH_FILTER.Movie }">
-                    <button (click)="setSearchFilter(SEARCH_FILTER.Movie)">
-                        <span>{{ SEARCH_FILTER.Movie | titlecase }}</span>
-                        <span *ngIf="allSearchItems">({{ allSearchItems.movies.total_results | number }})</span>
-                        <span *ngIf="!allSearchItems">(0)</span>
-                    </button>
-                </li>
-                <li [ngClass]="{ selected: searchFilter === SEARCH_FILTER.Tv }">
-                    <button (click)="setSearchFilter(SEARCH_FILTER.Tv)">
-                        <span>{{ SEARCH_FILTER.Tv | titlecase }}</span>
-                        <span *ngIf="allSearchItems">({{ allSearchItems.tvShows.total_results | number }})</span>
-                        <span *ngIf="!allSearchItems">(0)</span>
-                    </button>
-                </li>
-                <li [ngClass]="{ selected: searchFilter === SEARCH_FILTER.Person }">
-                    <button (click)="setSearchFilter(SEARCH_FILTER.Person)">
-                        <span>{{ SEARCH_FILTER.Person | titlecase }}</span>
-                        <span *ngIf="allSearchItems">({{ allSearchItems.people.total_results | number }})</span>
-                        <span *ngIf="!allSearchItems">(0)</span>
-                    </button>
-                </li>
-            </ul>
-        </aside>
-        <div class="media-item-container">
-            <span *ngIf="!searchQuery"
-                >Search Watchable by typing a word or phrase in the search box at the top of this page.</span
-            >
-            <ng-container *ngIf="searchQuery" [ngSwitch]="searchFilter">
-                <ng-container *ngSwitchCase="SEARCH_FILTER.Multi">
-                    <ng-container *ngIf="searchMulti.length !== 0">
-                        <div *ngFor="let searchMultiItem of searchMulti" class="media-item-container__media">
-                            <ng-container [ngSwitch]="searchMultiItem.media_type">
-                                <ng-container *ngSwitchCase="'movie'">
-                                    <a
-                                        class="media-item-container__media__img-anchor"
-                                        [routerLink]="['/', 'movies', 'movie', searchMultiItem.id]"
-                                    >
-                                        <ng-container>
-                                            <img
-                                                *ngIf="searchMultiItem.poster_path"
-                                                appPosterPath
-                                                [size]="posterSize"
-                                                [posterPath]="searchMultiItem.poster_path"
-                                                [alt]="searchMultiItem.title"
-                                            />
-                                            <img
-                                                *ngIf="!searchMultiItem.poster_path"
-                                                alt="Image not available"
-                                                [src]="posterFallback"
-                                            />
-                                        </ng-container>
-                                    </a>
-                                    <div class="media-item-container__media__content">
-                                        <h3>
-                                            <a [routerLink]="['/', 'movies', 'movie', searchMultiItem.id]">{{
-                                                searchMultiItem.title
-                                            }}</a>
-                                        </h3>
-                                        <span class="media-item-container__media__content__vote-average">
-                                            {{ +searchMultiItem.vote_average | number: "1.0-1" }} ({{
-                                                +searchMultiItem.vote_count | number
-                                            }})
-                                        </span>
-                                        <span class="media-item-container__media__content__release-date">
-                                            {{ searchMultiItem.release_date | date }}
-                                        </span>
-                                        <button type="button">Rate</button>
-                                    </div>
-                                    <div class="media-item-container__media__info">
-                                        <button [title]="'See more about ' + searchMultiItem.title">i</button>
-                                    </div>
-                                </ng-container>
-                                <ng-container *ngSwitchCase="'tv'">
-                                    <a
-                                        class="media-item-container__media__img-anchor"
-                                        [routerLink]="['/', 'series', 'serie', searchMultiItem.id]"
-                                    >
-                                        <ng-container>
-                                            <img
-                                                *ngIf="searchMultiItem.poster_path"
-                                                appPosterPath
-                                                [size]="posterSize"
-                                                [posterPath]="searchMultiItem.poster_path"
-                                                [alt]="searchMultiItem.name"
-                                            />
-                                            <img
-                                                *ngIf="!searchMultiItem.poster_path"
-                                                alt="Image not available"
-                                                [src]="posterFallback"
-                                            />
-                                        </ng-container>
-                                    </a>
-                                    <div class="media-item-container__media__content">
-                                        <h3>
-                                            <a [routerLink]="['/', 'series', 'serie', searchMultiItem.id]">{{
-                                                searchMultiItem.name
-                                            }}</a>
-                                        </h3>
-                                        <span class="media-item-container__media__content__vote-average">
-                                            {{ +searchMultiItem.vote_average | number: "1.0-1" }} ({{
-                                                +searchMultiItem.vote_count | number
-                                            }})
-                                        </span>
-                                        <span class="media-item-container__media__content__release-date">
-                                            {{ searchMultiItem.first_air_date | date }}
-                                        </span>
-                                        <button type="button">Rate</button>
-                                    </div>
-                                    <div class="media-item-container__media__info">
-                                        <button [title]="'See more about ' + searchMultiItem.name">i</button>
-                                    </div>
-                                </ng-container>
+<div class="wrapper">
+    <section>
+        <header>
+            <app-section-header title="Search Results"> </app-section-header>
+            <app-tabs [tabs]="searchTabs" (tabChange)="changeSearchOption($event)"> </app-tabs>
+        </header>
 
-                                <ng-container *ngSwitchCase="'person'">
-                                    <a
-                                        class="media-item-container__media__img-anchor"
-                                        [routerLink]="['/', 'people', 'person', searchMultiItem.id]"
-                                    >
-                                        <ng-container>
-                                            <img
-                                                *ngIf="searchMultiItem.profile_path"
-                                                appProfilePath
-                                                [size]="profileSize"
-                                                [profilePath]="searchMultiItem.profile_path"
-                                                [alt]="searchMultiItem.name"
-                                            />
-                                            <img
-                                                *ngIf="!searchMultiItem.profile_path"
-                                                alt="Image not available"
-                                                [src]="profileFallback"
-                                            />
-                                        </ng-container>
-                                    </a>
-                                    <div class="media-item-container__media__content">
-                                        <h3>
-                                            <a [routerLink]="['/', 'people', 'person', searchMultiItem.id]">{{
-                                                searchMultiItem.name
-                                            }}</a>
-                                        </h3>
-                                        <div class="media-item-container__media__content__details">
-                                            <span
-                                                class="media-item-container__media__content__details__known-for-department"
-                                            >
-                                                {{ searchMultiItem.known_for_department }}
-                                            </span>
-                                            <ng-container
-                                                *ngIf="
-                                                    searchMultiItem.known_for && searchMultiItem.known_for.length > 0
-                                                "
-                                            >
-                                                <span
-                                                    *ngIf="isMovie(searchMultiItem.known_for[0])"
-                                                    class="media-item-container__media__content__details__known-for"
-                                                >
-                                                    {{ searchMultiItem.known_for[0].title }} ({{
-                                                        searchMultiItem.known_for[0].release_date | date: "yyyy"
-                                                    }})
-                                                </span>
-                                                <span
-                                                    *ngIf="!isMovie(searchMultiItem.known_for[0])"
-                                                    class="media-item-container__media__content__details__known-for"
-                                                >
-                                                    {{ searchMultiItem.known_for[0].name }} ({{
-                                                        searchMultiItem.known_for[0].first_air_date | date: "yyyy"
-                                                    }})
-                                                </span>
-                                            </ng-container>
-                                        </div>
-                                    </div>
-                                    <div class="media-item-container__media__info">
-                                        <button [title]="'See more about ' + searchMultiItem.name">i</button>
-                                    </div>
-                                </ng-container>
-                            </ng-container>
-                        </div>
+        <div class="list-container">
+            <ng-container *ngIf="searchQuery">
+                <ng-container [ngSwitch]="searchOption">
+                    <ng-container *ngSwitchCase="SEARCH_OPTION.Movie">
+                        <ng-container *ngIf="searchMovies.length; else loadingState">
+                            <app-movie-list-item
+                                *ngFor="let movie of searchMovies; trackBy: trackByItemId"
+                                [movie]="movie"
+                                [isLoading]="false"
+                            ></app-movie-list-item>
+                        </ng-container>
+                        <p *ngIf="searchMovies.length === 0" class="no-results">
+                            No movies found for "{{ searchQuery }}"
+                        </p>
                     </ng-container>
-                    <ng-container *ngIf="searchMulti && searchMulti.length === 0">
-                        <span>No results matched your query.</span>
+
+                    <ng-container *ngSwitchCase="SEARCH_OPTION.Tv">
+                        <ng-container *ngIf="searchTvShows.length; else loadingState">
+                            <app-tv-show-list-item
+                                *ngFor="let tvShow of searchTvShows; trackBy: trackByItemId"
+                                [tvShow]="tvShow"
+                                [isLoading]="false"
+                            ></app-tv-show-list-item>
+                        </ng-container>
+                        <p *ngIf="searchTvShows.length === 0" class="no-results">
+                            No TV shows found for "{{ searchQuery }}"
+                        </p>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="SEARCH_OPTION.Person">
+                        <ng-container *ngIf="searchPeople.length; else loadingState">
+                            <app-person-list-item
+                                *ngFor="let person of searchPeople; trackBy: trackByItemId"
+                                [person]="person"
+                                [isLoading]="false"
+                            ></app-person-list-item>
+                        </ng-container>
+                        <p *ngIf="searchPeople.length === 0" class="no-results">
+                            No people found for "{{ searchQuery }}"
+                        </p>
                     </ng-container>
                 </ng-container>
-                <ng-container *ngSwitchCase="SEARCH_FILTER.Movie">
-                    <ng-container *ngIf="searchMovies.length !== 0">
-                        <div *ngFor="let searchMovie of searchMovies" class="media-item-container__media">
-                            <a
-                                class="media-item-container__media__img-anchor"
-                                [routerLink]="['/', 'movies', 'movie', searchMovie.id]"
-                            >
-                                <ng-container>
-                                    <img
-                                        *ngIf="searchMovie.poster_path"
-                                        appPosterPath
-                                        [size]="posterSize"
-                                        [posterPath]="searchMovie.poster_path"
-                                        [alt]="searchMovie.title"
-                                    />
-                                    <img
-                                        *ngIf="!searchMovie.poster_path"
-                                        alt="Image not available"
-                                        [src]="posterFallback"
-                                    />
-                                </ng-container>
-                            </a>
-                            <div class="media-item-container__media__content">
-                                <h3>
-                                    <a [routerLink]="['/', 'movies', 'movie', searchMovie.id]">{{
-                                        searchMovie.title
-                                    }}</a>
-                                </h3>
-                                <span class="media-item-container__media__content__vote-average">
-                                    {{ +searchMovie.vote_average | number: "1.0-1" }} ({{
-                                        +searchMovie.vote_count | number
-                                    }})
-                                </span>
-                                <span class="media-item-container__media__content__release-date">
-                                    {{ searchMovie.release_date | date }}
-                                </span>
-                                <button type="button">Rate</button>
-                            </div>
-                            <div class="media-item-container__media__info">
-                                <button [title]="'See more about ' + searchMovie.title">i</button>
-                            </div>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="searchMovies && searchMovies.length === 0">
-                        <span>No results matched your query.</span>
-                    </ng-container>
-                </ng-container>
-                <ng-container *ngSwitchCase="SEARCH_FILTER.Tv">
-                    <ng-container *ngIf="searchTvSeries.length !== 0">
-                        <div *ngFor="let searchTvSerie of searchTvSeries" class="media-item-container__media">
-                            <a
-                                class="media-item-container__media__img-anchor"
-                                [routerLink]="['/', 'series', 'serie', searchTvSerie.id]"
-                            >
-                                <ng-container>
-                                    <img
-                                        *ngIf="searchTvSerie.poster_path"
-                                        appPosterPath
-                                        [size]="posterSize"
-                                        [posterPath]="searchTvSerie.poster_path"
-                                        [alt]="searchTvSerie.name"
-                                    />
-                                    <img
-                                        *ngIf="!searchTvSerie.poster_path"
-                                        alt="Image not available"
-                                        [src]="posterFallback"
-                                    />
-                                </ng-container>
-                            </a>
-                            <div class="media-item-container__media__content">
-                                <h3>
-                                    <a [routerLink]="['/', 'series', 'serie', searchTvSerie.id]">{{
-                                        searchTvSerie.name
-                                    }}</a>
-                                </h3>
-                                <span class="media-item-container__media__content__vote-average">
-                                    {{ +searchTvSerie.vote_average | number: "1.0-1" }} ({{
-                                        +searchTvSerie.vote_count | number
-                                    }})
-                                </span>
-                                <span class="media-item-container__media__content__release-date">
-                                    {{ searchTvSerie.first_air_date | date }}
-                                </span>
-                                <button type="button">Rate</button>
-                            </div>
-                            <div class="media-item-container__media__info">
-                                <button [title]="'See more about ' + searchTvSerie.name">i</button>
-                            </div>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="searchTvSeries && searchTvSeries.length === 0">
-                        <span>No results matched your query.</span>
-                    </ng-container>
-                </ng-container>
-                <ng-container *ngSwitchCase="SEARCH_FILTER.Person">
-                    <ng-container *ngIf="searchPeople.length !== 0">
-                        <div *ngFor="let searchPerson of searchPeople" class="media-item-container__media">
-                            <a
-                                class="media-item-container__media__img-anchor"
-                                [routerLink]="['/', 'people', 'person', searchPerson.id]"
-                            >
-                                <ng-container>
-                                    <img
-                                        *ngIf="searchPerson.profile_path"
-                                        appProfilePath
-                                        [size]="profileSize"
-                                        [profilePath]="searchPerson.profile_path"
-                                        [alt]="searchPerson.name"
-                                    />
-                                    <img
-                                        *ngIf="!searchPerson.profile_path"
-                                        alt="Image not available"
-                                        [src]="profileFallback"
-                                    />
-                                </ng-container>
-                            </a>
-                            <div class="media-item-container__media__content">
-                                <h3>
-                                    <a [routerLink]="['/', 'people', 'person', searchPerson.id]">{{
-                                        searchPerson.name
-                                    }}</a>
-                                </h3>
-                                <div class="media-item-container__media__content__details">
-                                    <span class="media-item-container__media__content__details__known-for-department">
-                                        {{ searchPerson.known_for_department }}
-                                    </span>
-                                    <ng-container *ngIf="searchPerson.known_for && searchPerson.known_for.length > 0">
-                                        <span
-                                            *ngIf="isMovie(searchPerson.known_for[0])"
-                                            class="media-item-container__media__content__details__known-for"
-                                        >
-                                            {{ searchPerson.known_for[0].title }} ({{
-                                                searchPerson.known_for[0].release_date | date: "yyyy"
-                                            }})
-                                        </span>
-                                        <span
-                                            *ngIf="!isMovie(searchPerson.known_for[0])"
-                                            class="media-item-container__media__content__details__known-for"
-                                        >
-                                            {{ searchPerson.known_for[0].name }} ({{
-                                                searchPerson.known_for[0].first_air_date | date: "yyyy"
-                                            }})
-                                        </span>
-                                    </ng-container>
-                                </div>
-                            </div>
-                            <div class="media-item-container__media__info">
-                                <button [title]="'See more about ' + searchPerson.name">i</button>
-                            </div>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="searchPeople && searchPeople.length === 0">
-                        <span>No results matched your query.</span>
-                    </ng-container>
-                </ng-container>
+
+                <app-infinite-scroll-loader
+                    [disabled]="isLoading || currentPage >= totalPages"
+                    (scrolled)="loadMore()"
+                ></app-infinite-scroll-loader>
             </ng-container>
-            <div class="button-container">
-                <button *ngIf="this.currentPage < this.totalPages" (click)="onLoadMore()">Load More</button>
-            </div>
         </div>
-    </main>
-</section> -->
+    </section>
+</div>
+
+<ng-template #loadingState>
+    <ng-container [ngSwitch]="searchOption">
+        <ng-container *ngSwitchCase="SEARCH_OPTION.Movie">
+            <app-movie-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
+            </app-movie-list-item>
+        </ng-container>
+        <ng-container *ngSwitchCase="SEARCH_OPTION.Tv">
+            <app-tv-show-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
+            </app-tv-show-list-item>
+        </ng-container>
+        <ng-container *ngSwitchCase="SEARCH_OPTION.Person">
+            <app-person-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
+            </app-person-list-item>
+        </ng-container>
+    </ng-container>
+</ng-template>

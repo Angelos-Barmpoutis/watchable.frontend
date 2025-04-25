@@ -14,7 +14,7 @@
                                 {{ tvShow.first_air_date | date: "yyyy" }}
                             </span>
                             <span *ngIf="tvShow.genres?.length" class="genres">
-                                <span *ngFor="let genre of tvShow.genres; let last = last">
+                                <span *ngFor="let genre of tvShow.genres | slice: 0 : 2; let last = last">
                                     {{ genre.name }}{{ !last ? ", " : "" }}
                                 </span>
                             </span>

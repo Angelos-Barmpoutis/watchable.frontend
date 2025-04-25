@@ -2,20 +2,20 @@
 .input {
     width: 100%;
     padding: $spacing-md;
-    border: 1px solid $border-color;
+    border: none;
     border-radius: $border-radius-xl;
     background-color: $surface-color;
     color: $text-primary;
     font-size: $font-size-md;
-    transition: border-color $transition-normal;
+    border: 1px solid rgba($text-primary, 0.2);
+    overflow: hidden;
 
     &:focus {
-        border-color: $primary-color;
         outline: none;
     }
 
-    &-error {
-        border-color: $error-color;
+    &::placeholder {
+        color: $text-secondary;
     }
 }
 

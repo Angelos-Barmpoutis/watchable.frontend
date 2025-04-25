@@ -13,7 +13,7 @@ import { register } from 'swiper/element';
 
 import { routes } from './app.routes';
 import { InterceptorService } from './shared/services/interceptor.service';
-import { TitleService } from './shared/services/title.service';
+import { WindowTitleService } from './shared/services/window-title.service';
 
 register();
 
@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
                 anchorScrolling: 'enabled',
             }),
         ),
-        { provide: TitleStrategy, useClass: TitleService },
+        { provide: TitleStrategy, useClass: WindowTitleService },
         provideHttpClient(withInterceptorsFromDi()),
         { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     ],

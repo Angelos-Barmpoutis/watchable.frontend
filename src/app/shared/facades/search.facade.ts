@@ -29,7 +29,7 @@ export class SearchFacade {
         return this.searchGateway.getMovies(query, page);
     }
 
-    public getTvSeries(query: string = '', page: number = DEFAULT.page): Observable<PaginatedTvShows> {
+    public getTvShows(query: string = '', page: number = DEFAULT.page): Observable<PaginatedTvShows> {
         return this.searchGateway.getTvShows(query, page);
     }
 
@@ -41,7 +41,7 @@ export class SearchFacade {
         return forkJoin({
             multi: this.getMulti(query),
             movies: this.getMovies(query),
-            tvShows: this.getTvSeries(query),
+            tvShows: this.getTvShows(query),
             people: this.getPeople(query),
         });
     }

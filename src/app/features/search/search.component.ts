@@ -1,203 +1,210 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { Component, DestroyRef, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Params } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
+import { BaseMediaListItemComponent } from '../../shared/abstract/base-media-list-item.abstract';
+import { InfiniteScrollLoaderComponent } from '../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
+import { MovieListItemComponent } from '../../shared/components/movie-list-item/movie-list-item.component';
+import { PersonListItemComponent } from '../../shared/components/person-list-item/person-list-item.component';
+import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
+import { TabItem, TabsComponent } from '../../shared/components/tabs/tabs.component';
+import { TvShowListItemComponent } from '../../shared/components/tv-show-list-item/tv-show-list-item.component';
 import { DEFAULT } from '../../shared/constants/defaults.constant';
-import { MEDIA_TYPE } from '../../shared/enumerations/media-type.enum';
-import { POSTER_SIZE } from '../../shared/enumerations/poster-size.enum';
-import { PROFILE_SIZE } from '../../shared/enumerations/profile-size.enum';
 import { SEARCH_OPTION } from '../../shared/enumerations/search-option.enum';
-import { AllSearchItems, SearchFacade } from '../../shared/facades/search.facade';
-import { KnownForItem } from '../../shared/models/known-for-item.model';
-import { Movie } from '../../shared/models/movie.model';
+import { SearchFacade } from '../../shared/facades/search.facade';
+import { mapMoviesWithGenres, mapTvShowsWithGenres } from '../../shared/helpers/genres.helper';
+import { Genre } from '../../shared/models/genre.model';
+import { Movie, MovieItem } from '../../shared/models/movie.model';
 import { Person } from '../../shared/models/people.model';
-import { SearchResult } from '../../shared/models/search.model';
-import { TvShow } from '../../shared/models/tv-show.model';
+import { TvShow, TvShowItem } from '../../shared/models/tv-show.model';
+import { LocalStorageService } from '../../shared/services/local-storage.service';
 
 @Component({
     selector: 'app-search',
     standalone: true,
-    imports: [CommonModule],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MovieListItemComponent,
+        TvShowListItemComponent,
+        PersonListItemComponent,
+        InfiniteScrollLoaderComponent,
+        TabsComponent,
+        SectionHeaderComponent,
+    ],
     templateUrl: './search.component.html',
     styleUrl: './search.component.scss',
 })
-export class SearchComponent implements OnInit {
-    public posterSize: POSTER_SIZE = DEFAULT.smallPosterSize;
-    public posterFallback = DEFAULT.smallPosterFallback;
-    public profileSize: PROFILE_SIZE = DEFAULT.mediumProfileSize;
-    public profileFallback = DEFAULT.mediumProfileFallback;
-    public SEARCH_FILTER = SEARCH_OPTION;
-    public allSearchItems!: AllSearchItems;
-    public searchMulti: Array<SearchResult> = [];
-    public searchMovies: Array<Movie> = [];
-    public searchTvSeries: Array<TvShow> = [];
-    public searchPeople: Array<Person> = [];
-    public currentPage = DEFAULT.page;
-    public totalPages = DEFAULT.totalPages;
-    public searchQuery: string = '';
-    public searchFilter = DEFAULT.searchOption;
+export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow | Person> implements OnInit {
+    @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
+    readonly SEARCH_OPTION = SEARCH_OPTION;
+    private movieGenres: Array<Genre> = [];
+    private tvShowGenres: Array<Genre> = [];
+    searchMovies: Array<MovieItem> = [];
+    searchTvShows: Array<TvShowItem> = [];
+    searchPeople: Array<Person> = [];
+    searchQuery: string = '';
+    searchForm!: FormGroup;
+
+    hasMoreResults = true;
+    searchOption = DEFAULT.searchOption;
+    searchTabs: Array<TabItem<SEARCH_OPTION>> = [
+        { id: 0, label: 'Movies', value: SEARCH_OPTION.Movie },
+        { id: 1, label: 'TV Shows', value: SEARCH_OPTION.Tv },
+        { id: 2, label: 'People', value: SEARCH_OPTION.Person },
+    ];
 
     constructor(
         private searchFacade: SearchFacade,
+        private formBuilder: FormBuilder,
         private route: ActivatedRoute,
-        private destroyRef: DestroyRef,
-    ) {}
-
-    ngOnInit(): void {
-        this.listenForUrlParamterers();
+        private localStorageService: LocalStorageService,
+        private router: Router,
+        destroyRef: DestroyRef,
+    ) {
+        super(destroyRef);
+        this.searchForm = this.formBuilder.group({
+            searchQuery: ['', Validators.required],
+        });
     }
 
-    public isMovie(item: KnownForItem): boolean {
-        return item.media_type === MEDIA_TYPE.Movie;
+    override ngOnInit(): void {
+        this.getGenres();
+        this.listenForUrlParameterers();
     }
 
-    public onLoadMore(): void {
+    override loadMore(): void {
+        if (this.isLoading || this.currentPage >= this.totalPages) {
+            return;
+        }
         this.currentPage++;
 
-        switch (this.searchFilter) {
-            case SEARCH_OPTION.Multi:
-                this.getMulti(true, this.searchQuery, this.currentPage);
+        switch (this.searchOption) {
+            case SEARCH_OPTION.Movie: {
+                this.getMovies();
                 break;
-            case SEARCH_OPTION.Movie:
-                this.getMovies(true, this.searchQuery, this.currentPage);
-                break;
-            case SEARCH_OPTION.Tv:
-                this.getTvSeries(true, this.searchQuery, this.currentPage);
-                break;
-            case SEARCH_OPTION.Person:
-                this.getPeople(true, this.searchQuery, this.currentPage);
-                break;
-        }
-    }
-
-    public setSearchFilter(filter: SEARCH_OPTION): void {
-        this.currentPage = DEFAULT.page;
-        this.totalPages = DEFAULT.totalPages;
-        this.searchFilter = filter;
-
-        switch (this.searchFilter) {
-            case SEARCH_OPTION.Multi:
-                this.getMulti(false, this.searchQuery, this.currentPage);
-                break;
-            case SEARCH_OPTION.Movie:
-                this.getMovies(false, this.searchQuery, this.currentPage);
-                break;
-            case SEARCH_OPTION.Tv:
-                this.getTvSeries(false, this.searchQuery, this.currentPage);
-                break;
-            case SEARCH_OPTION.Person:
-                this.getPeople(false, this.searchQuery, this.currentPage);
-                break;
-        }
-    }
-
-    private listenForUrlParamterers(): void {
-        this.route.fragment.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((filter) => {
-            const searchFilter = filter;
-
-            switch (searchFilter) {
-                case SEARCH_OPTION.Multi:
-                    this.setSearchFilter(SEARCH_OPTION.Multi);
-                    break;
-                case SEARCH_OPTION.Movie:
-                    this.setSearchFilter(SEARCH_OPTION.Movie);
-                    break;
-                case SEARCH_OPTION.Tv:
-                    this.setSearchFilter(SEARCH_OPTION.Tv);
-                    break;
-                case SEARCH_OPTION.Person:
-                    this.setSearchFilter(SEARCH_OPTION.Person);
-                    break;
-                default:
-                    this.setSearchFilter(DEFAULT.searchOption);
-                    break;
             }
-        });
+            case SEARCH_OPTION.Tv: {
+                this.getTvShows();
+                break;
+            }
+            case SEARCH_OPTION.Person: {
+                this.getPeople();
+                break;
+            }
+        }
+    }
 
+    private listenForUrlParameterers(): void {
         this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params: Params) => {
-            const queryParam = params['query'] as string;
+            const queryParam = params['q'] as string;
 
-            if (queryParam) {
-                this.searchQuery = queryParam.trim();
-                this.getAll(queryParam);
-                this.setSearchFilter(this.searchFilter);
+            if (queryParam && queryParam !== '') {
+                this.searchQuery = queryParam;
+                this.changeSearchOption(this.searchOption);
             } else {
                 this.searchQuery = '';
+                this.router.navigate(['/']);
             }
         });
     }
 
-    private getMulti(loadMore: boolean = false, query: string, page: number): void {
+    private getMovies(): void {
+        this.isLoading = true;
         this.searchFacade
-            .getMulti(query, page)
+            .getMovies(this.searchQuery, this.currentPage)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((searchMulti) => {
-                if (loadMore) {
-                    this.searchMulti = [...this.searchMulti, ...searchMulti.results];
-                } else {
-                    this.searchMulti = searchMulti.results;
-                }
-
-                this.currentPage = searchMulti.page;
-                this.totalPages = searchMulti.total_pages;
+            .subscribe((paginatedMovies) => {
+                const moviesWithGenres = this.mapItemsWithGenres(
+                    paginatedMovies.results as Array<MovieItem>,
+                    this.movieGenres,
+                ) as Array<MovieItem>;
+                this.searchMovies = [...this.searchMovies, ...moviesWithGenres];
+                this.currentPage = paginatedMovies.page;
+                this.totalPages = paginatedMovies.total_pages;
+                this.isLoading = false;
             });
     }
 
-    private getMovies(loadMore: boolean = false, query: string, page: number): void {
+    private getTvShows(): void {
+        this.isLoading = true;
         this.searchFacade
-            .getMovies(query, page)
+            .getTvShows(this.searchQuery, this.currentPage)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((searchMovies) => {
-                if (loadMore) {
-                    this.searchMovies = [...this.searchMovies, ...searchMovies.results];
-                } else {
-                    this.searchMovies = searchMovies.results;
-                }
-
-                this.currentPage = searchMovies.page;
-                this.totalPages = searchMovies.total_pages;
+            .subscribe((paginatedTvShows) => {
+                const tvShowsWithGenres = this.mapItemsWithGenres(
+                    paginatedTvShows.results as Array<TvShowItem>,
+                    this.tvShowGenres,
+                ) as Array<TvShowItem>;
+                this.searchTvShows = [...this.searchTvShows, ...tvShowsWithGenres];
+                this.currentPage = paginatedTvShows.page;
+                this.totalPages = paginatedTvShows.total_pages;
+                this.isLoading = false;
             });
     }
 
-    private getTvSeries(loadMore: boolean = false, query: string, page: number): void {
+    private getPeople(): void {
+        this.isLoading = true;
         this.searchFacade
-            .getTvSeries(query, page)
+            .getPeople(this.searchQuery, this.currentPage)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((searchTvSeries) => {
-                if (loadMore) {
-                    this.searchTvSeries = [...this.searchTvSeries, ...searchTvSeries.results];
-                } else {
-                    this.searchTvSeries = searchTvSeries.results;
-                }
-
-                this.currentPage = searchTvSeries.page;
-                this.totalPages = searchTvSeries.total_pages;
+            .subscribe((paginatedPeople) => {
+                this.searchPeople = [...this.searchPeople, ...paginatedPeople.results];
+                this.currentPage = paginatedPeople.page;
+                this.totalPages = paginatedPeople.total_pages;
+                this.isLoading = false;
             });
     }
 
-    private getPeople(loadMore: boolean = false, query: string, page: number): void {
-        this.searchFacade
-            .getPeople(query, page)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((searchPeople) => {
-                if (loadMore) {
-                    this.searchPeople = [...this.searchPeople, ...searchPeople.results];
-                } else {
-                    this.searchPeople = searchPeople.results;
-                }
-
-                this.currentPage = searchPeople.page;
-                this.totalPages = searchPeople.total_pages;
-            });
+    changeSearchOption(searchOption: SEARCH_OPTION): void {
+        this.currentPage = DEFAULT.page;
+        this.totalPages = DEFAULT.totalPages;
+        this.searchOption = searchOption;
+        this.searchMovies = [];
+        this.searchTvShows = [];
+        this.searchPeople = [];
+        this.getItems();
     }
 
-    private getAll(query: string): void {
-        this.searchFacade
-            .getAll(query)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((allSearchItems) => {
-                this.allSearchItems = allSearchItems;
-            });
+    getItems(): void {
+        switch (this.searchOption) {
+            case SEARCH_OPTION.Movie:
+                this.getMovies();
+                break;
+            case SEARCH_OPTION.Tv:
+                this.getTvShows();
+                break;
+            case SEARCH_OPTION.Person:
+                this.getPeople();
+                break;
+            default:
+                this.getMovies();
+                break;
+        }
+    }
+
+    getGenres(): void {
+        this.movieGenres = this.localStorageService.getItem<Array<Genre>>('movieGenres') ?? [];
+        this.tvShowGenres = this.localStorageService.getItem<Array<Genre>>('tvShowGenres') ?? [];
+    }
+
+    trackByItemId(index: number, item: Movie | TvShow | Person): number {
+        return item.id;
+    }
+
+    mapItemsWithGenres(
+        items: Array<MovieItem | TvShowItem | Person>,
+        genres: Array<Genre>,
+    ): Array<Movie | TvShow | Person> {
+        switch (this.searchOption) {
+            case SEARCH_OPTION.Movie:
+                return mapMoviesWithGenres(items as Array<MovieItem>, genres);
+            case SEARCH_OPTION.Tv:
+                return mapTvShowsWithGenres(items as Array<TvShowItem>, genres);
+            default:
+                return items;
+        }
     }
 }

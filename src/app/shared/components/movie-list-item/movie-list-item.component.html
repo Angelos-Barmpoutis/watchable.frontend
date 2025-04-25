@@ -14,7 +14,7 @@
                         <div class="meta">
                             <span class="year">{{ movie.release_date | date: "yyyy" }}</span>
                             <span *ngIf="movie.genres?.length" class="genres">
-                                <span *ngFor="let genre of movie.genres; let last = last">
+                                <span *ngFor="let genre of movie.genres | slice: 0 : 2; let last = last">
                                     {{ genre.name }}{{ !last ? ", " : "" }}
                                 </span>
                             </span>

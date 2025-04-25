@@ -1,12 +1,12 @@
 @import "../../../../styles.scss";
 
 header {
-    padding: 12px 0;
+    padding: $spacing-md 0;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba($background-color, 0.6);
+    background-color: rgba($background-color, 0.8);
     backdrop-filter: blur(17px);
     z-index: map-get($z-layers, "header");
 
@@ -75,6 +75,10 @@ header {
                 transition: color $transition-normal;
 
                 &:hover {
+                    color: $text-primary;
+                }
+
+                &.active i {
                     color: $text-primary;
                 }
             }
@@ -156,6 +160,27 @@ header {
             }
         }
     }
+
+    .search-container {
+        transition: all $transition-normal;
+        overflow: hidden;
+        will-change: height, margin-top;
+        height: 0;
+
+        &.expanded {
+            margin-top: $spacing-md;
+            height: $input-height;
+        }
+
+        .search-form {
+            margin: 0 auto;
+
+            .input-wrapper {
+                position: relative;
+                width: 100%;
+            }
+        }
+    }
 }
 
 @media (max-width: map-get($breakpoints, "md")) {
@@ -183,12 +208,6 @@ header {
                 }
 
                 .nav-links {
-                    display: none;
-                }
-            }
-
-            .nav-end {
-                .search-trigger {
                     display: none;
                 }
             }

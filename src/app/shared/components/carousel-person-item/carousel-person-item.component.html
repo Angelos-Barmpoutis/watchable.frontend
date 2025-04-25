@@ -5,12 +5,14 @@
                 <img appProfilePath [size]="profileSize" [profilePath]="item.profile_path" />
             </ng-container>
         </div>
+        <div class="person-name">{{ item.name }}</div>
     </a>
 </ng-container>
 
 <ng-template #skeletonTemplate>
     <div appFadeIn class="skeleton-person">
         <div class="skeleton-profile"></div>
+        <div class="skeleton-name"></div>
     </div>
 </ng-template>
 

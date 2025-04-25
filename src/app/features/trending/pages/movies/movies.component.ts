@@ -77,6 +77,7 @@ export class TrendingMoviesComponent extends BaseMediaListItemComponent<MovieIte
     changeTimeOption(timeOption: TIME_OPTION): void {
         this.timeOption = timeOption;
         this.currentPage = DEFAULT.page;
+        this.totalPages = DEFAULT.totalPages;
         this.items = [];
         this.getItems();
     }
