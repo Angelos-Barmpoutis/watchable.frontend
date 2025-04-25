@@ -30,10 +30,6 @@
                 font-weight: $font-weight-medium;
                 line-break: anywhere;
 
-                i {
-                    font-size: $font-size-sm;
-                }
-
                 &:hover {
                     color: lighten($primary-color, 10%);
                 }
