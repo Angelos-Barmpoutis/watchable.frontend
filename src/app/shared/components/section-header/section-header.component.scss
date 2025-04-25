@@ -39,24 +39,28 @@
             width: 100%;
             justify-content: space-between;
 
-            .view-more {
-                font-size: $font-size-md;
-                font-weight: $font-weight-medium;
-                display: flex;
-                align-items: baseline;
-                gap: $spacing-xs;
-                transition: all $transition-normal;
-                color: $primary-color;
-                text-decoration: none;
-                cursor: pointer;
+            a {
+                flex-shrink: 0;
 
-                .chevron-icon {
-                    color: inherit;
-                    font-size: $font-size-sm;
-                }
+                .view-more {
+                    font-size: $font-size-md;
+                    font-weight: $font-weight-medium;
+                    display: flex;
+                    align-items: baseline;
+                    gap: $spacing-xs;
+                    transition: all $transition-normal;
+                    color: $primary-color;
+                    text-decoration: none;
+                    cursor: pointer;
 
-                &:hover {
-                    color: lighten($primary-color, 10%);
+                    .chevron-icon {
+                        color: inherit;
+                        font-size: $font-size-sm;
+                    }
+
+                    &:hover {
+                        color: lighten($primary-color, 10%);
+                    }
                 }
             }
         }
@@ -70,16 +74,18 @@
 
     .section-header {
         .title {
-            font-size: 18px;
+            font-size: 20px;
 
             .title-link {
-                .view-more {
-                    opacity: 1;
-                    font-size: $font-size-sm;
-                    margin-left: auto;
-
-                    .chevron-icon {
+                a {
+                    .view-more {
+                        opacity: 1;
                         font-size: $font-size-sm;
+                        margin-left: auto;
+
+                        .chevron-icon {
+                            font-size: $font-size-sm;
+                        }
                     }
                 }
             }
