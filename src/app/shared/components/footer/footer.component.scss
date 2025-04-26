@@ -34,7 +34,7 @@ footer {
                     font-weight: $font-weight-medium;
 
                     &:hover {
-                        color: $primary-color;
+                        color: rgba($primary-color, 0.8);
                     }
                 }
             }
@@ -59,11 +59,11 @@ footer {
             font-size: $font-size-sm;
 
             a {
-                color: $primary-color;
+                color: rgba($primary-color, 0.8);
                 text-decoration: none;
 
                 &:hover {
-                    color: lighten($primary-color, 10%);
+                    color: rgba($primary-color, 1);
                 }
             }
         }

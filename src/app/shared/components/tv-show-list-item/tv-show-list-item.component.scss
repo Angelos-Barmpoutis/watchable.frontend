@@ -93,19 +93,19 @@
                                 font-weight: $font-weight-bold;
 
                                 &.rating-low {
-                                    color: $error-color;
+                                    color: rgba($error-color, 0.8);
                                 }
 
                                 &.rating-medium {
-                                    color: $warning-color;
+                                    color: rgba($warning-color, 0.8);
                                 }
 
                                 &.rating-high {
-                                    color: $success-color;
+                                    color: rgba($success-color, 0.8);
                                 }
 
                                 &.rating-top {
-                                    color: $primary-color;
+                                    color: rgba($primary-color, 0.8);
                                 }
                             }
 
