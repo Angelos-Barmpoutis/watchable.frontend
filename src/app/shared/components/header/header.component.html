@@ -11,15 +11,36 @@
             </div>
 
             <div class="nav-end">
-                <button
-                    type="button"
-                    class="search-trigger"
-                    aria-label="Search"
-                    [class.active]="isSearchVisible"
-                    (click)="toggleSearch($event)"
-                >
-                    <i class="fas fa-search"></i>
-                </button>
+                <div class="search-container" [class.expanded]="isSearchVisible">
+                    <button
+                        type="button"
+                        class="search-trigger"
+                        aria-label="Search"
+                        [class.active]="isSearchVisible"
+                        (click)="toggleSearch($event)"
+                    >
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <form class="search-form" [formGroup]="searchForm">
+                        <div class="input-wrapper" [class.has-value]="searchQueryFormField?.value">
+                            <input
+                                #searchInput
+                                class="input"
+                                type="text"
+                                placeholder="Search for Movies, TV Shows, People..."
+                                formControlName="searchQuery"
+                            />
+                            <button
+                                *ngIf="searchQueryFormField?.value"
+                                type="button"
+                                class="close-button"
+                                (click)="clearSearch()"
+                            >
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
 
                 <div class="profile-dropdown" [class.active]="isProfileDropdownOpen">
                     <button class="profile-button" aria-label="User profile" (click)="toggleProfileDropdown($event)">
@@ -43,28 +64,5 @@
                 </div>
             </div>
         </nav>
-
-        <div class="search-container" [class.expanded]="isSearchVisible">
-            <form class="search-form" [formGroup]="searchForm">
-                <div class="input-wrapper">
-                    <input
-                        #searchInput
-                        class="input"
-                        type="text"
-                        placeholder="Search for Movies, TV Shows, People..."
-                        formControlName="searchQuery"
-                    />
-                    <button
-                        *ngIf="searchQueryFormField?.value"
-                        type="button"
-                        class="close-button"
-                        type="button"
-                        (click)="clearSearch()"
-                    >
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </form>
-        </div>
     </div>
 </header>

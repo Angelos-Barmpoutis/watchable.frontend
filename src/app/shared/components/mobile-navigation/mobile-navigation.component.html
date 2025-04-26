@@ -1,28 +1,38 @@
 <nav appFadeIn class="bottom-nav">
-    <div class="bottom-nav__container">
-        <a
-            routerLink="/"
-            routerLinkActive="active"
-            class="bottom-nav__item"
-            [routerLinkActiveOptions]="{ exact: true }"
-        >
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
+    <div class="wrapper">
+        <ul class="bottom-nav__container">
+            <li>
+                <a
+                    routerLink="/"
+                    routerLinkActive="active"
+                    class="bottom-nav__item"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                >
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
 
-        <a routerLink="/movies" routerLinkActive="active" class="bottom-nav__item">
-            <i class="fas fa-film"></i>
-            <span>Movies</span>
-        </a>
+            <li>
+                <a routerLink="/movies" routerLinkActive="active" class="bottom-nav__item">
+                    <i class="fas fa-film"></i>
+                    <span>Movies</span>
+                </a>
+            </li>
 
-        <a routerLink="/tv-shows" routerLinkActive="active" class="bottom-nav__item">
-            <i class="fas fa-tv"></i>
-            <span>TV Shows</span>
-        </a>
+            <li>
+                <a routerLink="/tv-shows" routerLinkActive="active" class="bottom-nav__item">
+                    <i class="fas fa-tv"></i>
+                    <span>TV Shows</span>
+                </a>
+            </li>
 
-        <a routerLink="/people" routerLinkActive="active" class="bottom-nav__item">
-            <i class="fa-solid fa-users"></i>
-            <span>People</span>
-        </a>
+            <li>
+                <a routerLink="/people" routerLinkActive="active" class="bottom-nav__item">
+                    <i class="fa-solid fa-users"></i>
+                    <span>People</span>
+                </a>
+            </li>
+        </ul>
     </div>
 </nav>

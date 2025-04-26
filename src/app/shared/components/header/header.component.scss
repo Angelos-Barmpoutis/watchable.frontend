@@ -1,7 +1,7 @@
 @import "../../../../styles.scss";
 
 header {
-    padding: 12px 0;
+    padding: $spacing-md 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -45,6 +45,8 @@ header {
                 list-style: none;
                 margin: 0;
                 padding: 0;
+                transition: all $transition-normal;
+                flex-shrink: 0;
 
                 a {
                     color: $text-secondary;
@@ -65,21 +67,62 @@ header {
             align-items: center;
             gap: $spacing-md;
 
-            .search-trigger {
-                background: none;
-                border: none;
-                color: $text-secondary;
-                font-size: $font-size-lg;
-                cursor: pointer;
-                padding: $spacing-xs $spacing-sm;
-                transition: color $transition-normal;
+            .search-container {
+                display: flex;
+                align-items: center;
+                width: 40px;
+                justify-content: center;
+                transition: width $transition-normal cubic-bezier(0.4, 0, 0.2, 1);
+                will-change: width;
+                position: relative;
 
-                &:hover {
-                    color: $text-primary;
+                &.expanded {
+                    width: min(450px, max(275px, calc(100vw - 500px)));
                 }
 
-                &.active i {
-                    color: $text-primary;
+                .search-trigger {
+                    position: absolute;
+                    left: 0;
+                    width: 56px;
+                    height: 44px;
+                    z-index: 1;
+                    background: none;
+                    border: none;
+                    color: $text-secondary;
+                    font-size: $font-size-lg;
+                    cursor: pointer;
+                    transition: color $transition-normal;
+
+                    &:hover {
+                        color: $text-primary;
+                    }
+
+                    &.active i {
+                        color: $text-primary;
+                    }
+                }
+
+                .search-form {
+                    position: absolute;
+                    right: 0;
+                    width: 100%;
+                    opacity: 0;
+                    transition: opacity $transition-normal;
+
+                    .input-wrapper {
+                        background-color: $surface-color;
+                        border: 1px solid $border-color;
+                        border-radius: $border-radius-xl;
+                        padding-left: $spacing-xl;
+
+                        &.has-value {
+                            padding-right: $spacing-lg;
+                        }
+                    }
+                }
+
+                &.expanded .search-form {
+                    opacity: 1;
                 }
             }
 
@@ -160,50 +203,73 @@ header {
             }
         }
     }
-
-    .search-container {
-        transition:
-            height $transition-normal cubic-bezier(0.4, 0, 0.2, 1),
-            margin-top $transition-normal cubic-bezier(0.4, 0, 0.2, 1),
-            opacity $transition-normal cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: hidden;
-        will-change: height, margin-top, opacity;
-        height: 0;
-        opacity: 0;
-
-        &.expanded {
-            margin-top: 12px;
-            height: $input-height;
-            opacity: 1;
-        }
-
-        .search-form {
-            margin: 0 auto;
-
-            .input-wrapper {
-                position: relative;
-                width: 100%;
-
-                .close-button {
-                    top: 50%;
-                    transform: translateY(-50%);
-                    right: $spacing-md;
-                }
-            }
-        }
-    }
 }
 
 @media (max-width: map-get($breakpoints, "md")) {
     header {
         nav {
             gap: $spacing-md;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
             .nav-start {
                 gap: $spacing-md;
+                position: absolute;
+                transition: opacity $transition-normal;
 
-                .nav-links {
-                    gap: $spacing-md;
+                .header-logo {
+                    font-size: $font-size-lg;
+                }
+            }
+
+            .nav-end {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                gap: $spacing-md;
+
+                .search-container {
+                    position: relative;
+                    transition: width $transition-normal cubic-bezier(0.4, 0, 0.2, 1);
+                    will-change: width;
+
+                    .search-trigger {
+                        position: absolute;
+                        left: 0;
+                        z-index: 1;
+                    }
+
+                    .search-form {
+                        position: absolute;
+                        right: 0;
+                        width: 100%;
+                        opacity: 0;
+                        transition: opacity $transition-normal;
+
+                        .input-wrapper {
+                            background-color: $surface-color;
+                            border: 1px solid $border-color;
+                            border-radius: $border-radius-xl;
+                            padding-left: $spacing-xl;
+                        }
+                    }
+
+                    &.expanded {
+                        width: 100%;
+
+                        .search-form {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+
+            &:has(.search-container.expanded) {
+                .nav-start {
+                    opacity: 0;
                 }
             }
         }
@@ -214,10 +280,6 @@ header {
     header {
         nav {
             .nav-start {
-                .header-logo {
-                    font-size: $font-size-lg;
-                }
-
                 .nav-links {
                     display: none;
                 }
