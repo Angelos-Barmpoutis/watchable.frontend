@@ -48,7 +48,9 @@
                                     <span class="vote-count">{{ voteCount }} votes</span>
                                 </div>
                             </div>
-                            <button class="button button-secondary"><i class="fas fa-star"></i> Rate</button>
+                            <button title="Rate" aria-label="Rate" class="button button-secondary">
+                                <i class="fas fa-star"></i> Rate
+                            </button>
                         </div>
 
                         <div class="overview">
@@ -56,10 +58,20 @@
                         </div>
 
                         <div class="action-buttons">
-                            <button *ngIf="trailerUrl" class="button button-primary" (click)="toggleTrailer()">
+                            <button
+                                *ngIf="trailerUrl"
+                                title="Watch Trailer"
+                                aria-label="Watch Trailer"
+                                class="button button-primary"
+                                (click)="toggleTrailer()"
+                            >
                                 <i class="fas fa-play"></i> Watch Trailer
                             </button>
-                            <button class="button button-secondary">
+                            <button
+                                title="Add to Watchlist"
+                                aria-label="Add to Watchlist"
+                                class="button button-secondary"
+                            >
                                 <i class="fas fa-plus"></i> Add to Watchlist
                             </button>
                         </div>
@@ -71,7 +83,7 @@
 
     <div *ngIf="showTrailer && trailerUrl" class="trailer-modal" (click)="toggleTrailer()">
         <div class="trailer-container">
-            <button class="close-button" (click)="toggleTrailer()">
+            <button title="Close" aria-label="Close" class="close-button" (click)="toggleTrailer()">
                 <i class="fas fa-times"></i>
             </button>
             <iframe

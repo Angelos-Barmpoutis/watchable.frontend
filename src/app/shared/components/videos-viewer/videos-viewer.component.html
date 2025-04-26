@@ -39,14 +39,22 @@
                     [src]="videoUrl"
                 ></iframe>
                 <div class="viewer-overlay">
-                    <button class="close-button" (click)="closeViewer()">
+                    <button title="Close" aria-label="Close" class="close-button" (click)="closeViewer()">
                         <i class="fas fa-times"></i>
                     </button>
                     <div class="navigation-buttons">
-                        <button class="nav-button" [class.disabled]="selectedVideoIndex === 0" (click)="prevVideo()">
+                        <button
+                            title="Previous"
+                            aria-label="Previous"
+                            class="nav-button"
+                            [class.disabled]="selectedVideoIndex === 0"
+                            (click)="prevVideo()"
+                        >
                             <i class="fas fa-chevron-left"></i>
                         </button>
                         <button
+                            title="Next"
+                            aria-label="Next"
                             class="nav-button"
                             [class.disabled]="selectedVideoIndex === videos.length - 1"
                             (click)="nextVideo()"

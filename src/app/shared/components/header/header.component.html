@@ -15,7 +15,8 @@
                     <button
                         type="button"
                         class="search-trigger"
-                        aria-label="Search"
+                        aria-label="isSearchVisible ? 'Close Search' : 'Search'"
+                        [title]="isSearchVisible ? 'Close Search' : 'Search'"
                         [class.active]="isSearchVisible"
                         (click)="toggleSearch($event)"
                     >
@@ -43,7 +44,12 @@
                 </div>
 
                 <div class="profile-dropdown" [class.active]="isProfileDropdownOpen">
-                    <button class="profile-button" aria-label="User profile" (click)="toggleProfileDropdown($event)">
+                    <button
+                        title="User profile"
+                        class="profile-button"
+                        aria-label="User profile"
+                        (click)="toggleProfileDropdown($event)"
+                    >
                         <i class="fa-regular fa-user"></i>
                     </button>
 

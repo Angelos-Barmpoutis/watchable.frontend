@@ -4,6 +4,7 @@
             *ngFor="let tab of tabs"
             class="tab button"
             role="tab"
+            [title]="tab.label"
             [class.button-primary]="selectedTabId === tab.id"
             [attr.aria-selected]="selectedTabId === tab.id"
             (click)="selectTab(tab.value)"

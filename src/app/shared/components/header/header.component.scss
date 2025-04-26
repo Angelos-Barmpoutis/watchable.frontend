@@ -83,7 +83,7 @@ header {
                 .search-trigger {
                     position: absolute;
                     left: 0;
-                    width: 56px;
+                    width: 52px;
                     height: 44px;
                     z-index: 1;
                     background: none;
@@ -282,6 +282,14 @@ header {
             .nav-start {
                 .nav-links {
                     display: none;
+                }
+            }
+
+            .nav-end {
+                .search-container {
+                    .search-trigger {
+                        width: 48px;
+                    }
                 }
             }
         }

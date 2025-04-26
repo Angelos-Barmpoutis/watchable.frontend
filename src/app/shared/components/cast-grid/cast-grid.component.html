@@ -8,7 +8,12 @@
     </div>
 
     <div *ngIf="hasMoreCast" class="view-all-container">
-        <button class="button button-secondary" (click)="toggleShowAll()">
+        <button
+            aria-label="showAll ? 'Show Less' : 'View All Cast'"
+            class="button button-secondary"
+            [title]="showAll ? 'Show Less' : 'View All Cast'"
+            (click)="toggleShowAll()"
+        >
             {{ showAll ? "Show Less" : "View All Cast" }}
             <i class="fas" [class.fa-chevron-down]="!showAll" [class.fa-chevron-up]="showAll"></i>
         </button>

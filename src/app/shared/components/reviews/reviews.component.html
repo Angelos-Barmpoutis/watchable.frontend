@@ -8,7 +8,12 @@
     </div>
 
     <div *ngIf="hasMoreReviews" class="view-all-container">
-        <button class="button button-secondary" (click)="toggleShowAll()">
+        <button
+            title="View All Reviews"
+            aria-label="View All Reviews"
+            class="button button-secondary"
+            (click)="toggleShowAll()"
+        >
             {{ showAll ? "Show Less" : "View All Reviews" }}
             <i class="fas" [class.fa-chevron-down]="!showAll" [class.fa-chevron-up]="showAll"></i>
         </button>

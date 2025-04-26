@@ -34,14 +34,22 @@
                     [size]="BACKDROP_SIZE.original"
                 />
                 <div class="viewer-overlay">
-                    <button class="close-button" (click)="closeViewer()">
+                    <button title="Close" aria-label="Close" class="close-button" (click)="closeViewer()">
                         <i class="fas fa-times"></i>
                     </button>
                     <div class="navigation-buttons">
-                        <button class="nav-button" [class.disabled]="selectedImageIndex === 0" (click)="prevImage()">
+                        <button
+                            title="Previous"
+                            aria-label="Previous"
+                            class="nav-button"
+                            [class.disabled]="selectedImageIndex === 0"
+                            (click)="prevImage()"
+                        >
                             <i class="fas fa-chevron-left"></i>
                         </button>
                         <button
+                            title="Next"
+                            aria-label="Next"
                             class="nav-button"
                             [class.disabled]="selectedImageIndex === images.length - 1"
                             (click)="nextImage()"

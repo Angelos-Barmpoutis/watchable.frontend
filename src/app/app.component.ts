@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { BehaviorSubject, forkJoin, take } from 'rxjs';
 
+import { BackToTopComponent } from './shared/components/back-to-top/back-to-top.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { MobileNavigationComponent } from './shared/components/mobile-navigation/mobile-navigation.component';
@@ -22,6 +23,7 @@ import { SearchService } from './shared/services/search.service';
         HeaderComponent,
         MobileNavigationComponent,
         FooterComponent,
+        BackToTopComponent,
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',

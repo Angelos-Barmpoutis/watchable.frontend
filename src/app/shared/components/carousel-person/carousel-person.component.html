@@ -1,11 +1,17 @@
 <div appFadeIn class="carousel">
     <ng-container *ngIf="!isLoading; else skeletonTemplate">
         <div class="carousel-wrapper">
-            <button type="button" class="nav-button nav-prev" [class]="prevButtonClass">
+            <button
+                title="Previous"
+                aria-label="Previous"
+                type="button"
+                class="nav-button nav-prev"
+                [class]="prevButtonClass"
+            >
                 <i class="fas fa-chevron-left chevron-icon"></i>
             </button>
 
-            <button type="button" class="nav-button nav-next" [class]="nextButtonClass">
+            <button title="Next" aria-label="Next" type="button" class="nav-button nav-next" [class]="nextButtonClass">
                 <i class="fas fa-chevron-right chevron-icon"></i>
             </button>
 
