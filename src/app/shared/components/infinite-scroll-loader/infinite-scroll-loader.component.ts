@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+
+import { FadeInDirective } from '../../directives/fade-in.directive';
 
 @Component({
     selector: 'app-infinite-scroll-loader',
     standalone: true,
-    imports: [],
+    imports: [CommonModule, FadeInDirective],
     templateUrl: './infinite-scroll-loader.component.html',
     styleUrl: './infinite-scroll-loader.component.scss',
 })

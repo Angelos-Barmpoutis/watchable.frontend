@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, Params, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { debounceTime } from 'rxjs';
 
 import { FadeInDirective } from '../../directives/fade-in.directive';
@@ -32,21 +32,31 @@ export class HeaderComponent implements OnInit {
         private searchService: SearchService,
         private fb: FormBuilder,
         private destroyRef: DestroyRef,
+        private route: ActivatedRoute,
+        private router: Router,
     ) {}
 
     ngOnInit(): void {
         this.initSearchForm();
         this.onSearch();
+        this.listenForUrlParameterers();
     }
 
     get searchQueryFormField(): FormControl {
         return this.searchForm.get('searchQuery') as FormControl;
     }
 
+    private listenForUrlParameterers(): void {
+        this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params: Params) => {
+            const queryParam = params['q'] as string;
+            this.searchQueryFormField.setValue(queryParam);
+        });
+    }
+
     private focusSearchInput(): void {
         setTimeout(() => {
             this.searchInput.nativeElement.focus();
-        }, 200);
+        }, 300);
     }
 
     private initSearchForm(): void {

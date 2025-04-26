@@ -30,7 +30,7 @@ export class SearchService {
     }
 
     handleSearchQuery(query: string): void {
-        if (query.trim() !== '') {
+        if (query?.trim() !== '') {
             this.navigateToSearchPage(query);
         } else {
             this.navigateToPreviousPage();

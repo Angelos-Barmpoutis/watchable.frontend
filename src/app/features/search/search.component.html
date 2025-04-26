@@ -9,7 +9,7 @@
             <ng-container *ngIf="searchQuery">
                 <ng-container [ngSwitch]="searchOption">
                     <ng-container *ngSwitchCase="SEARCH_OPTION.Movie">
-                        <ng-container *ngIf="searchMovies.length; else loadingState">
+                        <ng-container *ngIf="!isLoading; else loadingState">
                             <app-movie-list-item
                                 *ngFor="let movie of searchMovies; trackBy: trackByItemId"
                                 [movie]="movie"
@@ -22,7 +22,7 @@
                     </ng-container>
 
                     <ng-container *ngSwitchCase="SEARCH_OPTION.Tv">
-                        <ng-container *ngIf="searchTvShows.length; else loadingState">
+                        <ng-container *ngIf="!isLoading; else loadingState">
                             <app-tv-show-list-item
                                 *ngFor="let tvShow of searchTvShows; trackBy: trackByItemId"
                                 [tvShow]="tvShow"
@@ -35,7 +35,7 @@
                     </ng-container>
 
                     <ng-container *ngSwitchCase="SEARCH_OPTION.Person">
-                        <ng-container *ngIf="searchPeople.length; else loadingState">
+                        <ng-container *ngIf="!isLoading; else loadingState">
                             <app-person-list-item
                                 *ngFor="let person of searchPeople; trackBy: trackByItemId"
                                 [person]="person"

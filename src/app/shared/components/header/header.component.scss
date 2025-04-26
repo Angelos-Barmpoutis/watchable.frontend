@@ -1,7 +1,7 @@
 @import "../../../../styles.scss";
 
 header {
-    padding: $spacing-md 0;
+    padding: 12px 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -162,14 +162,19 @@ header {
     }
 
     .search-container {
-        transition: all $transition-normal;
+        transition:
+            height $transition-normal cubic-bezier(0.4, 0, 0.2, 1),
+            margin-top $transition-normal cubic-bezier(0.4, 0, 0.2, 1),
+            opacity $transition-normal cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
-        will-change: height, margin-top;
+        will-change: height, margin-top, opacity;
         height: 0;
+        opacity: 0;
 
         &.expanded {
-            margin-top: $spacing-md;
+            margin-top: 12px;
             height: $input-height;
+            opacity: 1;
         }
 
         .search-form {
@@ -178,6 +183,12 @@ header {
             .input-wrapper {
                 position: relative;
                 width: 100%;
+
+                .close-button {
+                    top: 50%;
+                    transform: translateY(-50%);
+                    right: $spacing-md;
+                }
             }
         }
     }

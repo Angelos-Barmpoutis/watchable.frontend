@@ -47,8 +47,6 @@ export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow |
     searchPeople: Array<Person> = [];
     searchQuery: string = '';
     searchForm!: FormGroup;
-
-    hasMoreResults = true;
     searchOption = DEFAULT.searchOption;
     searchTabs: Array<TabItem<SEARCH_OPTION>> = [
         { id: 0, label: 'Movies', value: SEARCH_OPTION.Movie },
@@ -73,28 +71,6 @@ export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow |
     override ngOnInit(): void {
         this.getGenres();
         this.listenForUrlParameterers();
-    }
-
-    override loadMore(): void {
-        if (this.isLoading || this.currentPage >= this.totalPages) {
-            return;
-        }
-        this.currentPage++;
-
-        switch (this.searchOption) {
-            case SEARCH_OPTION.Movie: {
-                this.getMovies();
-                break;
-            }
-            case SEARCH_OPTION.Tv: {
-                this.getTvShows();
-                break;
-            }
-            case SEARCH_OPTION.Person: {
-                this.getPeople();
-                break;
-            }
-        }
     }
 
     private listenForUrlParameterers(): void {
