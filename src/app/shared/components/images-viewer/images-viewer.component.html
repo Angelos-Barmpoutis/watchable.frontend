@@ -3,7 +3,7 @@
         <div
             *ngFor="let image of images | slice: 0 : DEFAULT.imagesCount; let i = index"
             class="image-item"
-            (click)="openViewer(image, i)"
+            (click)="openViewer(i)"
         >
             <img
                 appBackdropPath
@@ -15,49 +15,36 @@
             <div
                 *ngIf="i === DEFAULT.imagesCount - 1 && images.length > DEFAULT.imagesCount"
                 class="more-images"
-                (click)="openViewer(image, i, true)"
+                (click)="openViewer(i)"
             >
                 <span class="counter">+{{ images.length - DEFAULT.imagesCount }} more</span>
             </div>
         </div>
     </div>
 
-    <div *ngIf="showViewer" appFadeIn class="image-viewer" (click)="closeViewer()">
-        <div class="viewer-content" (click)="$event.stopPropagation()">
-            <div class="image-container">
-                <img
-                    *ngIf="selectedImage"
-                    appBackdropPath
-                    class="viewer-image"
-                    alt="Media image"
-                    [backdropPath]="selectedImage.file_path"
-                    [size]="BACKDROP_SIZE.original"
-                />
-                <div class="viewer-overlay">
-                    <button title="Close" aria-label="Close" class="close-button" (click)="closeViewer()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    <div class="navigation-buttons">
-                        <button
-                            title="Previous"
-                            aria-label="Previous"
-                            class="nav-button"
-                            [class.disabled]="selectedImageIndex === 0"
-                            (click)="prevImage()"
-                        >
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button
-                            title="Next"
-                            aria-label="Next"
-                            class="nav-button"
-                            [class.disabled]="selectedImageIndex === images.length - 1"
-                            (click)="nextImage()"
-                        >
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
+    <div *ngIf="showViewer" appFadeIn class="image-viewer">
+        <div class="viewer-content">
+            <button title="Close" aria-label="Close" class="close-button" (click)="closeViewer()">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="viewer-strip-container">
+                <swiper-container
+                    #viewerStrip
+                    class="viewer-strip"
+                    [slidesPerView]="1"
+                    [initialSlide]="selectedImageIndex"
+                    (swiperslidechange)="onViewerSlideChange($event)"
+                >
+                    <swiper-slide *ngFor="let image of images">
+                        <img
+                            appBackdropPath
+                            alt="Viewer image"
+                            [backdropPath]="image.file_path"
+                            [size]="BACKDROP_SIZE.original"
+                        />
+                    </swiper-slide>
+                </swiper-container>
             </div>
 
             <swiper-container
@@ -66,12 +53,11 @@
                 [spaceBetween]="8"
                 [slidesPerView]="'auto'"
                 [initialSlide]="selectedImageIndex"
-                (slideChange)="onSlideChange($event)"
             >
                 <swiper-slide
                     *ngFor="let image of images; let i = index"
                     [class.active]="i === selectedImageIndex"
-                    (click)="selectImage(image, i)"
+                    (click)="selectImage(i)"
                 >
                     <img appBackdropPath alt="Thumbnail" [backdropPath]="image.file_path" [size]="BACKDROP_SIZE.w300" />
                 </swiper-slide>

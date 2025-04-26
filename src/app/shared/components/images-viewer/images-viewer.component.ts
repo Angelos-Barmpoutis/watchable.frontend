@@ -30,73 +30,46 @@ interface Image {
 export class ImagesViewerComponent {
     @Input() images: Array<Image> = [];
     @Input() isLoading = false;
+    @ViewChild('viewerStrip') viewerStrip?: ElementRef<SwiperContainer>;
     @ViewChild('previewStrip') previewStrip?: ElementRef<SwiperContainer>;
 
-    selectedImage: Image | null = null;
     selectedImageIndex = 0;
     showViewer = false;
     readonly BACKDROP_SIZE = BACKDROP_SIZE;
     readonly DEFAULT = DEFAULT;
 
-    openViewer(image: Image, index: number, isCounter = false): void {
-        this.selectedImage = image;
-        this.selectedImageIndex = isCounter ? 5 : index;
+    openViewer(index: number): void {
+        this.selectedImageIndex = index;
         this.showViewer = true;
 
         requestAnimationFrame(() => {
             if (this.previewStrip?.nativeElement?.swiper !== undefined) {
-                this.scrollToActiveThumbnail();
+                this.scrollToActiveImage();
             }
         });
     }
 
     closeViewer(): void {
         this.showViewer = false;
-        this.selectedImage = null;
     }
 
-    prevImage(): void {
-        if (this.selectedImageIndex > 0) {
-            this.selectedImageIndex--;
-            this.selectedImage = this.images[this.selectedImageIndex];
-            this.scrollToActiveThumbnail();
-        }
-    }
-
-    nextImage(): void {
-        if (this.selectedImageIndex < this.images.length - 1) {
-            this.selectedImageIndex++;
-            this.selectedImage = this.images[this.selectedImageIndex];
-            this.scrollToActiveThumbnail();
-        }
-    }
-
-    selectImage(image: Image, index: number): void {
-        this.selectedImage = image;
+    selectImage(index: number): void {
         this.selectedImageIndex = index;
-        this.scrollToActiveThumbnail();
+        this.scrollToActiveImage();
     }
 
-    onSlideChange(event: Event): void {
+    onViewerSlideChange(event: Event): void {
         const swiper = (event.target as SwiperContainer).swiper;
         this.selectedImageIndex = swiper.activeIndex;
-        this.selectedImage = this.images[this.selectedImageIndex];
-        this.scrollToActiveThumbnail();
+        this.scrollToActiveImage();
     }
 
-    private scrollToActiveThumbnail(): void {
-        if (this.previewStrip?.nativeElement?.swiper) {
-            const swiper = this.previewStrip.nativeElement.swiper;
-            // Ensure the slide is visible by scrolling to it
-            swiper.slideTo(this.selectedImageIndex, 0, false);
-
-            // If on mobile, ensure the slide is centered
-            if (window.innerWidth <= 768) {
-                const slideWidth = swiper.slides[0]?.offsetWidth || 0;
-                const containerWidth = swiper.el.offsetWidth;
-                const scrollPosition = slideWidth * this.selectedImageIndex - (containerWidth - slideWidth) / 2;
-                swiper.wrapperEl.style.transform = `translate3d(${-scrollPosition}px, 0, 0)`;
-            }
+    private scrollToActiveImage(): void {
+        if (this.previewStrip?.nativeElement?.swiper && this.viewerStrip?.nativeElement?.swiper) {
+            const previewSwiper = this.previewStrip.nativeElement.swiper;
+            const viewerSwiper = this.viewerStrip.nativeElement.swiper;
+            previewSwiper.slideTo(this.selectedImageIndex, 500);
+            viewerSwiper.slideTo(this.selectedImageIndex, 500);
         }
     }
 

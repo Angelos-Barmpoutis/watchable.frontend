@@ -117,29 +117,3 @@
         }
     }
 }
-
-.close-button {
-    position: absolute;
-    top: $spacing-sm;
-    right: $spacing-sm;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: rgba($surface-color, 0.8);
-    color: $text-primary;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    transition: all $transition-normal;
-    z-index: 1;
-
-    &:hover {
-        background-color: rgba($surface-color, 1);
-    }
-
-    i {
-        font-size: $font-size-sm;
-    }
-}

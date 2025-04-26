@@ -69,3 +69,29 @@
     justify-content: center;
     margin-top: $spacing-lg;
 }
+
+.close-button {
+    position: absolute;
+    top: $spacing-md;
+    right: $spacing-md;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba($surface-color, 0.8);
+    color: $text-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: all $transition-normal;
+    z-index: map-get($z-layers, "header");
+
+    &:hover {
+        background-color: rgba($surface-color, 1);
+    }
+
+    i {
+        font-size: $font-size-sm;
+    }
+}
