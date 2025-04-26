@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Params, Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { debounceTime } from 'rxjs';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { FadeInDirective } from '../../directives/fade-in.directive';
 import { SearchService } from '../../services/search.service';
@@ -32,25 +32,33 @@ export class HeaderComponent implements OnInit {
         private searchService: SearchService,
         private fb: FormBuilder,
         private destroyRef: DestroyRef,
-        private route: ActivatedRoute,
-        private router: Router,
     ) {}
 
     ngOnInit(): void {
         this.initSearchForm();
-        this.onSearch();
-        this.listenForUrlParameterers();
+        this.initializeSearchState();
+        this.setupSearchSubscription();
     }
 
     get searchQueryFormField(): FormControl {
         return this.searchForm.get('searchQuery') as FormControl;
     }
 
-    private listenForUrlParameterers(): void {
-        this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params: Params) => {
-            const queryParam = params['q'] as string;
-            this.searchQueryFormField.setValue(queryParam);
-        });
+    private initializeSearchState(): void {
+        this.searchService
+            .getSearchQuery()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((query) => {
+                this.searchQueryFormField.setValue(query);
+            });
+    }
+
+    private setupSearchSubscription(): void {
+        this.searchQueryFormField.valueChanges
+            .pipe(takeUntilDestroyed(this.destroyRef), debounceTime(300), distinctUntilChanged())
+            .subscribe((value: string) => {
+                this.searchService.updateSearchQuery(value);
+            });
     }
 
     private focusSearchInput(): void {
@@ -86,15 +94,5 @@ export class HeaderComponent implements OnInit {
 
     clearSearch(): void {
         this.searchQueryFormField.setValue('');
-        const query = this.searchQueryFormField.value as string;
-        this.searchService.handleSearchQuery(query);
-    }
-
-    private onSearch(): void {
-        this.searchQueryFormField.valueChanges
-            .pipe(takeUntilDestroyed(this.destroyRef), debounceTime(300))
-            .subscribe((value: string) => {
-                this.searchService.handleSearchQuery(value);
-            });
     }
 }

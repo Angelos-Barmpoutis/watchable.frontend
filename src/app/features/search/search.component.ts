@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { distinctUntilChanged } from 'rxjs';
 
 import { BaseMediaListItemComponent } from '../../shared/abstract/base-media-list-item.abstract';
 import { InfiniteScrollLoaderComponent } from '../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
@@ -20,6 +21,7 @@ import { Movie, MovieItem } from '../../shared/models/movie.model';
 import { Person } from '../../shared/models/people.model';
 import { TvShow, TvShowItem } from '../../shared/models/tv-show.model';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
+import { SearchService } from '../../shared/services/search.service';
 
 @Component({
     selector: 'app-search',
@@ -57,10 +59,10 @@ export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow |
     constructor(
         private searchFacade: SearchFacade,
         private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
         private localStorageService: LocalStorageService,
-        private router: Router,
         destroyRef: DestroyRef,
+        private searchService: SearchService,
+        private router: Router,
     ) {
         super(destroyRef);
         this.searchForm = this.formBuilder.group({
@@ -74,17 +76,15 @@ export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow |
     }
 
     private listenForUrlParameterers(): void {
-        this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params: Params) => {
-            const queryParam = params['q'] as string;
-
-            if (queryParam && queryParam !== '') {
-                this.searchQuery = queryParam;
-                this.changeSearchOption(this.searchOption);
-            } else {
-                this.searchQuery = '';
-                this.router.navigate(['/']);
-            }
-        });
+        this.searchService
+            .getSearchQuery()
+            .pipe(takeUntilDestroyed(this.destroyRef), distinctUntilChanged())
+            .subscribe((query: string) => {
+                if (query) {
+                    this.searchQuery = query;
+                    this.changeSearchOption(this.searchOption);
+                }
+            });
     }
 
     private getMovies(): void {

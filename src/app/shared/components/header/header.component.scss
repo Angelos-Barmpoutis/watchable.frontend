@@ -118,6 +118,10 @@ header {
                         &.has-value {
                             padding-right: $spacing-lg;
                         }
+
+                        .close-button {
+                            right: 4px;
+                        }
                     }
                 }
 
@@ -229,7 +233,7 @@ header {
                 display: flex;
                 align-items: center;
                 justify-content: flex-end;
-                gap: $spacing-md;
+                gap: $spacing-sm;
 
                 .search-container {
                     position: relative;

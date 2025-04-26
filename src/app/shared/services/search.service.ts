@@ -1,39 +1,59 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
 export class SearchService {
-    private previousUrl: string = '';
+    private searchQuery$ = new BehaviorSubject<string>('');
+    private previousUrl: string = '/';
 
     constructor(private router: Router) {
-        this.getPreviousUrl();
-    }
+        // Initialize with current URL query param if any
+        this.initializeFromUrl();
 
-    private getPreviousUrl(): void {
+        // Track navigation for previous URL
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
-                if (!event.url.includes('/search')) {
-                    this.previousUrl = event.url;
+                const currentUrl = event.url;
+                if (!currentUrl.includes('/search')) {
+                    this.previousUrl = currentUrl;
+                } else {
+                    // Update query from URL on navigation to search
+                    this.updateQueryFromUrl(currentUrl);
                 }
             }
         });
     }
 
-    private navigateToSearchPage(query: string): void {
-        this.router.navigate(['/search'], { queryParams: { q: query } });
+    private initializeFromUrl(): void {
+        const currentUrl = this.router.url;
+        if (currentUrl.includes('/search')) {
+            this.updateQueryFromUrl(currentUrl);
+        }
     }
 
-    private navigateToPreviousPage(): void {
-        this.router.navigate([this.previousUrl]);
+    private updateQueryFromUrl(url: string): void {
+        const query = new URLSearchParams(url.split('?')[1]).get('q') || '';
+        this.searchQuery$.next(query);
     }
 
-    handleSearchQuery(query: string): void {
-        if (query?.trim() !== '') {
-            this.navigateToSearchPage(query);
-        } else {
-            this.navigateToPreviousPage();
+    getSearchQuery(): Observable<string> {
+        return this.searchQuery$.asObservable();
+    }
+
+    updateSearchQuery(query: string): void {
+        const trimmedQuery = query?.trim() || '';
+        this.searchQuery$.next(trimmedQuery);
+
+        if (trimmedQuery) {
+            this.router.navigate(['/search'], {
+                queryParams: { q: trimmedQuery },
+                replaceUrl: true,
+            });
+        } else if (this.router.url.includes('/search')) {
+            this.router.navigate([this.previousUrl], { replaceUrl: true });
         }
     }
 }
