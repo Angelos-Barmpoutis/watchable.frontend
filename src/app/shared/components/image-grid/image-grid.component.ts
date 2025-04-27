@@ -22,8 +22,8 @@ export class ImageGridComponent {
     @Input() isLoading = false;
 
     selectedImageIndex?: number;
-    readonly BACKDROP_SIZE = BACKDROP_SIZE;
-    readonly DEFAULT = DEFAULT;
+    readonly backdropSize = BACKDROP_SIZE;
+    readonly default = DEFAULT;
 
     openViewer(index: number, event: Event): void {
         event.stopPropagation();

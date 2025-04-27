@@ -29,13 +29,13 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
     ],
 })
 export class TvShowsComponent extends AbstractGenreLoaderComponent<TvShow> {
-    readonly MEDIA_TYPE = MEDIA_TYPE;
+    readonly mediaType = MEDIA_TYPE;
     airingToday: Array<TvShow> = [];
     popular: Array<TvShow> = [];
     topRated: Array<TvShow> = [];
     isMainContentLoading = false;
 
-    protected override mediaType = MEDIA_TYPE.TvShow;
+    protected override type = MEDIA_TYPE.TvShow;
     protected override genreStorageKey = 'tvShowGenres';
 
     constructor(

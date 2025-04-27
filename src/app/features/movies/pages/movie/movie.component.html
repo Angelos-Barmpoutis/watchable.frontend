@@ -1,4 +1,4 @@
-<app-media-hero [mediaDetails]="movieDetails" [mediaType]="MEDIA_TYPE.Movie" [isLoading]="isLoading"></app-media-hero>
+<app-media-hero [mediaDetails]="movieDetails" [type]="mediaType.Movie" [isLoading]="isLoading"></app-media-hero>
 
 <div class="wrapper">
     <div class="media-details-grid">
@@ -8,7 +8,10 @@
                     <header>
                         <app-section-header title="Reviews" [isLoading]="isLoading"></app-section-header>
                     </header>
-                    <app-reviews [reviews]="movieDetails?.reviews?.results ?? []" [isLoading]="isLoading"></app-reviews>
+                    <app-review-grid
+                        [reviews]="movieDetails?.reviews?.results ?? []"
+                        [isLoading]="isLoading"
+                    ></app-review-grid>
                 </section>
 
                 <section *ngIf="movieDetails?.credits?.cast?.length || isLoading">
@@ -47,7 +50,7 @@
                 </header>
                 <app-media-details
                     [mediaDetails]="movieDetails"
-                    [mediaType]="MEDIA_TYPE.Movie"
+                    [type]="mediaType.Movie"
                     [isLoading]="isLoading"
                 ></app-media-details>
             </section>
@@ -57,38 +60,42 @@
                     <app-section-header title="Media" [isLoading]="isLoading"></app-section-header>
                 </header>
                 <div class="social-links">
-                    <a
+                    <app-button
                         *ngIf="movieDetails?.external_ids?.imdb_id"
-                        target="_blank"
-                        class="button imdb-button"
-                        [href]="'https://www.imdb.com/title/' + movieDetails?.external_ids?.imdb_id"
+                        [type]="ButtonType.Imdb"
+                        [icon]="'fab fa-imdb'"
+                        [routerLink]="['https://www.imdb.com/title/' + movieDetails?.external_ids?.imdb_id]"
+                        [isLoading]="isLoading"
+                        [text]="'IMDb'"
                     >
-                        <i class="fab fa-imdb"></i> IMDb
-                    </a>
-                    <a
+                    </app-button>
+                    <app-button
                         *ngIf="movieDetails?.external_ids?.facebook_id"
-                        target="_blank"
-                        class="button facebook-button"
-                        [href]="'https://www.facebook.com/' + movieDetails?.external_ids?.facebook_id"
+                        [type]="ButtonType.Facebook"
+                        [icon]="'fab fa-facebook'"
+                        [routerLink]="['https://www.facebook.com/' + movieDetails?.external_ids?.facebook_id]"
+                        [isLoading]="isLoading"
+                        [text]="'Facebook'"
                     >
-                        <i class="fab fa-facebook"></i> Facebook
-                    </a>
-                    <a
+                    </app-button>
+                    <app-button
                         *ngIf="movieDetails?.external_ids?.instagram_id"
-                        target="_blank"
-                        class="button instagram-button"
-                        [href]="'https://www.instagram.com/' + movieDetails?.external_ids?.instagram_id"
+                        [type]="ButtonType.Instagram"
+                        [icon]="'fab fa-instagram'"
+                        [routerLink]="['https://www.instagram.com/' + movieDetails?.external_ids?.instagram_id]"
+                        [isLoading]="isLoading"
+                        [text]="'Instagram'"
                     >
-                        <i class="fab fa-instagram"></i> Instagram
-                    </a>
-                    <a
+                    </app-button>
+                    <app-button
                         *ngIf="movieDetails?.external_ids?.twitter_id"
-                        target="_blank"
-                        class="button twitter-button"
-                        [href]="'https://twitter.com/' + movieDetails?.external_ids?.twitter_id"
+                        [type]="ButtonType.Twitter"
+                        [icon]="'fab fa-twitter'"
+                        [routerLink]="['https://twitter.com/' + movieDetails?.external_ids?.twitter_id]"
+                        [isLoading]="isLoading"
+                        [text]="'Twitter'"
                     >
-                        <i class="fab fa-twitter"></i> Twitter
-                    </a>
+                    </app-button>
                 </div>
             </section>
         </aside>
@@ -99,7 +106,7 @@
             <app-section-header title="Similar Movies" [isLoading]="isLoading"></app-section-header>
         </header>
         <app-carousel-media
-            [mediaType]="MEDIA_TYPE.Movie"
+            [type]="mediaType.Movie"
             [items]="movieDetails?.similar?.results ?? []"
             [isLoading]="isLoading"
         >
@@ -111,7 +118,7 @@
             <app-section-header title="Recommendations" [isLoading]="isLoading"></app-section-header>
         </header>
         <app-carousel-media
-            [mediaType]="MEDIA_TYPE.Movie"
+            [type]="mediaType.Movie"
             [items]="movieDetails?.recommendations?.results ?? []"
             [isLoading]="isLoading"
         >

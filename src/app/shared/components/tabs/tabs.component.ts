@@ -3,6 +3,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
+import { ButtonType } from '../../enumerations/components/button-type.enum';
+import { ButtonComponent } from '../button/button.component';
 
 export interface TabItem<T> {
     id: number;
@@ -13,15 +15,18 @@ export interface TabItem<T> {
 @Component({
     selector: 'app-tabs',
     standalone: true,
-    imports: [CommonModule, FadeInDirective],
+    imports: [CommonModule, FadeInDirective, ButtonComponent],
     templateUrl: './tabs.component.html',
     styleUrl: './tabs.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsComponent<T = unknown> {
+    @Input() isLoading = false;
     @Input() tabs: Array<TabItem<T>> = [];
     @Input() selectedTabId = DEFAULT.selectedTabId;
     @Output() tabChange = new EventEmitter<T>();
+
+    readonly ButtonType = ButtonType;
 
     selectTab(value: T): void {
         if (this.selectedTabId !== value) {

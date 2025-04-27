@@ -192,14 +192,6 @@
             margin-block-start: $spacing-lg;
             display: flex;
             gap: $spacing-md;
-
-            .skeleton-button-primary,
-            .skeleton-button-secondary {
-                height: 40px;
-                width: 160px;
-                @include skeleton-loading;
-                border-radius: $border-radius-md;
-            }
         }
     }
 }

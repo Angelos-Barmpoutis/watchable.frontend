@@ -6,15 +6,16 @@ import { ActivatedRoute } from '@angular/router';
 import { EMPTY } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { CarouselMediaComponent } from '../../../../shared/components/carousel-media/carousel-media.component';
 import { CastGridComponent } from '../../../../shared/components/cast-grid/cast-grid.component';
 import { ImageGridComponent } from '../../../../shared/components/image-grid/image-grid.component';
 import { MediaDetailsComponent } from '../../../../shared/components/media-details/media-details.component';
 import { MediaHeroComponent } from '../../../../shared/components/media-hero/media-hero.component';
-import { ReviewsComponent } from '../../../../shared/components/reviews/reviews.component';
+import { ReviewGridComponent } from '../../../../shared/components/review-grid/review-grid.component';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { VideoGridComponent } from '../../../../shared/components/video-grid/video-grid.component';
-import { BACKDROP_SIZE } from '../../../../shared/enumerations/backdrop-size.enum';
+import { ButtonType } from '../../../../shared/enumerations/components/button-type.enum';
 import { MEDIA_TYPE } from '../../../../shared/enumerations/media-type.enum';
 import { TvShowGateway } from '../../../../shared/gateways/tv-show.gateway';
 import { filterMediaItems } from '../../../../shared/helpers/filter-items.helper';
@@ -30,9 +31,10 @@ import { TvShow, TvShowDetails } from '../../../../shared/models/tv-show.model';
         ImageGridComponent,
         MediaDetailsComponent,
         MediaHeroComponent,
-        ReviewsComponent,
+        ReviewGridComponent,
         SectionHeaderComponent,
         VideoGridComponent,
+        ButtonComponent,
     ],
     templateUrl: './tv-show.component.html',
     styleUrls: ['./tv-show.component.scss'],
@@ -41,8 +43,9 @@ export class TvShowComponent implements OnInit {
     tvShowDetails!: TvShowDetails;
     isLoading = true;
     trailerUrl: SafeResourceUrl | null = null;
-    readonly MEDIA_TYPE = MEDIA_TYPE;
-    readonly BACKDROP_SIZE = BACKDROP_SIZE;
+
+    readonly mediaType = MEDIA_TYPE;
+    readonly ButtonType = ButtonType;
 
     constructor(
         private route: ActivatedRoute,

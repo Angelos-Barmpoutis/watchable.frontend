@@ -41,10 +41,14 @@
                     </div>
 
                     <div class="featured-actions">
-                        <a class="button button-primary" [routerLink]="[mediaRoute, featuredItem.id]">
-                            <i [class]="mediaType === 'movie' ? 'fas fa-film' : 'fas fa-tv'"></i>
-                            {{ mediaType === "movie" ? "Movie" : "TV Show" }} Details
-                        </a>
+                        <app-button
+                            *ngIf="type === MEDIA_TYPE.Movie"
+                            [routerLink]="[mediaRoute, featuredItem.id]"
+                            [type]="ButtonType.Primary"
+                            [icon]="type === MEDIA_TYPE.Movie ? 'fas fa-film' : 'fas fa-tv'"
+                            [text]="type === MEDIA_TYPE.Movie ? 'Movie' : 'TV Show' + ' Details'"
+                        >
+                        </app-button>
                     </div>
                 </div>
             </div>
@@ -74,7 +78,7 @@
                         <div class="skeleton-line"></div>
                     </div>
                     <div class="skeleton-actions">
-                        <div class="skeleton-button-primary"></div>
+                        <app-button [type]="ButtonType.Primary" [isLoading]="true"></app-button>
                     </div>
                 </div>
             </div>

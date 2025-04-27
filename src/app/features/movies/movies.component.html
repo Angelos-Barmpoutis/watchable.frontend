@@ -1,9 +1,5 @@
 <section>
-    <app-featured-banner
-        [featuredItem]="nowPlaying[0]"
-        [mediaType]="MEDIA_TYPE.Movie"
-        [isLoading]="isMainContentLoading"
-    >
+    <app-featured-banner [featuredItem]="nowPlaying[0]" [type]="mediaType.Movie" [isLoading]="isMainContentLoading">
     </app-featured-banner>
 </section>
 
@@ -13,7 +9,7 @@
             <app-section-header redirectUrl="now-playing" title="Now Playing Movies" [isLoading]="isMainContentLoading">
             </app-section-header>
         </header>
-        <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="nowPlaying" [isLoading]="isMainContentLoading">
+        <app-carousel-media [type]="mediaType.Movie" [items]="nowPlaying" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 
@@ -22,7 +18,7 @@
             <app-section-header redirectUrl="popular" title="Popular Movies Today" [isLoading]="isMainContentLoading">
             </app-section-header>
         </header>
-        <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="popular" [isLoading]="isMainContentLoading">
+        <app-carousel-media [type]="mediaType.Movie" [items]="popular" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 
@@ -31,7 +27,7 @@
             <app-section-header redirectUrl="top-rated" title="Top Rated Movies" [isLoading]="isMainContentLoading">
             </app-section-header>
         </header>
-        <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="topRated" [isLoading]="isMainContentLoading">
+        <app-carousel-media [type]="mediaType.Movie" [items]="topRated" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 
@@ -40,7 +36,7 @@
             <app-section-header redirectUrl="upcoming" title="Upcoming Movies" [isLoading]="isMainContentLoading">
             </app-section-header>
         </header>
-        <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="upcoming" [isLoading]="isMainContentLoading">
+        <app-carousel-media [type]="mediaType.Movie" [items]="upcoming" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 
@@ -53,7 +49,7 @@
             >
             </app-section-header>
         </header>
-        <app-carousel-media [mediaType]="genre.type" [items]="genre.items" [isLoading]="isMainContentLoading">
+        <app-carousel-media [type]="genre.type" [items]="genre.items" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 </div>

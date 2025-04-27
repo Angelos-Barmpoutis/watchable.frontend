@@ -26,7 +26,7 @@ export abstract class AbstractGenreLoaderComponent<T> implements OnInit {
     protected allGenresLoaded = false;
     protected loadedGenres: Array<GenreLoadedItems<T>> = [];
 
-    protected abstract mediaType: MEDIA_TYPE;
+    protected abstract type: MEDIA_TYPE;
     protected abstract genreStorageKey: string;
 
     constructor(

@@ -1,15 +1,19 @@
 <div appFadeIn class="tabs-container">
     <div class="tab-group" role="tablist">
-        <button
-            *ngFor="let tab of tabs"
-            class="tab button"
-            role="tab"
-            [title]="tab.label"
-            [class.button-primary]="selectedTabId === tab.id"
-            [attr.aria-selected]="selectedTabId === tab.id"
-            (click)="selectTab(tab.value)"
-        >
-            {{ tab.label }}
-        </button>
+        <ng-container *ngFor="let tab of tabs">
+            <app-button
+                class="tab button"
+                role="tab"
+                [title]="tab.label"
+                [type]="selectedTabId === tab.id ? ButtonType.Primary : ButtonType.Secondary"
+                [isLoading]="isLoading"
+                [class.button-primary]="selectedTabId === tab.id"
+                [attr.aria-selected]="selectedTabId === tab.id"
+                [text]="tab.label"
+                [hasBorder]="false"
+                (click)="selectTab(tab.value)"
+            >
+            </app-button>
+        </ng-container>
     </div>
 </div>

@@ -3,22 +3,26 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
+import { ButtonType } from '../../enumerations/components/button-type.enum';
 import { Review } from '../../models/review.model';
-import { ReviewCardComponent } from '../review-card/review-card.component';
+import { ButtonComponent } from '../button/button.component';
+import { ReviewItemComponent } from '../review-item/review-item.component';
 
 @Component({
-    selector: 'app-reviews',
+    selector: 'app-review-grid',
     standalone: true,
-    imports: [CommonModule, FadeInDirective, ReviewCardComponent],
-    templateUrl: './reviews.component.html',
-    styleUrls: ['./reviews.component.scss'],
+    imports: [CommonModule, FadeInDirective, ReviewItemComponent, ButtonComponent],
+    templateUrl: './review-grid.component.html',
+    styleUrls: ['./review-grid.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReviewsComponent {
+export class ReviewGridComponent {
     @Input() reviews: Array<Review> = [];
     @Input() isLoading = false;
 
-    readonly DEFAULT = DEFAULT;
+    readonly default = DEFAULT;
+    readonly ButtonType = ButtonType;
+
     showAll = false;
 
     readonly defaultReview: Review = {

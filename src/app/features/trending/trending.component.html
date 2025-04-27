@@ -1,9 +1,5 @@
 <section>
-    <app-featured-banner
-        [featuredItem]="trendingMovies[0]"
-        [mediaType]="MEDIA_TYPE.Movie"
-        [isLoading]="isMainContentLoading"
-    >
+    <app-featured-banner [featuredItem]="trendingMovies[0]" [type]="mediaType.Movie" [isLoading]="isMainContentLoading">
     </app-featured-banner>
 </section>
 
@@ -17,7 +13,7 @@
             >
             </app-section-header>
         </header>
-        <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="trendingMovies" [isLoading]="isMainContentLoading">
+        <app-carousel-media [type]="mediaType.Movie" [items]="trendingMovies" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 
@@ -30,11 +26,7 @@
             >
             </app-section-header>
         </header>
-        <app-carousel-media
-            [mediaType]="MEDIA_TYPE.TvShow"
-            [items]="trendingTvShows"
-            [isLoading]="isMainContentLoading"
-        >
+        <app-carousel-media [type]="mediaType.TvShow" [items]="trendingTvShows" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 
@@ -54,12 +46,12 @@
         <header>
             <app-section-header
                 [isLoading]="isMainContentLoading"
-                [title]="genre.genreName + ' ' + (genre.type === MEDIA_TYPE.Movie ? 'Movies' : 'TV Shows')"
-                [redirectUrl]="[genre.type === MEDIA_TYPE.Movie ? 'movies' : 'tv-shows', 'discover', genre.genreName]"
+                [title]="genre.genreName + ' ' + (genre.type === mediaType.Movie ? 'Movies' : 'TV Shows')"
+                [redirectUrl]="[genre.type === mediaType.Movie ? 'movies' : 'tv-shows', 'discover', genre.genreName]"
             >
             </app-section-header>
         </header>
-        <app-carousel-media [mediaType]="genre.type" [items]="genre.items" [isLoading]="isMainContentLoading">
+        <app-carousel-media [type]="genre.type" [items]="genre.items" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 </div>

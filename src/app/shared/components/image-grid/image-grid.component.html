@@ -1,7 +1,7 @@
 <ng-container *ngIf="!isLoading; else loadingTemplate">
     <div appFadeIn class="images-grid">
         <div
-            *ngFor="let image of images | slice: 0 : DEFAULT.imagesCount; let i = index"
+            *ngFor="let image of images | slice: 0 : default.imagesCount; let i = index"
             class="image-item"
             (click)="openViewer(i, $event)"
         >
@@ -10,14 +10,14 @@
                 class="grid-image"
                 alt="Media image"
                 [backdropPath]="image.file_path"
-                [size]="BACKDROP_SIZE.w780"
+                [size]="backdropSize.w780"
             />
             <div
-                *ngIf="i === DEFAULT.imagesCount - 1 && images.length > DEFAULT.imagesCount"
+                *ngIf="i === default.imagesCount - 1 && images.length > default.imagesCount"
                 class="more-images"
                 (click)="openViewer(i, $event)"
             >
-                <span class="counter">+{{ images.length - DEFAULT.imagesCount }} more</span>
+                <span class="counter">+{{ images.length - default.imagesCount }} more</span>
             </div>
         </div>
     </div>

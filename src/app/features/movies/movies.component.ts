@@ -29,15 +29,15 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
     ],
 })
 export class MoviesComponent extends AbstractGenreLoaderComponent<Movie> {
-    readonly MEDIA_TYPE = MEDIA_TYPE;
+    readonly mediaType = MEDIA_TYPE;
     nowPlaying: Array<Movie> = [];
     popular: Array<Movie> = [];
     topRated: Array<Movie> = [];
     upcoming: Array<Movie> = [];
     isMainContentLoading = false;
 
-    protected mediaType = MEDIA_TYPE.Movie;
-    protected genreStorageKey = 'movieGenres';
+    protected override type = MEDIA_TYPE.Movie;
+    protected override genreStorageKey = 'movieGenres';
 
     constructor(
         private movieFacade: MovieFacade,

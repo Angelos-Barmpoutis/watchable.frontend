@@ -13,7 +13,7 @@ export abstract class BaseGalleryComponent implements OnChanges {
     @ViewChild('viewerStrip') viewerStrip?: ElementRef<SwiperContainer>;
     @ViewChild('previewStrip') previewStrip?: ElementRef<SwiperContainer>;
 
-    readonly DEFAULT = DEFAULT;
+    readonly default = DEFAULT;
     showViewer = false;
 
     ngOnChanges(changes: SimpleChanges): void {

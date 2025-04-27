@@ -20,7 +20,7 @@ export class VideoGridComponent {
     @Input() isLoading = false;
 
     selectedIndex?: number;
-    readonly DEFAULT = DEFAULT;
+    readonly default = DEFAULT;
 
     openViewer(index: number, event: Event): void {
         event.stopPropagation();

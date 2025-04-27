@@ -18,8 +18,8 @@ import { CarouselMediaItemComponent } from '../carousel-media-item/carousel-medi
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarouselMediaComponent extends BaseCarouselComponent<Movie | TvShow> {
-    @Input() mediaType: MEDIA_TYPE = MEDIA_TYPE.Movie;
-    readonly MEDIA_TYPE = MEDIA_TYPE;
+    @Input() type: MEDIA_TYPE = MEDIA_TYPE.Movie;
+    readonly mediaType = MEDIA_TYPE;
 
     constructor() {
         super();

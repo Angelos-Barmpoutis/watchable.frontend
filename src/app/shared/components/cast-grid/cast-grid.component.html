@@ -1,22 +1,22 @@
 <ng-container *ngIf="!isLoading; else loadingTemplate">
     <div appFadeIn class="cast-grid">
         <app-cast-person
-            *ngFor="let person of cast | slice: 0 : (showAll ? cast.length : DEFAULT.castCount)"
+            *ngFor="let person of cast | slice: 0 : (showAll ? cast.length : default.castCount)"
             [person]="person"
             [isLoading]="isLoading"
         ></app-cast-person>
     </div>
 
     <div *ngIf="hasMoreCast" class="view-all-container">
-        <button
-            aria-label="showAll ? 'Show Less' : 'View All Cast'"
-            class="button button-secondary"
-            [title]="showAll ? 'Show Less' : 'View All Cast'"
+        <app-button
+            [isIconLeft]="false"
+            [icon]="showAll ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"
+            [type]="ButtonType.Secondary"
+            [isLoading]="isLoading"
+            [text]="showAll ? 'Show Less' : 'View All Cast' + ' Details'"
             (click)="toggleShowAll()"
         >
-            {{ showAll ? "Show Less" : "View All Cast" }}
-            <i class="fas" [class.fa-chevron-down]="!showAll" [class.fa-chevron-up]="showAll"></i>
-        </button>
+        </app-button>
     </div>
 </ng-container>
 

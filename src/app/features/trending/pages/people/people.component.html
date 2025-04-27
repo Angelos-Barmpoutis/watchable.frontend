@@ -2,7 +2,7 @@
     <section>
         <header>
             <app-section-header title="Trending People Today" [isLoading]="isLoading"> </app-section-header>
-            <app-tabs [tabs]="timeTabs" (tabChange)="changeTimeOption($event)"> </app-tabs>
+            <app-tabs [isLoading]="isLoading" [tabs]="timeTabs" (tabChange)="changeTimeOption($event)"> </app-tabs>
         </header>
         <div class="list-container">
             <ng-container *ngIf="items.length; else loadingState">

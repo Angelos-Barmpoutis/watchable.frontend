@@ -17,11 +17,7 @@
 
             <swiper-container #swiperEl init="false">
                 <swiper-slide *ngFor="let item of items; trackBy: trackByItemId">
-                    <app-carousel-media-item
-                        [mediaType]="mediaType"
-                        [item]="item"
-                        [isLoading]="false"
-                    ></app-carousel-media-item>
+                    <app-carousel-media-item [type]="type" [item]="item" [isLoading]="false"></app-carousel-media-item>
                 </swiper-slide>
             </swiper-container>
         </div>

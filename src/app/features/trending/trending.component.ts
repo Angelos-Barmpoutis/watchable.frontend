@@ -34,7 +34,7 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
     ],
 })
 export class TrendingComponent implements OnInit {
-    readonly MEDIA_TYPE = MEDIA_TYPE;
+    readonly mediaType = MEDIA_TYPE;
     currentMovieGenreIndex = 0;
     currentTvShowGenreIndex = 0;
     genresPerBatch = DEFAULT.genresBatchSize;

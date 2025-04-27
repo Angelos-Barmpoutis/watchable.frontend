@@ -5,9 +5,9 @@
                 *ngIf="person.profile_path"
                 appProfilePath
                 [profilePath]="person.profile_path"
-                [size]="PROFILE_SIZE.w185"
+                [size]="profileSize.w185"
             />
-            <img *ngIf="!person.profile_path" [src]="DEFAULT.mediumProfileFallback" />
+            <img *ngIf="!person.profile_path" [src]="default.mediumProfileFallback" />
         </div>
         <div class="cast-info">
             <span class="cast-name">{{ person.name }}</span>

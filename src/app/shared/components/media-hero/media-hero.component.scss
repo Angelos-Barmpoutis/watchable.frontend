@@ -184,64 +184,6 @@
     }
 }
 
-.trailer-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    background: rgba($surface-color, 0.95);
-
-    .trailer-container {
-        position: relative;
-        width: 90%;
-        max-width: 1200px;
-        height: 90%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border-radius: $border-radius-lg;
-        overflow: hidden;
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: $border-radius-lg;
-        }
-
-        .close-button {
-            position: absolute;
-            top: $spacing-md;
-            right: $spacing-md;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background-color: rgba($surface-color, 0.8);
-            border: none;
-            color: $text-primary;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all $transition-normal;
-            z-index: 3;
-
-            &:hover {
-                background-color: rgba($surface-color, 1);
-            }
-
-            i {
-                font-size: $font-size-sm;
-            }
-        }
-    }
-}
-
 .skeleton-media-hero {
     height: 80vh;
     background-color: $background-color;
@@ -294,14 +236,14 @@
                 margin-block-start: $spacing-md;
 
                 .skeleton-media-rating {
-                    width: 80px;
+                    width: 60px;
                     height: 30px;
                     @include skeleton-loading;
                 }
 
                 .skeleton-media-rating-details {
-                    width: 100px;
-                    height: 20px;
+                    width: 50px;
+                    height: 18px;
                     @include skeleton-loading;
                 }
             }
@@ -326,13 +268,6 @@
                 margin-block-start: $spacing-lg;
                 display: flex;
                 gap: $spacing-md;
-
-                .skeleton-media-button {
-                    height: 40px;
-                    width: 160px;
-                    @include skeleton-loading;
-                    border-radius: $border-radius-md;
-                }
             }
         }
     }

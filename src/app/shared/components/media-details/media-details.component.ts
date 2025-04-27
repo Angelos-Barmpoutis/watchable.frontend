@@ -18,17 +18,17 @@ type MediaDetails = MovieDetails | TvShowDetails;
 })
 export class MediaDetailsComponent {
     @Input() mediaDetails!: MediaDetails;
-    @Input() mediaType: MEDIA_TYPE = MEDIA_TYPE.Movie;
+    @Input() type: MEDIA_TYPE = MEDIA_TYPE.Movie;
     @Input() isLoading = false;
 
-    readonly MEDIA_TYPE = MEDIA_TYPE;
+    readonly mediaType = MEDIA_TYPE;
 
     get isMovie(): boolean {
-        return this.mediaType === MEDIA_TYPE.Movie;
+        return this.type === MEDIA_TYPE.Movie;
     }
 
     get isTvShow(): boolean {
-        return this.mediaType === MEDIA_TYPE.TvShow;
+        return this.type === MEDIA_TYPE.TvShow;
     }
 
     get movieDetails(): MovieDetails | null {

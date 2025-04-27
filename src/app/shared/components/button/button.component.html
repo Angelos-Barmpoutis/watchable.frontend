@@ -1,0 +1,47 @@
+<ng-container *ngIf="!isLoading; else loading">
+    <button
+        *ngIf="!routerLink; else link"
+        appFadeIn
+        class="button"
+        type="button"
+        [class.button-primary]="type === ButtonType.Primary"
+        [class.button-secondary]="type === ButtonType.Secondary"
+        [class.button-outlined]="type === ButtonType.Outlined"
+        [class.imdb-button]="type === ButtonType.Imdb"
+        [class.facebook-button]="type === ButtonType.Facebook"
+        [class.instagram-button]="type === ButtonType.Instagram"
+        [class.twitter-button]="type === ButtonType.Twitter"
+        [class.no-border]="!hasBorder"
+        [disabled]="disabled"
+    >
+        <i *ngIf="icon && isIconLeft" [class]="icon"></i>
+        {{ text }}
+        <i *ngIf="icon && !isIconLeft" [class]="icon"></i>
+    </button>
+
+    <ng-template #link>
+        <a
+            appFadeIn
+            class="button"
+            [class.button-primary]="type === ButtonType.Primary"
+            [class.button-secondary]="type === ButtonType.Secondary"
+            [class.button-outlined]="type === ButtonType.Outlined"
+            [class.imdb-button]="type === ButtonType.Imdb"
+            [class.facebook-button]="type === ButtonType.Facebook"
+            [class.instagram-button]="type === ButtonType.Instagram"
+            [class.twitter-button]="type === ButtonType.Twitter"
+            [class.no-border]="!hasBorder"
+            [routerLink]="routerLink"
+        >
+            <i *ngIf="icon && isIconLeft" [class]="icon"></i>
+            {{ text }}
+            <i *ngIf="icon && !isIconLeft" [class]="icon"></i>
+        </a>
+    </ng-template>
+</ng-container>
+
+<ng-template #loading>
+    <div appFadeIn class="button loading-skeleton">
+        <div class="skeleton-content"></div>
+    </div>
+</ng-template>

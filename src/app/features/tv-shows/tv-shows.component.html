@@ -1,9 +1,5 @@
 <section>
-    <app-featured-banner
-        [featuredItem]="airingToday[0]"
-        [mediaType]="MEDIA_TYPE.TvShow"
-        [isLoading]="isMainContentLoading"
-    >
+    <app-featured-banner [featuredItem]="airingToday[0]" [type]="mediaType.TvShow" [isLoading]="isMainContentLoading">
     </app-featured-banner>
 </section>
 
@@ -17,7 +13,7 @@
             >
             </app-section-header>
         </header>
-        <app-carousel-media [mediaType]="MEDIA_TYPE.TvShow" [items]="airingToday" [isLoading]="isMainContentLoading">
+        <app-carousel-media [type]="mediaType.TvShow" [items]="airingToday" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 
@@ -26,7 +22,7 @@
             <app-section-header redirectUrl="popular" title="Popular TV Shows" [isLoading]="isMainContentLoading">
             </app-section-header>
         </header>
-        <app-carousel-media [mediaType]="MEDIA_TYPE.TvShow" [items]="popular" [isLoading]="isMainContentLoading">
+        <app-carousel-media [type]="mediaType.TvShow" [items]="popular" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 
@@ -35,7 +31,7 @@
             <app-section-header redirectUrl="top-rated" title="Top Rated TV Shows" [isLoading]="isMainContentLoading">
             </app-section-header>
         </header>
-        <app-carousel-media [mediaType]="MEDIA_TYPE.TvShow" [items]="topRated" [isLoading]="isMainContentLoading">
+        <app-carousel-media [type]="mediaType.TvShow" [items]="topRated" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 
@@ -48,7 +44,7 @@
             >
             </app-section-header>
         </header>
-        <app-carousel-media [mediaType]="genre.type" [items]="genre.items" [isLoading]="isMainContentLoading">
+        <app-carousel-media [type]="genre.type" [items]="genre.items" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 </div>

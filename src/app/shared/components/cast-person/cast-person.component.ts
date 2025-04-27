@@ -19,6 +19,6 @@ export class CastPersonComponent {
     @Input() person!: MediaCreditsCastPerson;
     @Input() isLoading = false;
 
-    readonly PROFILE_SIZE = PROFILE_SIZE;
-    readonly DEFAULT = DEFAULT;
+    readonly profileSize = PROFILE_SIZE;
+    readonly default = DEFAULT;
 }

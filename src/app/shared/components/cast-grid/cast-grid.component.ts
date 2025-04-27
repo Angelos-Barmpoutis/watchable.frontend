@@ -3,13 +3,15 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
+import { ButtonType } from '../../enumerations/components/button-type.enum';
 import { MediaCreditsCastPerson } from '../../models/media.model';
+import { ButtonComponent } from '../button/button.component';
 import { CastPersonComponent } from '../cast-person/cast-person.component';
 
 @Component({
     selector: 'app-cast-grid',
     standalone: true,
-    imports: [CommonModule, FadeInDirective, CastPersonComponent],
+    imports: [CommonModule, FadeInDirective, CastPersonComponent, ButtonComponent],
     templateUrl: './cast-grid.component.html',
     styleUrls: ['./cast-grid.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,7 +20,8 @@ export class CastGridComponent {
     @Input() cast: Array<MediaCreditsCastPerson> = [];
     @Input() isLoading = false;
 
-    readonly DEFAULT = DEFAULT;
+    readonly default = DEFAULT;
+    readonly ButtonType = ButtonType;
     showAll = false;
 
     get hasMoreCast(): boolean {

@@ -18,7 +18,7 @@ import { Backdrop } from '../../models/media.model';
 })
 export class ImageGalleryComponent extends BaseGalleryComponent {
     @Input() images: Array<Backdrop> = [];
-    readonly BACKDROP_SIZE = BACKDROP_SIZE;
+    readonly backdropSize = BACKDROP_SIZE;
 
     protected override onSelectedIndexChange(): void {
         // No additional logic needed for media gallery

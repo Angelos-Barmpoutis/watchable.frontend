@@ -8,9 +8,9 @@
                             *ngIf="mediaDetails?.poster_path"
                             appPosterPath
                             [posterPath]="mediaDetails?.poster_path ?? ''"
-                            [size]="POSTER_SIZE.w342"
+                            [size]="posterSize.w342"
                         />
-                        <img *ngIf="!mediaDetails?.poster_path" [src]="DEFAULT.largePosterFallback" />
+                        <img *ngIf="!mediaDetails?.poster_path" [src]="default.largePosterFallback" />
                     </div>
                     <div class="media-info">
                         <h2 class="media-title">
@@ -48,9 +48,11 @@
                                     <span class="vote-count">{{ voteCount }} votes</span>
                                 </div>
                             </div>
-                            <button title="Rate" aria-label="Rate" class="button button-secondary">
-                                <i class="fas fa-star"></i> Rate
-                            </button>
+                            <app-button
+                                [type]="ButtonType.Secondary"
+                                [icon]="'fas fa-star'"
+                                [text]="'Rate'"
+                            ></app-button>
                         </div>
 
                         <div class="overview">
@@ -58,22 +60,20 @@
                         </div>
 
                         <div class="action-buttons">
-                            <button
+                            <app-button
                                 *ngIf="trailerVideo"
-                                title="Watch Trailer"
-                                aria-label="Watch Trailer"
-                                class="button button-primary"
+                                [type]="ButtonType.Primary"
+                                [icon]="'fas fa-play'"
+                                [text]="'Watch Trailer'"
                                 (click)="toggleTrailer()"
                             >
-                                <i class="fas fa-play"></i> Watch Trailer
-                            </button>
-                            <button
-                                title="Add to Watchlist"
-                                aria-label="Add to Watchlist"
-                                class="button button-secondary"
+                            </app-button>
+                            <app-button
+                                [type]="ButtonType.Secondary"
+                                [icon]="'fas fa-plus'"
+                                [text]="'Add to Watchlist'"
                             >
-                                <i class="fas fa-plus"></i> Add to Watchlist
-                            </button>
+                            </app-button>
                         </div>
                     </div>
                 </div>
@@ -104,6 +104,7 @@
                     <div class="skeleton-media-rating-container">
                         <div class="skeleton-media-rating"></div>
                         <div class="skeleton-media-rating-details"></div>
+                        <app-button [type]="ButtonType.Secondary" [isLoading]="true"></app-button>
                     </div>
                     <div class="skeleton-media-overview">
                         <div class="skeleton-media-overview-line"></div>
@@ -111,8 +112,8 @@
                         <div class="skeleton-media-overview-line"></div>
                     </div>
                     <div class="skeleton-media-buttons">
-                        <div class="skeleton-media-button"></div>
-                        <div class="skeleton-media-button"></div>
+                        <app-button [type]="ButtonType.Primary" [isLoading]="true"></app-button>
+                        <app-button [type]="ButtonType.Secondary" [isLoading]="true"></app-button>
                     </div>
                 </div>
             </div>
