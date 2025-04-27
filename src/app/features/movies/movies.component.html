@@ -10,7 +10,8 @@
 <div class="wrapper">
     <section>
         <header>
-            <app-section-header redirectUrl="now-playing" title="Now Playing Movies"> </app-section-header>
+            <app-section-header redirectUrl="now-playing" title="Now Playing Movies" [isLoading]="isMainContentLoading">
+            </app-section-header>
         </header>
         <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="nowPlaying" [isLoading]="isMainContentLoading">
         </app-carousel-media>
@@ -18,7 +19,8 @@
 
     <section>
         <header>
-            <app-section-header redirectUrl="popular" title="Popular Movies Today"> </app-section-header>
+            <app-section-header redirectUrl="popular" title="Popular Movies Today" [isLoading]="isMainContentLoading">
+            </app-section-header>
         </header>
         <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="popular" [isLoading]="isMainContentLoading">
         </app-carousel-media>
@@ -26,7 +28,8 @@
 
     <section>
         <header>
-            <app-section-header redirectUrl="top-rated" title="Top Rated Movies"> </app-section-header>
+            <app-section-header redirectUrl="top-rated" title="Top Rated Movies" [isLoading]="isMainContentLoading">
+            </app-section-header>
         </header>
         <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="topRated" [isLoading]="isMainContentLoading">
         </app-carousel-media>
@@ -34,7 +37,8 @@
 
     <section>
         <header>
-            <app-section-header redirectUrl="upcoming" title="Upcoming Movies"> </app-section-header>
+            <app-section-header redirectUrl="upcoming" title="Upcoming Movies" [isLoading]="isMainContentLoading">
+            </app-section-header>
         </header>
         <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="upcoming" [isLoading]="isMainContentLoading">
         </app-carousel-media>
@@ -42,10 +46,15 @@
 
     <section *ngFor="let genre of loadedGenres">
         <header>
-            <app-section-header [title]="genre.genreName + ' Movies'" [redirectUrl]="['discover', genre.genreName]">
+            <app-section-header
+                [isLoading]="isMainContentLoading"
+                [title]="genre.genreName + ' Movies'"
+                [redirectUrl]="['discover', genre.genreName]"
+            >
             </app-section-header>
         </header>
-        <app-carousel-media [mediaType]="genre.type" [items]="genre.items" [isLoading]="false"> </app-carousel-media>
+        <app-carousel-media [mediaType]="genre.type" [items]="genre.items" [isLoading]="isMainContentLoading">
+        </app-carousel-media>
     </section>
 </div>
 

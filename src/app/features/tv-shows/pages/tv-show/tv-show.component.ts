@@ -4,7 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 import { CarouselMediaComponent } from '../../../../shared/components/carousel-media/carousel-media.component';
 import { CastGridComponent } from '../../../../shared/components/cast-grid/cast-grid.component';
@@ -57,27 +57,28 @@ export class TvShowComponent implements OnInit {
     private loadTvShowDetails(): void {
         this.route.paramMap
             .pipe(
+                tap(() => {
+                    this.isLoading = true;
+                }),
                 takeUntilDestroyed(this.destroyRef),
                 switchMap((params) => {
                     const id = Number(params.get('id'));
                     return id ? this.tvShowGateway.getDetails(id) : EMPTY;
                 }),
             )
-            .subscribe({
-                next: (tvShowDetails) => {
-                    this.tvShowDetails = {
-                        ...tvShowDetails,
-                        similar: {
-                            ...tvShowDetails.similar,
-                            results: filterMediaItems(tvShowDetails.similar.results) as Array<TvShow>,
-                        },
-                        recommendations: {
-                            ...tvShowDetails.recommendations,
-                            results: filterMediaItems(tvShowDetails.recommendations.results) as Array<TvShow>,
-                        },
-                    };
-                    this.isLoading = false;
-                },
+            .subscribe((tvShowDetails) => {
+                this.tvShowDetails = {
+                    ...tvShowDetails,
+                    similar: {
+                        ...tvShowDetails.similar,
+                        results: filterMediaItems(tvShowDetails.similar.results) as Array<TvShow>,
+                    },
+                    recommendations: {
+                        ...tvShowDetails.recommendations,
+                        results: filterMediaItems(tvShowDetails.recommendations.results) as Array<TvShow>,
+                    },
+                };
+                this.isLoading = false;
             });
     }
 }

@@ -1,7 +1,7 @@
 <div class="wrapper">
     <section>
         <header>
-            <app-section-header title="Top Rated TV Shows"> </app-section-header>
+            <app-section-header title="Top Rated TV Shows" [isLoading]="isLoading"> </app-section-header>
         </header>
         <div class="list-container">
             <ng-container *ngIf="items.length; else loadingState">

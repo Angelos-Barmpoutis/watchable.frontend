@@ -10,7 +10,11 @@
 <div class="wrapper">
     <section>
         <header>
-            <app-section-header title="Trending Movies Today" [redirectUrl]="['trending', 'movies']">
+            <app-section-header
+                title="Trending Movies Today"
+                [isLoading]="isMainContentLoading"
+                [redirectUrl]="['trending', 'movies']"
+            >
             </app-section-header>
         </header>
         <app-carousel-media [mediaType]="MEDIA_TYPE.Movie" [items]="trendingMovies" [isLoading]="isMainContentLoading">
@@ -19,7 +23,11 @@
 
     <section>
         <header>
-            <app-section-header title="Trending TV Shows Today" [redirectUrl]="['trending', 'tv-shows']">
+            <app-section-header
+                title="Trending TV Shows Today"
+                [isLoading]="isMainContentLoading"
+                [redirectUrl]="['trending', 'tv-shows']"
+            >
             </app-section-header>
         </header>
         <app-carousel-media
@@ -32,7 +40,11 @@
 
     <section>
         <header>
-            <app-section-header title="Trending People Today" [redirectUrl]="['trending', 'people']">
+            <app-section-header
+                title="Trending People Today"
+                [isLoading]="isMainContentLoading"
+                [redirectUrl]="['trending', 'people']"
+            >
             </app-section-header>
         </header>
         <app-carousel-person [items]="trendingPeople" [isLoading]="isMainContentLoading"> </app-carousel-person>
@@ -41,12 +53,14 @@
     <section *ngFor="let genre of loadedGenres">
         <header>
             <app-section-header
+                [isLoading]="isMainContentLoading"
                 [title]="genre.genreName + ' ' + (genre.type === MEDIA_TYPE.Movie ? 'Movies' : 'TV Shows')"
                 [redirectUrl]="[genre.type === MEDIA_TYPE.Movie ? 'movies' : 'tv-shows', 'discover', genre.genreName]"
             >
             </app-section-header>
         </header>
-        <app-carousel-media [mediaType]="genre.type" [items]="genre.items" [isLoading]="false"> </app-carousel-media>
+        <app-carousel-media [mediaType]="genre.type" [items]="genre.items" [isLoading]="isMainContentLoading">
+        </app-carousel-media>
     </section>
 </div>
 

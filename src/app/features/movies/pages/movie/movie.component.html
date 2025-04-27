@@ -6,21 +6,21 @@
             <div>
                 <section *ngIf="movieDetails?.reviews?.results?.length || isLoading">
                     <header>
-                        <app-section-header title="Reviews"></app-section-header>
+                        <app-section-header title="Reviews" [isLoading]="isLoading"></app-section-header>
                     </header>
                     <app-reviews [reviews]="movieDetails?.reviews?.results ?? []" [isLoading]="isLoading"></app-reviews>
                 </section>
 
                 <section *ngIf="movieDetails?.credits?.cast?.length || isLoading">
                     <header>
-                        <app-section-header title="Top Cast"></app-section-header>
+                        <app-section-header title="Top Cast" [isLoading]="isLoading"></app-section-header>
                     </header>
                     <app-cast-grid [cast]="movieDetails?.credits?.cast ?? []" [isLoading]="isLoading"></app-cast-grid>
                 </section>
 
                 <section *ngIf="movieDetails?.images?.backdrops?.length || isLoading">
                     <header>
-                        <app-section-header title="Photos"></app-section-header>
+                        <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
                     </header>
                     <app-image-grid
                         [images]="movieDetails?.images?.backdrops ?? []"
@@ -30,7 +30,7 @@
 
                 <section *ngIf="movieDetails?.videos?.results?.length || isLoading">
                     <header>
-                        <app-section-header title="Videos"></app-section-header>
+                        <app-section-header title="Videos" [isLoading]="isLoading"></app-section-header>
                     </header>
                     <app-video-grid
                         [videos]="movieDetails?.videos?.results ?? []"
@@ -43,7 +43,7 @@
         <aside>
             <section *ngIf="movieDetails || isLoading">
                 <header>
-                    <app-section-header title="Movie Info"></app-section-header>
+                    <app-section-header title="Movie Info" [isLoading]="isLoading"></app-section-header>
                 </header>
                 <app-media-details
                     [mediaDetails]="movieDetails"
@@ -54,7 +54,7 @@
 
             <section *ngIf="movieDetails?.external_ids || isLoading">
                 <header>
-                    <app-section-header title="Media"></app-section-header>
+                    <app-section-header title="Media" [isLoading]="isLoading"></app-section-header>
                 </header>
                 <div class="social-links">
                     <a
@@ -96,7 +96,7 @@
 
     <section *ngIf="movieDetails?.similar?.results?.length || isLoading">
         <header>
-            <app-section-header title="Similar Movies"></app-section-header>
+            <app-section-header title="Similar Movies" [isLoading]="isLoading"></app-section-header>
         </header>
         <app-carousel-media
             [mediaType]="MEDIA_TYPE.Movie"
@@ -108,7 +108,7 @@
 
     <section *ngIf="movieDetails?.recommendations?.results?.length || isLoading">
         <header>
-            <app-section-header title="Recommendations"></app-section-header>
+            <app-section-header title="Recommendations" [isLoading]="isLoading"></app-section-header>
         </header>
         <app-carousel-media
             [mediaType]="MEDIA_TYPE.Movie"

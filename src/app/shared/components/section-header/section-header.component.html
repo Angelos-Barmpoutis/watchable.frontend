@@ -2,13 +2,20 @@
     <div class="title-container">
         <h2 class="title">
             <div class="title-link">
-                <span>
-                    {{ title }}
-                </span>
-                <a *ngIf="redirectUrl" [routerLink]="redirectUrl">
-                    <span class="view-more">View More <i class="fas fa-chevron-right chevron-icon"></i></span>
-                </a>
+                <ng-container *ngIf="!isLoading; else loading">
+                    <span>{{ title }}</span>
+                    <a *ngIf="redirectUrl" [routerLink]="redirectUrl">
+                        <span class="view-more">View More <i class="fas fa-chevron-right chevron-icon"></i></span>
+                    </a>
+                </ng-container>
             </div>
         </h2>
     </div>
 </div>
+
+<ng-template #loading>
+    <div class="loading-skeleton">
+        <div class="skeleton-title"></div>
+        <div class="skeleton-view-more"></div>
+    </div>
+</ng-template>

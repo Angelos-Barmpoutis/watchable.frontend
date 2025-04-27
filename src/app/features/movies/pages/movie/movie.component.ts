@@ -3,7 +3,7 @@ import { Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 import { CarouselMediaComponent } from '../../../../shared/components/carousel-media/carousel-media.component';
 import { CastGridComponent } from '../../../../shared/components/cast-grid/cast-grid.component';
@@ -62,27 +62,28 @@ export class MovieComponent implements OnInit {
     private loadMovieDetails(): void {
         this.route.paramMap
             .pipe(
+                tap(() => {
+                    this.isLoading = true;
+                }),
                 takeUntilDestroyed(this.destroyRef),
                 switchMap((params) => {
                     const id = Number(params.get('id'));
                     return id ? this.movieGateway.getDetails(id) : EMPTY;
                 }),
             )
-            .subscribe({
-                next: (movieDetails) => {
-                    this.movieDetails = {
-                        ...movieDetails,
-                        similar: {
-                            ...movieDetails.similar,
-                            results: filterMediaItems(movieDetails.similar.results) as Array<Movie>,
-                        },
-                        recommendations: {
-                            ...movieDetails.recommendations,
-                            results: filterMediaItems(movieDetails.recommendations.results) as Array<Movie>,
-                        },
-                    };
-                    this.isLoading = false;
-                },
+            .subscribe((movieDetails) => {
+                this.movieDetails = {
+                    ...movieDetails,
+                    similar: {
+                        ...movieDetails.similar,
+                        results: filterMediaItems(movieDetails.similar.results) as Array<Movie>,
+                    },
+                    recommendations: {
+                        ...movieDetails.recommendations,
+                        results: filterMediaItems(movieDetails.recommendations.results) as Array<Movie>,
+                    },
+                };
+                this.isLoading = false;
             });
     }
 }

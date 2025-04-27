@@ -1,7 +1,7 @@
 <div class="wrapper">
     <section>
         <header>
-            <app-section-header title="Search Results"> </app-section-header>
+            <app-section-header title="Search Results" [isLoading]="isLoading"> </app-section-header>
             <app-tabs [tabs]="searchTabs" (tabChange)="changeSearchOption($event)"> </app-tabs>
         </header>
 

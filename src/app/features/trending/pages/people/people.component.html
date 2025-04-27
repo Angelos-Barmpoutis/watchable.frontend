@@ -1,7 +1,7 @@
 <div class="wrapper">
     <section>
         <header>
-            <app-section-header title="Trending People Today"> </app-section-header>
+            <app-section-header title="Trending People Today" [isLoading]="isLoading"> </app-section-header>
             <app-tabs [tabs]="timeTabs" (tabChange)="changeTimeOption($event)"> </app-tabs>
         </header>
         <div class="list-container">

@@ -16,4 +16,5 @@ import { FadeInDirective } from '../../directives/fade-in.directive';
 export class SectionHeaderComponent {
     @Input() title: string = '';
     @Input() redirectUrl: string | Array<string> | null | undefined;
+    @Input() isLoading: boolean = false;
 }
