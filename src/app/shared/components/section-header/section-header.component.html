@@ -14,8 +14,10 @@
 </div>
 
 <ng-template #loading>
-    <div class="loading-skeleton">
-        <div class="skeleton-title"></div>
-        <div class="skeleton-view-more"></div>
+    <div appFadeIn class="loading-skeleton">
+        <div class="skeleton-title-container">
+            <div class="skeleton-title"></div>
+        </div>
+        <div *ngIf="redirectUrl" class="skeleton-view-more"></div>
     </div>
 </ng-template>
