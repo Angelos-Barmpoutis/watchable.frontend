@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { register, SwiperContainer } from 'swiper/element';
 
+import { DEFAULT } from '../../constants/defaults.constant';
 import { BackdropPathDirective } from '../../directives/backdrop-path.directive';
 import { FadeInDirective } from '../../directives/fade-in.directive';
 import { BACKDROP_SIZE } from '../../enumerations/backdrop-size.enum';
@@ -37,11 +38,12 @@ export class MediaGalleryComponent implements OnChanges {
     @ViewChild('previewStrip') previewStrip?: ElementRef<SwiperContainer>;
 
     readonly BACKDROP_SIZE = BACKDROP_SIZE;
+    readonly DEFAULT = DEFAULT;
     showViewer = false;
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['selectedImageIndex']) {
-            if (changes['selectedImageIndex'].currentValue) {
+            if (changes['selectedImageIndex'].currentValue !== undefined) {
                 this.showViewer = true;
                 this.scrollToActiveImage();
             } else {
@@ -71,8 +73,8 @@ export class MediaGalleryComponent implements OnChanges {
             if (this.previewStrip?.nativeElement?.swiper && this.viewerStrip?.nativeElement?.swiper) {
                 const previewSwiper = this.previewStrip.nativeElement.swiper;
                 const viewerSwiper = this.viewerStrip.nativeElement.swiper;
-                previewSwiper.slideTo(this.selectedImageIndex ?? 0, 500);
-                viewerSwiper.slideTo(this.selectedImageIndex ?? 0, 500);
+                previewSwiper.slideTo(this.selectedImageIndex ?? 0, DEFAULT.carouselAnimationDuration);
+                viewerSwiper.slideTo(this.selectedImageIndex ?? 0, DEFAULT.carouselAnimationDuration);
             }
         });
     }

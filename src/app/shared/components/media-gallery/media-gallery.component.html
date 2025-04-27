@@ -11,7 +11,7 @@
                 [spaceBetween]="16"
                 [slidesPerView]="1"
                 [initialSlide]="selectedImageIndex"
-                [speed]="500"
+                [speed]="DEFAULT.carouselAnimationDuration"
                 (swiperslidechange)="onViewerSlideChange($event)"
             >
                 <swiper-slide *ngFor="let image of images">
@@ -31,7 +31,7 @@
             [spaceBetween]="8"
             [slidesPerView]="'auto'"
             [initialSlide]="selectedImageIndex"
-            [speed]="500"
+            [speed]="DEFAULT.carouselAnimationDuration"
         >
             <swiper-slide
                 *ngFor="let image of images; let i = index"
