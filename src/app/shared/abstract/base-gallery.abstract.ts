@@ -8,6 +8,7 @@ register();
 @Directive()
 export abstract class BaseGalleryComponent implements OnChanges {
     @Input() selectedIndex?: number;
+    @Input() showPreviewStrip = true;
     @Output() closeViewer = new EventEmitter<void>();
     @ViewChild('viewerStrip') viewerStrip?: ElementRef<SwiperContainer>;
     @ViewChild('previewStrip') previewStrip?: ElementRef<SwiperContainer>;

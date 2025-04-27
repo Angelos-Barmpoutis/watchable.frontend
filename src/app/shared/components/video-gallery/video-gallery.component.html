@@ -38,35 +38,37 @@
             </swiper-container>
         </div>
 
-        <swiper-container
-            #previewStrip
-            class="preview-strip"
-            [spaceBetween]="8"
-            [slidesPerView]="'auto'"
-            [initialSlide]="selectedIndex"
-            [speed]="DEFAULT.carouselAnimationDuration"
-            [touchRatio]="1"
-            [touchAngle]="45"
-            [touchStartPreventDefault]="false"
-            [touchMoveStopPropagation]="true"
-            [allowTouchMove]="true"
-        >
-            <swiper-slide
-                *ngFor="let video of videos; let i = index"
-                [class.active]="i === selectedIndex"
-                (click)="selectItem(i)"
+        <ng-container *ngIf="showPreviewStrip">
+            <swiper-container
+                #previewStrip
+                class="preview-strip"
+                [spaceBetween]="8"
+                [slidesPerView]="'auto'"
+                [initialSlide]="selectedIndex"
+                [speed]="DEFAULT.carouselAnimationDuration"
+                [touchRatio]="1"
+                [touchAngle]="45"
+                [touchStartPreventDefault]="false"
+                [touchMoveStopPropagation]="true"
+                [allowTouchMove]="true"
             >
-                <div class="video-thumbnail">
-                    <img
-                        class="thumbnail-image"
-                        [src]="'https://img.youtube.com/vi/' + video.key + '/maxresdefault.jpg'"
-                        [alt]="video.name"
-                    />
-                    <div class="play-button">
-                        <i class="fas fa-play"></i>
+                <swiper-slide
+                    *ngFor="let video of videos; let i = index"
+                    [class.active]="i === selectedIndex"
+                    (click)="selectItem(i)"
+                >
+                    <div class="video-thumbnail">
+                        <img
+                            class="thumbnail-image"
+                            [src]="'https://img.youtube.com/vi/' + video.key + '/maxresdefault.jpg'"
+                            [alt]="video.name"
+                        />
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
                     </div>
-                </div>
-            </swiper-slide>
-        </swiper-container>
+                </swiper-slide>
+            </swiper-container>
+        </ng-container>
     </div>
 </div>

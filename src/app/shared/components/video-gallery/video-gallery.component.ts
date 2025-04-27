@@ -4,7 +4,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { BaseGalleryComponent } from '../../abstract/base-gallery.abstract';
 import { FadeInDirective } from '../../directives/fade-in.directive';
-import { getVideoUrl } from '../../helpers/video-url.helper';
+import { getYoutubeVideoUrl } from '../../helpers/youtube-video-url.helper';
 import { Video } from '../../models/media.model';
 
 @Component({
@@ -26,7 +26,7 @@ export class VideoGalleryComponent extends BaseGalleryComponent {
 
     protected override onSelectedIndexChange(): void {
         if (this.selectedIndex !== undefined && this.videos[this.selectedIndex]) {
-            this.videoUrl = getVideoUrl(this.videos[this.selectedIndex], this.sanitizer);
+            this.videoUrl = getYoutubeVideoUrl(this.videos[this.selectedIndex], this.sanitizer);
         }
     }
 }

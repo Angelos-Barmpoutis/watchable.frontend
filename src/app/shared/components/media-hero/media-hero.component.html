@@ -59,7 +59,7 @@
 
                         <div class="action-buttons">
                             <button
-                                *ngIf="trailerUrl"
+                                *ngIf="trailerVideo"
                                 title="Watch Trailer"
                                 aria-label="Watch Trailer"
                                 class="button button-primary"
@@ -81,20 +81,12 @@
         </div>
     </div>
 
-    <div *ngIf="showTrailer && trailerUrl" class="trailer-modal" (click)="toggleTrailer()">
-        <div class="trailer-container">
-            <button title="Close" aria-label="Close" class="close-button" (click)="toggleTrailer()">
-                <i class="fas fa-times"></i>
-            </button>
-            <iframe
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-                [src]="trailerUrl"
-            >
-            </iframe>
-        </div>
-    </div>
+    <app-video-gallery
+        [videos]="trailerVideo ? [trailerVideo] : []"
+        [selectedIndex]="showTrailer ? 0 : undefined"
+        [showPreviewStrip]="false"
+        (closeViewer)="toggleTrailer()"
+    ></app-video-gallery>
 </ng-container>
 
 <ng-template #loadingTemplate>

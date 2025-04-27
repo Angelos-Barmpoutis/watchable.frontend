@@ -26,21 +26,23 @@
             </swiper-container>
         </div>
 
-        <swiper-container
-            #previewStrip
-            class="preview-strip"
-            [spaceBetween]="8"
-            [slidesPerView]="'auto'"
-            [initialSlide]="selectedIndex"
-            [speed]="DEFAULT.carouselAnimationDuration"
-        >
-            <swiper-slide
-                *ngFor="let image of images; let i = index"
-                [class.active]="i === selectedIndex"
-                (click)="selectItem(i)"
+        <ng-container *ngIf="showPreviewStrip">
+            <swiper-container
+                #previewStrip
+                class="preview-strip"
+                [spaceBetween]="8"
+                [slidesPerView]="'auto'"
+                [initialSlide]="selectedIndex"
+                [speed]="DEFAULT.carouselAnimationDuration"
             >
-                <img appBackdropPath alt="Thumbnail" [backdropPath]="image.file_path" [size]="BACKDROP_SIZE.w300" />
-            </swiper-slide>
-        </swiper-container>
+                <swiper-slide
+                    *ngFor="let image of images; let i = index"
+                    [class.active]="i === selectedIndex"
+                    (click)="selectItem(i)"
+                >
+                    <img appBackdropPath alt="Thumbnail" [backdropPath]="image.file_path" [size]="BACKDROP_SIZE.w300" />
+                </swiper-slide>
+            </swiper-container>
+        </ng-container>
     </div>
 </div>

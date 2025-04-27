@@ -2,7 +2,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { Video } from '../models/media.model';
 
-export function getVideoUrl(video: Video | null, sanitizer: DomSanitizer): SafeResourceUrl | null {
+export function getYoutubeVideoUrl(video: Video | null, sanitizer: DomSanitizer): SafeResourceUrl | null {
     if (!video) return null;
 
     return sanitizer.bypassSecurityTrustResourceUrl(
