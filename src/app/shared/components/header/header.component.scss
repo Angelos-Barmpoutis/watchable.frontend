@@ -1,7 +1,7 @@
 @import "../../../../styles.scss";
 
 header {
-    padding: $spacing-md 0;
+    padding: calc($spacing-sm * 1.5) 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -9,6 +9,7 @@ header {
     background-color: rgba($background-color, 0.8);
     backdrop-filter: blur(17px);
     z-index: map-get($z-layers, "header");
+    border-bottom: 1px solid rgba($text-secondary, 0.2);
 
     nav {
         display: flex;
@@ -111,7 +112,7 @@ header {
 
                     .input-wrapper {
                         background-color: $surface-color;
-                        border: 1px solid $border-color;
+                        border: 1px solid rgba($text-secondary, 0.2);
                         border-radius: $border-radius-xl;
                         padding-left: $spacing-xl;
 

@@ -6,18 +6,18 @@ import { BackdropPathDirective } from '../../directives/backdrop-path.directive'
 import { FadeInDirective } from '../../directives/fade-in.directive';
 import { BACKDROP_SIZE } from '../../enumerations/backdrop-size.enum';
 import { Backdrop } from '../../models/media.model';
-import { MediaGalleryComponent } from '../media-gallery/media-gallery.component';
+import { ImageGalleryComponent } from '../image-gallery/image-gallery.component';
 
 @Component({
-    selector: 'app-images-grid',
+    selector: 'app-image-grid',
     standalone: true,
-    imports: [CommonModule, BackdropPathDirective, FadeInDirective, MediaGalleryComponent],
-    templateUrl: './images-grid.component.html',
-    styleUrls: ['./images-grid.component.scss'],
+    imports: [CommonModule, BackdropPathDirective, FadeInDirective, ImageGalleryComponent],
+    templateUrl: './image-grid.component.html',
+    styleUrls: ['./image-grid.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ImagesGridComponent {
+export class ImageGridComponent {
     @Input() images: Array<Backdrop> = [];
     @Input() isLoading = false;
 

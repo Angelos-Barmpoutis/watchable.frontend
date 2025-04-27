@@ -7,12 +7,12 @@ import { switchMap } from 'rxjs/operators';
 
 import { CarouselMediaComponent } from '../../../../shared/components/carousel-media/carousel-media.component';
 import { CastGridComponent } from '../../../../shared/components/cast-grid/cast-grid.component';
-import { ImagesGridComponent } from '../../../../shared/components/images-grid/images-grid.component';
+import { ImageGridComponent } from '../../../../shared/components/image-grid/image-grid.component';
 import { MediaDetailsComponent } from '../../../../shared/components/media-details/media-details.component';
 import { MediaHeroComponent } from '../../../../shared/components/media-hero/media-hero.component';
 import { ReviewsComponent } from '../../../../shared/components/reviews/reviews.component';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
-import { VideosViewerComponent } from '../../../../shared/components/videos-viewer/videos-viewer.component';
+import { VideoGridComponent } from '../../../../shared/components/video-grid/video-grid.component';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { BACKDROP_SIZE } from '../../../../shared/enumerations/backdrop-size.enum';
 import { MEDIA_TYPE } from '../../../../shared/enumerations/media-type.enum';
@@ -29,12 +29,12 @@ import { Movie, MovieDetails } from '../../../../shared/models/movie.model';
         CommonModule,
         CarouselMediaComponent,
         CastGridComponent,
-        ImagesGridComponent,
+        ImageGridComponent,
         MediaDetailsComponent,
         MediaHeroComponent,
         ReviewsComponent,
         SectionHeaderComponent,
-        VideosViewerComponent,
+        VideoGridComponent,
     ],
     templateUrl: './movie.component.html',
     styleUrls: ['./movie.component.scss'],

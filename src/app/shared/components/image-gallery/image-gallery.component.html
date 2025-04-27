@@ -10,7 +10,8 @@
                 class="viewer-strip"
                 [spaceBetween]="16"
                 [slidesPerView]="1"
-                [initialSlide]="selectedImageIndex"
+                [initialSlide]="selectedIndex"
+                [grabCursor]="true"
                 [speed]="DEFAULT.carouselAnimationDuration"
                 (swiperslidechange)="onViewerSlideChange($event)"
             >
@@ -30,13 +31,13 @@
             class="preview-strip"
             [spaceBetween]="8"
             [slidesPerView]="'auto'"
-            [initialSlide]="selectedImageIndex"
+            [initialSlide]="selectedIndex"
             [speed]="DEFAULT.carouselAnimationDuration"
         >
             <swiper-slide
                 *ngFor="let image of images; let i = index"
-                [class.active]="i === selectedImageIndex"
-                (click)="selectImage(i)"
+                [class.active]="i === selectedIndex"
+                (click)="selectItem(i)"
             >
                 <img appBackdropPath alt="Thumbnail" [backdropPath]="image.file_path" [size]="BACKDROP_SIZE.w300" />
             </swiper-slide>

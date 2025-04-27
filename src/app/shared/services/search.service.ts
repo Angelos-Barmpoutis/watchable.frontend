@@ -44,12 +44,11 @@ export class SearchService {
     }
 
     updateSearchQuery(query: string): void {
-        const trimmedQuery = query?.trim() || '';
-        this.searchQuery$.next(trimmedQuery);
+        this.searchQuery$.next(query);
 
-        if (trimmedQuery) {
+        if (query?.trim() !== '') {
             this.router.navigate(['/search'], {
-                queryParams: { q: trimmedQuery },
+                queryParams: { q: query },
                 replaceUrl: true,
             });
         } else if (this.router.url.includes('/search')) {

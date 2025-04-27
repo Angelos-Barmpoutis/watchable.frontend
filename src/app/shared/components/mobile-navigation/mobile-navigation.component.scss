@@ -9,6 +9,7 @@
     background-color: rgba($background-color, 0.8);
     backdrop-filter: blur(17px);
     z-index: map-get($z-layers, "header");
+    border-top: 1px solid rgba($text-secondary, 0.2);
 
     &__container {
         display: flex;

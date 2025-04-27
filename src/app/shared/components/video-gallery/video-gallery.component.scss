@@ -1,0 +1,137 @@
+@import "../../../../styles.scss";
+
+.video-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    background: rgba($background-color, 0.8);
+    backdrop-filter: blur(17px);
+
+    .viewer-content {
+        position: relative;
+        width: 90%;
+        max-width: 1200px;
+        gap: $spacing-xl;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+        justify-content: center;
+
+        @media (max-width: map-get($breakpoints, "sm")) {
+            width: 100%;
+            height: 100%;
+            padding: $spacing-md;
+        }
+
+        .viewer-strip-container {
+            position: relative;
+            width: 100%;
+            border-radius: $border-radius-lg;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .viewer-strip {
+                width: 100%;
+                z-index: 2;
+
+                swiper-slide {
+                    width: 100%;
+
+                    .video-container {
+                        position: relative;
+                        width: 100%;
+                        padding-top: 56.25%; // 16:9 aspect ratio
+                        border-radius: $border-radius-lg;
+                        overflow: hidden;
+                        z-index: 1;
+
+                        iframe {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            border: none;
+                            pointer-events: none;
+                        }
+
+                        .video-loading {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background: rgba($background-color, 0.8);
+                            color: $text-primary;
+                            font-size: 2rem;
+                            z-index: 2;
+                        }
+                    }
+                }
+            }
+        }
+
+        .preview-strip {
+            width: 100%;
+
+            swiper-slide {
+                flex: 0 0 100px;
+                height: 56px;
+                overflow: hidden;
+                border-radius: $border-radius-md;
+                border: 1px solid transparent;
+                cursor: pointer;
+
+                .video-thumbnail {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+
+                    .thumbnail-image {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        transition: all $transition-normal;
+                    }
+
+                    .play-button {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        color: $text-primary;
+                        font-size: 1.5rem;
+                        opacity: 0.8;
+                        transition: all $transition-normal;
+                    }
+
+                    &:hover {
+                        .thumbnail-image {
+                            transform: scale(1.05);
+                        }
+                        .play-button {
+                            opacity: 1;
+                            transform: translate(-50%, -50%) scale(1.1);
+                        }
+                    }
+                }
+
+                &.active {
+                    border-color: $primary-color;
+                }
+            }
+        }
+    }
+}

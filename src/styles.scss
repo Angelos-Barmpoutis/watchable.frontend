@@ -31,6 +31,16 @@ body {
     * {
         font-family: $font-family;
     }
+
+    &:has(.image-viewer) {
+        overflow: hidden;
+        scroll-behavior: none;
+    }
+
+    &:has(.video-viewer) {
+        overflow: hidden;
+        scroll-behavior: none;
+    }
 }
 
 // Typography

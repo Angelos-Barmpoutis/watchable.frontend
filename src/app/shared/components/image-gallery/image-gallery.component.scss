@@ -10,7 +10,8 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    background: rgba($background-color, 0.95);
+    background: rgba($background-color, 0.8);
+    backdrop-filter: blur(17px);
 
     .viewer-content {
         position: relative;
@@ -62,55 +63,6 @@
                     position: absolute;
                     top: 44px;
                 }
-
-                .navigation-buttons {
-                    position: absolute;
-                    top: 50%;
-                    left: 0;
-                    right: 0;
-                    transform: translateY(-50%);
-                    display: flex;
-                    justify-content: space-between;
-                    padding: 0 $spacing-sm;
-                    pointer-events: none;
-
-                    @media (max-width: map-get($breakpoints, "sm")) {
-                        display: none;
-                    }
-
-                    .nav-button {
-                        width: 32px;
-                        height: 32px;
-                        border-radius: 50%;
-                        background-color: rgba($surface-color, 0.8);
-                        border: none;
-                        color: $text-primary;
-                        cursor: pointer;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        transition: all $transition-normal;
-                        pointer-events: auto;
-
-                        @media (max-width: map-get($breakpoints, "sm")) {
-                            width: 28px;
-                            height: 28px;
-                        }
-
-                        &:hover:not(.disabled) {
-                            background-color: rgba($surface-color, 1);
-                        }
-
-                        &.disabled {
-                            opacity: 0.5;
-                            cursor: not-allowed;
-                        }
-
-                        i {
-                            font-size: $font-size-sm;
-                        }
-                    }
-                }
             }
         }
 
@@ -118,8 +70,8 @@
             width: 100%;
 
             swiper-slide {
-                flex: 0 0 150px;
-                height: 84.375px;
+                flex: 0 0 100px;
+                height: 56px;
                 overflow: hidden;
                 border-radius: $border-radius-md;
                 border: 1px solid transparent;

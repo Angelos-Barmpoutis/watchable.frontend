@@ -22,11 +22,11 @@
         </div>
     </div>
 
-    <app-media-gallery
+    <app-image-gallery
         [images]="images"
-        [selectedImageIndex]="selectedImageIndex"
+        [selectedIndex]="selectedImageIndex"
         (closeViewer)="closeViewer()"
-    ></app-media-gallery>
+    ></app-image-gallery>
 </ng-container>
 
 <ng-template #loadingTemplate>
