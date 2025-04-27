@@ -3,7 +3,7 @@ import { Country } from './country,model';
 import { ExternalIds } from './external-ids.model';
 import { Genre } from './genre.model';
 import { Language } from './language.model';
-import { Backdrop, MediaCredits, MediaCreditsCrewPerson, Poster, Video } from './media.model';
+import { Backdrop, Logo, MediaCredits, MediaCreditsCrewPerson, Poster, Video } from './media.model';
 import { Network } from './network.model';
 import { CreatorPerson, GuestStarPerson, Person, PersonRole } from './people.model';
 import { PaginatedReviewItems } from './review.model';
@@ -75,6 +75,7 @@ export interface TvShowDetails {
     images: {
         backdrops: Array<Backdrop>;
         posters: Array<Poster>;
+        logos: Array<Logo>;
     };
     reviews: PaginatedReviewItems;
     credits: MediaCredits;

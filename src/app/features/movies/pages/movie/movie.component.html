@@ -22,10 +22,10 @@
                     <header>
                         <app-section-header title="Photos"></app-section-header>
                     </header>
-                    <app-images-viewer
+                    <app-images-grid
                         [images]="movieDetails?.images?.backdrops ?? []"
                         [isLoading]="isLoading"
-                    ></app-images-viewer>
+                    ></app-images-grid>
                 </section>
 
                 <section *ngIf="movieDetails?.videos?.results?.length || isLoading">

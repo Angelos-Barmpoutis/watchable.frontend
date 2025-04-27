@@ -3,7 +3,7 @@ import { Country } from './country,model';
 import { ExternalIds } from './external-ids.model';
 import { Genre } from './genre.model';
 import { Language } from './language.model';
-import { Backdrop, MediaCredits, Poster, Video } from './media.model';
+import { Backdrop, Logo, MediaCredits, Poster, Video } from './media.model';
 import { PaginatedReviewItems } from './review.model';
 
 export interface Movie {
@@ -58,6 +58,7 @@ export interface MovieDetails {
     images: {
         backdrops: Array<Backdrop>;
         posters: Array<Poster>;
+        logos: Array<Logo>;
     };
     reviews: PaginatedReviewItems;
     credits: MediaCredits;

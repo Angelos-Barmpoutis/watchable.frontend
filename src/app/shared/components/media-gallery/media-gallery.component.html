@@ -1,0 +1,45 @@
+<div *ngIf="showViewer" appFadeIn class="image-viewer">
+    <div class="viewer-content">
+        <button title="Close" aria-label="Close" class="close-button" (click)="emitCloseViewer()">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <div class="viewer-strip-container">
+            <swiper-container
+                #viewerStrip
+                class="viewer-strip"
+                [spaceBetween]="16"
+                [slidesPerView]="1"
+                [initialSlide]="selectedImageIndex"
+                [speed]="500"
+                (swiperslidechange)="onViewerSlideChange($event)"
+            >
+                <swiper-slide *ngFor="let image of images">
+                    <img
+                        appBackdropPath
+                        alt="Viewer image"
+                        [backdropPath]="image.file_path"
+                        [size]="BACKDROP_SIZE.w1280"
+                    />
+                </swiper-slide>
+            </swiper-container>
+        </div>
+
+        <swiper-container
+            #previewStrip
+            class="preview-strip"
+            [spaceBetween]="8"
+            [slidesPerView]="'auto'"
+            [initialSlide]="selectedImageIndex"
+            [speed]="500"
+        >
+            <swiper-slide
+                *ngFor="let image of images; let i = index"
+                [class.active]="i === selectedImageIndex"
+                (click)="selectImage(i)"
+            >
+                <img appBackdropPath alt="Thumbnail" [backdropPath]="image.file_path" [size]="BACKDROP_SIZE.w300" />
+            </swiper-slide>
+        </swiper-container>
+    </div>
+</div>

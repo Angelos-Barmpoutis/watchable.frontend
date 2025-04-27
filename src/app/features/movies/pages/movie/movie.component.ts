@@ -7,7 +7,7 @@ import { switchMap } from 'rxjs/operators';
 
 import { CarouselMediaComponent } from '../../../../shared/components/carousel-media/carousel-media.component';
 import { CastGridComponent } from '../../../../shared/components/cast-grid/cast-grid.component';
-import { ImagesViewerComponent } from '../../../../shared/components/images-viewer/images-viewer.component';
+import { ImagesGridComponent } from '../../../../shared/components/images-grid/images-grid.component';
 import { MediaDetailsComponent } from '../../../../shared/components/media-details/media-details.component';
 import { MediaHeroComponent } from '../../../../shared/components/media-hero/media-hero.component';
 import { ReviewsComponent } from '../../../../shared/components/reviews/reviews.component';
@@ -29,7 +29,7 @@ import { Movie, MovieDetails } from '../../../../shared/models/movie.model';
         CommonModule,
         CarouselMediaComponent,
         CastGridComponent,
-        ImagesViewerComponent,
+        ImagesGridComponent,
         MediaDetailsComponent,
         MediaHeroComponent,
         ReviewsComponent,

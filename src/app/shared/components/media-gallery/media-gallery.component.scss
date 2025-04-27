@@ -1,58 +1,5 @@
 @import "../../../../styles.scss";
 
-.images-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: $spacing-md;
-
-    @media (max-width: map-get($breakpoints, "sm")) {
-        grid-template-columns: 1fr;
-    }
-
-    .image-item {
-        position: relative;
-        border-radius: $border-radius-md;
-        overflow: hidden;
-        cursor: pointer;
-        aspect-ratio: 16/9;
-
-        .grid-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform $transition-normal;
-        }
-
-        &:hover .grid-image {
-            transform: scale(1.02);
-        }
-
-        .more-images {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba($background-color, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background-color $transition-normal;
-
-            &:hover {
-                background: rgba($background-color, 0.8);
-            }
-
-            .counter {
-                font-size: $font-size-md;
-                font-weight: $font-weight-semibold;
-                color: $text-primary;
-            }
-        }
-    }
-}
-
 .image-viewer {
     position: fixed;
     top: 0;
@@ -193,29 +140,6 @@
                     transform: scale(1.05);
                 }
             }
-        }
-    }
-}
-
-.skeleton-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: $spacing-md !important;
-    margin: $spacing-md 0;
-
-    @media (max-width: map-get($breakpoints, "sm")) {
-        grid-template-columns: 1fr;
-    }
-
-    .skeleton-image-item {
-        aspect-ratio: 16/9;
-        border-radius: $border-radius-md;
-        overflow: hidden;
-
-        .skeleton-image {
-            width: 100%;
-            height: 100%;
-            @include skeleton-loading;
         }
     }
 }

@@ -5,13 +5,13 @@ import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
 
 @Component({
-    selector: 'app-back-to-top',
+    selector: 'app-back-to-top-button',
     standalone: true,
     imports: [CommonModule, FadeInDirective],
-    templateUrl: './back-to-top.component.html',
-    styleUrls: ['./back-to-top.component.scss'],
+    templateUrl: './back-to-top-button.component.html',
+    styleUrls: ['./back-to-top-button.component.scss'],
 })
-export class BackToTopComponent implements OnInit {
+export class BackToTopButtonComponent implements OnInit {
     @HostListener('window:scroll')
     onWindowScroll(): void {
         this.checkScrollPosition();

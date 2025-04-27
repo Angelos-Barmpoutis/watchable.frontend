@@ -25,10 +25,10 @@
                     <header>
                         <app-section-header title="Photos"></app-section-header>
                     </header>
-                    <app-images-viewer
+                    <app-images-grid
                         [images]="tvShowDetails?.images?.backdrops ?? []"
                         [isLoading]="isLoading"
-                    ></app-images-viewer>
+                    ></app-images-grid>
                 </section>
 
                 <section *ngIf="tvShowDetails?.videos?.results?.length || isLoading">
