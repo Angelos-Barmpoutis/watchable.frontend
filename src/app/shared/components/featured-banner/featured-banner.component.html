@@ -42,11 +42,11 @@
 
                     <div class="featured-actions">
                         <app-button
-                            *ngIf="type === MEDIA_TYPE.Movie"
+                            *ngIf="type === mediaType.Movie"
                             [routerLink]="[mediaRoute, featuredItem.id]"
-                            [type]="ButtonType.Primary"
-                            [icon]="type === MEDIA_TYPE.Movie ? 'fas fa-film' : 'fas fa-tv'"
-                            [text]="type === MEDIA_TYPE.Movie ? 'Movie Details' : 'TV Show Details'"
+                            [type]="buttonType.Primary"
+                            [icon]="type === mediaType.Movie ? 'fas fa-film' : 'fas fa-tv'"
+                            [text]="type === mediaType.Movie ? 'Movie Details' : 'TV Show Details'"
                         >
                         </app-button>
                     </div>
@@ -78,7 +78,7 @@
                         <div class="skeleton-line"></div>
                     </div>
                     <div class="skeleton-actions">
-                        <app-button [type]="ButtonType.Primary" [isLoading]="true"></app-button>
+                        <app-button [type]="buttonType.Primary" [isLoading]="true"></app-button>
                     </div>
                 </div>
             </div>

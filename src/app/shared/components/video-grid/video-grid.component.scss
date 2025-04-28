@@ -101,7 +101,7 @@
         border-radius: $border-radius-md;
         overflow: hidden;
 
-        .skeleton-thumbnail {
+        .skeleton-video {
             width: 100%;
             height: 100%;
             @include skeleton-loading;

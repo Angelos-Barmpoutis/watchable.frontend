@@ -3,10 +3,10 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { FadeInDirective } from '../../directives/fade-in.directive';
-import { BACKDROP_SIZE } from '../../enumerations/backdrop-size.enum';
+import { BackdropSize } from '../../enumerations/backdrop-size.enum';
 import { ButtonType } from '../../enumerations/components/button-type.enum';
-import { MEDIA_TYPE } from '../../enumerations/media-type.enum';
-import { POSTER_SIZE } from '../../enumerations/poster-size.enum';
+import { MediaType } from '../../enumerations/media-type.enum';
+import { PosterSize as PosterSize } from '../../enumerations/poster-size.enum';
 import { getBackgroundImageUrl } from '../../helpers/background-image-url';
 import { mapGenres } from '../../helpers/genres.helper';
 import { Genre } from '../../models/genre.model';
@@ -24,12 +24,12 @@ import { ButtonComponent } from '../button/button.component';
 })
 export class FeaturedBannerComponent implements OnChanges {
     @Input() featuredItem!: Movie | TvShow;
-    @Input() type: MEDIA_TYPE = MEDIA_TYPE.Movie;
+    @Input() type: MediaType = MediaType.Movie;
     @Input() isLoading: boolean = false;
 
-    readonly MEDIA_TYPE = MEDIA_TYPE;
-    readonly POSTER_SIZE = POSTER_SIZE;
-    readonly ButtonType = ButtonType;
+    readonly mediaType = MediaType;
+    readonly posterSize = PosterSize;
+    readonly buttonType = ButtonType;
 
     genresList: string = '';
 
@@ -44,13 +44,13 @@ export class FeaturedBannerComponent implements OnChanges {
     get featuredTitle(): string {
         if (!this.featuredItem) return '';
 
-        return this.type === MEDIA_TYPE.Movie ? (this.featuredItem as Movie).title : (this.featuredItem as TvShow).name;
+        return this.type === MediaType.Movie ? (this.featuredItem as Movie).title : (this.featuredItem as TvShow).name;
     }
 
     get featuredDate(): string {
         if (!this.featuredItem) return '';
 
-        return this.type === MEDIA_TYPE.Movie
+        return this.type === MediaType.Movie
             ? (this.featuredItem as Movie).release_date
             : (this.featuredItem as TvShow).first_air_date;
     }
@@ -58,15 +58,15 @@ export class FeaturedBannerComponent implements OnChanges {
     get featuredBackdropUrl(): string {
         if (!this.featuredItem || !this.featuredItem.backdrop_path) return '';
 
-        return getBackgroundImageUrl(BACKDROP_SIZE.original, this.featuredItem.backdrop_path);
+        return getBackgroundImageUrl(BackdropSize.original, this.featuredItem.backdrop_path);
     }
 
     get mediaRoute(): string {
-        return this.type === MEDIA_TYPE.Movie ? '/movies/movie' : '/tv-shows/tv-show';
+        return this.type === MediaType.Movie ? '/movies/movie' : '/tv-shows/tv-show';
     }
 
     private mapGenresToString(): void {
-        const storageKey = this.type === MEDIA_TYPE.Movie ? 'movieGenres' : 'tvShowGenres';
+        const storageKey = this.type === MediaType.Movie ? 'movieGenres' : 'tvShowGenres';
         const allGenres = this.localStorageService.getItem<Array<Genre>>(storageKey) || [];
         this.genresList = mapGenres(this.featuredItem.genre_ids, allGenres);
     }

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { MEDIA_TYPE } from '../../enumerations/media-type.enum';
+import { MediaType } from '../../enumerations/media-type.enum';
 import { MovieDetails } from '../../models/movie.model';
 import { TvShowDetails } from '../../models/tv-show.model';
 
@@ -18,17 +18,17 @@ type MediaDetails = MovieDetails | TvShowDetails;
 })
 export class MediaDetailsComponent {
     @Input() mediaDetails!: MediaDetails;
-    @Input() type: MEDIA_TYPE = MEDIA_TYPE.Movie;
+    @Input() type: MediaType = MediaType.Movie;
     @Input() isLoading = false;
 
-    readonly mediaType = MEDIA_TYPE;
+    readonly mediaType = MediaType;
 
     get isMovie(): boolean {
-        return this.type === MEDIA_TYPE.Movie;
+        return this.type === MediaType.Movie;
     }
 
     get isTvShow(): boolean {
-        return this.type === MEDIA_TYPE.TvShow;
+        return this.type === MediaType.TvShow;
     }
 
     get movieDetails(): MovieDetails | null {

@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
 import { ProfilePathDirective } from '../../directives/profile-path.directive';
-import { PROFILE_SIZE } from '../../enumerations/profile-size.enum';
+import { ProfileSize } from '../../enumerations/profile-size.enum';
 import { Person } from '../../models/people.model';
 
 @Component({
@@ -19,6 +19,6 @@ import { Person } from '../../models/people.model';
 export class CarouselPersonItemComponent {
     @Input() item!: Person;
     @Input() isLoading = false;
-    profileSize: PROFILE_SIZE = DEFAULT.mediumProfileSize;
+    profileSize: ProfileSize = DEFAULT.mediumProfileSize;
     profileFallback = DEFAULT.mediumProfileFallback;
 }

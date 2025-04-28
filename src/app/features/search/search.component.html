@@ -8,7 +8,7 @@
         <div class="list-container">
             <ng-container *ngIf="searchQuery">
                 <ng-container [ngSwitch]="searchOption">
-                    <ng-container *ngSwitchCase="SEARCH_OPTION.Movie">
+                    <ng-container *ngSwitchCase="searchOption.Movie">
                         <app-movie-list-item
                             *ngFor="let movie of searchMovies; trackBy: trackByItemId"
                             [movie]="movie"
@@ -26,7 +26,7 @@
                         </p>
                     </ng-container>
 
-                    <ng-container *ngSwitchCase="SEARCH_OPTION.Tv">
+                    <ng-container *ngSwitchCase="searchOption.Tv">
                         <app-tv-show-list-item
                             *ngFor="let tvShow of searchTvShows; trackBy: trackByItemId"
                             [tvShow]="tvShow"
@@ -44,7 +44,7 @@
                         </p>
                     </ng-container>
 
-                    <ng-container *ngSwitchCase="SEARCH_OPTION.Person">
+                    <ng-container *ngSwitchCase="searchOption.Person">
                         <app-person-list-item
                             *ngFor="let person of searchPeople; trackBy: trackByItemId"
                             [person]="person"
@@ -75,19 +75,19 @@
 
 <ng-template #loadingState>
     <ng-container [ngSwitch]="searchOption">
-        <ng-container *ngSwitchCase="SEARCH_OPTION.Movie">
+        <ng-container *ngSwitchCase="searchOption.Movie">
             <ng-container *ngIf="searchMovies.length === 0">
                 <app-movie-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
                 </app-movie-list-item>
             </ng-container>
         </ng-container>
-        <ng-container *ngSwitchCase="SEARCH_OPTION.Tv">
+        <ng-container *ngSwitchCase="searchOption.Tv">
             <ng-container *ngIf="searchTvShows.length === 0">
                 <app-tv-show-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
                 </app-tv-show-list-item>
             </ng-container>
         </ng-container>
-        <ng-container *ngSwitchCase="SEARCH_OPTION.Person">
+        <ng-container *ngSwitchCase="searchOption.Person">
             <ng-container *ngIf="searchPeople.length === 0">
                 <app-person-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
                 </app-person-list-item>

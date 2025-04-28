@@ -1,4 +1,4 @@
-export enum LOGO_SIZE {
+export enum LogoSize {
     w45 = 'w45',
     w92 = 'w92',
     w154 = 'w154',

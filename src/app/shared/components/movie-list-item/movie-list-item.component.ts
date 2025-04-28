@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
 import { PosterPathDirective } from '../../directives/poster-path.directive';
-import { POSTER_SIZE } from '../../enumerations/poster-size.enum';
+import { PosterSize } from '../../enumerations/poster-size.enum';
 import { MovieItem } from '../../models/movie.model';
 
 @Component({
@@ -19,6 +19,6 @@ import { MovieItem } from '../../models/movie.model';
 export class MovieListItemComponent {
     @Input() movie!: MovieItem;
     @Input() isLoading = false;
-    posterSize: POSTER_SIZE = DEFAULT.mediumPosterSize;
+    posterSize: PosterSize = DEFAULT.mediumPosterSize;
     posterFallback = DEFAULT.mediumPosterFallback;
 }

@@ -9,7 +9,7 @@ import { PersonListItemComponent } from '../../../../shared/components/person-li
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { TabItem, TabsComponent } from '../../../../shared/components/tabs/tabs.component';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
-import { TIME_OPTION } from '../../../../shared/enumerations/time-option.enum';
+import { TimeOption } from '../../../../shared/enumerations/time-option.enum';
 import { TrendingFacade } from '../../../../shared/facades/trending.facade';
 import { Person } from '../../../../shared/models/people.model';
 
@@ -31,9 +31,9 @@ import { Person } from '../../../../shared/models/people.model';
 export class TrendingPeopleComponent extends BaseListItemComponent<Person> implements OnInit {
     override items: Array<Person> = [];
     timeOption = DEFAULT.timeOption;
-    timeTabs: Array<TabItem<TIME_OPTION>> = [
-        { id: 0, value: TIME_OPTION.Day, label: 'Today' },
-        { id: 1, value: TIME_OPTION.Week, label: 'This Week' },
+    timeTabs: Array<TabItem<TimeOption>> = [
+        { id: 0, value: TimeOption.Day, label: 'Today' },
+        { id: 1, value: TimeOption.Week, label: 'This Week' },
     ];
 
     constructor(
@@ -64,7 +64,7 @@ export class TrendingPeopleComponent extends BaseListItemComponent<Person> imple
             });
     }
 
-    changeTimeOption(timeOption: TIME_OPTION): void {
+    changeTimeOption(timeOption: TimeOption): void {
         this.timeOption = timeOption;
         this.currentPage = DEFAULT.page;
         this.items = [];

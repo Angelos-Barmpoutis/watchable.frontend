@@ -13,7 +13,7 @@ import { SectionHeaderComponent } from '../../shared/components/section-header/s
 import { TabItem, TabsComponent } from '../../shared/components/tabs/tabs.component';
 import { TvShowListItemComponent } from '../../shared/components/tv-show-list-item/tv-show-list-item.component';
 import { DEFAULT } from '../../shared/constants/defaults.constant';
-import { SEARCH_OPTION } from '../../shared/enumerations/search-option.enum';
+import { SearchOption } from '../../shared/enumerations/search-option.enum';
 import { SearchFacade } from '../../shared/facades/search.facade';
 import { mapMoviesWithGenres, mapTvShowsWithGenres } from '../../shared/helpers/genres.helper';
 import { Genre } from '../../shared/models/genre.model';
@@ -41,7 +41,7 @@ import { SearchService } from '../../shared/services/search.service';
 })
 export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow | Person> implements OnInit {
     @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
-    readonly SEARCH_OPTION = SEARCH_OPTION;
+    readonly searchOption = SearchOption;
     private movieGenres: Array<Genre> = [];
     private tvShowGenres: Array<Genre> = [];
     searchMovies: Array<MovieItem> = [];
@@ -49,11 +49,11 @@ export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow |
     searchPeople: Array<Person> = [];
     searchQuery: string = '';
     searchForm!: FormGroup;
-    searchOption = DEFAULT.searchOption;
-    searchTabs: Array<TabItem<SEARCH_OPTION>> = [
-        { id: 0, label: 'Movies', value: SEARCH_OPTION.Movie },
-        { id: 1, label: 'TV Shows', value: SEARCH_OPTION.Tv },
-        { id: 2, label: 'People', value: SEARCH_OPTION.Person },
+    option: SearchOption = DEFAULT.searchOption;
+    searchTabs: Array<TabItem<SearchOption>> = [
+        { id: 0, label: 'Movies', value: SearchOption.Movie },
+        { id: 1, label: 'TV Shows', value: SearchOption.Tv },
+        { id: 2, label: 'People', value: SearchOption.Person },
     ];
 
     constructor(
@@ -82,7 +82,7 @@ export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow |
             .subscribe((query: string) => {
                 if (query) {
                     this.searchQuery = query;
-                    this.changeSearchOption(this.searchOption);
+                    this.changeSearchOption(this.option);
                 }
             });
     }
@@ -134,10 +134,10 @@ export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow |
             });
     }
 
-    changeSearchOption(searchOption: SEARCH_OPTION): void {
+    changeSearchOption(searchOption: SearchOption): void {
         this.currentPage = DEFAULT.page;
         this.totalPages = DEFAULT.totalPages;
-        this.searchOption = searchOption;
+        this.option = searchOption;
         this.searchMovies = [];
         this.searchTvShows = [];
         this.searchPeople = [];
@@ -145,14 +145,14 @@ export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow |
     }
 
     getItems(): void {
-        switch (this.searchOption) {
-            case SEARCH_OPTION.Movie:
+        switch (this.option) {
+            case SearchOption.Movie:
                 this.getMovies();
                 break;
-            case SEARCH_OPTION.Tv:
+            case SearchOption.Tv:
                 this.getTvShows();
                 break;
-            case SEARCH_OPTION.Person:
+            case SearchOption.Person:
                 this.getPeople();
                 break;
             default:
@@ -174,10 +174,10 @@ export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow |
         items: Array<MovieItem | TvShowItem | Person>,
         genres: Array<Genre>,
     ): Array<Movie | TvShow | Person> {
-        switch (this.searchOption) {
-            case SEARCH_OPTION.Movie:
+        switch (this.option) {
+            case SearchOption.Movie:
                 return mapMoviesWithGenres(items as Array<MovieItem>, genres);
-            case SEARCH_OPTION.Tv:
+            case SearchOption.Tv:
                 return mapTvShowsWithGenres(items as Array<TvShowItem>, genres);
             default:
                 return items;

@@ -9,7 +9,7 @@ import { CarouselMediaComponent } from '../../shared/components/carousel-media/c
 import { FeaturedBannerComponent } from '../../shared/components/featured-banner/featured-banner.component';
 import { InfiniteScrollLoaderComponent } from '../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
 import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
-import { MEDIA_TYPE } from '../../shared/enumerations/media-type.enum';
+import { MediaType } from '../../shared/enumerations/media-type.enum';
 import { MovieFacade } from '../../shared/facades/movie.facade';
 import { filterMediaItems } from '../../shared/helpers/filter-items.helper';
 import { Movie, PaginatedMovies } from '../../shared/models/movie.model';
@@ -29,14 +29,14 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
     ],
 })
 export class MoviesComponent extends AbstractGenreLoaderComponent<Movie> {
-    readonly mediaType = MEDIA_TYPE;
+    readonly mediaType = MediaType;
     nowPlaying: Array<Movie> = [];
     popular: Array<Movie> = [];
     topRated: Array<Movie> = [];
     upcoming: Array<Movie> = [];
     isMainContentLoading = false;
 
-    protected override type = MEDIA_TYPE.Movie;
+    protected override type = MediaType.Movie;
     protected override genreStorageKey = 'movieGenres';
 
     constructor(

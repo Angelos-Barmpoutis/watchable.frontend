@@ -9,7 +9,7 @@ import { MovieListItemComponent } from '../../../../shared/components/movie-list
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { TabItem, TabsComponent } from '../../../../shared/components/tabs/tabs.component';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
-import { TIME_OPTION } from '../../../../shared/enumerations/time-option.enum';
+import { TimeOption } from '../../../../shared/enumerations/time-option.enum';
 import { TrendingFacade } from '../../../../shared/facades/trending.facade';
 import { mapMoviesWithGenres } from '../../../../shared/helpers/genres.helper';
 import { Genre } from '../../../../shared/models/genre.model';
@@ -34,9 +34,9 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 export class TrendingMoviesComponent extends BaseMediaListItemComponent<MovieItem> {
     override items: Array<MovieItem> = [];
     timeOption = DEFAULT.timeOption;
-    timeTabs: Array<TabItem<TIME_OPTION>> = [
-        { id: 0, value: TIME_OPTION.Day, label: 'Today' },
-        { id: 1, value: TIME_OPTION.Week, label: 'This Week' },
+    timeTabs: Array<TabItem<TimeOption>> = [
+        { id: 0, value: TimeOption.Day, label: 'Today' },
+        { id: 1, value: TimeOption.Week, label: 'This Week' },
     ];
 
     constructor(
@@ -74,7 +74,7 @@ export class TrendingMoviesComponent extends BaseMediaListItemComponent<MovieIte
             });
     }
 
-    changeTimeOption(timeOption: TIME_OPTION): void {
+    changeTimeOption(timeOption: TimeOption): void {
         this.timeOption = timeOption;
         this.currentPage = DEFAULT.page;
         this.totalPages = DEFAULT.totalPages;

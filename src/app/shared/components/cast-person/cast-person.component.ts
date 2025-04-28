@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { ProfilePathDirective } from '../../directives/profile-path.directive';
-import { PROFILE_SIZE } from '../../enumerations/profile-size.enum';
+import { ProfileSize } from '../../enumerations/profile-size.enum';
 import { MediaCreditsCastPerson } from '../../models/media.model';
 
 @Component({
@@ -19,6 +19,6 @@ export class CastPersonComponent {
     @Input() person!: MediaCreditsCastPerson;
     @Input() isLoading = false;
 
-    readonly profileSize = PROFILE_SIZE;
+    readonly profileSize = ProfileSize;
     readonly default = DEFAULT;
 }

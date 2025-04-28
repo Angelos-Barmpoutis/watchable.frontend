@@ -9,7 +9,7 @@ import { CarouselMediaComponent } from '../../shared/components/carousel-media/c
 import { FeaturedBannerComponent } from '../../shared/components/featured-banner/featured-banner.component';
 import { InfiniteScrollLoaderComponent } from '../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
 import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
-import { MEDIA_TYPE } from '../../shared/enumerations/media-type.enum';
+import { MediaType } from '../../shared/enumerations/media-type.enum';
 import { TvShowFacade } from '../../shared/facades/tv-show.facade';
 import { filterMediaItems } from '../../shared/helpers/filter-items.helper';
 import { PaginatedTvShows, TvShow } from '../../shared/models/tv-show.model';
@@ -29,13 +29,13 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
     ],
 })
 export class TvShowsComponent extends AbstractGenreLoaderComponent<TvShow> {
-    readonly mediaType = MEDIA_TYPE;
+    readonly mediaType = MediaType;
     airingToday: Array<TvShow> = [];
     popular: Array<TvShow> = [];
     topRated: Array<TvShow> = [];
     isMainContentLoading = false;
 
-    protected override type = MEDIA_TYPE.TvShow;
+    protected override type = MediaType.TvShow;
     protected override genreStorageKey = 'tvShowGenres';
 
     constructor(

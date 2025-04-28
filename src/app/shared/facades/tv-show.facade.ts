@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 
 import { DEFAULT } from '../constants/defaults.constant';
-import { MEDIA_TYPE } from '../enumerations/media-type.enum';
+import { MediaType } from '../enumerations/media-type.enum';
 import { DiscoverGateway } from '../gateways/discover.gateway';
 import { TvShowGateway } from '../gateways/tv-show.gateway';
 import { Genre } from '../models/genre.model';
@@ -67,7 +67,7 @@ export class TvShowFacade {
         for (let i = 0; i < genresPerBatch; i++) {
             if (currentTvShowGenreIndex + i < tvShowGenres.length) {
                 const genre = tvShowGenres[currentTvShowGenreIndex + i];
-                genresToLoad[`${MEDIA_TYPE.TvShow}_${genre.name}`] = this.getTvShows(undefined, genre.id);
+                genresToLoad[`${MediaType.TvShow}_${genre.name}`] = this.getTvShows(undefined, genre.id);
             }
         }
 

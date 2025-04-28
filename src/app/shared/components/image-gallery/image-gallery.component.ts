@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, Input } fro
 import { BaseGalleryComponent } from '../../abstract/base-gallery.abstract';
 import { BackdropPathDirective } from '../../directives/backdrop-path.directive';
 import { FadeInDirective } from '../../directives/fade-in.directive';
-import { BACKDROP_SIZE } from '../../enumerations/backdrop-size.enum';
+import { BackdropSize } from '../../enumerations/backdrop-size.enum';
 import { Backdrop } from '../../models/media.model';
 
 @Component({
@@ -18,7 +18,7 @@ import { Backdrop } from '../../models/media.model';
 })
 export class ImageGalleryComponent extends BaseGalleryComponent {
     @Input() images: Array<Backdrop> = [];
-    readonly backdropSize = BACKDROP_SIZE;
+    readonly backdropSize = BackdropSize;
 
     protected override onSelectedIndexChange(): void {
         // No additional logic needed for media gallery

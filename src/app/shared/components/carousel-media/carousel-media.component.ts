@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, Input } fro
 
 import { BaseCarouselComponent } from '../../abstract/base-carousel.abstract';
 import { FadeInDirective } from '../../directives/fade-in.directive';
-import { MEDIA_TYPE } from '../../enumerations/media-type.enum';
+import { MediaType } from '../../enumerations/media-type.enum';
 import { Movie } from '../../models/movie.model';
 import { TvShow } from '../../models/tv-show.model';
 import { CarouselMediaItemComponent } from '../carousel-media-item/carousel-media-item.component';
@@ -18,8 +18,8 @@ import { CarouselMediaItemComponent } from '../carousel-media-item/carousel-medi
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarouselMediaComponent extends BaseCarouselComponent<Movie | TvShow> {
-    @Input() type: MEDIA_TYPE = MEDIA_TYPE.Movie;
-    readonly mediaType = MEDIA_TYPE;
+    @Input() type: MediaType = MediaType.Movie;
+    readonly mediaType = MediaType;
 
     constructor() {
         super();

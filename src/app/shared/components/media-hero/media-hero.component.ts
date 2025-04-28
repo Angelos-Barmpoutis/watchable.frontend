@@ -6,8 +6,8 @@ import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
 import { PosterPathDirective } from '../../directives/poster-path.directive';
 import { ButtonType } from '../../enumerations/components/button-type.enum';
-import { MEDIA_TYPE } from '../../enumerations/media-type.enum';
-import { POSTER_SIZE } from '../../enumerations/poster-size.enum';
+import { MediaType } from '../../enumerations/media-type.enum';
+import { PosterSize } from '../../enumerations/poster-size.enum';
 import { getBackgroundImageUrl } from '../../helpers/background-image-url';
 import { getTrailerVideo } from '../../helpers/trailer-url.helper';
 import { Video } from '../../models/media.model';
@@ -29,11 +29,11 @@ type MediaDetails = MovieDetails | TvShowDetails;
 })
 export class MediaHeroComponent implements OnChanges {
     @Input() mediaDetails: MediaDetails | null | undefined = null;
-    @Input() type: MEDIA_TYPE = MEDIA_TYPE.Movie;
+    @Input() type: MediaType = MediaType.Movie;
     @Input() isLoading: boolean = false;
 
-    readonly mediaType = MEDIA_TYPE;
-    readonly posterSize = POSTER_SIZE;
+    readonly mediaType = MediaType;
+    readonly posterSize = PosterSize;
     readonly default = DEFAULT;
     readonly ButtonType = ButtonType;
 
@@ -54,29 +54,29 @@ export class MediaHeroComponent implements OnChanges {
 
     get backdropUrl(): string {
         if (!this.mediaDetails || !this.mediaDetails.backdrop_path) return '';
-        return getBackgroundImageUrl(POSTER_SIZE.original, this.mediaDetails.backdrop_path);
+        return getBackgroundImageUrl(PosterSize.original, this.mediaDetails.backdrop_path);
     }
 
     get title(): string {
-        return this.type === MEDIA_TYPE.Movie
+        return this.type === MediaType.Movie
             ? (this.mediaDetails as MovieDetails).title
             : (this.mediaDetails as TvShowDetails).name;
     }
 
     get releaseDate(): string {
-        return this.type === MEDIA_TYPE.Movie
+        return this.type === MediaType.Movie
             ? (this.mediaDetails as MovieDetails).release_date
             : (this.mediaDetails as TvShowDetails).first_air_date;
     }
 
     get runtime(): number | null {
-        return this.type === MEDIA_TYPE.Movie
+        return this.type === MediaType.Movie
             ? (this.mediaDetails as MovieDetails).runtime
             : (this.mediaDetails as TvShowDetails).episode_run_time?.[0] || null;
     }
 
     get voteAverage(): number {
-        if (this.type === MEDIA_TYPE.Movie) {
+        if (this.type === MediaType.Movie) {
             return (this.mediaDetails as MovieDetails).vote_average || 0;
         } else {
             return (this.mediaDetails as TvShowDetails).vote_average || 0;
@@ -84,7 +84,7 @@ export class MediaHeroComponent implements OnChanges {
     }
 
     get voteCount(): number {
-        if (this.type === MEDIA_TYPE.Movie) {
+        if (this.type === MediaType.Movie) {
             return (this.mediaDetails as MovieDetails).vote_count || 0;
         } else {
             return (this.mediaDetails as TvShowDetails).vote_count || 0;
@@ -92,7 +92,7 @@ export class MediaHeroComponent implements OnChanges {
     }
 
     get tagline(): string | null {
-        if (this.type === MEDIA_TYPE.Movie) {
+        if (this.type === MediaType.Movie) {
             return (this.mediaDetails as MovieDetails).tagline;
         }
         return (this.mediaDetails as TvShowDetails).tagline;
@@ -106,28 +106,28 @@ export class MediaHeroComponent implements OnChanges {
     }
 
     get ratingDetails(): string {
-        if (this.type === MEDIA_TYPE.Movie) {
+        if (this.type === MediaType.Movie) {
             return `${this.voteCount.toLocaleString()} votes`;
         }
         return `${this.voteCount.toLocaleString()} votes`;
     }
 
     get mediaTitle(): string {
-        if (this.type === MEDIA_TYPE.Movie) {
+        if (this.type === MediaType.Movie) {
             return (this.mediaDetails as MovieDetails).title;
         }
         return (this.mediaDetails as TvShowDetails).name;
     }
 
     get mediaReleaseDate(): string {
-        if (this.type === MEDIA_TYPE.Movie) {
+        if (this.type === MediaType.Movie) {
             return (this.mediaDetails as MovieDetails).release_date;
         }
         return (this.mediaDetails as TvShowDetails).first_air_date;
     }
 
     get mediaRuntime(): string {
-        if (this.type === MEDIA_TYPE.Movie) {
+        if (this.type === MediaType.Movie) {
             const runtime = (this.mediaDetails as MovieDetails).runtime;
             return runtime ? `${runtime} min` : '';
         }
@@ -155,7 +155,7 @@ export class MediaHeroComponent implements OnChanges {
     }
 
     get mediaYear(): string {
-        const date = this.type === MEDIA_TYPE.Movie ? this.mediaReleaseDate : this.mediaReleaseDate;
+        const date = this.type === MediaType.Movie ? this.mediaReleaseDate : this.mediaReleaseDate;
         return date ? new Date(date).getFullYear().toString() : '';
     }
 

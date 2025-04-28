@@ -1,4 +1,4 @@
-export enum POSTER_SIZE {
+export enum PosterSize {
     w92 = 'w92',
     w154 = 'w154',
     w185 = 'w185',

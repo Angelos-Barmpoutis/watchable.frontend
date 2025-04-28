@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, Input } fro
 import { DEFAULT } from '../../constants/defaults.constant';
 import { BackdropPathDirective } from '../../directives/backdrop-path.directive';
 import { FadeInDirective } from '../../directives/fade-in.directive';
-import { BACKDROP_SIZE } from '../../enumerations/backdrop-size.enum';
+import { BackdropSize } from '../../enumerations/backdrop-size.enum';
 import { Backdrop } from '../../models/media.model';
 import { ImageGalleryComponent } from '../image-gallery/image-gallery.component';
 
@@ -22,7 +22,7 @@ export class ImageGridComponent {
     @Input() isLoading = false;
 
     selectedImageIndex?: number;
-    readonly backdropSize = BACKDROP_SIZE;
+    readonly backdropSize = BackdropSize;
     readonly default = DEFAULT;
 
     openViewer(index: number, event: Event): void {

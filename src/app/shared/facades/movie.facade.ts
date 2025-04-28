@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 
 import { DEFAULT } from '../constants/defaults.constant';
-import { MEDIA_TYPE } from '../enumerations/media-type.enum';
+import { MediaType } from '../enumerations/media-type.enum';
 import { DiscoverGateway } from '../gateways/discover.gateway';
 import { MovieGateway } from '../gateways/movie.gateway';
 import { Genre } from '../models/genre.model';
@@ -73,7 +73,7 @@ export class MovieFacade {
         for (let i = 0; i < genresPerBatch; i++) {
             if (currentMovieGenreIndex + i < movieGenres.length) {
                 const genre = movieGenres[currentMovieGenreIndex + i];
-                genresToLoad[`${MEDIA_TYPE.Movie}_${genre.name}`] = this.getMovies(undefined, genre.id);
+                genresToLoad[`${MediaType.Movie}_${genre.name}`] = this.getMovies(undefined, genre.id);
             }
         }
 

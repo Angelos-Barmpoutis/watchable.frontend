@@ -1,4 +1,4 @@
-import { MEDIA_TYPE } from '../enumerations/media-type.enum';
+import { MediaType } from '../enumerations/media-type.enum';
 import { Genre } from './genre.model';
 
 export interface KnownForItem {
@@ -11,7 +11,7 @@ export interface KnownForItem {
     overview: string;
     poster_path?: string;
     profile_path?: string;
-    media_type: MEDIA_TYPE;
+    media_type: MediaType;
     adult: boolean;
     original_language: string;
     genre_ids: Array<Genre>;

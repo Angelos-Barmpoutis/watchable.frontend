@@ -15,7 +15,7 @@ import { ReviewGridComponent } from '../../../../shared/components/review-grid/r
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { VideoGridComponent } from '../../../../shared/components/video-grid/video-grid.component';
 import { ButtonType } from '../../../../shared/enumerations/components/button-type.enum';
-import { MEDIA_TYPE } from '../../../../shared/enumerations/media-type.enum';
+import { MediaType } from '../../../../shared/enumerations/media-type.enum';
 import { MovieGateway } from '../../../../shared/gateways/movie.gateway';
 import { filterMediaItems } from '../../../../shared/helpers/filter-items.helper';
 import { Movie, MovieDetails } from '../../../../shared/models/movie.model';
@@ -39,7 +39,7 @@ import { Movie, MovieDetails } from '../../../../shared/models/movie.model';
     styleUrls: ['./movie.component.scss'],
 })
 export class MovieComponent implements OnInit {
-    readonly mediaType = MEDIA_TYPE;
+    readonly mediaType = MediaType;
     movieId!: number;
     movieDetails!: MovieDetails;
     isLoading = true;

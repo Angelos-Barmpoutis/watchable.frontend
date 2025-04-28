@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { GENDER } from '../enumerations/gender.enum';
+import { Gender } from '../enumerations/gender.enum';
 
 @Pipe({
     name: 'gender',
@@ -8,6 +8,6 @@ import { GENDER } from '../enumerations/gender.enum';
 })
 export class GenderPipe implements PipeTransform {
     transform(value: number): string {
-        return GENDER[value] || 'Unknown';
+        return Gender[value] || 'Unknown';
     }
 }

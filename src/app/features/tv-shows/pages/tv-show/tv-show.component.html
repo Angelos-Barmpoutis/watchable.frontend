@@ -61,7 +61,7 @@
                 </header>
                 <div class="social-links">
                     <app-button
-                        *ngIf="tvShowDetails?.external_ids?.imdb_id"
+                        *ngIf="tvShowDetails?.external_ids?.imdb_id || isLoading"
                         [type]="ButtonType.Imdb"
                         [icon]="'fab fa-imdb'"
                         [routerLink]="['https://www.imdb.com/title/' + tvShowDetails?.external_ids?.imdb_id]"
@@ -70,7 +70,7 @@
                     >
                     </app-button>
                     <app-button
-                        *ngIf="tvShowDetails?.external_ids?.facebook_id"
+                        *ngIf="tvShowDetails?.external_ids?.facebook_id || isLoading"
                         [type]="ButtonType.Facebook"
                         [icon]="'fab fa-facebook'"
                         [routerLink]="['https://www.facebook.com/' + tvShowDetails?.external_ids?.facebook_id]"
@@ -79,7 +79,7 @@
                     >
                     </app-button>
                     <app-button
-                        *ngIf="tvShowDetails?.external_ids?.instagram_id"
+                        *ngIf="tvShowDetails?.external_ids?.instagram_id || isLoading"
                         [type]="ButtonType.Instagram"
                         [icon]="'fab fa-instagram'"
                         [routerLink]="['https://www.instagram.com/' + tvShowDetails?.external_ids?.instagram_id]"
@@ -88,7 +88,7 @@
                     >
                     </app-button>
                     <app-button
-                        *ngIf="tvShowDetails?.external_ids?.twitter_id"
+                        *ngIf="tvShowDetails?.external_ids?.twitter_id || isLoading"
                         [type]="ButtonType.Twitter"
                         [icon]="'fab fa-twitter'"
                         [routerLink]="['https://twitter.com/' + tvShowDetails?.external_ids?.twitter_id]"

@@ -1,4 +1,4 @@
-export enum SEARCH_OPTION {
+export enum SearchOption {
     Multi = 'multi',
     Person = 'person',
     Movie = 'movie',

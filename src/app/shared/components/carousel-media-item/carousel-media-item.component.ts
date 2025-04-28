@@ -5,8 +5,8 @@ import { RouterLink } from '@angular/router';
 import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
 import { PosterPathDirective } from '../../directives/poster-path.directive';
-import { MEDIA_TYPE } from '../../enumerations/media-type.enum';
-import { POSTER_SIZE } from '../../enumerations/poster-size.enum';
+import { MediaType } from '../../enumerations/media-type.enum';
+import { PosterSize } from '../../enumerations/poster-size.enum';
 import { Movie } from '../../models/movie.model';
 import { TvShow } from '../../models/tv-show.model';
 
@@ -21,9 +21,11 @@ import { TvShow } from '../../models/tv-show.model';
 export class CarouselMediaItemComponent {
     @Input() item!: Movie | TvShow;
     @Input() isLoading = false;
-    @Input() mediaType: MEDIA_TYPE = MEDIA_TYPE.Movie;
-    readonly MEDIA_TYPE = MEDIA_TYPE;
-    posterSize: POSTER_SIZE = DEFAULT.largePosterSize;
+    @Input() type: MediaType = MediaType.Movie;
+
+    readonly mediaType = MediaType;
+
+    posterSize: PosterSize = DEFAULT.largePosterSize;
     posterFallback = DEFAULT.largePosterFallback;
 
     get title(): string {
@@ -31,7 +33,7 @@ export class CarouselMediaItemComponent {
             return '';
         }
 
-        if (this.mediaType === MEDIA_TYPE.Movie) {
+        if (this.type === MediaType.Movie) {
             return (this.item as Movie).title || '';
         } else {
             return (this.item as TvShow).name || '';

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 
 import { DEFAULT } from '../constants/defaults.constant';
-import { MEDIA_TYPE } from '../enumerations/media-type.enum';
-import { TIME_OPTION } from '../enumerations/time-option.enum';
+import { MediaType } from '../enumerations/media-type.enum';
+import { TimeOption } from '../enumerations/time-option.enum';
 import { DiscoverGateway } from '../gateways/discover.gateway';
 import { TrendingGateway } from '../gateways/trending.gateway';
 import { Genre } from '../models/genre.model';
@@ -33,7 +33,7 @@ export class TrendingFacade {
     ) {}
 
     public getMovies(
-        timeOption: TIME_OPTION = DEFAULT.timeOption,
+        timeOption: TimeOption = DEFAULT.timeOption,
         page: number = DEFAULT.page,
         genreId?: number,
     ): Observable<PaginatedMovies> {
@@ -44,7 +44,7 @@ export class TrendingFacade {
     }
 
     public getTvShows(
-        timeOption: TIME_OPTION = DEFAULT.timeOption,
+        timeOption: TimeOption = DEFAULT.timeOption,
         page: number = DEFAULT.page,
         genreId?: number,
     ): Observable<PaginatedTvShows> {
@@ -55,7 +55,7 @@ export class TrendingFacade {
     }
 
     public getPeople(
-        timeOption: TIME_OPTION = DEFAULT.timeOption,
+        timeOption: TimeOption = DEFAULT.timeOption,
         page: number = DEFAULT.page,
     ): Observable<PaginatedPeople> {
         return this.trendingGateway.getPeople(timeOption, page);
@@ -81,14 +81,14 @@ export class TrendingFacade {
         for (let i = 0; i < genresPerBatch / 2; i++) {
             if (currentMovieGenreIndex + i < movieGenres.length) {
                 const genre = movieGenres[currentMovieGenreIndex + i];
-                genresToLoad[`${MEDIA_TYPE.Movie}_${genre.name}`] = this.getMovies(undefined, undefined, genre.id);
+                genresToLoad[`${MediaType.Movie}_${genre.name}`] = this.getMovies(undefined, undefined, genre.id);
             }
         }
 
         for (let i = 0; i < genresPerBatch / 2; i++) {
             if (currentTvShowGenreIndex + i < tvShowGenres.length) {
                 const genre = tvShowGenres[currentTvShowGenreIndex + i];
-                genresToLoad[`${MEDIA_TYPE.TvShow}_${genre.name}`] = this.getTvShows(undefined, undefined, genre.id);
+                genresToLoad[`${MediaType.TvShow}_${genre.name}`] = this.getTvShows(undefined, undefined, genre.id);
             }
         }
 

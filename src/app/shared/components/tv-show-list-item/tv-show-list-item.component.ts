@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { PosterPathDirective } from '../../directives/poster-path.directive';
-import { POSTER_SIZE } from '../../enumerations/poster-size.enum';
+import { PosterSize } from '../../enumerations/poster-size.enum';
 import { TvShowItem } from '../../models/tv-show.model';
 
 @Component({
@@ -18,6 +18,6 @@ export class TvShowListItemComponent {
     @Input() tvShow!: TvShowItem;
     @Input() isLoading: boolean = false;
 
-    posterSize: POSTER_SIZE = DEFAULT.mediumPosterSize;
+    posterSize: PosterSize = DEFAULT.mediumPosterSize;
     posterFallback = DEFAULT.mediumPosterFallback;
 }

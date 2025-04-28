@@ -1,4 +1,4 @@
-export enum PROFILE_SIZE {
+export enum ProfileSize {
     w45 = 'w45',
     w185 = 'w185',
     w632 = 'w632',

@@ -16,7 +16,7 @@ import { ReviewGridComponent } from '../../../../shared/components/review-grid/r
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { VideoGridComponent } from '../../../../shared/components/video-grid/video-grid.component';
 import { ButtonType } from '../../../../shared/enumerations/components/button-type.enum';
-import { MEDIA_TYPE } from '../../../../shared/enumerations/media-type.enum';
+import { MediaType } from '../../../../shared/enumerations/media-type.enum';
 import { TvShowGateway } from '../../../../shared/gateways/tv-show.gateway';
 import { filterMediaItems } from '../../../../shared/helpers/filter-items.helper';
 import { TvShow, TvShowDetails } from '../../../../shared/models/tv-show.model';
@@ -44,7 +44,7 @@ export class TvShowComponent implements OnInit {
     isLoading = true;
     trailerUrl: SafeResourceUrl | null = null;
 
-    readonly mediaType = MEDIA_TYPE;
+    readonly mediaType = MediaType;
     readonly ButtonType = ButtonType;
 
     constructor(

@@ -5,13 +5,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 
 import { DEFAULT } from '../constants/defaults.constant';
-import { MEDIA_TYPE } from '../enumerations/media-type.enum';
+import { MediaType } from '../enumerations/media-type.enum';
 import { filterMediaItems } from '../helpers/filter-items.helper';
 import { Genre } from '../models/genre.model';
 import { LocalStorageService } from '../services/local-storage.service';
 
 export interface GenreLoadedItems<T> {
-    type: MEDIA_TYPE;
+    type: MediaType;
     genreName: string;
     genreId: number;
     items: Array<T>;
@@ -26,7 +26,7 @@ export abstract class AbstractGenreLoaderComponent<T> implements OnInit {
     protected allGenresLoaded = false;
     protected loadedGenres: Array<GenreLoadedItems<T>> = [];
 
-    protected abstract type: MEDIA_TYPE;
+    protected abstract type: MediaType;
     protected abstract genreStorageKey: string;
 
     constructor(
@@ -74,7 +74,7 @@ export abstract class AbstractGenreLoaderComponent<T> implements OnInit {
 
                         if (genreId) {
                             this.loadedGenres.push({
-                                type: type as MEDIA_TYPE,
+                                type: type as MediaType,
                                 genreName,
                                 genreId,
                                 items: items,

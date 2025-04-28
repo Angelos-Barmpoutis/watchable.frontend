@@ -9,7 +9,7 @@ import { FeaturedBannerComponent } from '../../shared/components/featured-banner
 import { InfiniteScrollLoaderComponent } from '../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
 import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
 import { DEFAULT } from '../../shared/constants/defaults.constant';
-import { MEDIA_TYPE } from '../../shared/enumerations/media-type.enum';
+import { MediaType } from '../../shared/enumerations/media-type.enum';
 import { TrendingFacade } from '../../shared/facades/trending.facade';
 import { filterMediaItems, filterPersonItems } from '../../shared/helpers/filter-items.helper';
 import { Genre } from '../../shared/models/genre.model';
@@ -34,7 +34,7 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
     ],
 })
 export class TrendingComponent implements OnInit {
-    readonly mediaType = MEDIA_TYPE;
+    readonly mediaType = MediaType;
     currentMovieGenreIndex = 0;
     currentTvShowGenreIndex = 0;
     genresPerBatch = DEFAULT.genresBatchSize;
@@ -47,7 +47,7 @@ export class TrendingComponent implements OnInit {
     movieGenres: Array<Genre> = [];
     tvShowGenres: Array<Genre> = [];
     loadedGenres: Array<{
-        type: MEDIA_TYPE.Movie | MEDIA_TYPE.TvShow;
+        type: MediaType.Movie | MediaType.TvShow;
         genreName: string;
         genreId: number;
         items: Array<Movie | TvShow>;
@@ -118,7 +118,7 @@ export class TrendingComponent implements OnInit {
 
                         if (genreId) {
                             this.loadedGenres.push({
-                                type: type as MEDIA_TYPE.Movie | MEDIA_TYPE.TvShow,
+                                type: type as MediaType.Movie | MediaType.TvShow,
                                 genreName,
                                 genreId,
                                 items: items,

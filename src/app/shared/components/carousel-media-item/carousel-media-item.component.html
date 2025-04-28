@@ -5,8 +5,8 @@
         [title]="title"
         [routerLink]="[
             '/',
-            mediaType === MEDIA_TYPE.Movie ? 'movies' : 'tv-shows',
-            mediaType === MEDIA_TYPE.Movie ? 'movie' : 'tv-show',
+            type === mediaType.Movie ? 'movies' : 'tv-shows',
+            type === mediaType.Movie ? 'movie' : 'tv-show',
             item.id
         ]"
     >
