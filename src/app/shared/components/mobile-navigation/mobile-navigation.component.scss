@@ -29,7 +29,7 @@
         align-items: center;
         justify-content: center;
         gap: 4px;
-        color: $text-secondary;
+        color: $text-primary;
         padding-block: $spacing-md;
         text-decoration: none;
         transition: color $transition-normal;
@@ -50,12 +50,12 @@
         }
 
         &.active {
-            color: $text-primary;
+            color: $primary-color;
         }
 
         &:hover,
         &:focus {
-            color: $text-primary;
+            color: $primary-color;
         }
     }
 }
