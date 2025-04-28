@@ -93,7 +93,7 @@ section {
     header {
         display: flex;
         justify-content: space-between;
-        align-items: baseline;
+        align-items: center;
         gap: $spacing-md;
         margin-block: calc($spacing-sm * 1.5);
 
