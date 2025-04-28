@@ -77,17 +77,20 @@ header {
                     z-index: 1;
                     background: none;
                     border: none;
-                    color: $text-secondary;
+                    color: $text-primary;
                     font-size: $font-size-lg;
                     cursor: pointer;
-                    transition: color $transition-normal;
+                    transition:
+                        color $transition-normal,
+                        transform $transition-normal;
 
                     &:hover {
-                        color: $text-primary;
+                        transform: translateY(-2px);
+                        color: $primary-color;
                     }
 
                     &.active i {
-                        color: $text-primary;
+                        color: $primary-color;
                     }
                 }
 
@@ -127,14 +130,21 @@ header {
                 .profile-button {
                     background: none;
                     border: none;
-                    color: $text-secondary;
+                    color: $text-primary;
                     padding: $spacing-xs $spacing-sm;
                     cursor: pointer;
-                    transition: color $transition-normal;
+                    transition:
+                        color $transition-normal,
+                        transform $transition-normal;
                     font-size: $font-size-lg;
 
                     &:hover {
-                        color: $text-primary;
+                        transform: translateY(-2px);
+                        color: $primary-color;
+                    }
+
+                    &.active {
+                        color: $primary-color;
                     }
                 }
 
@@ -243,13 +253,6 @@ header {
                         width: 100%;
                         opacity: 0;
                         transition: opacity $transition-normal;
-
-                        .input-wrapper {
-                            background-color: $surface-color;
-                            border: 1px solid $border-color;
-                            border-radius: $border-radius-xl;
-                            padding-left: $spacing-xl;
-                        }
                     }
 
                     &.expanded {

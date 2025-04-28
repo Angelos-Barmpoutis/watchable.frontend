@@ -72,6 +72,7 @@
                         title="User profile"
                         class="profile-button"
                         aria-label="User profile"
+                        [class.active]="isProfileDropdownOpen"
                         (click)="toggleProfileDropdown($event)"
                     >
                         <i class="fa-regular fa-user"></i>
