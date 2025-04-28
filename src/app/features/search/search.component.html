@@ -7,7 +7,7 @@
 
         <div class="list-container">
             <ng-container *ngIf="searchQuery">
-                <ng-container [ngSwitch]="searchOption">
+                <ng-container [ngSwitch]="option">
                     <ng-container *ngSwitchCase="searchOption.Movie">
                         <app-movie-list-item
                             *ngFor="let movie of searchMovies; trackBy: trackByItemId"
@@ -74,7 +74,7 @@
 </div>
 
 <ng-template #loadingState>
-    <ng-container [ngSwitch]="searchOption">
+    <ng-container [ngSwitch]="option">
         <ng-container *ngSwitchCase="searchOption.Movie">
             <ng-container *ngIf="searchMovies.length === 0">
                 <app-movie-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">

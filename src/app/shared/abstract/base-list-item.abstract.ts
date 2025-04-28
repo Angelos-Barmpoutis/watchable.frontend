@@ -8,7 +8,7 @@ export abstract class BaseListItemComponent<T> {
     itemsPerPage = DEFAULT.itemsPerPage;
     currentPage = DEFAULT.page;
     totalPages = DEFAULT.totalPages;
-    isLoading = false;
+    isLoading = true;
 
     protected get skeletonArray(): Array<number> {
         return Array(this.itemsPerPage)

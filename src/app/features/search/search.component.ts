@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { distinctUntilChanged } from 'rxjs';
 
 import { BaseMediaListItemComponent } from '../../shared/abstract/base-media-list-item.abstract';
@@ -60,19 +59,22 @@ export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow |
         private searchFacade: SearchFacade,
         private formBuilder: FormBuilder,
         private localStorageService: LocalStorageService,
-        destroyRef: DestroyRef,
         private searchService: SearchService,
-        private router: Router,
+        destroyRef: DestroyRef,
     ) {
         super(destroyRef);
-        this.searchForm = this.formBuilder.group({
-            searchQuery: ['', Validators.required],
-        });
     }
 
     override ngOnInit(): void {
+        this.initForm();
         this.getGenres();
         this.listenForUrlParameterers();
+    }
+
+    private initForm(): void {
+        this.searchForm = this.formBuilder.group({
+            searchQuery: ['', Validators.required],
+        });
     }
 
     private listenForUrlParameterers(): void {
