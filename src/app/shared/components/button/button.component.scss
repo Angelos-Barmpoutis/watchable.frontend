@@ -41,13 +41,17 @@
     }
 
     &.button-secondary {
-        background-color: rgba($surface-color, 0.6);
-        backdrop-filter: blur(14px);
+        background: transparent;
         color: $text-primary;
-        border-color: rgba($text-primary, 0.2);
+        border: none;
+        font-weight: $font-weight-semibold;
 
         &:hover {
-            background-color: rgba($surface-color, 0.8);
+            color: $primary-color;
+        }
+
+        &.active {
+            color: $primary-color;
         }
     }
 
@@ -101,9 +105,17 @@
         min-width: 100px;
         height: 40px;
         border-radius: 4px;
+
+        &.no-padding {
+            height: 17px;
+        }
     }
 
     &.no-border {
         border-color: transparent;
+    }
+
+    &.no-padding {
+        padding: 0;
     }
 }

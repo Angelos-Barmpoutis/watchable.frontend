@@ -12,6 +12,7 @@
         [class.instagram-button]="type === ButtonType.Instagram"
         [class.twitter-button]="type === ButtonType.Twitter"
         [class.no-border]="!hasBorder"
+        [class.no-padding]="!hasPadding"
         [disabled]="disabled"
     >
         <i *ngIf="icon && isIconLeft" [class]="icon"></i>
@@ -31,7 +32,9 @@
             [class.instagram-button]="type === ButtonType.Instagram"
             [class.twitter-button]="type === ButtonType.Twitter"
             [class.no-border]="!hasBorder"
+            [class.no-padding]="!hasPadding"
             [routerLink]="routerLink"
+            [routerLinkActive]="routerLinkActive"
         >
             <i *ngIf="icon && isIconLeft" [class]="icon"></i>
             {{ text }}
@@ -41,7 +44,7 @@
 </ng-container>
 
 <ng-template #loading>
-    <div appFadeIn class="button loading-skeleton">
+    <div appFadeIn class="button loading-skeleton" [class.no-padding]="!hasPadding">
         <div class="skeleton-content"></div>
     </div>
 </ng-template>

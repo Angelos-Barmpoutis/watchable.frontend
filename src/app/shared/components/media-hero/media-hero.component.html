@@ -52,6 +52,7 @@
                                 [type]="ButtonType.Secondary"
                                 [icon]="'fas fa-star'"
                                 [text]="'Rate'"
+                                [hasPadding]="false"
                             ></app-button>
                         </div>
 
@@ -72,6 +73,7 @@
                                 [type]="ButtonType.Secondary"
                                 [icon]="'fas fa-plus'"
                                 [text]="'Add to Watchlist'"
+                                [hasPadding]="false"
                             >
                             </app-button>
                         </div>
@@ -104,7 +106,7 @@
                     <div class="skeleton-media-rating-container">
                         <div class="skeleton-media-rating"></div>
                         <div class="skeleton-media-rating-details"></div>
-                        <app-button [type]="ButtonType.Secondary" [isLoading]="true"></app-button>
+                        <app-button [type]="ButtonType.Secondary" [isLoading]="true" [hasPadding]="false"></app-button>
                     </div>
                     <div class="skeleton-media-overview">
                         <div class="skeleton-media-overview-line"></div>
@@ -113,7 +115,7 @@
                     </div>
                     <div class="skeleton-media-buttons">
                         <app-button [type]="ButtonType.Primary" [isLoading]="true"></app-button>
-                        <app-button [type]="ButtonType.Secondary" [isLoading]="true"></app-button>
+                        <app-button [type]="ButtonType.Secondary" [isLoading]="true" [hasPadding]="false"></app-button>
                     </div>
                 </div>
             </div>

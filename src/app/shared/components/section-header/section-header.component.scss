@@ -70,13 +70,6 @@
                         border-radius: 4px;
                     }
                 }
-
-                .skeleton-view-more {
-                    height: 20px;
-                    width: 100px;
-                    @include skeleton-loading;
-                    border-radius: 4px;
-                }
             }
 
             a {
@@ -115,27 +108,6 @@
     .section-header {
         .title {
             font-size: 18px;
-
-            .title-link {
-                a {
-                    .view-more {
-                        opacity: 1;
-                        font-size: $font-size-sm;
-                        margin-left: auto;
-
-                        .chevron-icon {
-                            font-size: $font-size-sm;
-                        }
-                    }
-                }
-
-                .loading-skeleton {
-                    .skeleton-view-more {
-                        width: 80px;
-                        height: 18px;
-                    }
-                }
-            }
         }
     }
 }

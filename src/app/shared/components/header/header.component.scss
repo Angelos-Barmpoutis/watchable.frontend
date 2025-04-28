@@ -48,18 +48,6 @@ header {
                 padding: 0;
                 transition: all $transition-normal;
                 flex-shrink: 0;
-
-                a {
-                    color: $text-secondary;
-                    text-decoration: none;
-                    font-size: 15px;
-                    transition: color $transition-normal;
-
-                    &:hover,
-                    &.active {
-                        color: $text-primary;
-                    }
-                }
             }
         }
 

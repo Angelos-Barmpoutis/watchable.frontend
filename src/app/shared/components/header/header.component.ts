@@ -6,14 +6,16 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { FadeInDirective } from '../../directives/fade-in.directive';
+import { ButtonType } from '../../enumerations/components/button-type.enum';
 import { SearchService } from '../../services/search.service';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
     selector: 'app-header',
     standalone: true,
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    imports: [CommonModule, ReactiveFormsModule, RouterLink, RouterLinkActive, FadeInDirective],
+    imports: [CommonModule, ReactiveFormsModule, RouterLink, RouterLinkActive, FadeInDirective, ButtonComponent],
 })
 export class HeaderComponent implements OnInit {
     @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
@@ -23,6 +25,8 @@ export class HeaderComponent implements OnInit {
             this.isProfileDropdownOpen = false;
         }
     }
+
+    readonly buttonType = ButtonType;
 
     isProfileDropdownOpen = false;
     isSearchVisible = false;

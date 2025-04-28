@@ -17,10 +17,12 @@ export class ButtonComponent {
     @Input() type: ButtonType = ButtonType.Primary;
     @Input() isLoading: boolean = false;
     @Input() routerLink?: string | Array<string | number>;
+    @Input() routerLinkActive: string = '';
     @Input() disabled: boolean = false;
     @Input() icon?: string;
     @Input() isIconLeft: boolean = true;
     @Input() text?: string;
     @Input() hasBorder: boolean = true;
+    @Input() hasPadding: boolean = true;
     readonly ButtonType = ButtonType;
 }

@@ -4,9 +4,33 @@
             <div class="nav-start">
                 <a class="header-logo" [routerLink]="['/']">Watchable</a>
                 <ul class="nav-links">
-                    <li><a routerLinkActive="active" [routerLink]="['/', 'movies']">Movies</a></li>
-                    <li><a routerLinkActive="active" [routerLink]="['/', 'tv-shows']">TV Shows</a></li>
-                    <li><a routerLinkActive="active" [routerLink]="['/', 'people']">People</a></li>
+                    <li>
+                        <app-button
+                            [type]="buttonType.Secondary"
+                            [routerLink]="['/', 'movies']"
+                            [routerLinkActive]="'active'"
+                            [text]="'Movies'"
+                            [hasPadding]="false"
+                        ></app-button>
+                    </li>
+                    <li>
+                        <app-button
+                            [type]="buttonType.Secondary"
+                            [routerLink]="['/', 'tv-shows']"
+                            [routerLinkActive]="'active'"
+                            [text]="'TV Shows'"
+                            [hasPadding]="false"
+                        ></app-button>
+                    </li>
+                    <li>
+                        <app-button
+                            [type]="buttonType.Secondary"
+                            [routerLink]="['/', 'people']"
+                            [routerLinkActive]="'active'"
+                            [text]="'People'"
+                            [hasPadding]="false"
+                        ></app-button>
+                    </li>
                 </ul>
             </div>
 
