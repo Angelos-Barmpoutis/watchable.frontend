@@ -20,6 +20,10 @@
         border-radius: $border-radius-xl;
         padding: $spacing-xs;
         gap: $spacing-sm;
+
+        app-button {
+            flex-shrink: unset;
+        }
     }
 }
 

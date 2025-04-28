@@ -81,16 +81,16 @@ header {
                     font-size: $font-size-lg;
                     cursor: pointer;
                     transition:
-                        color $transition-normal,
+                                            // color $transition-normal,
                         transform $transition-normal;
 
                     &:hover {
                         transform: translateY(-2px);
-                        color: $primary-color;
+                        // color: $primary-color;
                     }
 
                     &.active i {
-                        color: $primary-color;
+                        // color: $primary-color;
                     }
                 }
 
@@ -134,17 +134,17 @@ header {
                     padding: $spacing-xs $spacing-sm;
                     cursor: pointer;
                     transition:
-                        color $transition-normal,
+                        // color $transition-normal,
                         transform $transition-normal;
                     font-size: $font-size-lg;
 
                     &:hover {
                         transform: translateY(-2px);
-                        color: $primary-color;
+                        // color: $primary-color;
                     }
 
                     &.active {
-                        color: $primary-color;
+                        // color: $primary-color;
                     }
                 }
 
