@@ -1,7 +1,7 @@
 @import "../../../../styles.scss";
 
 header {
-    padding: calc($spacing-sm * 1.5) 0;
+    padding: $spacing-md 0;
     position: fixed;
     top: 0;
     left: 0;

@@ -2,7 +2,7 @@
 
 .button {
     @media (max-width: map-get($breakpoints, "sm")) {
-        padding: $spacing-sm calc($spacing-sm * 1.5);
+        padding: calc($spacing-sm * 1.5);
     }
 
     justify-content: center;
@@ -21,6 +21,7 @@
     overflow: hidden;
     border: 1px solid transparent;
     background: none;
+    width: 100%;
 
     &:hover {
         transform: translateY(-2px);

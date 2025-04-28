@@ -95,7 +95,7 @@ section {
         justify-content: space-between;
         align-items: baseline;
         gap: $spacing-md;
-        margin-block: 12px;
+        margin-block: calc($spacing-sm * 1.5);
 
         &:has(app-tabs) {
             margin-bottom: $spacing-xl;

@@ -1,6 +1,6 @@
 .input {
     width: 100%;
-    padding: $spacing-sm $spacing-md;
+    padding: calc($spacing-sm * 1.5) $spacing-md;
     border-radius: $border-radius-xl;
     background-color: rgba($surface-color, 0.6);
     color: $text-primary;
@@ -9,7 +9,7 @@
     overflow: hidden;
 
     @media (max-width: map-get($breakpoints, "sm")) {
-        padding: $spacing-sm calc($spacing-sm * 1.5);
+        padding: calc($spacing-sm * 1.5);
     }
 
     &:focus {
