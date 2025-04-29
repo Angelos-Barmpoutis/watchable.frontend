@@ -13,6 +13,10 @@
         gap: $spacing-md;
         font-size: $font-size-sm;
 
+        @media (max-width: map-get($breakpoints, "sm")) {
+            font-size: $font-size-xs;
+        }
+
         .detail-label {
             color: $text-secondary;
             font-weight: $font-weight-medium;
@@ -74,23 +78,21 @@
     .skeleton-media-label {
         @include skeleton-loading;
         height: $font-size-sm;
-        width: 120px;
+        width: 110px;
+
+        @media (max-width: map-get($breakpoints, "sm")) {
+            height: $font-size-xs;
+            width: 140px;
+        }
     }
 
     .skeleton-media-value {
         @include skeleton-loading;
         flex: 1;
         height: $font-size-sm;
-    }
 
-    .skeleton-media-links {
-        display: flex;
-        gap: $spacing-md;
-    }
-
-    .skeleton-media-button {
-        @include skeleton-loading;
-        width: 160px;
-        height: 40px;
+        @media (max-width: map-get($breakpoints, "sm")) {
+            height: $font-size-xs;
+        }
     }
 }

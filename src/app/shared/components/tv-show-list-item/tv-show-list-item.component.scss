@@ -229,7 +229,7 @@
                 }
 
                 .overview {
-                    @include text-clamp(2);
+                    font-size: $font-size-xs;
                 }
             }
         }
@@ -250,9 +250,7 @@
 
                 .overview-skeleton {
                     .line {
-                        &:nth-child(3) {
-                            display: none;
-                        }
+                        height: $font-size-xs;
                     }
                 }
             }
