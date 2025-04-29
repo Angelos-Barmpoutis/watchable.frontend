@@ -16,7 +16,7 @@
         color: $text-primary;
         display: flex;
         align-items: center;
-        gap: $spacing-sm;
+        gap: 6px;
         margin: 0;
         width: 100%;
 
@@ -51,7 +51,7 @@
                 .skeleton-title-container {
                     display: flex;
                     align-items: center;
-                    gap: $spacing-sm;
+                    gap: 6px;
 
                     &::before {
                         content: "";

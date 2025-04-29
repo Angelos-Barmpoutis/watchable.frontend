@@ -1,7 +1,7 @@
 @import "../../../../styles.scss";
 
 .featured-banner {
-    height: 80vh;
+    height: calc(68vh - $desktop-header-height);
     background-size: cover;
     background-position: center 10%;
     position: relative;
@@ -16,7 +16,7 @@
     }
 
     .featured-details {
-        max-width: 60%;
+        max-width: 50%;
         display: flex;
         flex-direction: column;
 
@@ -28,7 +28,7 @@
         }
 
         .featured-meta {
-            margin-block-start: $spacing-sm;
+            margin-block-start: $spacing-xs;
             color: $text-secondary;
             font-size: $font-size-sm;
 
@@ -118,10 +118,9 @@
 }
 
 .featured-banner-skeleton {
-    height: 80dvh;
+    height: calc(68dvh - $desktop-header-height);
     background-color: $background-color;
     position: relative;
-    margin-bottom: $spacing-2xl;
 
     .overlay {
         width: 100%;
@@ -131,7 +130,7 @@
     }
 
     .featured-details {
-        max-width: 60%;
+        max-width: 50%;
 
         .skeleton-title {
             height: $font-size-3xl;
@@ -198,7 +197,7 @@
 
 @media (max-width: map-get($breakpoints, "md")) {
     .featured-banner {
-        height: calc(80vh - $mobile-nav-height);
+        height: calc(75vh - $mobile-nav-height - $desktop-header-height);
 
         .overlay {
             align-items: flex-end;
@@ -219,7 +218,7 @@
     }
 
     .featured-banner-skeleton {
-        height: calc(80vh - $mobile-nav-height);
+        height: calc(75vh - $mobile-nav-height - $desktop-header-height);
 
         .overlay {
             align-items: flex-end;
@@ -236,7 +235,7 @@
             .skeleton-overview {
                 .skeleton-overview-line {
                     height: $font-size-sm;
-                    width: 80%;
+                    width: 68%;
                 }
             }
         }
@@ -247,12 +246,32 @@
     .featured-banner {
         .featured-details {
             margin-bottom: $spacing-md;
+
+            .featured-meta {
+                font-size: $font-size-xs;
+            }
+
+            .overview {
+                p {
+                    font-size: $font-size-xs;
+                }
+            }
         }
     }
 
     .featured-banner-skeleton {
         .featured-details {
             margin-bottom: $spacing-md;
+
+            .featured-meta {
+                font-size: $font-size-xs;
+            }
+
+            .skeleton-overview {
+                .skeleton-overview-line {
+                    height: $font-size-xs;
+                }
+            }
         }
     }
 }

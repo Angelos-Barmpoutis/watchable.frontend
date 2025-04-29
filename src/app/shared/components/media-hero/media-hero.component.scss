@@ -1,7 +1,7 @@
 @import "../../../../styles.scss";
 
 .media-hero {
-    height: 80vh;
+    height: calc(63vh - $desktop-header-height);
     background-size: cover;
     background-position: center 10%;
     position: relative;
@@ -21,8 +21,8 @@
         align-items: flex-end;
 
         .media-poster {
-            flex: 0 0 300px;
-            height: 450px;
+            flex: 0 0 250px;
+            height: 375px;
             border-radius: $border-radius-lg;
             overflow: hidden;
             box-shadow: $shadow-lg;
@@ -43,7 +43,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            max-width: 60%;
+            max-width: 50%;
 
             .media-title {
                 font-size: $font-size-3xl;
@@ -53,7 +53,7 @@
             }
 
             .media-meta {
-                margin-block-start: $spacing-sm;
+                margin-block-start: $spacing-xs;
                 color: $text-secondary;
                 font-size: $font-size-sm;
 
@@ -144,7 +144,7 @@
     }
 
     @media (max-width: map-get($breakpoints, "md")) {
-        height: calc(80vh - $mobile-nav-height);
+        height: calc(75vh - $mobile-nav-height - $desktop-header-height);
 
         .overlay {
             align-items: flex-end;
@@ -181,12 +181,24 @@
             .media-poster {
                 display: none;
             }
+
+            .media-info {
+                .media-meta {
+                    font-size: $font-size-xs;
+                }
+
+                .overview {
+                    p {
+                        font-size: $font-size-xs;
+                    }
+                }
+            }
         }
     }
 }
 
 .skeleton-media-hero {
-    height: 80vh;
+    height: calc(63vh - $desktop-header-height);
     background-color: $background-color;
     position: relative;
     width: 100%;
@@ -199,8 +211,8 @@
         align-items: flex-end;
 
         .skeleton-media-poster {
-            flex: 0 0 300px;
-            height: 450px;
+            flex: 0 0 250px;
+            height: 375px;
             border-radius: $border-radius-lg;
             @include skeleton-loading;
         }
@@ -275,7 +287,7 @@
     }
 
     @media (max-width: map-get($breakpoints, "md")) {
-        height: calc(80vh - $mobile-nav-height);
+        height: calc(75vh - $mobile-nav-height - $desktop-header-height);
         align-items: flex-end;
 
         .skeleton-media-content {
@@ -298,7 +310,7 @@
                 .skeleton-media-overview {
                     .skeleton-media-overview-text {
                         height: $font-size-sm;
-                        width: 80%;
+                        width: 68%;
                     }
                 }
             }
@@ -311,6 +323,18 @@
 
             .skeleton-media-poster {
                 display: none;
+            }
+
+            .skeleton-media-info {
+                .skeleton-media-meta {
+                    font-size: $font-size-xs;
+                }
+            }
+
+            .skeleton-media-overview {
+                .skeleton-media-overview-text {
+                    height: $font-size-xs;
+                }
             }
         }
     }
