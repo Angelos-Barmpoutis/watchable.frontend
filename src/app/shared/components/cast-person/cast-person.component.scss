@@ -2,10 +2,7 @@
 
 .cast-person {
     display: flex;
-    gap: $spacing-md;
-    background-color: rgba($surface-color, 0.6);
-    backdrop-filter: blur(14px);
-    border-radius: $border-radius-lg;
+    gap: $spacing-sm;
     overflow: hidden;
     transition: transform $transition-normal;
     cursor: pointer;
@@ -35,8 +32,12 @@
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        padding: $spacing-md $spacing-md $spacing-md 0;
+        padding: $spacing-md;
         gap: $spacing-xs;
+        background-color: rgba($surface-color, 0.6);
+        backdrop-filter: blur(14px);
+        border-radius: $border-radius-lg;
+        flex: 1;
 
         .cast-name {
             font-weight: $font-weight-semibold;
@@ -54,9 +55,7 @@
 
 .cast-person-skeleton {
     display: flex;
-    gap: $spacing-md;
-    background-color: rgba($surface-color, 0.6);
-    border-radius: $border-radius-lg;
+    gap: $spacing-sm;
     overflow: hidden;
 
     .cast-photo {
@@ -72,8 +71,12 @@
         display: flex;
         flex-direction: column;
         gap: $spacing-sm;
-        padding-block: $spacing-md;
+        padding: $spacing-md;
         overflow: hidden;
+        background-color: rgba($surface-color, 0.6);
+        backdrop-filter: blur(14px);
+        border-radius: $border-radius-lg;
+        flex: 1;
 
         .cast-name {
             height: $font-size-sm;

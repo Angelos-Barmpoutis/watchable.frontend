@@ -1,17 +1,13 @@
 @import "../../../../styles.scss";
 
 .movie-list-item {
-    background-color: rgba($surface-color, 0.6);
-    border-radius: $border-radius-lg;
-    display: flex;
-    flex-direction: column;
     text-decoration: none;
     transition: all $transition-normal;
 
     .movie-main {
         display: grid;
         grid-template-columns: 128px 1fr;
-        gap: $spacing-md;
+        gap: $spacing-sm;
         cursor: pointer;
 
         .poster-wrapper {
@@ -33,7 +29,10 @@
             display: flex;
             flex-direction: column;
             gap: $spacing-md;
-            padding: $spacing-md $spacing-md $spacing-md 0;
+            padding: $spacing-md;
+            background-color: rgba($surface-color, 0.6);
+            backdrop-filter: blur(14px);
+            border-radius: $border-radius-lg;
 
             .info-header {
                 display: flex;
@@ -134,16 +133,12 @@
 }
 
 .movie-list-item-loading {
-    background-color: rgba($surface-color, 0.6);
-    border-radius: $border-radius-lg;
-    display: flex;
-    flex-direction: column;
     height: 192px;
 
     .movie-main {
         display: grid;
         grid-template-columns: 128px 1fr;
-        gap: $spacing-md;
+        gap: $spacing-sm;
         height: 100%;
 
         .poster-skeleton {
@@ -158,7 +153,10 @@
             display: flex;
             flex-direction: column;
             gap: $spacing-md;
-            padding: $spacing-md $spacing-md $spacing-md 0;
+            padding: $spacing-md;
+            background-color: rgba($surface-color, 0.6);
+            backdrop-filter: blur(14px);
+            border-radius: $border-radius-lg;
 
             .header-skeleton {
                 display: flex;

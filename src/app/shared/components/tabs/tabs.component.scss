@@ -17,6 +17,7 @@
     .tab-group {
         display: flex;
         background-color: rgba($surface-color, 0.6);
+        backdrop-filter: blur(14px);
         border-radius: $border-radius-xl;
         padding: $spacing-xs;
         gap: $spacing-sm;
