@@ -49,7 +49,8 @@
                                 </div>
                             </div>
                             <app-button
-                                [type]="ButtonType.Secondary"
+                                [variant]="ButtonType.Secondary"
+                                [type]="'button'"
                                 [icon]="'fas fa-star'"
                                 [text]="'Rate'"
                                 [hasPadding]="false"
@@ -63,14 +64,16 @@
                         <div class="action-buttons">
                             <app-button
                                 *ngIf="trailerVideo"
-                                [type]="ButtonType.Primary"
+                                [variant]="ButtonType.Primary"
+                                [type]="'button'"
                                 [icon]="'fas fa-play'"
                                 [text]="'Watch Trailer'"
                                 (click)="toggleTrailer()"
                             >
                             </app-button>
                             <app-button
-                                [type]="ButtonType.Secondary"
+                                [variant]="ButtonType.Secondary"
+                                [type]="'button'"
                                 [icon]="'fas fa-plus'"
                                 [text]="'Add to Watchlist'"
                                 [hasPadding]="false"
@@ -106,7 +109,11 @@
                     <div class="skeleton-media-rating-container">
                         <div class="skeleton-media-rating"></div>
                         <div class="skeleton-media-rating-details"></div>
-                        <app-button [type]="ButtonType.Secondary" [isLoading]="true" [hasPadding]="false"></app-button>
+                        <app-button
+                            [variant]="ButtonType.Secondary"
+                            [isLoading]="true"
+                            [hasPadding]="false"
+                        ></app-button>
                     </div>
                     <div class="skeleton-media-overview">
                         <div class="skeleton-media-overview-line"></div>
@@ -114,8 +121,12 @@
                         <div class="skeleton-media-overview-line"></div>
                     </div>
                     <div class="skeleton-media-buttons">
-                        <app-button [type]="ButtonType.Primary" [isLoading]="true"></app-button>
-                        <app-button [type]="ButtonType.Secondary" [isLoading]="true" [hasPadding]="false"></app-button>
+                        <app-button [variant]="ButtonType.Primary" [isLoading]="true"></app-button>
+                        <app-button
+                            [variant]="ButtonType.Secondary"
+                            [isLoading]="true"
+                            [hasPadding]="false"
+                        ></app-button>
                     </div>
                 </div>
             </div>

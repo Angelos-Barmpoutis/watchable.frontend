@@ -11,7 +11,8 @@
         <app-button
             [isIconLeft]="false"
             [icon]="showAll ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"
-            [type]="ButtonType.Secondary"
+            [variant]="ButtonType.Secondary"
+            [type]="'button'"
             [isLoading]="isLoading"
             [text]="showAll ? 'Show Less' : 'View All'"
             [hasPadding]="false"

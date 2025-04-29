@@ -6,7 +6,8 @@
                 <ul class="nav-links">
                     <li>
                         <app-button
-                            [type]="buttonType.Secondary"
+                            [variant]="buttonType.Secondary"
+                            [type]="'button'"
                             [routerLink]="['/', 'movies']"
                             [routerLinkActive]="'active'"
                             [text]="'Movies'"
@@ -15,7 +16,8 @@
                     </li>
                     <li>
                         <app-button
-                            [type]="buttonType.Secondary"
+                            [variant]="buttonType.Secondary"
+                            [type]="'button'"
                             [routerLink]="['/', 'tv-shows']"
                             [routerLinkActive]="'active'"
                             [text]="'TV Shows'"
@@ -24,7 +26,8 @@
                     </li>
                     <li>
                         <app-button
-                            [type]="buttonType.Secondary"
+                            [variant]="buttonType.Secondary"
+                            [type]="'button'"
                             [routerLink]="['/', 'people']"
                             [routerLinkActive]="'active'"
                             [text]="'People'"

@@ -9,7 +9,8 @@
 
     <div *ngIf="hasMoreReviews" class="view-all-container">
         <app-button
-            [type]="ButtonType.Secondary"
+            [variant]="ButtonType.Secondary"
+            [type]="'button'"
             [isLoading]="isLoading"
             [icon]="showAll ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"
             [isIconLeft]="false"

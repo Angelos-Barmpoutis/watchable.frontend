@@ -62,7 +62,8 @@
                 <div class="social-links">
                     <app-button
                         *ngIf="movieDetails?.external_ids?.imdb_id || isLoading"
-                        [type]="ButtonType.Imdb"
+                        [variant]="ButtonType.Imdb"
+                        [type]="'button'"
                         [icon]="'fab fa-imdb'"
                         [routerLink]="['https://www.imdb.com/title/' + movieDetails?.external_ids?.imdb_id]"
                         [isLoading]="isLoading"
@@ -71,7 +72,8 @@
                     </app-button>
                     <app-button
                         *ngIf="movieDetails?.external_ids?.facebook_id || isLoading"
-                        [type]="ButtonType.Facebook"
+                        [variant]="ButtonType.Facebook"
+                        [type]="'button'"
                         [icon]="'fab fa-facebook'"
                         [routerLink]="['https://www.facebook.com/' + movieDetails?.external_ids?.facebook_id]"
                         [isLoading]="isLoading"
@@ -80,7 +82,8 @@
                     </app-button>
                     <app-button
                         *ngIf="movieDetails?.external_ids?.instagram_id || isLoading"
-                        [type]="ButtonType.Instagram"
+                        [variant]="ButtonType.Instagram"
+                        [type]="'button'"
                         [icon]="'fab fa-instagram'"
                         [routerLink]="['https://www.instagram.com/' + movieDetails?.external_ids?.instagram_id]"
                         [isLoading]="isLoading"
@@ -89,7 +92,8 @@
                     </app-button>
                     <app-button
                         *ngIf="movieDetails?.external_ids?.twitter_id || isLoading"
-                        [type]="ButtonType.Twitter"
+                        [variant]="ButtonType.Twitter"
+                        [type]="'button'"
                         [icon]="'fab fa-twitter'"
                         [routerLink]="['https://twitter.com/' + movieDetails?.external_ids?.twitter_id]"
                         [isLoading]="isLoading"

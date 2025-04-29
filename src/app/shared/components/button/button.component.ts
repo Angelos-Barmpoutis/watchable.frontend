@@ -14,7 +14,8 @@ import { ButtonType } from '../../enumerations/components/button-type.enum';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
-    @Input() type: ButtonType = ButtonType.Primary;
+    @Input() type: HTMLButtonElement['type'] = 'button';
+    @Input() variant: ButtonType = ButtonType.Primary;
     @Input() isLoading: boolean = false;
     @Input() routerLink?: string | Array<string | number>;
     @Input() routerLinkActive: string = '';

@@ -6,7 +6,8 @@
                     <span>{{ title }}</span>
                     <app-button
                         *ngIf="redirectUrl"
-                        [type]="buttonType.Secondary"
+                        [variant]="buttonType.Secondary"
+                        [type]="'button'"
                         [routerLink]="redirectUrl"
                         [text]="'View More'"
                         [isIconLeft]="false"
@@ -26,7 +27,8 @@
         </div>
         <app-button
             *ngIf="redirectUrl"
-            [type]="buttonType.Secondary"
+            [variant]="buttonType.Secondary"
+            [type]="'button'"
             [routerLink]="redirectUrl"
             [text]="'View More'"
             [isIconLeft]="false"
