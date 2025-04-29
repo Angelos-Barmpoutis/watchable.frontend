@@ -106,6 +106,10 @@
         margin-bottom: $spacing-md;
         line-height: 1.5;
         @include text-clamp(6);
+
+        @media (max-width: map-get($breakpoints, "sm")) {
+            font-size: $font-size-xs;
+        }
     }
 
     .read-more {
@@ -184,6 +188,10 @@
     background-color: $surface-color;
     border-radius: $border-radius-sm;
     @include skeleton-loading;
+
+    @media (max-width: map-get($breakpoints, "sm")) {
+        height: $font-size-xs;
+    }
 
     &:nth-child(1) {
         width: 100%;
