@@ -8,7 +8,7 @@
                 <app-person-list-item
                     *ngFor="let person of items; trackBy: trackByItemId"
                     [person]="person"
-                    [isLoading]="false"
+                    [isLoading]="isLoading"
                 >
                 </app-person-list-item>
             </ng-container>

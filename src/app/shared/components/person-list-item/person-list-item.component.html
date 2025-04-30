@@ -2,7 +2,7 @@
     <a appFadeIn class="person-list-item" [routerLink]="['/', 'people', 'person', person.id]">
         <div class="person-main">
             <div class="person-avatar">
-                <ng-container *ngIf="person.profile_path; else altProfilePath">
+                <ng-container *ngIf="person?.profile_path; else altProfilePath">
                     <img appProfilePath [size]="profileSize" [profilePath]="person.profile_path" />
                 </ng-container>
             </div>
@@ -13,8 +13,8 @@
                     <span class="person-department">{{ person.known_for_department }}</span>
                 </div>
 
-                <div *ngIf="person.known_for && person.known_for.length" class="credits-list">
-                    <span *ngFor="let credit of person.known_for | slice: 0 : 3" class="genre">
+                <div *ngIf="person?.known_for && person?.known_for?.length" class="credits-list">
+                    <span *ngFor="let credit of person?.known_for | slice: 0 : 2" class="credit">
                         {{ credit?.title ?? credit?.name }}
                     </span>
                 </div>
@@ -32,7 +32,9 @@
                     <div class="skeleton-name"></div>
                     <div class="skeleton-department"></div>
                 </div>
-                <div class="skeleton-credits"></div>
+                <div class="skeleton-credits">
+                    <div class="line"></div>
+                </div>
             </div>
         </div>
     </div>

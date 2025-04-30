@@ -11,7 +11,7 @@
 
     .image-item {
         position: relative;
-        border-radius: $border-radius-md;
+        border-radius: $border-radius-lg;
         overflow: hidden;
         cursor: pointer;
         aspect-ratio: 16/9;
@@ -65,7 +65,7 @@
 
     .skeleton-image-item {
         aspect-ratio: 16/9;
-        border-radius: $border-radius-md;
+        border-radius: $border-radius-lg;
         overflow: hidden;
 
         .skeleton-image {

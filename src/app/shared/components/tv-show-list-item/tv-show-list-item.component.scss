@@ -7,7 +7,7 @@
 
     .tv-show-main {
         display: grid;
-        grid-template-columns: 128px 1fr;
+        grid-template-columns: 100px 1fr;
         gap: $spacing-sm;
         cursor: pointer;
 
@@ -135,11 +135,11 @@
 }
 
 .tv-show-list-item-loading {
-    height: 192px;
+    height: 150px;
 
     .tv-show-main {
         display: grid;
-        grid-template-columns: 128px 1fr;
+        grid-template-columns: 100px 1fr;
         gap: $spacing-sm;
         height: 100%;
 
@@ -216,9 +216,10 @@
 @media (max-width: map-get($breakpoints, "sm")) {
     .tv-show-list-item {
         .tv-show-main {
-            grid-template-columns: 96px 1fr;
+            grid-template-columns: 88px 1fr;
 
             .info {
+                padding: calc($spacing-sm * 1.5);
                 .info-header {
                     flex-direction: row;
                     align-items: center;
@@ -236,12 +237,14 @@
     }
 
     .tv-show-list-item-loading {
-        height: 150px;
+        height: 132.8px;
 
         .tv-show-main {
-            grid-template-columns: 96px 1fr;
+            grid-template-columns: 88px 1fr;
 
             .info-skeleton {
+                padding: calc($spacing-sm * 1.5);
+
                 .header-skeleton {
                     .title-container-skeleton {
                         max-width: 70%;

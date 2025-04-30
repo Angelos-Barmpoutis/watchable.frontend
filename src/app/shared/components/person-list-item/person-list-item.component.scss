@@ -1,27 +1,23 @@
 @import "../../../../styles.scss";
 
 .person-list-item {
-    background-color: $surface-color;
-    border-radius: $border-radius-xl;
-    border: 1px solid $border-color;
-    overflow: hidden;
-    display: block;
     text-decoration: none;
     transition: all $transition-normal;
+    display: block;
 
     .person-main {
         display: grid;
-        grid-template-columns: 128px 1fr;
-        gap: $spacing-md;
-        padding: $spacing-md;
+        grid-template-columns: 100px 1fr;
+        gap: $spacing-sm;
         cursor: pointer;
 
         .person-avatar {
             width: 100%;
+            height: 100%;
             aspect-ratio: 1/1;
-            transition: filter $transition-normal;
-            border-radius: 50%;
             overflow: hidden;
+            transition: filter $transition-normal;
+            border-radius: $spacing-sm;
 
             img {
                 width: 100%;
@@ -36,64 +32,75 @@
             display: flex;
             flex-direction: column;
             gap: $spacing-md;
+            padding: $spacing-md;
+            background-color: rgba($surface-color, 0.6);
+            backdrop-filter: blur(14px);
+            border-radius: $border-radius-lg;
 
             .person-header {
                 display: flex;
-                flex-wrap: wrap;
-                align-items: baseline;
-                gap: $spacing-sm;
+                flex-direction: column;
+                gap: $spacing-xs;
 
                 .person-name {
-                    font-size: $font-size-md;
-                    font-weight: $font-weight-medium;
+                    font-size: $font-size-sm;
+                    font-weight: $font-weight-semibold;
                     color: $text-primary;
                     margin: 0;
                     @include text-clamp(1);
                 }
 
                 .person-department {
-                    font-weight: $font-weight-medium;
                     color: $text-secondary;
-                    font-size: $font-size-sm;
+                    font-size: $font-size-xs;
                 }
             }
 
             .credits-list {
                 display: flex;
                 flex-wrap: wrap;
-                gap: $spacing-sm;
+                gap: $spacing-xs;
+                color: $text-primary;
+                font-size: $font-size-sm;
+                line-height: 1.5;
+                @include text-clamp(1);
+
+                .credit {
+                    position: relative;
+                    margin-right: $spacing-xs;
+
+                    &:not(:first-child)::before {
+                        content: "•";
+                        margin-inline: $spacing-xs;
+                        opacity: 0.5;
+                    }
+                }
             }
         }
     }
 
     &:hover {
-        background-color: rgba($primary-color, 0.05);
-        border-color: rgba($primary-color, 0.2);
+        transform: translateY(-2px);
 
-        .person-avatar {
-            filter: brightness(0.85);
-
-            img {
-                transform: scale(1.05);
-            }
+        .person-avatar img {
+            transform: scale(1.05);
         }
     }
 }
 
 // Skeleton styles
 .person-list-item.skeleton {
-    pointer-events: none;
-
     .person-main {
         display: grid;
-        grid-template-columns: 128px 1fr;
-        gap: $spacing-md;
-        padding: $spacing-md;
+        grid-template-columns: 100px 1fr;
+        gap: $spacing-sm;
+        height: 100%;
 
         .skeleton-avatar {
             width: 100%;
+            height: 100%;
             aspect-ratio: 1/1;
-            border-radius: 50% !important;
+            border-radius: $spacing-sm;
             @include skeleton-loading;
         }
 
@@ -101,6 +108,10 @@
             display: flex;
             flex-direction: column;
             gap: $spacing-md;
+            padding: $spacing-md;
+            background-color: rgba($surface-color, 0.6);
+            backdrop-filter: blur(14px);
+            border-radius: $border-radius-lg;
 
             .skeleton-header {
                 display: flex;
@@ -108,22 +119,33 @@
                 gap: $spacing-xs;
 
                 .skeleton-name {
-                    height: 24px;
-                    width: 60%;
+                    width: 70%;
+                    height: $font-size-sm;
                     @include skeleton-loading;
                 }
 
                 .skeleton-department {
-                    height: 16px;
-                    width: 40%;
+                    width: 50%;
+                    height: $font-size-xs;
                     @include skeleton-loading;
                 }
             }
 
             .skeleton-credits {
-                height: 14px;
-                width: 60%;
-                @include skeleton-loading;
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-xs;
+                margin-top: $spacing-md;
+
+                .line {
+                    width: 100%;
+                    height: $font-size-sm;
+                    @include skeleton-loading;
+
+                    &:nth-child(2) {
+                        width: 80%;
+                    }
+                }
             }
         }
     }
@@ -132,21 +154,23 @@
 @media (max-width: map-get($breakpoints, "sm")) {
     .person-list-item {
         .person-main {
-            grid-template-columns: 96px 1fr;
-            padding: $spacing-sm;
-            gap: $spacing-md;
+            grid-template-columns: 88px 1fr;
 
             .person-content {
-                gap: $spacing-md;
+                padding: calc($spacing-sm * 1.5);
 
                 .person-header {
                     .person-name {
-                        font-size: $font-size-md;
+                        font-size: $font-size-sm;
                     }
 
                     .person-department {
-                        font-size: $font-size-sm;
+                        font-size: $font-size-xs;
                     }
+                }
+
+                .credits-list {
+                    font-size: $font-size-xs;
                 }
             }
         }
@@ -154,12 +178,26 @@
 
     .person-list-item.skeleton {
         .person-main {
-            grid-template-columns: 96px 1fr;
-            padding: $spacing-sm;
-            gap: $spacing-md;
+            grid-template-columns: 88px 1fr;
 
             .skeleton-content {
-                gap: $spacing-md;
+                padding: calc($spacing-sm * 1.5);
+
+                .skeleton-header {
+                    .skeleton-name {
+                        height: $font-size-sm;
+                    }
+
+                    .skeleton-department {
+                        height: $font-size-xs;
+                    }
+                }
+
+                .skeleton-credits {
+                    .line {
+                        height: $font-size-xs;
+                    }
+                }
             }
         }
     }

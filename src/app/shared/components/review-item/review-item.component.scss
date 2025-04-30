@@ -135,6 +135,10 @@
             }
         }
     }
+
+    @media (max-width: map-get($breakpoints, "sm")) {
+        padding: calc($spacing-sm * 1.5);
+    }
 }
 
 // Skeleton styles

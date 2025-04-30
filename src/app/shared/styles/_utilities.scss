@@ -19,16 +19,6 @@
     }
 }
 
-.reviews-container {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-md;
-
-    @media (max-width: map-get($breakpoints, "sm")) {
-        gap: $spacing-sm;
-    }
-}
-
 .media-details-grid {
     display: grid;
     grid-template-columns: 3fr 1fr;
