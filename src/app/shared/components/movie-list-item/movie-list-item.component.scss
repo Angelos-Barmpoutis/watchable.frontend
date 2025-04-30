@@ -3,6 +3,7 @@
 .movie-list-item {
     text-decoration: none;
     transition: all $transition-normal;
+    display: block;
 
     .movie-main {
         display: grid;
@@ -88,6 +89,7 @@
                             transition: transform $transition-normal;
 
                             .rating-value {
+                                color: $text-primary;
                                 font-size: $font-size-sm;
                                 font-weight: $font-weight-bold;
 

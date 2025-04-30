@@ -2,6 +2,7 @@ import { AfterViewInit, Directive, ElementRef, Input, ViewChild } from '@angular
 import { SwiperContainer } from 'swiper/element';
 import { SwiperOptions } from 'swiper/types';
 
+import { SWIPER_CONFIG } from '../config/swiper.config';
 import { DEFAULT } from '../constants/defaults.constant';
 
 let carouselId = 0;
@@ -28,14 +29,7 @@ export abstract class BaseCarouselComponent<T> implements AfterViewInit {
     readonly carouselId = carouselId++;
     readonly itemsPerPage = DEFAULT.itemsPerPage;
     readonly swiperOptions: SwiperOptions = {
-        slidesPerView: 'auto',
-        spaceBetween: 8,
-        loop: true,
-        speed: 400,
-        freeMode: {
-            sticky: true,
-            enabled: true,
-        },
+        ...SWIPER_CONFIG,
         navigation: {
             nextEl: `.${this.nextButtonClass}`,
             prevEl: `.${this.prevButtonClass}`,

@@ -3,6 +3,7 @@
 .tv-show-list-item {
     text-decoration: none;
     transition: all $transition-normal;
+    display: block;
 
     .tv-show-main {
         display: grid;
@@ -90,6 +91,7 @@
                             .rating-value {
                                 font-size: $font-size-sm;
                                 font-weight: $font-weight-bold;
+                                color: $text-primary;
 
                                 &.rating-low {
                                     color: rgba($error-color, 0.8);

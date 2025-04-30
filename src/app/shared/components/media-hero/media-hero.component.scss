@@ -92,6 +92,7 @@
                         .rating-value {
                             font-size: $font-size-sm;
                             font-weight: $font-weight-semibold;
+                            color: $text-primary;
 
                             &.rating-low {
                                 color: rgba($error-color, 0.8);

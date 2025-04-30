@@ -25,6 +25,7 @@
                         <div class="rating">
                             <div class="rating-badge">
                                 <span
+                                    *ngIf="movie.vote_average; else noRating"
                                     class="rating-value"
                                     [class.rating-low]="movie.vote_average < 5.0"
                                     [class.rating-medium]="movie.vote_average >= 5.0 && movie.vote_average < 7.0"
@@ -33,6 +34,9 @@
                                 >
                                     {{ movie.vote_average | number: "1.1-1" }}
                                 </span>
+                                <ng-template #noRating>
+                                    <span class="rating-value">-</span>
+                                </ng-template>
                                 <span class="rating-total">/10</span>
                             </div>
                         </div>

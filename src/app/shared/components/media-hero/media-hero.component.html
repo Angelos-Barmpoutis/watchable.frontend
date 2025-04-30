@@ -30,10 +30,11 @@
                             </span>
                         </div>
 
-                        <div *ngIf="voteAverage !== 0" class="rating-container">
+                        <div class="rating-container">
                             <div class="rating">
                                 <div class="rating-badge">
                                     <span
+                                        *ngIf="voteAverage; else noRating"
                                         class="rating-value"
                                         [class.rating-low]="voteAverage < 5"
                                         [class.rating-medium]="voteAverage >= 5 && voteAverage < 7"
@@ -42,6 +43,9 @@
                                     >
                                         {{ voteAverage | number: "1.1-1" }}
                                     </span>
+                                    <ng-template #noRating>
+                                        <span class="rating-value">-</span>
+                                    </ng-template>
                                     <span class="rating-total">/10</span>
                                 </div>
                                 <div class="rating-details">
