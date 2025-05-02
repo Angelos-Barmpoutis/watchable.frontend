@@ -4,8 +4,8 @@
     position: fixed;
     bottom: $spacing-md;
     right: $spacing-lg;
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     background-color: rgba($primary-color, 0.8);
     backdrop-filter: blur(17px);
@@ -25,7 +25,7 @@
     }
 
     i {
-        font-size: $font-size-md;
+        font-size: $font-size-lg;
     }
 
     @media (max-width: map-get($breakpoints, "sm")) {
