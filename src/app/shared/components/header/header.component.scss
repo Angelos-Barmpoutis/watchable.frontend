@@ -1,7 +1,6 @@
 @import "../../../../styles.scss";
 
 header {
-    padding: $spacing-md 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -10,6 +9,9 @@ header {
     backdrop-filter: blur(17px);
     z-index: map-get($z-layers, "header");
     border-bottom: 1px solid rgba($text-secondary, 0.2);
+    height: $desktop-header-height;
+    display: flex;
+    align-items: center;
 
     nav {
         display: flex;
@@ -72,13 +74,13 @@ header {
                 .search-trigger {
                     position: absolute;
                     left: 0;
-                    width: 52px;
+                    width: 44px;
                     height: 44px;
                     z-index: 1;
                     background: none;
                     border: none;
                     color: $text-primary;
-                    font-size: $font-size-lg;
+                    font-size: $font-size-md;
                     cursor: pointer;
                     transition:
                                             // color $transition-normal,
@@ -105,14 +107,14 @@ header {
                         background-color: $surface-color;
                         border: 1px solid rgba($text-secondary, 0.2);
                         border-radius: $border-radius-xl;
-                        padding-left: $spacing-xl;
+                        padding-left: $spacing-lg;
 
                         &.has-value {
                             padding-right: $spacing-lg;
                         }
 
                         .close-button {
-                            right: 4px;
+                            right: 0;
                             top: 50%;
                             transform: translateY(-50%);
                         }
@@ -136,7 +138,7 @@ header {
                     transition:
                         // color $transition-normal,
                         transform $transition-normal;
-                    font-size: $font-size-lg;
+                    font-size: $font-size-md;
 
                     &:hover {
                         transform: translateY(-2px);
@@ -280,14 +282,6 @@ header {
             .nav-start {
                 .nav-links {
                     display: none;
-                }
-            }
-
-            .nav-end {
-                .search-container {
-                    .search-trigger {
-                        width: 48px;
-                    }
                 }
             }
         }
