@@ -4,33 +4,13 @@
             <div class="nav-start">
                 <a class="header-logo" [routerLink]="['/']">Watchable</a>
                 <ul class="nav-links">
-                    <li>
+                    <li *ngFor="let link of navigationLinks; trackBy: trackByLink">
                         <app-button
                             [variant]="buttonType.Secondary"
                             [type]="'button'"
-                            [routerLink]="['/', 'movies']"
+                            [link]="link"
                             [routerLinkActive]="'active'"
-                            [text]="'Movies'"
-                            [hasPadding]="false"
-                        ></app-button>
-                    </li>
-                    <li>
-                        <app-button
-                            [variant]="buttonType.Secondary"
-                            [type]="'button'"
-                            [routerLink]="['/', 'tv-shows']"
-                            [routerLinkActive]="'active'"
-                            [text]="'TV Shows'"
-                            [hasPadding]="false"
-                        ></app-button>
-                    </li>
-                    <li>
-                        <app-button
-                            [variant]="buttonType.Secondary"
-                            [type]="'button'"
-                            [routerLink]="['/', 'people']"
-                            [routerLinkActive]="'active'"
-                            [text]="'People'"
+                            [text]="link.title"
                             [hasPadding]="false"
                         ></app-button>
                     </li>
@@ -50,7 +30,7 @@
                         <i class="fas fa-search"></i>
                     </button>
                     <form class="search-form" [formGroup]="searchForm">
-                        <div class="input-wrapper" [class.has-value]="searchQueryFormField?.value">
+                        <div class="input-wrapper" [class.has-value]="searchQueryFormField.value">
                             <input
                                 #searchInput
                                 class="input"
@@ -59,7 +39,7 @@
                                 formControlName="searchQuery"
                             />
                             <button
-                                *ngIf="searchQueryFormField?.value"
+                                *ngIf="searchQueryFormField.value"
                                 type="button"
                                 class="close-button"
                                 (click)="clearSearch()"

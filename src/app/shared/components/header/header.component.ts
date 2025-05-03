@@ -5,10 +5,11 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
+import { NAVIGATION_LINKS, NavigationLink } from '../../config/navigation.config';
 import { FadeInDirective } from '../../directives/fade-in.directive';
-import { ButtonType } from '../../enumerations/components/button-type.enum';
 import { SearchService } from '../../services/search.service';
 import { ButtonComponent } from '../button/button.component';
+import { ButtonType } from '../button/enumerations/button-type.enum';
 
 @Component({
     selector: 'app-header',
@@ -27,6 +28,7 @@ export class HeaderComponent implements OnInit {
     }
 
     readonly buttonType = ButtonType;
+    readonly navigationLinks = NAVIGATION_LINKS;
 
     isProfileDropdownOpen = false;
     isSearchVisible = false;
@@ -98,5 +100,9 @@ export class HeaderComponent implements OnInit {
 
     clearSearch(): void {
         this.searchQueryFormField.setValue('');
+    }
+
+    trackByLink(index: number, link: NavigationLink): string {
+        return link.path;
     }
 }

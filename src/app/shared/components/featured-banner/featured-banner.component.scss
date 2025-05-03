@@ -2,9 +2,18 @@
 
 .featured-banner {
     height: calc(68vh - $desktop-header-height);
+    background-image: var(--background-image-780);
     background-size: cover;
     background-position: center 10%;
     position: relative;
+
+    @media (min-width: 780px) {
+        background-image: var(--background-image-1280);
+    }
+
+    @media (min-width: 1280px) {
+        background-image: var(--background-image-original);
+    }
 
     .overlay {
         background: linear-gradient(to right, rgba($background-color, 0.2), transparent),

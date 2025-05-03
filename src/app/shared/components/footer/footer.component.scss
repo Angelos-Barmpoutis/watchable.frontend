@@ -45,7 +45,6 @@ footer {
         padding-top: $spacing-lg;
         border-top: 1px solid $border-color;
         display: flex;
-        justify-content: space-between;
         align-items: center;
 
         .copyright {
@@ -55,6 +54,7 @@ footer {
         }
 
         .powered-by {
+            margin: auto;
             color: $text-secondary;
             font-size: $font-size-sm;
 

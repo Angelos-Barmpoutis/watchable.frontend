@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isLoading; else loadingTemplate">
-    <div appFadeIn class="media-hero" [style.background-image]="backdropUrl">
+    <div appFadeIn class="media-hero" appBackgroundPath [backgroundPath]="mediaDetails?.backdrop_path ?? ''">
         <div class="overlay">
             <div class="wrapper">
                 <div class="media-content">
@@ -99,8 +99,8 @@
 </ng-container>
 
 <ng-template #loadingTemplate>
-    <div appFadeIn class="skeleton-media-hero">
-        <div class="wrapper">
+    <div class="wrapper">
+        <div class="skeleton-media-hero">
             <div class="skeleton-media-content">
                 <div class="skeleton-media-poster"></div>
                 <div class="skeleton-media-info">
@@ -115,6 +115,9 @@
                         <div class="skeleton-media-rating-details"></div>
                         <app-button
                             [variant]="ButtonType.Secondary"
+                            [type]="'button'"
+                            [icon]="'fas fa-star'"
+                            [text]="'Rate'"
                             [isLoading]="true"
                             [hasPadding]="false"
                         ></app-button>
@@ -125,9 +128,19 @@
                         <div class="skeleton-media-overview-line"></div>
                     </div>
                     <div class="skeleton-media-buttons">
-                        <app-button [variant]="ButtonType.Primary" [isLoading]="true"></app-button>
+                        <app-button
+                            [variant]="ButtonType.Primary"
+                            [type]="'button'"
+                            [icon]="'fas fa-play'"
+                            [text]="'Watch Trailer'"
+                            [isLoading]="true"
+                            [hasPadding]="false"
+                        ></app-button>
                         <app-button
                             [variant]="ButtonType.Secondary"
+                            [type]="'button'"
+                            [icon]="'fas fa-plus'"
+                            [text]="'Add to Watchlist'"
                             [isLoading]="true"
                             [hasPadding]="false"
                         ></app-button>

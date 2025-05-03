@@ -13,24 +13,10 @@
                 </a>
             </li>
 
-            <li>
-                <a routerLink="/movies" routerLinkActive="active" class="bottom-nav__item">
-                    <i class="fas fa-film"></i>
-                    <span>Movies</span>
-                </a>
-            </li>
-
-            <li>
-                <a routerLink="/tv-shows" routerLinkActive="active" class="bottom-nav__item">
-                    <i class="fas fa-tv"></i>
-                    <span>TV Shows</span>
-                </a>
-            </li>
-
-            <li>
-                <a routerLink="/people" routerLinkActive="active" class="bottom-nav__item">
-                    <i class="fa-solid fa-users"></i>
-                    <span>People</span>
+            <li *ngFor="let link of navigationLinks; trackBy: trackByLink">
+                <a routerLinkActive="active" class="bottom-nav__item" [routerLink]="link.path">
+                    <i [class]="link.icon"></i>
+                    <span>{{ link.title }}</span>
                 </a>
             </li>
         </ul>

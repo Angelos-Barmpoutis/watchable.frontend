@@ -3,9 +3,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
-import { ButtonType } from '../../enumerations/components/button-type.enum';
 import { MediaCreditsCastPerson } from '../../models/media.model';
 import { ButtonComponent } from '../button/button.component';
+import { ButtonType } from '../button/enumerations/button-type.enum';
 import { CastPersonComponent } from '../cast-person/cast-person.component';
 
 @Component({

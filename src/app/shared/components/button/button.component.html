@@ -1,6 +1,6 @@
 <ng-container *ngIf="!isLoading; else loading">
     <button
-        *ngIf="!routerLink; else link"
+        *ngIf="!link; else linkButton"
         appFadeIn
         class="button"
         [type]="type"
@@ -20,8 +20,9 @@
         <i *ngIf="icon && !isIconLeft" [class]="icon"></i>
     </button>
 
-    <ng-template #link>
+    <ng-template #linkButton>
         <a
+            *ngIf="link?.isExternal; else internalLink"
             appFadeIn
             class="button"
             [class.button-primary]="variant === ButtonType.Primary"
@@ -33,7 +34,23 @@
             [class.twitter-button]="variant === ButtonType.Twitter"
             [class.no-border]="!hasBorder"
             [class.no-padding]="!hasPadding"
-            [routerLink]="routerLink"
+            [target]="link?.isExternal ? '_blank' : '_self'"
+            [href]="link?.isExternal ? link?.path : null"
+        >
+            <i *ngIf="icon && isIconLeft" [class]="icon"></i>
+            {{ text }}
+            <i *ngIf="icon && !isIconLeft" [class]="icon"></i>
+        </a>
+    </ng-template>
+    <ng-template #internalLink>
+        <a
+            appFadeIn
+            class="button"
+            [class.button-primary]="variant === ButtonType.Primary"
+            [class.button-secondary]="variant === ButtonType.Secondary"
+            [class.no-border]="!hasBorder"
+            [class.no-padding]="!hasPadding"
+            [routerLink]="link?.path"
             [routerLinkActive]="routerLinkActive"
         >
             <i *ngIf="icon && isIconLeft" [class]="icon"></i>

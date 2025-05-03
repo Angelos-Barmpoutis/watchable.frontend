@@ -4,8 +4,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { FadeInDirective } from '../../directives/fade-in.directive';
-import { ButtonType } from '../../enumerations/components/button-type.enum';
 import { ButtonComponent } from '../button/button.component';
+import { ButtonType } from '../button/enumerations/button-type.enum';
+import { ButtonLink } from '../button/models/button.model';
 
 @Component({
     selector: 'app-section-header',
@@ -21,4 +22,11 @@ export class SectionHeaderComponent {
     @Input() isLoading: boolean = false;
 
     readonly buttonType = ButtonType;
+
+    get link(): ButtonLink {
+        return {
+            path: this.redirectUrl ?? '',
+            isExternal: false,
+        };
+    }
 }

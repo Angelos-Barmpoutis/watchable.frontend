@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
-import { ButtonType } from '../../enumerations/components/button-type.enum';
+import { ButtonType } from '../button/enumerations/button-type.enum';
 import { Review } from '../../models/review.model';
 import { ButtonComponent } from '../button/button.component';
 import { ReviewItemComponent } from '../review-item/review-item.component';

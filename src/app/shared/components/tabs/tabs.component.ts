@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
-import { ButtonType } from '../../enumerations/components/button-type.enum';
+import { ButtonType } from '../button/enumerations/button-type.enum';
 import { ButtonComponent } from '../button/button.component';
 
 export interface TabItem<T> {

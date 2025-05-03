@@ -25,8 +25,8 @@ export class CarouselMediaItemComponent {
 
     readonly mediaType = MediaType;
 
-    posterSize: PosterSize = DEFAULT.largePosterSize;
-    posterFallback = DEFAULT.largePosterFallback;
+    posterSize: PosterSize = DEFAULT.mediumPosterSize;
+    posterFallback = DEFAULT.mediumPosterFallback;
 
     get title(): string {
         if (!this.item) {

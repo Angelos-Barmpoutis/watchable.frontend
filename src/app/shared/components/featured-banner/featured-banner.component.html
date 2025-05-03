@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isLoading; else skeletonTemplate">
-    <div appFadeIn class="featured-banner" [style.background-image]="featuredBackdropUrl">
+    <div appFadeIn class="featured-banner" appBackgroundPath [backgroundPath]="backgroundPath">
         <div class="overlay">
             <div class="wrapper">
                 <div class="featured-details">
@@ -47,7 +47,7 @@
                     <div class="featured-actions">
                         <app-button
                             *ngIf="type === mediaType.Movie"
-                            [routerLink]="[mediaRoute, featuredItem.id]"
+                            [link]="link"
                             [variant]="buttonType.Primary"
                             [type]="'button'"
                             [icon]="type === mediaType.Movie ? 'fas fa-film' : 'fas fa-tv'"

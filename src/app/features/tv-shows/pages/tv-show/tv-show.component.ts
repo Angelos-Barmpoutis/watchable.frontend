@@ -7,6 +7,8 @@ import { EMPTY } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { ButtonType } from '../../../../shared/components/button/enumerations/button-type.enum';
+import { ButtonLink } from '../../../../shared/components/button/models/button.model';
 import { CarouselMediaComponent } from '../../../../shared/components/carousel-media/carousel-media.component';
 import { CastGridComponent } from '../../../../shared/components/cast-grid/cast-grid.component';
 import { ImageGridComponent } from '../../../../shared/components/image-grid/image-grid.component';
@@ -15,7 +17,6 @@ import { MediaHeroComponent } from '../../../../shared/components/media-hero/med
 import { ReviewGridComponent } from '../../../../shared/components/review-grid/review-grid.component';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { VideoGridComponent } from '../../../../shared/components/video-grid/video-grid.component';
-import { ButtonType } from '../../../../shared/enumerations/components/button-type.enum';
 import { MediaType } from '../../../../shared/enumerations/media-type.enum';
 import { TvShowGateway } from '../../../../shared/gateways/tv-show.gateway';
 import { filterMediaItems } from '../../../../shared/helpers/filter-items.helper';
@@ -43,6 +44,12 @@ export class TvShowComponent implements OnInit {
     tvShowDetails!: TvShowDetails;
     isLoading = true;
     trailerUrl: SafeResourceUrl | null = null;
+    mediaLinks: Array<ButtonLink> = [
+        { path: 'https://www.imdb.com/title/' + this.tvShowDetails?.external_ids?.imdb_id, isExternal: true },
+        { path: 'https://www.facebook.com/' + this.tvShowDetails?.external_ids?.facebook_id, isExternal: true },
+        { path: 'https://www.instagram.com/' + this.tvShowDetails?.external_ids?.instagram_id, isExternal: true },
+        { path: 'https://www.twitter.com/' + this.tvShowDetails?.external_ids?.twitter_id, isExternal: true },
+    ];
 
     readonly mediaType = MediaType;
     readonly ButtonType = ButtonType;

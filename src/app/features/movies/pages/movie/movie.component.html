@@ -65,7 +65,7 @@
                         [variant]="ButtonType.Imdb"
                         [type]="'button'"
                         [icon]="'fab fa-imdb'"
-                        [routerLink]="['https://www.imdb.com/title/' + movieDetails?.external_ids?.imdb_id]"
+                        [link]="mediaLinks[0]"
                         [isLoading]="isLoading"
                         [text]="'IMDb'"
                     >
@@ -75,7 +75,7 @@
                         [variant]="ButtonType.Facebook"
                         [type]="'button'"
                         [icon]="'fab fa-facebook'"
-                        [routerLink]="['https://www.facebook.com/' + movieDetails?.external_ids?.facebook_id]"
+                        [link]="mediaLinks[1]"
                         [isLoading]="isLoading"
                         [text]="'Facebook'"
                     >
@@ -85,7 +85,7 @@
                         [variant]="ButtonType.Instagram"
                         [type]="'button'"
                         [icon]="'fab fa-instagram'"
-                        [routerLink]="['https://www.instagram.com/' + movieDetails?.external_ids?.instagram_id]"
+                        [link]="mediaLinks[2]"
                         [isLoading]="isLoading"
                         [text]="'Instagram'"
                     >
@@ -95,7 +95,7 @@
                         [variant]="ButtonType.Twitter"
                         [type]="'button'"
                         [icon]="'fab fa-twitter'"
-                        [routerLink]="['https://twitter.com/' + movieDetails?.external_ids?.twitter_id]"
+                        [link]="mediaLinks[3]"
                         [isLoading]="isLoading"
                         [text]="'Twitter'"
                     >

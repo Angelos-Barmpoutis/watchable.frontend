@@ -2,7 +2,7 @@
 
 .back-to-top {
     position: fixed;
-    bottom: $spacing-md;
+    bottom: $spacing-xl;
     right: $spacing-lg;
     width: 48px;
     height: 48px;
@@ -17,7 +17,7 @@
     justify-content: center;
     transition: all $transition-normal;
     z-index: map-get($z-layers, "header");
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -2px 17px rgba(31, 31, 31, 0.329);
 
     &:hover {
         background-color: rgba($primary-color, 1);
