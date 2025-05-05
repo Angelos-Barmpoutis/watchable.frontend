@@ -13,7 +13,7 @@
                 [initialSlide]="selectedIndex"
                 [grabCursor]="true"
                 [speed]="default.carouselAnimationDuration"
-                (swiperslidechange)="onViewerSlideChange($event)"
+                (swiperslidechangetransitionend)="onViewerSlideChange($event)"
             >
                 <swiper-slide *ngFor="let image of images">
                     <img
