@@ -34,7 +34,7 @@ export class InfiniteScrollLoaderComponent implements OnInit, OnDestroy {
         const options = {
             root: null,
             rootMargin: '400px',
-            threshold: 0.1,
+            threshold: 0.5,
         };
 
         this.observer = new IntersectionObserver(([entry]) => {

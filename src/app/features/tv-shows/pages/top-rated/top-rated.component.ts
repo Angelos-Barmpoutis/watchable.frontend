@@ -5,8 +5,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { BaseMediaListItemComponent } from '../../../../shared/abstract/base-media-list-item.abstract';
 import { InfiniteScrollLoaderComponent } from '../../../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
+import { MediaListItemComponent } from '../../../../shared/components/media-list-item/media-list-item.component';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
-import { TvShowListItemComponent } from '../../../../shared/components/tv-show-list-item/tv-show-list-item.component';
+import { MediaType } from '../../../../shared/enumerations/media-type.enum';
 import { TvShowFacade } from '../../../../shared/facades/tv-show.facade';
 import { mapTvShowsWithGenres } from '../../../../shared/helpers/genres.helper';
 import { Genre } from '../../../../shared/models/genre.model';
@@ -23,12 +24,13 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
         CommonModule,
         ReactiveFormsModule,
         SectionHeaderComponent,
-        TvShowListItemComponent,
         InfiniteScrollLoaderComponent,
+        MediaListItemComponent,
     ],
 })
 export class TopRatedTvShowsComponent extends BaseMediaListItemComponent<TvShowItem> {
     override items: Array<TvShowItem> = [];
+    mediaType = MediaType;
 
     constructor(
         private tvShowFacade: TvShowFacade,

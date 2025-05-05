@@ -1,0 +1,67 @@
+<ng-container *ngIf="!isLoading; else skeletonTemplate">
+    <a
+        appFadeIn
+        class="media-list-item"
+        [routerLink]="[
+            '/',
+            type === mediaType.Movie ? 'movies' : 'tv-shows',
+            type === mediaType.Movie ? 'movie' : 'tv-show',
+            media.id
+        ]"
+    >
+        <div class="media-main">
+            <div class="poster-wrapper">
+                <img *ngIf="media.poster_path" appPosterPath [posterPath]="media.poster_path" [size]="posterSize" />
+                <img *ngIf="!media.poster_path" [src]="posterFallback" />
+            </div>
+            <div class="info">
+                <div class="info-header">
+                    <div class="title-container">
+                        <h3 class="title">{{ title }}</h3>
+                        <div class="meta">
+                            <span *ngIf="releaseDate" class="year">
+                                {{ releaseDate | date: "yyyy" }}
+                            </span>
+                            <span *ngIf="genres?.length" class="genres">
+                                <span *ngFor="let genre of genres | slice: 0 : 2; let last = last">
+                                    {{ genre.name }}{{ !last ? ", " : "" }}
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="rating-container">
+                        <div class="rating">
+                            <div class="rating-badge">
+                                <span class="rating-value" [class]="ratingClass">{{ rating | number: "1.1-1" }}</span>
+                                <span class="rating-total">/10</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p *ngIf="media.overview" class="overview">{{ media.overview }}</p>
+            </div>
+        </div>
+    </a>
+</ng-container>
+
+<ng-template #skeletonTemplate>
+    <div appFadeIn class="media-list-item-loading">
+        <div class="media-main">
+            <div class="poster-skeleton"></div>
+            <div class="info-skeleton">
+                <div class="header-skeleton">
+                    <div class="title-container-skeleton">
+                        <div class="title-skeleton"></div>
+                        <div class="meta-skeleton"></div>
+                    </div>
+                    <div class="rating-skeleton"></div>
+                </div>
+                <div class="overview-skeleton">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

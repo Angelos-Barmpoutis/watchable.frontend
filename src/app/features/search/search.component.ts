@@ -6,19 +6,19 @@ import { distinctUntilChanged } from 'rxjs';
 
 import { BaseMediaListItemComponent } from '../../shared/abstract/base-media-list-item.abstract';
 import { InfiniteScrollLoaderComponent } from '../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
-import { MovieListItemComponent } from '../../shared/components/movie-list-item/movie-list-item.component';
+import { MediaListItemComponent } from '../../shared/components/media-list-item/media-list-item.component';
 import { PersonListItemComponent } from '../../shared/components/person-list-item/person-list-item.component';
 import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
 import { TabItem, TabsComponent } from '../../shared/components/tabs/tabs.component';
-import { TvShowListItemComponent } from '../../shared/components/tv-show-list-item/tv-show-list-item.component';
 import { DEFAULT } from '../../shared/constants/defaults.constant';
+import { MediaType } from '../../shared/enumerations/media-type.enum';
 import { SearchOption } from '../../shared/enumerations/search-option.enum';
 import { SearchFacade } from '../../shared/facades/search.facade';
 import { mapMoviesWithGenres, mapTvShowsWithGenres } from '../../shared/helpers/genres.helper';
 import { Genre } from '../../shared/models/genre.model';
-import { Movie, MovieItem } from '../../shared/models/movie.model';
+import { MovieItem } from '../../shared/models/movie.model';
 import { Person } from '../../shared/models/people.model';
-import { TvShow, TvShowItem } from '../../shared/models/tv-show.model';
+import { TvShowItem } from '../../shared/models/tv-show.model';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { SearchService } from '../../shared/services/search.service';
 
@@ -28,8 +28,7 @@ import { SearchService } from '../../shared/services/search.service';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        MovieListItemComponent,
-        TvShowListItemComponent,
+        MediaListItemComponent,
         PersonListItemComponent,
         InfiniteScrollLoaderComponent,
         TabsComponent,
@@ -38,22 +37,27 @@ import { SearchService } from '../../shared/services/search.service';
     templateUrl: './search.component.html',
     styleUrl: './search.component.scss',
 })
-export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow | Person> implements OnInit {
+export class SearchComponent extends BaseMediaListItemComponent<MovieItem | TvShowItem | Person> implements OnInit {
     @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
     readonly searchOption = SearchOption;
-    private movieGenres: Array<Genre> = [];
-    private tvShowGenres: Array<Genre> = [];
+    searchForm!: FormGroup;
+    searchQuery: string = '';
     searchMovies: Array<MovieItem> = [];
     searchTvShows: Array<TvShowItem> = [];
     searchPeople: Array<Person> = [];
-    searchQuery: string = '';
-    searchForm!: FormGroup;
-    option: SearchOption = DEFAULT.searchOption;
+    movieGenres: Array<Genre> = [];
+    tvShowGenres: Array<Genre> = [];
+    override currentPage: number = 1;
+    override totalPages: number = 1;
+    override isLoading: boolean = false;
+    option: SearchOption = SearchOption.Movie;
     searchTabs: Array<TabItem<SearchOption>> = [
         { id: 0, label: 'Movies', value: SearchOption.Movie },
         { id: 1, label: 'TV Shows', value: SearchOption.Tv },
         { id: 2, label: 'People', value: SearchOption.Person },
     ];
+
+    mediaType = MediaType;
 
     constructor(
         private searchFacade: SearchFacade,
@@ -168,14 +172,14 @@ export class SearchComponent extends BaseMediaListItemComponent<Movie | TvShow |
         this.tvShowGenres = this.localStorageService.getItem<Array<Genre>>('tvShowGenres') ?? [];
     }
 
-    trackByItemId(index: number, item: Movie | TvShow | Person): number {
+    trackByItemId(index: number, item: MovieItem | TvShowItem | Person): number {
         return item.id;
     }
 
     mapItemsWithGenres(
         items: Array<MovieItem | TvShowItem | Person>,
         genres: Array<Genre>,
-    ): Array<Movie | TvShow | Person> {
+    ): Array<MovieItem | TvShowItem | Person> {
         switch (this.option) {
             case SearchOption.Movie:
                 return mapMoviesWithGenres(items as Array<MovieItem>, genres);

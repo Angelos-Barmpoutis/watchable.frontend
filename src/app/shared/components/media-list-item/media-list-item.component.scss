@@ -1,11 +1,11 @@
 @import "../../../../styles.scss";
 
-.tv-show-list-item {
+.media-list-item {
     text-decoration: none;
     transition: all $transition-normal;
     display: block;
 
-    .tv-show-main {
+    .media-main {
         display: grid;
         grid-template-columns: 100px 1fr;
         gap: $spacing-sm;
@@ -134,10 +134,10 @@
     }
 }
 
-.tv-show-list-item-loading {
+.media-list-item-loading {
     height: 150px;
 
-    .tv-show-main {
+    .media-main {
         display: grid;
         grid-template-columns: 100px 1fr;
         gap: $spacing-sm;
@@ -154,7 +154,7 @@
         .info-skeleton {
             display: flex;
             flex-direction: column;
-            gap: calc($spacing-sm * 1.5);
+            gap: $spacing-md;
             padding: $spacing-md;
             background-color: rgba($surface-color, 0.6);
             backdrop-filter: blur(14px);
@@ -214,12 +214,13 @@
 }
 
 @media (max-width: map-get($breakpoints, "sm")) {
-    .tv-show-list-item {
-        .tv-show-main {
+    .media-list-item {
+        .media-main {
             grid-template-columns: 88px 1fr;
 
             .info {
                 padding: calc($spacing-sm * 1.5);
+
                 .info-header {
                     flex-direction: row;
                     align-items: center;
@@ -236,10 +237,10 @@
         }
     }
 
-    .tv-show-list-item-loading {
+    .media-list-item-loading {
         height: 132.8px;
 
-        .tv-show-main {
+        .media-main {
             grid-template-columns: 88px 1fr;
 
             .info-skeleton {
@@ -248,12 +249,6 @@
                 .header-skeleton {
                     .title-container-skeleton {
                         max-width: 70%;
-                    }
-                }
-
-                .overview-skeleton {
-                    .line {
-                        height: $font-size-xs;
                     }
                 }
             }

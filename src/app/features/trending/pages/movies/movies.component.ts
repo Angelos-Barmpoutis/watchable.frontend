@@ -5,10 +5,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { BaseMediaListItemComponent } from '../../../../shared/abstract/base-media-list-item.abstract';
 import { InfiniteScrollLoaderComponent } from '../../../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
-import { MovieListItemComponent } from '../../../../shared/components/movie-list-item/movie-list-item.component';
+import { MediaListItemComponent } from '../../../../shared/components/media-list-item/media-list-item.component';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { TabItem, TabsComponent } from '../../../../shared/components/tabs/tabs.component';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
+import { MediaType } from '../../../../shared/enumerations/media-type.enum';
 import { TimeOption } from '../../../../shared/enumerations/time-option.enum';
 import { TrendingFacade } from '../../../../shared/facades/trending.facade';
 import { mapMoviesWithGenres } from '../../../../shared/helpers/genres.helper';
@@ -26,7 +27,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
         CommonModule,
         ReactiveFormsModule,
         SectionHeaderComponent,
-        MovieListItemComponent,
+        MediaListItemComponent,
         TabsComponent,
         InfiniteScrollLoaderComponent,
     ],
@@ -38,6 +39,8 @@ export class TrendingMoviesComponent extends BaseMediaListItemComponent<MovieIte
         { id: 0, value: TimeOption.Day, label: 'Today' },
         { id: 1, value: TimeOption.Week, label: 'This Week' },
     ];
+
+    mediaType = MediaType;
 
     constructor(
         private trendingFacade: TrendingFacade,

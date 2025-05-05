@@ -6,8 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 
 import { BaseDiscoverComponent } from '../../../../shared/abstract/base-discover.abstract';
 import { InfiniteScrollLoaderComponent } from '../../../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
+import { MediaListItemComponent } from '../../../../shared/components/media-list-item/media-list-item.component';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
-import { TvShowListItemComponent } from '../../../../shared/components/tv-show-list-item/tv-show-list-item.component';
+import { MediaType } from '../../../../shared/enumerations/media-type.enum';
 import { TvShowFacade } from '../../../../shared/facades/tv-show.facade';
 import { mapTvShowsWithGenres } from '../../../../shared/helpers/genres.helper';
 import { TvShowItem } from '../../../../shared/models/tv-show.model';
@@ -18,10 +19,11 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
     standalone: true,
     templateUrl: './discover.component.html',
     styleUrl: './discover.component.scss',
-    imports: [CommonModule, SectionHeaderComponent, TvShowListItemComponent, InfiniteScrollLoaderComponent],
+    imports: [CommonModule, SectionHeaderComponent, InfiniteScrollLoaderComponent, MediaListItemComponent],
 })
 export class DiscoverTvShowsComponent extends BaseDiscoverComponent<TvShowItem> {
     protected override genreStorageKey = 'tvShowGenres';
+    mediaType = MediaType;
 
     constructor(
         private tvShowFacade: TvShowFacade,

@@ -5,8 +5,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { BaseMediaListItemComponent } from '../../../../shared/abstract/base-media-list-item.abstract';
 import { InfiniteScrollLoaderComponent } from '../../../../shared/components/infinite-scroll-loader/infinite-scroll-loader.component';
-import { MovieListItemComponent } from '../../../../shared/components/movie-list-item/movie-list-item.component';
+import { MediaListItemComponent } from '../../../../shared/components/media-list-item/media-list-item.component';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
+import { MediaType } from '../../../../shared/enumerations/media-type.enum';
 import { MovieFacade } from '../../../../shared/facades/movie.facade';
 import { mapMoviesWithGenres } from '../../../../shared/helpers/genres.helper';
 import { Genre } from '../../../../shared/models/genre.model';
@@ -23,12 +24,13 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
         CommonModule,
         ReactiveFormsModule,
         SectionHeaderComponent,
-        MovieListItemComponent,
+        MediaListItemComponent,
         InfiniteScrollLoaderComponent,
     ],
 })
 export class TopRatedMoviesComponent extends BaseMediaListItemComponent<MovieItem> {
     override items: Array<MovieItem> = [];
+    mediaType = MediaType;
 
     constructor(
         private movieFacade: MovieFacade,
