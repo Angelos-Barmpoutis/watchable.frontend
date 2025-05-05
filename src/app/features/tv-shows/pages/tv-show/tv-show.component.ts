@@ -44,12 +44,6 @@ export class TvShowComponent implements OnInit {
     tvShowDetails!: TvShowDetails;
     isLoading = true;
     trailerUrl: SafeResourceUrl | null = null;
-    mediaLinks: Array<ButtonLink> = [
-        { path: 'https://www.imdb.com/title/' + this.tvShowDetails?.external_ids?.imdb_id, isExternal: true },
-        { path: 'https://www.facebook.com/' + this.tvShowDetails?.external_ids?.facebook_id, isExternal: true },
-        { path: 'https://www.instagram.com/' + this.tvShowDetails?.external_ids?.instagram_id, isExternal: true },
-        { path: 'https://www.twitter.com/' + this.tvShowDetails?.external_ids?.twitter_id, isExternal: true },
-    ];
 
     readonly mediaType = MediaType;
     readonly ButtonType = ButtonType;
@@ -62,6 +56,15 @@ export class TvShowComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadTvShowDetails();
+    }
+
+    get mediaLinks(): Array<ButtonLink> {
+        return [
+            { path: 'https://www.imdb.com/title/' + this.tvShowDetails?.external_ids?.imdb_id, isExternal: true },
+            { path: 'https://www.facebook.com/' + this.tvShowDetails?.external_ids?.facebook_id, isExternal: true },
+            { path: 'https://www.instagram.com/' + this.tvShowDetails?.external_ids?.instagram_id, isExternal: true },
+            { path: 'https://www.twitter.com/' + this.tvShowDetails?.external_ids?.twitter_id, isExternal: true },
+        ];
     }
 
     private loadTvShowDetails(): void {

@@ -1,53 +1,77 @@
-import { Directive, HostBinding, Input } from '@angular/core';
+import { ChangeDetectorRef, Directive, HostBinding, Input, OnInit } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
 import { BackdropSize } from '../enumerations/backdrop-size.enum';
+import { ScreenSize, ScreenSizeService } from '../services/screen-size.service';
 
 @Directive({
     selector: '[appBackdropPath]',
     standalone: true,
 })
-export class BackdropPathDirective {
-    @Input() backdropPath: string = '';
+export class BackdropPathDirective implements OnInit {
+    @Input() backdropPath!: string;
     @Input() baseUrl: string = environment.imageBaseUrl;
     @Input() size: BackdropSize = BackdropSize.w1280;
 
+    constructor(
+        private cdr: ChangeDetectorRef,
+        private screenSizeService: ScreenSizeService,
+    ) {}
+
+    ngOnInit(): void {
+        if (!this.backdropPath) return;
+
+        this.screenSizeService.currentSize$.subscribe((size) => {
+            switch (true) {
+                case size === ScreenSize.XSmall:
+                    if (this.size === BackdropSize.w1280 || this.size === BackdropSize.original) {
+                        this.size = BackdropSize.w780;
+                    }
+                    break;
+                case size === ScreenSize.Small:
+                    if (
+                        this.size === BackdropSize.w780 ||
+                        this.size === BackdropSize.w1280 ||
+                        this.size === BackdropSize.original
+                    ) {
+                        this.size = BackdropSize.w780;
+                    }
+                    break;
+                case size === ScreenSize.Medium:
+                    if (
+                        this.size === BackdropSize.w780 ||
+                        this.size === BackdropSize.w1280 ||
+                        this.size === BackdropSize.original
+                    ) {
+                        this.size = BackdropSize.w780;
+                    }
+                    break;
+                case size === ScreenSize.Large:
+                    if (
+                        this.size === BackdropSize.w780 ||
+                        this.size === BackdropSize.w1280 ||
+                        this.size === BackdropSize.original
+                    ) {
+                        this.size = BackdropSize.w1280;
+                    }
+                    break;
+                case size === ScreenSize.XLarge:
+                    if (
+                        this.size === BackdropSize.w780 ||
+                        this.size === BackdropSize.w1280 ||
+                        this.size === BackdropSize.original
+                    ) {
+                        this.size = BackdropSize.original;
+                    }
+                    break;
+                default:
+                    this.size = BackdropSize.original;
+            }
+            this.cdr.detectChanges();
+        });
+    }
+
     @HostBinding('src') get imageUrl(): string {
         return `${this.baseUrl}${this.size}${this.backdropPath}`;
-    }
-
-    @HostBinding('srcset') get imageSrcset(): string {
-        // Apply srcset for large and medium images
-        if (this.size === BackdropSize.w1280) {
-            return [
-                `${this.baseUrl}${BackdropSize.w780}${this.backdropPath} 390w`,
-                `${this.baseUrl}${BackdropSize.w1280}${this.backdropPath} 640w`,
-                `${this.baseUrl}${BackdropSize.original}${this.backdropPath} 960w`,
-            ].join(', ');
-        } else if (this.size === BackdropSize.w780) {
-            return [
-                `${this.baseUrl}${BackdropSize.w780}${this.backdropPath} 390w`,
-                `${this.baseUrl}${BackdropSize.original}${this.backdropPath} 960w`,
-            ].join(', ');
-        } else if (this.size === BackdropSize.original) {
-            return [
-                `${this.baseUrl}${BackdropSize.w780}${this.backdropPath} 390w`,
-                `${this.baseUrl}${BackdropSize.w1280}${this.backdropPath} 640w`,
-                `${this.baseUrl}${BackdropSize.original}${this.backdropPath} 960w`,
-            ].join(', ');
-        }
-        return '';
-    }
-
-    @HostBinding('sizes') get imageSizes(): string {
-        // Apply sizes for large and medium images
-        if (this.size === BackdropSize.w1280) {
-            return '(max-width: 576px) 390px, (max-width: 1200px) 390px, (max-width: 1920px) 640px, 960px';
-        } else if (this.size === BackdropSize.w780) {
-            return '(max-width: 576px) 390px, (max-width: 1920px) 390px, 960px';
-        } else if (this.size === BackdropSize.original) {
-            return '(max-width: 576px) 390px, (max-width: 1200px) 390px, (max-width: 1920px) 640px, 960px';
-        }
-        return '';
     }
 }
