@@ -48,10 +48,10 @@ export abstract class BaseGalleryComponent implements OnChanges {
     protected scrollToActiveItem(): void {
         requestAnimationFrame(() => {
             if (this.previewStrip?.nativeElement?.swiper && this.viewerStrip?.nativeElement?.swiper) {
-                const previewSwiper = this.previewStrip.nativeElement.swiper;
-                const viewerSwiper = this.viewerStrip.nativeElement.swiper;
-                previewSwiper.slideTo(this.selectedIndex ?? 0, DEFAULT.carouselAnimationDuration);
-                viewerSwiper.slideTo(this.selectedIndex ?? 0, DEFAULT.carouselAnimationDuration);
+                const previewSwiper = this.previewStrip?.nativeElement.swiper;
+                const viewerSwiper = this.viewerStrip?.nativeElement.swiper;
+                previewSwiper?.slideTo(this.selectedIndex ?? 0, DEFAULT.carouselAnimationDuration);
+                viewerSwiper?.slideTo(this.selectedIndex ?? 0, DEFAULT.carouselAnimationDuration);
             }
         });
     }
