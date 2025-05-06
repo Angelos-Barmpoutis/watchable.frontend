@@ -13,6 +13,7 @@
                 [initialSlide]="selectedIndex"
                 [grabCursor]="true"
                 [speed]="default.carouselAnimationDuration"
+                [allowTouchMove]="true"
                 (swiperslidechange)="onViewerSlideChange($event)"
             >
                 <swiper-slide *ngFor="let image of images">
@@ -42,6 +43,7 @@
                 [slidesPerView]="'auto'"
                 [initialSlide]="selectedIndex"
                 [speed]="default.carouselAnimationDuration"
+                [allowTouchMove]="true"
             >
                 <swiper-slide
                     *ngFor="let image of images; let i = index"
