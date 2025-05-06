@@ -25,7 +25,7 @@ export const appConfig: ApplicationConfig = {
             withViewTransitions(),
             withPreloading(PreloadAllModules),
             withInMemoryScrolling({
-                scrollPositionRestoration: 'top',
+                scrollPositionRestoration: 'enabled',
                 anchorScrolling: 'enabled',
             }),
         ),
