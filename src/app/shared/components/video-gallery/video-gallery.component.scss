@@ -91,8 +91,9 @@
                 height: 56px;
                 overflow: hidden;
                 border-radius: $border-radius-lg;
-                border: 1px solid transparent;
                 cursor: pointer;
+                opacity: 0.5;
+                transition: opacity $transition-normal;
 
                 .video-thumbnail {
                     position: relative;
@@ -129,7 +130,7 @@
                 }
 
                 &.active {
-                    border-color: $primary-color;
+                    opacity: 1;
                 }
             }
         }

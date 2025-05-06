@@ -17,4 +17,12 @@ export class PeopleGateway {
     getPopular(page: number): Observable<PaginatedPeople> {
         return this.peopleDriver.getPopularPeople(this.urlService.createUrlForTMDB(['person', `popular?page=${page}`]));
     }
+
+    getPersonDetails(id: number): Observable<any> {
+        return this.peopleDriver.getPersonDetails(
+            this.urlService.createUrlForTMDB(['person', `${id}`], {
+                append_to_response: 'images,external_ids,movie_credits,tv_credits',
+            }),
+        );
+    }
 }

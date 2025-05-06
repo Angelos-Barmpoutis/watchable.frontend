@@ -1,5 +1,6 @@
 import { ExternalIds } from './external-ids.model';
 import { KnownForItem } from './known-for-item.model';
+import { Backdrop, Logo, MediaCredits, Poster } from './media.model';
 
 export interface Person {
     adult: boolean;
@@ -67,6 +68,12 @@ export interface PersonDetails {
     place_of_birth: string;
     popularity: number;
     profile_path: string;
+    images?: {
+        profiles: Array<Poster | Backdrop | Logo>;
+    };
+    external_ids?: ExternalIds;
+    movie_credits?: MediaCredits;
+    tv_credits?: MediaCredits;
 }
 
 export interface CrewPerson {

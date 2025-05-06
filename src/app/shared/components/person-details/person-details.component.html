@@ -1,0 +1,52 @@
+<ng-container *ngIf="!isLoading && personDetails">
+    <ul class="details-list">
+        <li *ngIf="personDetails?.gender">
+            <span class="detail-label">Gender:</span>
+            <span class="detail-value">{{ gender }}</span>
+        </li>
+        <li *ngIf="personDetails?.birthday">
+            <span class="detail-label">Birthday:</span>
+            <span class="detail-value">{{ personDetails?.birthday }}</span>
+        </li>
+        <li *ngIf="personDetails?.deathday">
+            <span class="detail-label">Deathday:</span>
+            <span class="detail-value">{{ personDetails?.deathday }}</span>
+        </li>
+        <li *ngIf="personDetails?.place_of_birth">
+            <span class="detail-label">Place of Birth:</span>
+            <span class="detail-value">{{ personDetails?.place_of_birth }}</span>
+        </li>
+        <li *ngIf="personDetails?.known_for_department">
+            <span class="detail-label">Known For:</span>
+            <span class="detail-value">{{ personDetails?.known_for_department }}</span>
+        </li>
+        <li *ngIf="personDetails?.popularity">
+            <span class="detail-label">Popularity:</span>
+            <span class="detail-value">{{ personDetails?.popularity | number: "1.0-0" }}</span>
+        </li>
+        <li *ngIf="personDetails?.homepage">
+            <span class="detail-label">Website:</span>
+            <span class="detail-value">
+                <a class="detail-link" target="_blank" [href]="personDetails?.homepage">{{
+                    personDetails?.homepage
+                }}</a>
+            </span>
+        </li>
+        <li *ngIf="personDetails?.also_known_as?.length">
+            <span class="detail-label">Also Known As:</span>
+            <span class="detail-value">{{ personDetails.also_known_as[0] }}</span>
+        </li>
+    </ul>
+</ng-container>
+<ng-container *ngIf="isLoading">
+    <div class="skeleton-media-details">
+        <div class="skeleton-media-content">
+            <div class="skeleton-media-list">
+                <div *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]" class="skeleton-media-item">
+                    <div class="skeleton-media-label"></div>
+                    <div class="skeleton-media-value"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

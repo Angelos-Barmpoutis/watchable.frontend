@@ -20,6 +20,7 @@ import { ImageGalleryComponent } from '../image-gallery/image-gallery.component'
 export class ImageGridComponent {
     @Input() images: Array<Backdrop> = [];
     @Input() isLoading = false;
+    @Input() aspectRatio: '16/9' | '3/4' = '16/9';
 
     selectedImageIndex?: number;
     readonly backdropSize = BackdropSize;

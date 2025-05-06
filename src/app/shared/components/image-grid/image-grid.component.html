@@ -3,6 +3,7 @@
         <div
             *ngFor="let image of images | slice: 0 : default.imagesCount; let i = index"
             class="image-item"
+            [ngClass]="{ 'aspect-ratio-16-9': aspectRatio === '16/9', 'aspect-ratio-3-4': aspectRatio === '3/4' }"
             (click)="openViewer(i, $event)"
         >
             <img
@@ -25,13 +26,18 @@
     <app-image-gallery
         [images]="images"
         [selectedIndex]="selectedImageIndex"
+        [aspectRatio]="aspectRatio"
         (closeViewer)="closeViewer()"
     ></app-image-gallery>
 </ng-container>
 
 <ng-template #loadingTemplate>
     <div appFadeIn class="skeleton-grid">
-        <div *ngFor="let i of skeletonArray" class="skeleton-image-item">
+        <div
+            *ngFor="let i of skeletonArray"
+            class="skeleton-image-item"
+            [ngClass]="{ 'aspect-ratio-16-9': aspectRatio === '16/9', 'aspect-ratio-3-4': aspectRatio === '3/4' }"
+        >
             <div class="skeleton-image"></div>
         </div>
     </div>

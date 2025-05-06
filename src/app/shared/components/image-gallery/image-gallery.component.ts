@@ -18,6 +18,7 @@ import { Backdrop } from '../../models/media.model';
 })
 export class ImageGalleryComponent extends BaseGalleryComponent {
     @Input() images: Array<Backdrop> = [];
+    @Input() aspectRatio: '16/9' | '3/4' = '16/9';
     readonly backdropSize = BackdropSize;
 
     protected override onSelectedIndexChange(): void {

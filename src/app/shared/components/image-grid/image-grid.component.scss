@@ -14,7 +14,14 @@
         border-radius: $border-radius-lg;
         overflow: hidden;
         cursor: pointer;
-        aspect-ratio: 16/9;
+
+        &.aspect-ratio-16-9 {
+            aspect-ratio: 16/9;
+        }
+
+        &.aspect-ratio-3-4 {
+            aspect-ratio: 3/4;
+        }
 
         .grid-image {
             width: 100%;
@@ -64,9 +71,17 @@
     }
 
     .skeleton-image-item {
-        aspect-ratio: 16/9;
         border-radius: $border-radius-lg;
         overflow: hidden;
+        aspect-ratio: 16/9;
+
+        &.aspect-ratio-16-9 {
+            aspect-ratio: 16/9;
+        }
+
+        &.aspect-ratio-3-4 {
+            aspect-ratio: 3/4;
+        }
 
         .skeleton-image {
             width: 100%;

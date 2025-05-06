@@ -39,6 +39,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-start;
+                gap: $spacing-sm;
 
                 .title-container {
                     display: flex;
@@ -164,6 +165,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-start;
+                gap: $spacing-sm;
 
                 .title-container-skeleton {
                     display: flex;
