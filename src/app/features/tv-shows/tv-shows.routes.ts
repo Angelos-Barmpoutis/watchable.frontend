@@ -6,10 +6,6 @@ export const routes: Routes = [
         loadComponent: () => import('./tv-shows.component').then((c) => c.TvShowsComponent),
     },
     {
-        path: 'tv-show/:id',
-        loadComponent: () => import('./pages/tv-show/tv-show.component').then((c) => c.TvShowComponent),
-    },
-    {
         path: 'discover/:genre',
         loadComponent: () => import('./pages/discover/discover.component').then((c) => c.DiscoverTvShowsComponent),
     },
@@ -25,5 +21,23 @@ export const routes: Routes = [
     {
         path: 'top-rated',
         loadComponent: () => import('./pages/top-rated/top-rated.component').then((c) => c.TopRatedTvShowsComponent),
+    },
+    {
+        path: 'tv-show/:id',
+        loadComponent: () => import('./pages/tv-show/tv-show.component').then((c) => c.TvShowComponent),
+    },
+    {
+        path: 'tv-show/:id/seasons',
+        loadComponent: () => import('./pages/seasons/seasons.component').then((c) => c.SeasonsComponent),
+    },
+    {
+        path: 'tv-show/:id/seasons/:seasonNumber',
+        loadComponent: () =>
+            import('./pages/season-details/season-details.component').then((c) => c.SeasonDetailsComponent),
+    },
+    {
+        path: 'tv-show/:id/seasons/:seasonNumber/episodes/:episodeNumber',
+        loadComponent: () =>
+            import('./pages/episode-details/episode-details.component').then((c) => c.EpisodeDetailsComponent),
     },
 ];

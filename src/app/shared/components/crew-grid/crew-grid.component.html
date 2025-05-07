@@ -1,0 +1,33 @@
+<ng-container *ngIf="!isLoading; else loadingTemplate">
+    <div appFadeIn class="crew-grid">
+        <div *ngFor="let person of crew" class="crew-person">
+            <a [routerLink]="['/', 'people', 'person', person.id]">
+                <div class="crew-photo">
+                    <img
+                        *ngIf="person.profile_path"
+                        appProfilePath
+                        [profilePath]="person.profile_path"
+                        [size]="profileSize.w185"
+                    />
+                    <img *ngIf="!person.profile_path" [src]="default.mediumProfileFallback" />
+                </div>
+                <div class="crew-info">
+                    <span class="crew-name">{{ person.name }}</span>
+                    <span class="crew-role">{{ getRole(person) }}</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #loadingTemplate>
+    <div appFadeIn class="crew-grid">
+        <div *ngFor="let i of skeletonArray" class="crew-person-skeleton">
+            <div class="crew-photo"></div>
+            <div class="crew-info">
+                <span class="crew-name"></span>
+                <span class="crew-role"></span>
+            </div>
+        </div>
+    </div>
+</ng-template>

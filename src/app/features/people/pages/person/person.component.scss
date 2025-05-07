@@ -211,19 +211,3 @@
         }
     }
 }
-
-.skeleton-biography {
-    margin-top: $spacing-md;
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-sm;
-
-    .skeleton-biography-line {
-        height: $font-size-sm;
-        @include skeleton-loading;
-
-        &:last-child {
-            width: 85%;
-        }
-    }
-}

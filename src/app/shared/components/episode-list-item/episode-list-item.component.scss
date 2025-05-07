@@ -1,0 +1,92 @@
+@import "../../../../styles.scss";
+
+.episode {
+    text-decoration: none;
+    transition: all $transition-normal;
+    display: flex;
+    flex-direction: column;
+
+    .episode-poster {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 16/9;
+        border-radius: $border-radius-lg;
+        overflow: hidden;
+        margin-bottom: $spacing-sm;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform $transition-normal;
+        }
+    }
+
+    .title {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: $text-primary;
+        margin: 0;
+        @include text-clamp(1);
+    }
+
+    .meta {
+        color: $text-secondary;
+        font-size: $font-size-xs;
+
+        > span {
+            position: relative;
+            margin-right: $spacing-xs;
+
+            &:not(:first-child)::before {
+                content: "•";
+                margin-inline: $spacing-xs;
+                opacity: 0.5;
+            }
+        }
+
+        .genres {
+            display: inline;
+        }
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.skeleton-episode {
+    display: flex;
+    flex-direction: column;
+
+    .skeleton-poster {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 16/9;
+        border-radius: $border-radius-lg;
+        overflow: hidden;
+        margin-bottom: $spacing-sm;
+        @include skeleton-loading;
+    }
+
+    .skeleton-title {
+        width: 60%;
+        height: 100%;
+        @include skeleton-loading;
+        height: $font-size-sm;
+        margin-bottom: $spacing-sm;
+    }
+
+    .skeleton-meta {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        gap: $spacing-xs;
+
+        .skeleton-meta-item {
+            width: 20%;
+            height: $font-size-xs;
+            @include skeleton-loading;
+        }
+    }
+}

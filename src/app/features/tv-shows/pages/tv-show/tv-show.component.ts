@@ -10,6 +10,7 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 import { ButtonType } from '../../../../shared/components/button/enumerations/button-type.enum';
 import { ButtonLink } from '../../../../shared/components/button/models/button.model';
 import { CarouselMediaComponent } from '../../../../shared/components/carousel-media/carousel-media.component';
+import { CarouselSeasonComponent } from '../../../../shared/components/carousel-season/carousel-season.component';
 import { CastGridComponent } from '../../../../shared/components/cast-grid/cast-grid.component';
 import { ImageGridComponent } from '../../../../shared/components/image-grid/image-grid.component';
 import { MediaDetailsComponent } from '../../../../shared/components/media-details/media-details.component';
@@ -18,7 +19,7 @@ import { ReviewGridComponent } from '../../../../shared/components/review-grid/r
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { VideoGridComponent } from '../../../../shared/components/video-grid/video-grid.component';
 import { MediaType } from '../../../../shared/enumerations/media-type.enum';
-import { TvShowGateway } from '../../../../shared/gateways/tv-show.gateway';
+import { TvShowFacade } from '../../../../shared/facades/tv-show.facade';
 import { filterMediaItems } from '../../../../shared/helpers/filter-items.helper';
 import { TvShow, TvShowDetails } from '../../../../shared/models/tv-show.model';
 
@@ -27,14 +28,15 @@ import { TvShow, TvShowDetails } from '../../../../shared/models/tv-show.model';
     standalone: true,
     imports: [
         CommonModule,
+        SectionHeaderComponent,
+        MediaHeroComponent,
+        MediaDetailsComponent,
+        CarouselSeasonComponent,
         CarouselMediaComponent,
         CastGridComponent,
         ImageGridComponent,
-        MediaDetailsComponent,
-        MediaHeroComponent,
-        ReviewGridComponent,
-        SectionHeaderComponent,
         VideoGridComponent,
+        ReviewGridComponent,
         ButtonComponent,
     ],
     templateUrl: './tv-show.component.html',
@@ -45,12 +47,12 @@ export class TvShowComponent implements OnInit {
     isLoading = true;
     trailerUrl: SafeResourceUrl | null = null;
 
-    readonly mediaType = MediaType;
     readonly ButtonType = ButtonType;
+    readonly mediaType = MediaType;
 
     constructor(
         private route: ActivatedRoute,
-        private tvShowGateway: TvShowGateway,
+        private tvShowFacade: TvShowFacade,
         private destroyRef: DestroyRef,
     ) {}
 
@@ -76,7 +78,7 @@ export class TvShowComponent implements OnInit {
                 takeUntilDestroyed(this.destroyRef),
                 switchMap((params) => {
                     const id = Number(params.get('id'));
-                    return id ? this.tvShowGateway.getDetails(id) : EMPTY;
+                    return id ? this.tvShowFacade.getDetails(id) : EMPTY;
                 }),
             )
             .subscribe((tvShowDetails) => {

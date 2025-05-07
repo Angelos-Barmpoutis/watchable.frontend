@@ -1,0 +1,28 @@
+<ng-container *ngIf="!isLoading; else skeletonTemplate">
+    <a
+        appFadeIn
+        class="season"
+        [title]="season?.name"
+        [routerLink]="['/tv-shows', 'tv-show', tvShowId, 'seasons', season?.season_number]"
+    >
+        <div class="season-poster">
+            <ng-container *ngIf="season?.poster_path; else altPosterPath">
+                <img appPosterPath [size]="posterSize" [posterPath]="season?.poster_path ?? ''" />
+            </ng-container>
+        </div>
+        <span class="season-name">{{ season?.name }}</span>
+        <span class="season-episodes">{{ season?.episode_count }} Episodes</span>
+    </a>
+</ng-container>
+
+<ng-template #skeletonTemplate>
+    <div appFadeIn class="skeleton-season">
+        <div class="skeleton-poster"></div>
+        <div class="skeleton-name"></div>
+        <div class="skeleton-episodes"></div>
+    </div>
+</ng-template>
+
+<ng-template #altPosterPath>
+    <img [src]="posterFallback" />
+</ng-template>

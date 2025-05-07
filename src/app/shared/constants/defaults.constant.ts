@@ -16,7 +16,7 @@ export const DEFAULT = {
     imagesCount: 3,
     videosCount: 3,
     castCount: 6,
-    reviewsCount: 3,
+    reviewsCount: 4,
     infiniteScrollThreshold: 0.1,
     infiniteScrollRootMargin: 278,
     scrollThreshold: 700,

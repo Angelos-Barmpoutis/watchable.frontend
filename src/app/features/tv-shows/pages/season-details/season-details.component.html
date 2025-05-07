@@ -1,0 +1,81 @@
+<app-media-hero
+    [mediaDetails]="tvShowDetails"
+    [type]="mediaType.TvShow"
+    [isLoading]="isLoading"
+    [seasonNumber]="seasonNumber"
+></app-media-hero>
+
+<div class="wrapper">
+    <section *ngIf="seasonDetails?.overview || isLoading">
+        <header>
+            <app-section-header title="Season Overview" [isLoading]="isLoading"></app-section-header>
+        </header>
+        <p *ngIf="seasonDetails?.overview && !isLoading; else loadingOverviewTemplate" class="overview" appFadeIn>
+            {{ seasonDetails?.overview }}
+        </p>
+        <ng-template #loadingOverviewTemplate>
+            <div class="skeleton-overview">
+                <div class="skeleton-overview-line"></div>
+                <div class="skeleton-overview-line"></div>
+                <div class="skeleton-overview-line"></div>
+                <div class="skeleton-overview-line"></div>
+            </div>
+        </ng-template>
+    </section>
+
+    <section *ngIf="episodes?.length || isLoading">
+        <header>
+            <app-section-header title="Episodes" [isLoading]="isLoading"></app-section-header>
+        </header>
+        <div class="episode-grid">
+            <ng-container *ngIf="episodes?.length; else loadingState">
+                <app-episode-list-item
+                    *ngFor="let episode of episodes; trackBy: trackByItemId"
+                    [episode]="episode"
+                    [tvShowId]="tvShowId"
+                    [seasonNumber]="seasonNumber"
+                    [isLoading]="isLoading"
+                >
+                </app-episode-list-item>
+            </ng-container>
+        </div>
+    </section>
+
+    <section *ngIf="seasonDetails?.images?.posters?.length || isLoading">
+        <header>
+            <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
+        </header>
+        <app-image-grid
+            [images]="seasonDetails?.images?.posters ?? []"
+            [isLoading]="isLoading"
+            [imagesCount]="5"
+        ></app-image-grid>
+    </section>
+
+    <section *ngIf="seasonDetails?.videos?.results?.length || isLoading">
+        <header>
+            <app-section-header title="Videos" [isLoading]="isLoading"></app-section-header>
+        </header>
+        <app-video-grid
+            [videos]="seasonDetails?.videos?.results ?? []"
+            [isLoading]="isLoading"
+            [videosCount]="5"
+        ></app-video-grid>
+    </section>
+
+    <section *ngIf="seasonDetails?.credits?.cast?.length || isLoading">
+        <header>
+            <app-section-header title="Top Cast" [isLoading]="isLoading"></app-section-header>
+        </header>
+        <app-cast-grid
+            [cast]="seasonDetails?.credits?.cast ?? []"
+            [isLoading]="isLoading"
+            [castCount]="10"
+        ></app-cast-grid>
+    </section>
+</div>
+
+<ng-template #loadingState>
+    <app-episode-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
+    </app-episode-list-item>
+</ng-template>

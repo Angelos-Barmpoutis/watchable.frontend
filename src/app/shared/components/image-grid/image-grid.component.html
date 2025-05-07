@@ -1,7 +1,7 @@
 <ng-container *ngIf="!isLoading; else loadingTemplate">
     <div appFadeIn class="images-grid">
         <div
-            *ngFor="let image of images | slice: 0 : default.imagesCount; let i = index"
+            *ngFor="let image of images | slice: 0 : imagesCount; let i = index"
             class="image-item"
             [ngClass]="{ 'aspect-ratio-16-9': aspectRatio === '16/9', 'aspect-ratio-3-4': aspectRatio === '3/4' }"
             (click)="openViewer(i, $event)"
@@ -14,11 +14,11 @@
                 [size]="backdropSize.w780"
             />
             <div
-                *ngIf="i === default.imagesCount - 1 && images.length > default.imagesCount"
+                *ngIf="i === imagesCount - 1 && images.length > imagesCount"
                 class="more-images"
                 (click)="openViewer(i, $event)"
             >
-                <span class="counter">+{{ images.length - default.imagesCount }} more</span>
+                <span class="counter">+{{ images.length - imagesCount }} more</span>
             </div>
         </div>
     </div>

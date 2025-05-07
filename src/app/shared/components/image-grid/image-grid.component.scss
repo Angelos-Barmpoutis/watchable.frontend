@@ -5,11 +5,15 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: $spacing-md;
 
+    &:has(.aspect-ratio-3-4) {
+        grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    }
+
     @media (max-width: map-get($breakpoints, "sm")) {
         grid-template-columns: 1fr;
 
         &:has(.aspect-ratio-3-4) {
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
         }
     }
 

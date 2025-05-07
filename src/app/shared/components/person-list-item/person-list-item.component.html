@@ -14,7 +14,7 @@
                 </div>
 
                 <div *ngIf="person?.known_for && person?.known_for?.length" class="credits-list">
-                    <span *ngFor="let credit of person?.known_for | slice: 0 : 2" class="credit">
+                    <span *ngFor="let credit of person?.known_for | slice: 0 : 1" class="credit">
                         {{ credit?.title ?? credit?.name }}
                     </span>
                 </div>

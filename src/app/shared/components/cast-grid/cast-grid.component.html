@@ -1,7 +1,7 @@
 <ng-container *ngIf="!isLoading; else loadingTemplate">
     <div appFadeIn class="cast-grid">
         <app-cast-person
-            *ngFor="let person of cast | slice: 0 : (showAll ? cast.length : default.castCount)"
+            *ngFor="let person of cast | slice: 0 : (showAll ? cast.length : castCount)"
             [person]="person"
             [isLoading]="isLoading"
         ></app-cast-person>

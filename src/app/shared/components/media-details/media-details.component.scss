@@ -12,6 +12,12 @@
         display: flex;
         gap: $spacing-md;
         font-size: $font-size-sm;
+        border-bottom: 1px solid $surface-color;
+        padding-bottom: $spacing-sm;
+
+        &:last-child {
+            border-bottom: none;
+        }
 
         @media (max-width: map-get($breakpoints, "sm")) {
             font-size: $font-size-xs;
@@ -67,7 +73,7 @@
     .skeleton-media-list {
         display: flex;
         flex-direction: column;
-        gap: calc($spacing-sm * 1.5);
+        gap: $spacing-md;
     }
 
     .skeleton-media-item {

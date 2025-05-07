@@ -39,6 +39,7 @@ export class MediaHeroComponent implements OnChanges {
     @Input() mediaDetails: MediaDetails | null | undefined = null;
     @Input() type: MediaType = MediaType.Movie;
     @Input() isLoading: boolean = false;
+    @Input() seasonNumber?: number;
 
     readonly mediaType = MediaType;
     readonly posterSize = PosterSize;
@@ -60,9 +61,11 @@ export class MediaHeroComponent implements OnChanges {
     }
 
     get title(): string {
-        return this.type === MediaType.Movie
-            ? (this.mediaDetails as MovieDetails).title
-            : (this.mediaDetails as TvShowDetails).name;
+        if (this.type === MediaType.Movie) {
+            return (this.mediaDetails as MovieDetails).title;
+        }
+        const showName = (this.mediaDetails as TvShowDetails).name;
+        return this.seasonNumber ? `${showName} - Season ${this.seasonNumber}` : showName;
     }
 
     get releaseDate(): string {

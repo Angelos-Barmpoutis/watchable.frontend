@@ -1,3 +1,5 @@
+@import "./animations";
+
 .wrapper {
     width: 100%;
     max-width: $container-2xl;
@@ -22,11 +24,15 @@
 .media-details-grid {
     display: grid;
     grid-template-columns: 3fr 1fr;
-    gap: $spacing-xl;
+    gap: $spacing-2xl;
 
     @media (max-width: map-get($breakpoints, "lg")) {
         gap: 0;
         grid-template-columns: 1fr;
+    }
+
+    .media-details-grid-content {
+        overflow: hidden;
     }
 
     aside {
@@ -45,7 +51,7 @@
 .person-details-grid {
     display: grid;
     grid-template-columns: 3fr 1fr;
-    gap: $spacing-xl;
+    gap: $spacing-2xl;
 
     @media (max-width: map-get($breakpoints, "lg")) {
         gap: 0;
@@ -63,10 +69,6 @@
             order: -1;
         }
     }
-
-    .biography {
-        font-size: $font-size-sm;
-    }
 }
 
 .social-links {
@@ -79,6 +81,25 @@
     display: flex;
     justify-content: center;
     margin-top: $spacing-lg;
+}
+
+.overview {
+    font-size: $font-size-sm;
+}
+
+.skeleton-overview {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    .skeleton-overview-line {
+        height: $font-size-sm;
+        @include skeleton-loading;
+
+        &:last-child {
+            width: 85%;
+        }
+    }
 }
 
 .close-button {

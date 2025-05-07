@@ -93,6 +93,7 @@ export interface TvShowSeason {
     poster_path: string;
     season_number: number;
     vote_average: number;
+    credits?: MediaCredits;
 }
 
 export interface TvShowSeasonDetails {
@@ -105,6 +106,13 @@ export interface TvShowSeasonDetails {
     poster_path: string;
     season_number: number;
     vote_average: number;
+    backdrop_path: string;
+    credits: MediaCredits;
+    images: {
+        backdrops: Array<Backdrop>;
+        posters: Array<Poster>;
+    };
+    videos: { results: Array<Video> };
 }
 
 export interface TvShowExternalIds extends ExternalIds {

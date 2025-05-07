@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { PaginatedTvShows, TvShowDetails } from '../models/tv-show.model';
+import { PaginatedTvShows, TvShowDetails, TvShowEpisodeDetails, TvShowSeasonDetails } from '../models/tv-show.model';
 import { HttpService } from '../services/http.service';
 
 @Injectable({
@@ -24,5 +24,17 @@ export class TvShowDriver {
 
     getDetails(url: string): Observable<TvShowDetails> {
         return this.httpService.get<TvShowDetails>(url);
+    }
+
+    getTvShowsByGenre(url: string): Observable<PaginatedTvShows> {
+        return this.httpService.get<PaginatedTvShows>(url);
+    }
+
+    getTvShowSeasonDetails(url: string): Observable<TvShowSeasonDetails> {
+        return this.httpService.get<TvShowSeasonDetails>(url);
+    }
+
+    getTvShowEpisodeDetails(url: string): Observable<TvShowEpisodeDetails> {
+        return this.httpService.get<TvShowEpisodeDetails>(url);
     }
 }

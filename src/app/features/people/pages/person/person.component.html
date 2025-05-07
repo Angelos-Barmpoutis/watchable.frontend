@@ -34,29 +34,16 @@
 <div class="wrapper">
     <div class="person-details-grid">
         <div>
-            <section *ngIf="personDetails?.biography || isLoading" appFadeIn>
-                <header>
-                    <app-section-header title="Biography" [isLoading]="isLoading"></app-section-header>
-                </header>
-                <p *ngIf="!isLoading; else loadingBiographyTemplate" class="biography">
-                    {{ personDetails?.biography }}
-                </p>
-
-                <ng-template #loadingBiographyTemplate>
-                    <div class="skeleton-biography">
-                        <div class="skeleton-biography-line"></div>
-                        <div class="skeleton-biography-line"></div>
-                        <div class="skeleton-biography-line"></div>
-                        <div class="skeleton-biography-line"></div>
-                    </div>
-                </ng-template>
-            </section>
-
             <section *ngIf="images?.length || isLoading">
                 <header>
                     <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
                 </header>
-                <app-image-grid aspectRatio="3/4" [images]="images" [isLoading]="isLoading"></app-image-grid>
+                <app-image-grid
+                    aspectRatio="3/4"
+                    [images]="images"
+                    [isLoading]="isLoading"
+                    [imagesCount]="6"
+                ></app-image-grid>
             </section>
 
             <section *ngIf="movieCastItems?.length || isLoading">
@@ -137,4 +124,21 @@
             </section>
         </aside>
     </div>
+
+    <section *ngIf="personDetails?.biography || isLoading" appFadeIn>
+        <header>
+            <app-section-header title="Biography" [isLoading]="isLoading"></app-section-header>
+        </header>
+        <p *ngIf="!isLoading; else loadingBiographyTemplate" appFadeIn class="overview">
+            {{ personDetails?.biography }}
+        </p>
+        <ng-template #loadingBiographyTemplate>
+            <div class="skeleton-overview">
+                <div class="skeleton-overview-line"></div>
+                <div class="skeleton-overview-line"></div>
+                <div class="skeleton-overview-line"></div>
+                <div class="skeleton-overview-line"></div>
+            </div>
+        </ng-template>
+    </section>
 </div>

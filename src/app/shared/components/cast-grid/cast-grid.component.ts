@@ -19,17 +19,18 @@ import { CastPersonComponent } from '../cast-person/cast-person.component';
 export class CastGridComponent {
     @Input() cast: Array<MediaCreditsCastPerson> = [];
     @Input() isLoading = false;
+    @Input() castCount = DEFAULT.castCount;
 
     readonly default = DEFAULT;
     readonly ButtonType = ButtonType;
     showAll = false;
 
     get hasMoreCast(): boolean {
-        return this.cast.length > DEFAULT.castCount;
+        return this.cast.length > this.castCount;
     }
 
     get skeletonArray(): Array<number> {
-        return Array(DEFAULT.castCount)
+        return Array(this.castCount)
             .fill(0)
             .map((_, index) => index + 1);
     }

@@ -3,15 +3,22 @@
 <div class="wrapper">
     <div class="media-details-grid">
         <ng-container>
-            <div>
-                <section *ngIf="tvShowDetails?.reviews?.results?.length || isLoading">
+            <div class="media-details-grid-content">
+                <section *ngIf="tvShowDetails?.seasons?.length || isLoading">
                     <header>
-                        <app-section-header title="Reviews" [isLoading]="isLoading"></app-section-header>
+                        <app-section-header
+                            [title]="'Seasons'"
+                            [isLoading]="isLoading"
+                            [redirectUrl]="['/tv-shows', 'tv-show', tvShowDetails?.id?.toString() ?? '', 'seasons']"
+                        >
+                        </app-section-header>
                     </header>
-                    <app-review-grid
-                        [reviews]="tvShowDetails?.reviews?.results ?? []"
+                    <app-carousel-season
+                        [items]="tvShowDetails?.seasons ?? []"
+                        [tvShowId]="tvShowDetails?.id ?? 0"
                         [isLoading]="isLoading"
-                    ></app-review-grid>
+                    >
+                    </app-carousel-season>
                 </section>
 
                 <section *ngIf="tvShowDetails?.credits?.cast?.length || isLoading">
@@ -39,6 +46,30 @@
                         [videos]="tvShowDetails?.videos?.results ?? []"
                         [isLoading]="isLoading"
                     ></app-video-grid>
+                </section>
+
+                <section *ngIf="tvShowDetails?.similar?.results?.length || isLoading">
+                    <header>
+                        <app-section-header title="Similar TV Shows" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-carousel-media
+                        [type]="mediaType.TvShow"
+                        [items]="tvShowDetails?.similar?.results ?? []"
+                        [isLoading]="isLoading"
+                    >
+                    </app-carousel-media>
+                </section>
+
+                <section *ngIf="tvShowDetails?.recommendations?.results?.length || isLoading">
+                    <header>
+                        <app-section-header title="Recommendations" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-carousel-media
+                        [type]="mediaType.TvShow"
+                        [items]="tvShowDetails?.recommendations?.results ?? []"
+                        [isLoading]="isLoading"
+                    >
+                    </app-carousel-media>
                 </section>
             </div>
         </ng-container>
@@ -105,27 +136,10 @@
         </aside>
     </div>
 
-    <section *ngIf="tvShowDetails?.similar?.results?.length || isLoading">
+    <section *ngIf="tvShowDetails?.reviews?.results?.length || isLoading">
         <header>
-            <app-section-header title="Similar TV Shows" [isLoading]="isLoading"></app-section-header>
+            <app-section-header title="Reviews" [isLoading]="isLoading"></app-section-header>
         </header>
-        <app-carousel-media
-            [type]="mediaType.TvShow"
-            [items]="tvShowDetails?.similar?.results ?? []"
-            [isLoading]="isLoading"
-        >
-        </app-carousel-media>
-    </section>
-
-    <section *ngIf="tvShowDetails?.recommendations?.results?.length || isLoading">
-        <header>
-            <app-section-header title="Recommendations" [isLoading]="isLoading"></app-section-header>
-        </header>
-        <app-carousel-media
-            [type]="mediaType.TvShow"
-            [items]="tvShowDetails?.recommendations?.results ?? []"
-            [isLoading]="isLoading"
-        >
-        </app-carousel-media>
+        <app-review-grid [reviews]="tvShowDetails?.reviews?.results ?? []" [isLoading]="isLoading"></app-review-grid>
     </section>
 </div>

@@ -21,6 +21,7 @@ export class ImageGridComponent {
     @Input() images: Array<Backdrop> = [];
     @Input() isLoading = false;
     @Input() aspectRatio: '16/9' | '3/4' = '16/9';
+    @Input() imagesCount = DEFAULT.imagesCount;
 
     selectedImageIndex?: number;
     readonly backdropSize = BackdropSize;
@@ -36,7 +37,7 @@ export class ImageGridComponent {
     }
 
     get skeletonArray(): Array<number> {
-        return Array(DEFAULT.imagesCount)
+        return Array(this.imagesCount)
             .fill(0)
             .map((_, index) => index + 1);
     }

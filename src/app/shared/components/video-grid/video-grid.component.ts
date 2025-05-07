@@ -18,6 +18,7 @@ import { VideoGalleryComponent } from '../video-gallery/video-gallery.component'
 export class VideoGridComponent {
     @Input() videos: Array<Video> = [];
     @Input() isLoading = false;
+    @Input() videosCount = DEFAULT.videosCount;
 
     selectedIndex?: number;
     readonly default = DEFAULT;
@@ -32,7 +33,7 @@ export class VideoGridComponent {
     }
 
     get skeletonArray(): Array<number> {
-        return Array(DEFAULT.videosCount)
+        return Array(this.videosCount)
             .fill(0)
             .map((_, index) => index + 1);
     }

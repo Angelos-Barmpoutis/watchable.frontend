@@ -1,7 +1,7 @@
 <ng-container *ngIf="!isLoading; else loadingTemplate">
     <div appFadeIn class="videos-grid">
         <div
-            *ngFor="let video of videos | slice: 0 : default.videosCount; let i = index"
+            *ngFor="let video of videos | slice: 0 : videosCount; let i = index"
             class="video-item"
             (click)="openViewer(i, $event)"
         >
@@ -16,11 +16,11 @@
                 </div>
             </div>
             <div
-                *ngIf="i === default.videosCount - 1 && videos.length > default.videosCount"
+                *ngIf="i === videosCount - 1 && videos.length > videosCount"
                 class="more-videos"
                 (click)="openViewer(i, $event)"
             >
-                <span class="counter">+{{ videos.length - default.videosCount }} more</span>
+                <span class="counter">+{{ videos.length - videosCount }} more</span>
             </div>
         </div>
     </div>

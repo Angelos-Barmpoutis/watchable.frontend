@@ -6,7 +6,7 @@ import { MediaType } from '../enumerations/media-type.enum';
 import { DiscoverGateway } from '../gateways/discover.gateway';
 import { TvShowGateway } from '../gateways/tv-show.gateway';
 import { Genre } from '../models/genre.model';
-import { PaginatedTvShows, TvShowDetails } from '../models/tv-show.model';
+import { PaginatedTvShows, TvShowDetails, TvShowEpisodeDetails, TvShowSeasonDetails } from '../models/tv-show.model';
 import { LocalStorageService } from '../services/local-storage.service';
 
 export interface AllTvShows {
@@ -29,23 +29,23 @@ export class TvShowFacade {
         private localStorageService: LocalStorageService,
     ) {}
 
-    public getAiringToday(page: number = DEFAULT.page): Observable<PaginatedTvShows> {
+    getAiringToday(page: number = DEFAULT.page): Observable<PaginatedTvShows> {
         return this.tvShowGateway.getAiringToday(page);
     }
 
-    public getPopular(page: number = DEFAULT.page): Observable<PaginatedTvShows> {
+    getPopular(page: number = DEFAULT.page): Observable<PaginatedTvShows> {
         return this.tvShowGateway.getPopular(page);
     }
 
-    public getTopRated(page: number = DEFAULT.page): Observable<PaginatedTvShows> {
+    getTopRated(page: number = DEFAULT.page): Observable<PaginatedTvShows> {
         return this.tvShowGateway.getTopRated(page);
     }
 
-    public getDetails(id: number): Observable<TvShowDetails> {
+    getDetails(id: number): Observable<TvShowDetails> {
         return this.tvShowGateway.getDetails(id);
     }
 
-    public getAllTvShows(): Observable<AllTvShows> {
+    getAllTvShows(): Observable<AllTvShows> {
         return forkJoin({
             airingToday: this.getAiringToday(),
             popular: this.getPopular(),
@@ -53,11 +53,11 @@ export class TvShowFacade {
         });
     }
 
-    public getTvShows(page: number = DEFAULT.page, genreId: number): Observable<PaginatedTvShows> {
+    getTvShows(page: number = DEFAULT.page, genreId: number): Observable<PaginatedTvShows> {
         return this.discoverGateway.getTvShows(page, genreId);
     }
 
-    public getTvShowsByGenreIds(
+    getTvShowsByGenreIds(
         currentTvShowGenreIndex: number,
         genresPerBatch: number = DEFAULT.genresBatchSize,
     ): Observable<GenreContentBatch> {
@@ -79,5 +79,17 @@ export class TvShowFacade {
 
         // Load the genres
         return forkJoin(genresToLoad);
+    }
+
+    getTvShowSeasonDetails(tvShowId: number, seasonNumber: number): Observable<TvShowSeasonDetails> {
+        return this.tvShowGateway.getTvShowSeasonDetails(tvShowId, seasonNumber);
+    }
+
+    getTvShowEpisodeDetails(
+        tvShowId: number,
+        seasonNumber: number,
+        episodeNumber: number,
+    ): Observable<TvShowEpisodeDetails> {
+        return this.tvShowGateway.getTvShowEpisodeDetails(tvShowId, seasonNumber, episodeNumber);
     }
 }

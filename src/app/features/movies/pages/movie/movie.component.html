@@ -3,17 +3,7 @@
 <div class="wrapper">
     <div class="media-details-grid">
         <ng-container>
-            <div>
-                <section *ngIf="movieDetails?.reviews?.results?.length || isLoading">
-                    <header>
-                        <app-section-header title="Reviews" [isLoading]="isLoading"></app-section-header>
-                    </header>
-                    <app-review-grid
-                        [reviews]="movieDetails?.reviews?.results ?? []"
-                        [isLoading]="isLoading"
-                    ></app-review-grid>
-                </section>
-
+            <div class="media-details-grid-content">
                 <section *ngIf="movieDetails?.credits?.cast?.length || isLoading">
                     <header>
                         <app-section-header title="Top Cast" [isLoading]="isLoading"></app-section-header>
@@ -39,6 +29,30 @@
                         [videos]="movieDetails?.videos?.results ?? []"
                         [isLoading]="isLoading"
                     ></app-video-grid>
+                </section>
+
+                <section *ngIf="movieDetails?.similar?.results?.length || isLoading">
+                    <header>
+                        <app-section-header title="Similar Movies" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-carousel-media
+                        [type]="mediaType.Movie"
+                        [items]="movieDetails?.similar?.results ?? []"
+                        [isLoading]="isLoading"
+                    >
+                    </app-carousel-media>
+                </section>
+
+                <section *ngIf="movieDetails?.recommendations?.results?.length || isLoading">
+                    <header>
+                        <app-section-header title="Recommendations" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-carousel-media
+                        [type]="mediaType.Movie"
+                        [items]="movieDetails?.recommendations?.results ?? []"
+                        [isLoading]="isLoading"
+                    >
+                    </app-carousel-media>
                 </section>
             </div>
         </ng-container>
@@ -105,27 +119,10 @@
         </aside>
     </div>
 
-    <section *ngIf="movieDetails?.similar?.results?.length || isLoading">
+    <section *ngIf="movieDetails?.reviews?.results?.length || isLoading">
         <header>
-            <app-section-header title="Similar Movies" [isLoading]="isLoading"></app-section-header>
+            <app-section-header title="Reviews" [isLoading]="isLoading"></app-section-header>
         </header>
-        <app-carousel-media
-            [type]="mediaType.Movie"
-            [items]="movieDetails?.similar?.results ?? []"
-            [isLoading]="isLoading"
-        >
-        </app-carousel-media>
-    </section>
-
-    <section *ngIf="movieDetails?.recommendations?.results?.length || isLoading">
-        <header>
-            <app-section-header title="Recommendations" [isLoading]="isLoading"></app-section-header>
-        </header>
-        <app-carousel-media
-            [type]="mediaType.Movie"
-            [items]="movieDetails?.recommendations?.results ?? []"
-            [isLoading]="isLoading"
-        >
-        </app-carousel-media>
+        <app-review-grid [reviews]="movieDetails?.reviews?.results ?? []" [isLoading]="isLoading"></app-review-grid>
     </section>
 </div>
