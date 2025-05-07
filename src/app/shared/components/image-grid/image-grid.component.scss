@@ -10,7 +10,7 @@
     }
 
     @media (max-width: map-get($breakpoints, "sm")) {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
 
         &:has(.aspect-ratio-3-4) {
             grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
