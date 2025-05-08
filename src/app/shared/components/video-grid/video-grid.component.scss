@@ -6,7 +6,7 @@
     gap: $spacing-md;
 
     @media (max-width: map-get($breakpoints, "sm")) {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
     }
 
     .video-item {
