@@ -27,18 +27,13 @@
         <header>
             <app-section-header title="Episodes" [isLoading]="isLoading"></app-section-header>
         </header>
-        <div class="episode-grid">
-            <ng-container *ngIf="episodes?.length; else loadingState">
-                <app-episode-list-item
-                    *ngFor="let episode of episodes; trackBy: trackByItemId"
-                    [episode]="episode"
-                    [tvShowId]="tvShowId"
-                    [seasonNumber]="seasonNumber"
-                    [isLoading]="isLoading"
-                >
-                </app-episode-list-item>
-            </ng-container>
-        </div>
+        <app-episode-grid
+            [episodes]="episodes"
+            [tvShowId]="tvShowId"
+            [seasonNumber]="seasonNumber"
+            [isLoading]="isLoading"
+            [episodesCount]="5"
+        ></app-episode-grid>
     </section>
 
     <section *ngIf="seasonDetails?.images?.posters?.length || isLoading">
@@ -74,8 +69,3 @@
         ></app-cast-grid>
     </section>
 </div>
-
-<ng-template #loadingState>
-    <app-episode-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
-    </app-episode-list-item>
-</ng-template>

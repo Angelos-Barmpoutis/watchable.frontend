@@ -5,7 +5,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { map, switchMap, tap } from 'rxjs/operators';
 
 import { CastGridComponent } from '../../../../shared/components/cast-grid/cast-grid.component';
-import { EpisodeListItemComponent } from '../../../../shared/components/episode-list-item/episode-list-item.component';
+import { EpisodeGridComponent } from '../../../../shared/components/episode-grid/episode-grid.component';
 import { ImageGridComponent } from '../../../../shared/components/image-grid/image-grid.component';
 import { MediaHeroComponent } from '../../../../shared/components/media-hero/media-hero.component';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
@@ -22,7 +22,7 @@ import { TvShowDetails, TvShowEpisode, TvShowSeasonDetails } from '../../../../s
         CommonModule,
         RouterModule,
         SectionHeaderComponent,
-        EpisodeListItemComponent,
+        EpisodeGridComponent,
         MediaHeroComponent,
         CastGridComponent,
         ImageGridComponent,
@@ -49,10 +49,6 @@ export class SeasonDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadDetails();
-    }
-
-    get skeletonArray(): Array<number> {
-        return Array(6).fill(0);
     }
 
     private loadDetails(): void {
@@ -82,13 +78,5 @@ export class SeasonDetailsComponent implements OnInit {
                 this.episodes = details.episodes;
                 this.isLoading = false;
             });
-    }
-
-    trackByItemId(index: number, item: TvShowEpisode): number {
-        return item.id;
-    }
-
-    trackByIndex(index: number): number {
-        return index;
     }
 }

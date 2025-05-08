@@ -9,14 +9,14 @@ import { MediaType } from '../../enumerations/media-type.enum';
 import { TvShowEpisode } from '../../models/tv-show.model';
 
 @Component({
-    selector: 'app-episode-list-item',
+    selector: 'app-episode-grid-item',
     standalone: true,
     imports: [CommonModule, RouterLink, BackdropPathDirective, FadeInDirective],
-    templateUrl: './episode-list-item.component.html',
-    styleUrls: ['./episode-list-item.component.scss'],
+    templateUrl: './episode-grid-item.component.html',
+    styleUrls: ['./episode-grid-item.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EpisodeListItemComponent {
+export class EpisodeGridItemComponent {
     @Input() public episode!: TvShowEpisode;
     @Input() public tvShowId!: number;
     @Input() public seasonNumber!: number;
