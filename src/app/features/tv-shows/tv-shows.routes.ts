@@ -36,7 +36,7 @@ export const routes: Routes = [
             import('./pages/season-details/season-details.component').then((c) => c.SeasonDetailsComponent),
     },
     {
-        path: 'tv-show/:id/seasons/:seasonNumber/episodes/:episodeNumber',
+        path: 'tv-show/:id/seasons/:seasonNumber/episode/:episodeNumber',
         loadComponent: () =>
             import('./pages/episode-details/episode-details.component').then((c) => c.EpisodeDetailsComponent),
     },
