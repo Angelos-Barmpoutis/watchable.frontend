@@ -152,6 +152,13 @@ export interface TvShowEpisodeDetails {
     still_path: string;
     vote_average: number;
     vote_count: number;
+    videos?: { results: Array<Video> };
+    images?: {
+        backdrops: Array<Backdrop>;
+        posters: Array<Poster>;
+        stills: Array<Backdrop>;
+    };
+    credits?: MediaCredits;
 }
 
 export interface TvShowEpisodeCreditsPerson extends Person {

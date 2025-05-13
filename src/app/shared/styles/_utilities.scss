@@ -94,10 +94,12 @@
 
     .skeleton-overview-line {
         height: $font-size-sm;
+        width: 100%;
         @include skeleton-loading;
+        border-radius: $border-radius-sm;
 
         &:last-child {
-            width: 85%;
+            width: 70%;
         }
     }
 }

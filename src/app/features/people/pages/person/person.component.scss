@@ -140,12 +140,6 @@
                 width: 100px;
                 height: $font-size-sm;
                 @include skeleton-loading;
-
-                &:not(:first-child)::before {
-                    content: "•";
-                    margin: 0 $spacing-xs;
-                    opacity: 0.5;
-                }
             }
         }
     }

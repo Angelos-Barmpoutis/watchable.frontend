@@ -43,6 +43,7 @@ import { TvShowItem } from '../../../../shared/models/tv-show.model';
     ],
     templateUrl: './person.component.html',
     styleUrl: './person.component.scss',
+    // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersonComponent implements OnInit {
     personId!: number;
@@ -50,6 +51,14 @@ export class PersonComponent implements OnInit {
     isLoading = true;
     movieCastItems: Array<MovieItem> = [];
     tvCastItems: Array<TvShowItem> = [];
+
+    // Regular properties instead of getters
+    images: Array<Poster | Backdrop | Logo> = [];
+    movieCast: Array<MovieCreditsCastPerson> = [];
+    tvCast: Array<TvCreditsCastPerson> = [];
+    externalIds?: ExternalIds;
+    mediaLinks: Array<ButtonLink> = [];
+    gender: string = '';
 
     readonly buttonType = ButtonType;
     readonly personType = MediaType.Person;
@@ -67,39 +76,32 @@ export class PersonComponent implements OnInit {
         this.loadPersonDetails();
     }
 
-    get images(): Array<Poster | Backdrop | Logo> {
-        return this.personDetails?.images?.profiles || [];
-    }
+    private updateProperties(): void {
+        this.images = this.personDetails?.images?.profiles || [];
+        this.movieCast = (this.personDetails?.movie_credits?.cast as Array<MovieCreditsCastPerson>) || [];
+        this.tvCast = (this.personDetails?.tv_credits?.cast as unknown as Array<TvCreditsCastPerson>) || [];
 
-    get movieCast(): Array<MovieCreditsCastPerson> {
-        return (this.personDetails?.movie_credits?.cast as Array<MovieCreditsCastPerson>) || [];
-    }
+        const externalIds = Object.fromEntries(
+            Object.entries(this.personDetails?.external_ids || {}).filter(([key, value]) => value !== null),
+        ) as unknown as ExternalIds;
+        this.externalIds = Object.keys(externalIds).length > 0 ? externalIds : undefined;
 
-    get tvCast(): Array<TvCreditsCastPerson> {
-        return (this.personDetails?.tv_credits?.cast as unknown as Array<TvCreditsCastPerson>) || [];
-    }
-
-    get externalIds(): ExternalIds | undefined {
-        return this.personDetails?.external_ids;
-    }
-
-    get mediaLinks(): Array<ButtonLink> {
-        return [
+        this.mediaLinks = [
             { path: 'https://www.imdb.com/name/' + this.externalIds?.imdb_id, isExternal: true },
             { path: 'https://www.facebook.com/' + this.externalIds?.facebook_id, isExternal: true },
             { path: 'https://www.instagram.com/' + this.externalIds?.instagram_id, isExternal: true },
             { path: 'https://www.twitter.com/' + this.externalIds?.twitter_id, isExternal: true },
         ];
-    }
 
-    get gender(): string {
         switch (this.personDetails?.gender) {
             case 1:
-                return 'Female';
+                this.gender = 'Female';
+                break;
             case 2:
-                return 'Male';
+                this.gender = 'Male';
+                break;
             default:
-                return '';
+                this.gender = '';
         }
     }
 
@@ -117,6 +119,7 @@ export class PersonComponent implements OnInit {
             )
             .subscribe((personDetails) => {
                 this.personDetails = personDetails;
+                this.updateProperties();
                 this.createMovieCastItems(this.movieCast);
                 this.createTvCastItems(this.tvCast);
                 this.isLoading = false;

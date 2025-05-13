@@ -4,17 +4,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { map, switchMap, tap } from 'rxjs/operators';
 
-import { CastGridComponent } from '../../../../shared/components/cast-grid/cast-grid.component';
-import { EpisodeGridComponent } from '../../../../shared/components/episode-grid/episode-grid.component';
-import { ImageGridComponent } from '../../../../shared/components/image-grid/image-grid.component';
-import { MediaHeroComponent } from '../../../../shared/components/media-hero/media-hero.component';
-import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
-import { VideoGridComponent } from '../../../../shared/components/video-grid/video-grid.component';
-import { FadeInDirective } from '../../../../shared/directives/fade-in.directive';
-import { AspectRatio } from '../../../../shared/enumerations/aspect-ratio.enum';
-import { MediaType } from '../../../../shared/enumerations/media-type.enum';
-import { TvShowFacade } from '../../../../shared/facades/tv-show.facade';
-import { TvShowDetails, TvShowEpisode, TvShowSeasonDetails } from '../../../../shared/models/tv-show.model';
+import { CastGridComponent } from '../../../../../../shared/components/cast-grid/cast-grid.component';
+import { EpisodeGridComponent } from '../../../../../../shared/components/episode-grid/episode-grid.component';
+import { ImageGridComponent } from '../../../../../../shared/components/image-grid/image-grid.component';
+import { MediaHeroComponent } from '../../../../../../shared/components/media-hero/media-hero.component';
+import { SectionHeaderComponent } from '../../../../../../shared/components/section-header/section-header.component';
+import { VideoGridComponent } from '../../../../../../shared/components/video-grid/video-grid.component';
+import { FadeInDirective } from '../../../../../../shared/directives/fade-in.directive';
+import { AspectRatio } from '../../../../../../shared/enumerations/aspect-ratio.enum';
+import { MediaType } from '../../../../../../shared/enumerations/media-type.enum';
+import { TvShowFacade } from '../../../../../../shared/facades/tv-show.facade';
+import { TvShowDetails, TvShowEpisode, TvShowSeasonDetails } from '../../../../../../shared/models/tv-show.model';
 
 @Component({
     selector: 'app-season-details',

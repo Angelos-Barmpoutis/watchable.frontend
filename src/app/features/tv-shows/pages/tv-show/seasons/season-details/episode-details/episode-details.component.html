@@ -1,0 +1,96 @@
+<app-media-hero
+    [mediaDetails]="tvShowDetails"
+    [type]="mediaType.TvShow"
+    [isLoading]="isLoading"
+    [seasonNumber]="seasonNumber"
+    [episodeNumber]="episodeNumber"
+></app-media-hero>
+
+<div class="wrapper">
+    <div class="media-details-grid">
+        <div class="media-details-grid-content">
+            <section *ngIf="episodeDetails?.overview || isLoading">
+                <header>
+                    <app-section-header title="Episode Overview" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <p
+                    *ngIf="episodeDetails?.overview && !isLoading; else loadingOverviewTemplate"
+                    class="overview"
+                    appFadeIn
+                >
+                    {{ episodeDetails?.overview }}
+                </p>
+                <ng-template #loadingOverviewTemplate>
+                    <div class="skeleton-overview">
+                        <div class="skeleton-overview-line"></div>
+                    </div>
+                </ng-template>
+            </section>
+
+            <section *ngIf="cast?.length || isLoading">
+                <header>
+                    <app-section-header title="Cast" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-cast-grid [cast]="cast" [isLoading]="isLoading"></app-cast-grid>
+            </section>
+
+            <section *ngIf="episodeDetails?.crew?.length || isLoading">
+                <header>
+                    <app-section-header title="Crew" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-cast-grid [cast]="transformedCrew" [isLoading]="isLoading"></app-cast-grid>
+            </section>
+
+            <section *ngIf="episodeDetails?.guest_stars?.length || isLoading">
+                <header>
+                    <app-section-header title="Guest Stars" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-cast-grid [cast]="episodeDetails?.guest_stars ?? []" [isLoading]="isLoading"></app-cast-grid>
+            </section>
+
+            <section *ngIf="episodeDetails?.images?.backdrops?.length || isLoading">
+                <header>
+                    <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-image-grid
+                    [images]="episodeDetails?.images?.backdrops ?? []"
+                    [isLoading]="isLoading"
+                    [imagesCount]="7"
+                    [aspectRatio]="aspectRatio['16/9']"
+                ></app-image-grid>
+            </section>
+
+            <section *ngIf="episodeDetails?.images?.stills?.length || isLoading">
+                <header>
+                    <app-section-header title="Images" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-image-grid
+                    [images]="episodeDetails?.images?.stills ?? []"
+                    [isLoading]="isLoading"
+                    [imagesCount]="7"
+                    [aspectRatio]="aspectRatio['16/9']"
+                ></app-image-grid>
+            </section>
+
+            <section *ngIf="episodeDetails?.videos?.results?.length || isLoading">
+                <header>
+                    <app-section-header title="Videos" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-video-grid
+                    [videos]="episodeDetails?.videos?.results ?? []"
+                    [isLoading]="isLoading"
+                    [videosCount]="5"
+                ></app-video-grid>
+            </section>
+        </div>
+
+        <aside>
+            <section *ngIf="episodeDetails || isLoading">
+                <header>
+                    <app-section-header title="Episode Info" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-episode-details [episodeDetails]="episodeDetails" [isLoading]="isLoading"></app-episode-details>
+            </section>
+        </aside>
+    </div>
+</div>

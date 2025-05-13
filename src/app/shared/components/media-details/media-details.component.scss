@@ -82,6 +82,7 @@
         @include skeleton-loading;
         height: $font-size-sm;
         width: 110px;
+        border-radius: $border-radius-sm;
 
         @media (max-width: map-get($breakpoints, "sm")) {
             height: $font-size-xs;
@@ -93,6 +94,7 @@
         @include skeleton-loading;
         flex: 1;
         height: $font-size-sm;
+        border-radius: $border-radius-sm;
 
         @media (max-width: map-get($breakpoints, "sm")) {
             height: $font-size-xs;

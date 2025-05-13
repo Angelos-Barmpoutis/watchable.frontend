@@ -28,16 +28,20 @@ export const routes: Routes = [
     },
     {
         path: 'tv-show/:id/seasons',
-        loadComponent: () => import('./pages/seasons/seasons.component').then((c) => c.SeasonsComponent),
+        loadComponent: () => import('./pages/tv-show/seasons/seasons.component').then((c) => c.SeasonsComponent),
     },
     {
         path: 'tv-show/:id/seasons/:seasonNumber',
         loadComponent: () =>
-            import('./pages/season-details/season-details.component').then((c) => c.SeasonDetailsComponent),
+            import('./pages/tv-show/seasons/season-details/season-details.component').then(
+                (c) => c.SeasonDetailsComponent,
+            ),
     },
     {
         path: 'tv-show/:id/seasons/:seasonNumber/episode/:episodeNumber',
         loadComponent: () =>
-            import('./pages/episode-details/episode-details.component').then((c) => c.EpisodeDetailsComponent),
+            import('./pages/tv-show/seasons/season-details/episode-details/episode-details.component').then(
+                (c) => c.EpisodeDetailsPageComponent,
+            ),
     },
 ];

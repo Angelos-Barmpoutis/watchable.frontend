@@ -15,6 +15,7 @@
                     <div class="media-info">
                         <h2 class="media-title">
                             {{ title }}
+                            <span *ngIf="subtitle" class="media-subtitle">({{ subtitle }})</span>
                         </h2>
                         <div class="media-meta">
                             <span *ngIf="releaseDate" class="media-year">
@@ -49,7 +50,7 @@
                                     <span class="rating-total">/10</span>
                                 </div>
                                 <div *ngIf="voteCount" class="rating-details">
-                                    <span class="vote-count">{{ voteCount }} votes</span>
+                                    <span class="vote-count">{{ voteCount | formatNumberWithK }} votes</span>
                                 </div>
                             </div>
                             <app-button

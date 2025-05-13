@@ -12,6 +12,7 @@ import { getTrailerVideo } from '../../helpers/trailer-url.helper';
 import { Video } from '../../models/media.model';
 import { MovieDetails } from '../../models/movie.model';
 import { TvShowDetails } from '../../models/tv-show.model';
+import { FormatNumberWithKPipe } from '../../pipes/format-number.pipe';
 import { TimePipe } from '../../pipes/time.pipe';
 import { ButtonComponent } from '../button/button.component';
 import { ButtonType } from '../button/enumerations/button-type.enum';
@@ -26,6 +27,7 @@ type MediaDetails = MovieDetails | TvShowDetails;
         CommonModule,
         FadeInDirective,
         TimePipe,
+        FormatNumberWithKPipe,
         PosterPathDirective,
         BackgroundPathDirective,
         VideoGalleryComponent,
@@ -40,6 +42,7 @@ export class MediaHeroComponent implements OnChanges {
     @Input() type: MediaType = MediaType.Movie;
     @Input() isLoading: boolean = false;
     @Input() seasonNumber?: number;
+    @Input() episodeNumber?: number;
 
     readonly mediaType = MediaType;
     readonly posterSize = PosterSize;
@@ -65,7 +68,17 @@ export class MediaHeroComponent implements OnChanges {
             return (this.mediaDetails as MovieDetails).title;
         }
         const showName = (this.mediaDetails as TvShowDetails).name;
-        return this.seasonNumber ? `${showName} - Season ${this.seasonNumber}` : showName;
+
+        return showName;
+    }
+
+    get subtitle(): string {
+        if (this.seasonNumber && this.episodeNumber) {
+            return `S${this.seasonNumber.toString().padStart(2, '0')}E${this.episodeNumber
+                .toString()
+                .padStart(2, '0')}`;
+        }
+        return this.seasonNumber ? `S${this.seasonNumber.toString().padStart(2, '0')}` : '';
     }
 
     get releaseDate(): string {

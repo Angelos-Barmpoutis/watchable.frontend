@@ -59,6 +59,11 @@
                 font-weight: $font-weight-semibold;
                 margin: 0;
                 line-height: 1.2;
+
+                .media-subtitle {
+                    font-size: $font-size-xl;
+                    color: $text-secondary;
+                }
             }
 
             .media-meta {
@@ -174,6 +179,10 @@
 
                 .media-title {
                     font-size: 28px;
+
+                    .media-subtitle {
+                        font-size: 18px;
+                    }
                 }
 
                 .overview {
@@ -235,7 +244,7 @@
 
             .skeleton-media-title {
                 height: $font-size-3xl;
-                width: 40%;
+                width: 60%;
                 @include skeleton-loading;
                 border-radius: $border-radius-md;
             }

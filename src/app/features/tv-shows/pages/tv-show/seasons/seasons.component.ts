@@ -5,12 +5,12 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { EMPTY } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 
-import { SeasonListItemComponent } from '../../../../shared/components/season-list-item/season-list-item.component';
-import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
-import { DEFAULT } from '../../../../shared/constants/defaults.constant';
-import { MediaType } from '../../../../shared/enumerations/media-type.enum';
-import { TvShowFacade } from '../../../../shared/facades/tv-show.facade';
-import { TvShowDetails, TvShowSeason } from '../../../../shared/models/tv-show.model';
+import { SeasonListItemComponent } from '../../../../../shared/components/season-list-item/season-list-item.component';
+import { SectionHeaderComponent } from '../../../../../shared/components/section-header/section-header.component';
+import { DEFAULT } from '../../../../../shared/constants/defaults.constant';
+import { MediaType } from '../../../../../shared/enumerations/media-type.enum';
+import { TvShowFacade } from '../../../../../shared/facades/tv-show.facade';
+import { TvShowDetails, TvShowSeason } from '../../../../../shared/models/tv-show.model';
 
 @Component({
     selector: 'app-seasons',
