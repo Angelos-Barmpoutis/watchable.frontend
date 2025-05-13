@@ -48,7 +48,7 @@
                                     </ng-template>
                                     <span class="rating-total">/10</span>
                                 </div>
-                                <div class="rating-details">
+                                <div *ngIf="voteCount" class="rating-details">
                                     <span class="vote-count">{{ voteCount }} votes</span>
                                 </div>
                             </div>

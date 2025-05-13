@@ -14,6 +14,7 @@ import { PersonDetailsComponent } from '../../../../shared/components/person-det
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
 import { FadeInDirective } from '../../../../shared/directives/fade-in.directive';
+import { AspectRatio } from '../../../../shared/enumerations/aspect-ratio.enum';
 import { MediaType } from '../../../../shared/enumerations/media-type.enum';
 import { PeopleFacade } from '../../../../shared/facades/people.facade';
 import { ExternalIds } from '../../../../shared/models/external-ids.model';
@@ -50,10 +51,11 @@ export class PersonComponent implements OnInit {
     movieCastItems: Array<MovieItem> = [];
     tvCastItems: Array<TvShowItem> = [];
 
-    readonly ButtonType = ButtonType;
+    readonly buttonType = ButtonType;
     readonly personType = MediaType.Person;
-    readonly MediaType = MediaType;
-    readonly DEFAULT = DEFAULT;
+    readonly mediaType = MediaType;
+    readonly aspectRatio = AspectRatio;
+    readonly default = DEFAULT;
 
     constructor(
         private route: ActivatedRoute,

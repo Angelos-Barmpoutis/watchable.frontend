@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, Input } fro
 import { BaseGalleryComponent } from '../../abstract/base-gallery.abstract';
 import { BackdropPathDirective } from '../../directives/backdrop-path.directive';
 import { FadeInDirective } from '../../directives/fade-in.directive';
+import { AspectRatio } from '../../enumerations/aspect-ratio.enum';
 import { BackdropSize } from '../../enumerations/backdrop-size.enum';
 import { Backdrop } from '../../models/media.model';
 
@@ -18,8 +19,9 @@ import { Backdrop } from '../../models/media.model';
 })
 export class ImageGalleryComponent extends BaseGalleryComponent {
     @Input() images: Array<Backdrop> = [];
-    @Input() aspectRatio: '16/9' | '3/4' = '16/9';
+    @Input() aspectRatio: AspectRatio = AspectRatio['16/9'];
     readonly backdropSize = BackdropSize;
+    readonly aspectRatioEnum = AspectRatio;
 
     protected override onSelectedIndexChange(): void {
         // No additional logic needed for media gallery

@@ -39,7 +39,7 @@
                     <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
                 </header>
                 <app-image-grid
-                    aspectRatio="3/4"
+                    [aspectRatio]="aspectRatio['3/4']"
                     [images]="images"
                     [isLoading]="isLoading"
                     [imagesCount]="6"
@@ -52,9 +52,9 @@
                 </header>
                 <app-media-list-grid
                     [items]="movieCastItems"
-                    [type]="MediaType.Movie"
+                    [type]="mediaType.Movie"
                     [isLoading]="isLoading"
-                    [initialCount]="DEFAULT.castCount"
+                    [initialCount]="default.castCount"
                 ></app-media-list-grid>
             </section>
 
@@ -64,9 +64,9 @@
                 </header>
                 <app-media-list-grid
                     [items]="tvCastItems"
-                    [type]="MediaType.TvShow"
+                    [type]="mediaType.TvShow"
                     [isLoading]="isLoading"
-                    [initialCount]="DEFAULT.castCount"
+                    [initialCount]="default.castCount"
                 ></app-media-list-grid>
             </section>
         </div>
@@ -86,7 +86,7 @@
                 <div class="social-links">
                     <app-button
                         *ngIf="externalIds?.imdb_id"
-                        [variant]="ButtonType.Imdb"
+                        [variant]="buttonType.Imdb"
                         [type]="'button'"
                         [icon]="'fab fa-imdb'"
                         [link]="mediaLinks[0]"
@@ -95,7 +95,7 @@
                     ></app-button>
                     <app-button
                         *ngIf="externalIds?.facebook_id"
-                        [variant]="ButtonType.Facebook"
+                        [variant]="buttonType.Facebook"
                         [type]="'button'"
                         [icon]="'fab fa-facebook'"
                         [link]="mediaLinks[1]"
@@ -104,7 +104,7 @@
                     ></app-button>
                     <app-button
                         *ngIf="externalIds?.instagram_id"
-                        [variant]="ButtonType.Instagram"
+                        [variant]="buttonType.Instagram"
                         [type]="'button'"
                         [icon]="'fab fa-instagram'"
                         [link]="mediaLinks[2]"
@@ -113,7 +113,7 @@
                     ></app-button>
                     <app-button
                         *ngIf="externalIds?.twitter_id"
-                        [variant]="ButtonType.Twitter"
+                        [variant]="buttonType.Twitter"
                         [type]="'button'"
                         [icon]="'fab fa-twitter'"
                         [link]="mediaLinks[3]"

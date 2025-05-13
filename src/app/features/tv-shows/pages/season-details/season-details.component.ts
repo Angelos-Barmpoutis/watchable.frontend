@@ -11,6 +11,7 @@ import { MediaHeroComponent } from '../../../../shared/components/media-hero/med
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { VideoGridComponent } from '../../../../shared/components/video-grid/video-grid.component';
 import { FadeInDirective } from '../../../../shared/directives/fade-in.directive';
+import { AspectRatio } from '../../../../shared/enumerations/aspect-ratio.enum';
 import { MediaType } from '../../../../shared/enumerations/media-type.enum';
 import { TvShowFacade } from '../../../../shared/facades/tv-show.facade';
 import { TvShowDetails, TvShowEpisode, TvShowSeasonDetails } from '../../../../shared/models/tv-show.model';
@@ -41,10 +42,12 @@ export class SeasonDetailsComponent implements OnInit {
     episodes: Array<TvShowEpisode> = [];
     isLoading = true;
 
+    readonly aspectRatio = AspectRatio;
+
     constructor(
-        private readonly route: ActivatedRoute,
-        private readonly tvShowFacade: TvShowFacade,
-        private readonly destroyRef: DestroyRef,
+        private route: ActivatedRoute,
+        private tvShowFacade: TvShowFacade,
+        private destroyRef: DestroyRef,
     ) {}
 
     ngOnInit(): void {

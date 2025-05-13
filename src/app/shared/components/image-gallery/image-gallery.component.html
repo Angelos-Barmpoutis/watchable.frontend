@@ -20,8 +20,9 @@
                     <div
                         class="image-container"
                         [ngClass]="{
-                            'aspect-ratio-16-9': aspectRatio === '16/9',
-                            'aspect-ratio-3-4': aspectRatio === '3/4'
+                            'aspect-ratio-16-9': aspectRatio === aspectRatioEnum['16/9'],
+                            'aspect-ratio-3-4': aspectRatio === aspectRatioEnum['3/4'],
+                            'aspect-ratio-2-3': aspectRatio === aspectRatioEnum['2/3']
                         }"
                     >
                         <img
@@ -53,8 +54,9 @@
                     <div
                         class="preview-container"
                         [ngClass]="{
-                            'aspect-ratio-16-9': aspectRatio === '16/9',
-                            'aspect-ratio-3-4': aspectRatio === '3/4'
+                            'aspect-ratio-16-9': aspectRatio === aspectRatioEnum['16/9'],
+                            'aspect-ratio-3-4': aspectRatio === aspectRatioEnum['3/4'],
+                            'aspect-ratio-2-3': aspectRatio === aspectRatioEnum['2/3']
                         }"
                     >
                         <img

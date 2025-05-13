@@ -28,7 +28,6 @@
             font-weight: $font-weight-medium;
             width: 110px;
             flex-shrink: 0;
-            line-height: 1.3;
 
             @media (max-width: map-get($breakpoints, "sm")) {
                 width: 140px;
@@ -37,7 +36,6 @@
 
         .detail-value {
             color: $text-primary;
-            line-height: 1.3;
 
             .detail-link {
                 color: rgba($primary-color, 0.8);
@@ -45,7 +43,6 @@
                 transition: color $transition-normal;
                 font-weight: $font-weight-medium;
                 line-break: anywhere;
-                line-height: 1.3;
 
                 &:hover {
                     color: rgba($primary-color, 1);
