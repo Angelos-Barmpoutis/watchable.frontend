@@ -127,44 +127,103 @@ header {
             .profile-dropdown {
                 position: relative;
 
+                @media (max-width: map-get($breakpoints, "sm")) {
+                    position: static;
+                }
+
                 .profile-button {
                     background: none;
                     border: none;
                     color: $text-primary;
                     padding: $spacing-xs $spacing-sm;
                     cursor: pointer;
-                    transition:
-                        // color $transition-normal,
-                        transform $transition-normal;
+                    transition: all $transition-normal;
                     font-size: $font-size-lg;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: rgba($primary-color, 0.1);
 
                     &:hover {
                         transform: translateY(-2px);
-                        // color: $primary-color;
+                        background-color: rgba($primary-color, 0.15);
                     }
 
                     &.active {
-                        // color: $primary-color;
+                        background-color: rgba($primary-color, 0.2);
                     }
                 }
 
                 .dropdown-menu {
                     position: absolute;
-                    top: calc(100% + $spacing-md);
+                    top: calc(100% + $spacing-md + $spacing-xs);
                     right: 0;
-                    width: 200px;
-                    background-color: $surface-color;
-                    border: 1px solid $border-color;
-                    border-radius: $border-radius-xl;
-                    padding: $spacing-xs;
-                    z-index: 1000;
-                    box-shadow: $shadow-lg;
+                    width: 280px;
+                    background-color: rgba($background-color, 0.98);
+                    backdrop-filter: blur(16px);
+                    border: 1px solid rgba($text-secondary, 0.2);
+                    border-radius: $border-radius-lg;
+                    padding: $spacing-sm;
+                    z-index: map-get($z-layers, "header");
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 
                     .dropdown-header {
-                        padding: $spacing-xs $spacing-sm;
-                        color: $text-primary;
-                        font-size: $font-size-md;
-                        font-weight: $font-weight-medium;
+                        padding: $spacing-sm;
+                        border-bottom: 1px solid rgba($text-secondary, 0.1);
+                        margin-bottom: $spacing-sm;
+                        padding-bottom: $spacing-sm;
+
+                        .user-info {
+                            display: flex;
+                            align-items: center;
+                            gap: $spacing-sm;
+
+                            .avatar {
+                                width: 40px;
+                                height: 40px;
+                                border-radius: 50%;
+                                background: map-get($gradients, "primary");
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: $font-size-lg;
+                                color: $text-primary;
+                                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                                flex-shrink: 0;
+                            }
+
+                            .user-details {
+                                display: flex;
+                                flex-direction: column;
+                                gap: $spacing-xs;
+
+                                .username {
+                                    font-size: $font-size-sm;
+                                    font-weight: $font-weight-semibold;
+                                    color: $text-primary;
+                                    letter-spacing: -0.01em;
+                                }
+
+                                .email {
+                                    font-size: $font-size-xs;
+                                    color: $text-secondary;
+
+                                    .link {
+                                        color: rgba($primary-color, 0.8);
+                                        text-decoration: none;
+                                        font-weight: $font-weight-medium;
+                                        transition: all $transition-normal;
+
+                                        &:hover {
+                                            color: $primary-color;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     .dropdown-list {
@@ -172,34 +231,52 @@ header {
                         margin: 0;
                         padding: 0;
 
-                        li {
-                            &.divider {
-                                height: 2px;
-                                background-color: $border-color;
-                                margin: $spacing-xs 0;
+                        &:not(:last-child) {
+                            border-bottom: 1px solid rgba($text-secondary, 0.1);
+                            margin-bottom: $spacing-sm;
+                            padding-bottom: $spacing-sm;
+                        }
+
+                        .dropdown-item {
+                            display: flex;
+                            align-items: center;
+                            gap: $spacing-sm;
+                            padding: $spacing-sm;
+                            color: $text-secondary;
+                            text-decoration: none;
+                            font-size: $font-size-sm;
+                            border-radius: $border-radius-lg;
+                            transition: all $transition-normal;
+                            font-weight: $font-weight-medium;
+                            letter-spacing: -0.01em;
+
+                            i {
+                                width: 20px;
+                                text-align: center;
+                                font-size: $font-size-md;
+                                color: $text-secondary;
                             }
 
-                            a {
-                                display: flex;
-                                align-items: center;
-                                gap: $spacing-sm;
-                                padding: $spacing-xs $spacing-sm;
-                                color: $text-secondary;
-                                text-decoration: none;
-                                font-size: $font-size-md;
-                                border-radius: $border-radius-lg;
-                                transition: all $transition-normal;
-                                font-weight: $font-weight-medium;
+                            &:hover {
+                                background-color: rgba($primary-color, 0.08);
+                                color: $text-primary;
+                                transform: translateX(2px);
 
                                 i {
-                                    width: 16px;
-                                    text-align: center;
-                                    font-size: $font-size-md;
+                                    color: $primary-color;
+                                }
+                            }
+
+                            &.text-danger {
+                                color: $error-color;
+
+                                i {
+                                    color: $error-color;
                                 }
 
                                 &:hover {
-                                    background-color: rgba($primary-color, 0.1);
-                                    color: $primary-color;
+                                    background-color: rgba($error-color, 0.08);
+                                    transform: translateX(2px);
                                 }
                             }
                         }
@@ -291,5 +368,14 @@ header {
                 }
             }
         }
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
     }
 }

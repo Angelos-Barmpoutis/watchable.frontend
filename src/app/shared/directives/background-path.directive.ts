@@ -10,7 +10,7 @@ import { BackdropSize } from '../enumerations/backdrop-size.enum';
 export class BackgroundPathDirective {
     @Input() backgroundPath!: string;
     @Input() baseUrl: string = environment.imageBaseUrl;
-    @Input() size: BackdropSize = BackdropSize.w1280;
+    @Input() size: BackdropSize = BackdropSize.original;
 
     @HostBinding('style.background-image')
     get backgroundImage(): string {

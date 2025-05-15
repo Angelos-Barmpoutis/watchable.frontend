@@ -66,6 +66,15 @@ export class MovieComponent implements OnInit {
         ];
     }
 
+    get isExternalIdAvailable(): boolean {
+        return (
+            !!this.movieDetails?.external_ids?.imdb_id ||
+            !!this.movieDetails?.external_ids?.facebook_id ||
+            !!this.movieDetails?.external_ids?.instagram_id ||
+            !!this.movieDetails?.external_ids?.twitter_id
+        );
+    }
+
     private loadMovieDetails(): void {
         this.route.paramMap
             .pipe(
@@ -88,6 +97,12 @@ export class MovieComponent implements OnInit {
                     recommendations: {
                         ...movieDetails.recommendations,
                         results: filterMediaItems(movieDetails.recommendations.results) as Array<Movie>,
+                    },
+                    external_ids: {
+                        imdb_id: movieDetails.external_ids?.imdb_id || null,
+                        facebook_id: movieDetails.external_ids?.facebook_id || null,
+                        instagram_id: movieDetails.external_ids?.instagram_id || null,
+                        twitter_id: movieDetails.external_ids?.twitter_id || null,
                     },
                 };
                 this.isLoading = false;

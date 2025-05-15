@@ -69,6 +69,15 @@ export class TvShowComponent implements OnInit {
         ];
     }
 
+    get isExternalIdAvailable(): boolean {
+        return (
+            !!this.tvShowDetails?.external_ids?.imdb_id ||
+            !!this.tvShowDetails?.external_ids?.facebook_id ||
+            !!this.tvShowDetails?.external_ids?.instagram_id ||
+            !!this.tvShowDetails?.external_ids?.twitter_id
+        );
+    }
+
     private loadTvShowDetails(): void {
         this.route.paramMap
             .pipe(
@@ -91,6 +100,12 @@ export class TvShowComponent implements OnInit {
                     recommendations: {
                         ...tvShowDetails.recommendations,
                         results: filterMediaItems(tvShowDetails.recommendations.results) as Array<TvShow>,
+                    },
+                    external_ids: {
+                        imdb_id: tvShowDetails.external_ids?.imdb_id || null,
+                        facebook_id: tvShowDetails.external_ids?.facebook_id || null,
+                        instagram_id: tvShowDetails.external_ids?.instagram_id || null,
+                        twitter_id: tvShowDetails.external_ids?.twitter_id || null,
                     },
                 };
                 this.isLoading = false;

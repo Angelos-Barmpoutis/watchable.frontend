@@ -84,7 +84,7 @@
                 ></app-media-details>
             </section>
 
-            <section *ngIf="tvShowDetails?.external_ids || isLoading">
+            <section *ngIf="isExternalIdAvailable || isLoading">
                 <header>
                     <app-section-header title="Media" [isLoading]="isLoading"></app-section-header>
                 </header>

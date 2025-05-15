@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit {
 
     isProfileDropdownOpen = false;
     isSearchVisible = false;
+    isLoggedIn = false;
     searchForm!: FormGroup;
 
     constructor(
@@ -42,46 +43,22 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         this.initSearchForm();
-        this.initializeSearchState();
-        this.setupSearchSubscription();
-    }
-
-    get searchQueryFormField(): FormControl {
-        return this.searchForm.get('searchQuery') as FormControl;
-    }
-
-    private initializeSearchState(): void {
-        this.searchService
-            .getSearchQuery()
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((query) => {
-                this.searchQueryFormField.setValue(query);
-            });
-    }
-
-    private setupSearchSubscription(): void {
-        this.searchQueryFormField.valueChanges
-            .pipe(takeUntilDestroyed(this.destroyRef), debounceTime(300), distinctUntilChanged())
-            .subscribe((value: string) => {
-                this.searchService.updateSearchQuery(value);
-            });
-    }
-
-    private focusSearchInput(): void {
-        setTimeout(() => {
-            this.searchInput.nativeElement.focus();
-        }, 300);
     }
 
     private initSearchForm(): void {
         this.searchForm = this.fb.group({
             searchQuery: [''],
         });
+
+        this.searchQueryFormField.valueChanges
+            .pipe(takeUntilDestroyed(this.destroyRef), debounceTime(300), distinctUntilChanged())
+            .subscribe((value) => {
+                this.searchService.updateSearchQuery(value);
+            });
     }
 
-    toggleProfileDropdown(event: Event): void {
-        event.stopPropagation();
-        this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
+    get searchQueryFormField(): FormControl {
+        return this.searchForm.get('searchQuery') as FormControl;
     }
 
     toggleSearch(event: Event): void {
@@ -89,17 +66,20 @@ export class HeaderComponent implements OnInit {
         this.isSearchVisible = !this.isSearchVisible;
 
         if (this.isSearchVisible) {
-            this.focusSearchInput();
+            setTimeout(() => {
+                this.searchInput.nativeElement.focus();
+            }, 100);
         }
-    }
-
-    closeSearch(): void {
-        this.isSearchVisible = false;
-        this.searchForm.reset();
     }
 
     clearSearch(): void {
         this.searchQueryFormField.setValue('');
+        this.searchInput.nativeElement.focus();
+    }
+
+    toggleProfileDropdown(event: Event): void {
+        event.stopPropagation();
+        this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
     }
 
     trackByLink(index: number, link: NavigationLink): string {

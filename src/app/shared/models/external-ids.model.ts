@@ -1,8 +1,7 @@
 export interface ExternalIds {
-    id: number;
-    imdb_id: string;
-    wikidata_id: string;
-    facebook_id: string;
-    instagram_id: string;
-    twitter_id: string;
+    id?: number;
+    imdb_id: string | null;
+    facebook_id: string | null;
+    instagram_id: string | null;
+    twitter_id: string | null;
 }

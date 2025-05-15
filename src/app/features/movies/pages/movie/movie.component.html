@@ -69,7 +69,7 @@
                 ></app-media-details>
             </section>
 
-            <section *ngIf="movieDetails?.external_ids || isLoading">
+            <section *ngIf="isExternalIdAvailable || isLoading">
                 <header>
                     <app-section-header title="Media" [isLoading]="isLoading"></app-section-header>
                 </header>

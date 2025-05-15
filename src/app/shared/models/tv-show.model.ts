@@ -81,7 +81,7 @@ export interface TvShowDetails {
     credits: MediaCredits;
     similar: PaginatedTvShows;
     recommendations: PaginatedTvShows;
-    external_ids: TvShowExternalIds;
+    external_ids: ExternalIds;
 }
 
 export interface TvShowSeason {
@@ -116,10 +116,10 @@ export interface TvShowSeasonDetails {
 }
 
 export interface TvShowExternalIds extends ExternalIds {
-    freebase_mid: string;
-    freebase_id: string;
-    tvdb_id: number;
-    tvrage_id: number;
+    freebase_mid: string | null;
+    freebase_id: string | null;
+    tvdb_id: number | null;
+    tvrage_id: number | null;
 }
 
 export interface TvShowEpisode {
