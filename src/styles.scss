@@ -32,12 +32,9 @@ body {
         font-family: $font-family;
     }
 
-    &:has(.image-viewer) {
-        overflow: hidden;
-        scroll-behavior: none;
-    }
-
-    &:has(.video-viewer) {
+    &:has(.image-viewer),
+    &:has(.video-viewer),
+    &:has(.dialog-container) {
         overflow: hidden;
         scroll-behavior: none;
     }
@@ -151,4 +148,45 @@ section {
 // Disable outline for mouse users
 :focus:not(:focus-visible) {
     outline: none;
+}
+
+// CDK Overlay styles
+.cdk-overlay-container {
+    position: fixed;
+    z-index: 1000;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    .cdk-overlay-backdrop {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        pointer-events: auto;
+        transition: opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+        opacity: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+
+        &.cdk-overlay-backdrop-showing {
+            opacity: 1;
+        }
+    }
+
+    .cdk-global-overlay-wrapper {
+        position: absolute;
+        pointer-events: auto;
+        box-sizing: border-box;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
 }

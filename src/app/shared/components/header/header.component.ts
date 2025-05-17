@@ -6,17 +6,26 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { NAVIGATION_LINKS, NavigationLink } from '../../config/navigation.config';
-import { FadeInDirective } from '../../directives/fade-in.directive';
+import { DropdownAnimationDirective } from '../../directives/dropdown-animation.directive';
+import { DialogService } from '../../services/dialog.service';
 import { SearchService } from '../../services/search.service';
 import { ButtonComponent } from '../button/button.component';
 import { ButtonType } from '../button/enumerations/button-type.enum';
+import { SignInDialogComponent } from '../sign-in-dialog/sign-in-dialog.component';
 
 @Component({
     selector: 'app-header',
     standalone: true,
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    imports: [CommonModule, ReactiveFormsModule, RouterLink, RouterLinkActive, FadeInDirective, ButtonComponent],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterLink,
+        RouterLinkActive,
+        DropdownAnimationDirective,
+        ButtonComponent,
+    ],
 })
 export class HeaderComponent implements OnInit {
     @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
@@ -39,6 +48,7 @@ export class HeaderComponent implements OnInit {
         private searchService: SearchService,
         private fb: FormBuilder,
         private destroyRef: DestroyRef,
+        private dialogService: DialogService,
     ) {}
 
     ngOnInit(): void {
@@ -74,12 +84,16 @@ export class HeaderComponent implements OnInit {
 
     clearSearch(): void {
         this.searchQueryFormField.setValue('');
-        this.searchInput.nativeElement.focus();
     }
 
     toggleProfileDropdown(event: Event): void {
         event.stopPropagation();
         this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
+    }
+
+    openSignInDialog(): void {
+        this.dialogService.open(SignInDialogComponent);
+        this.isProfileDropdownOpen = false;
     }
 
     trackByLink(index: number, link: NavigationLink): string {

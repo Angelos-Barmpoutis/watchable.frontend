@@ -36,6 +36,10 @@
         position: relative;
         min-width: 0;
 
+        @media (max-width: map-get($breakpoints, "sm")) {
+            padding-block: calc($spacing-sm * 1.5);
+        }
+
         i {
             font-size: $font-size-lg;
             display: block;
@@ -68,10 +72,5 @@
         @supports (padding-bottom: env(safe-area-inset-bottom)) {
             padding-bottom: min(env(safe-area-inset-bottom), 16px);
         }
-
-        // For Android devices with bottom navigation bar
-        // @media (hover: none) and (pointer: coarse) {
-        //     padding-bottom: 16px;
-        // }
     }
 }

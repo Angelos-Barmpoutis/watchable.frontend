@@ -49,7 +49,7 @@
 
     main {
         flex: 1;
-        padding-block-start: $mobile-header-height;
+        padding-block-start: $mobile-header-height !important;
 
         // Exlude pages that either have media hero or featured banner
         // &:not(:has(app-trending)):not(:has(app-movie)):not(:has(app-movies)):not(:has(app-tv-show)):not(

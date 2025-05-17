@@ -2,6 +2,7 @@
     <a
         appFadeIn
         class="media-list-item"
+        [title]="title"
         [routerLink]="[
             '/',
             type === mediaType.Movie ? 'movies' : 'tv-shows',

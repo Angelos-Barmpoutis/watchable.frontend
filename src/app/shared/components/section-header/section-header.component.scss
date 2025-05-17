@@ -25,10 +25,9 @@
                 content: "";
                 display: block;
                 width: $spacing-xs;
-                height: $font-size-lg;
+                height: $font-size-2xl;
                 background-color: rgba($primary-color, 0.8);
                 border-radius: $spacing-sm;
-                font-size: $font-size-lg;
             }
         }
 
@@ -57,10 +56,9 @@
                         content: "";
                         display: block;
                         width: $spacing-xs;
-                        height: $font-size-lg;
+                        height: $font-size-2xl;
                         @include skeleton-loading;
                         border-radius: $spacing-sm;
-                        font-size: $font-size-lg;
                     }
 
                     .skeleton-title {

@@ -46,28 +46,45 @@
                 ></app-image-grid>
             </section>
 
+            <section *ngIf="personDetails?.biography || isLoading" appFadeIn>
+                <header>
+                    <app-section-header title="Biography" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <p *ngIf="!isLoading; else loadingBiographyTemplate" appFadeIn class="overview">
+                    {{ personDetails?.biography }}
+                </p>
+                <ng-template #loadingBiographyTemplate>
+                    <div class="skeleton-overview">
+                        <div class="skeleton-overview-line"></div>
+                        <div class="skeleton-overview-line"></div>
+                        <div class="skeleton-overview-line"></div>
+                        <div class="skeleton-overview-line"></div>
+                    </div>
+                </ng-template>
+            </section>
+
             <section *ngIf="movieCastItems?.length || isLoading">
                 <header>
                     <app-section-header title="Movie Credits" [isLoading]="isLoading"></app-section-header>
                 </header>
-                <app-media-list-grid
+                <app-media-grid
                     [items]="movieCastItems"
                     [type]="mediaType.Movie"
                     [isLoading]="isLoading"
                     [initialCount]="default.castCount"
-                ></app-media-list-grid>
+                ></app-media-grid>
             </section>
 
             <section *ngIf="tvCastItems?.length || isLoading">
                 <header>
                     <app-section-header title="TV Show Credits" [isLoading]="isLoading"></app-section-header>
                 </header>
-                <app-media-list-grid
+                <app-media-grid
                     [items]="tvCastItems"
                     [type]="mediaType.TvShow"
                     [isLoading]="isLoading"
                     [initialCount]="default.castCount"
-                ></app-media-list-grid>
+                ></app-media-grid>
             </section>
         </div>
 
@@ -124,21 +141,4 @@
             </section>
         </aside>
     </div>
-
-    <section *ngIf="personDetails?.biography || isLoading" appFadeIn>
-        <header>
-            <app-section-header title="Biography" [isLoading]="isLoading"></app-section-header>
-        </header>
-        <p *ngIf="!isLoading; else loadingBiographyTemplate" appFadeIn class="overview">
-            {{ personDetails?.biography }}
-        </p>
-        <ng-template #loadingBiographyTemplate>
-            <div class="skeleton-overview">
-                <div class="skeleton-overview-line"></div>
-                <div class="skeleton-overview-line"></div>
-                <div class="skeleton-overview-line"></div>
-                <div class="skeleton-overview-line"></div>
-            </div>
-        </ng-template>
-    </section>
 </div>

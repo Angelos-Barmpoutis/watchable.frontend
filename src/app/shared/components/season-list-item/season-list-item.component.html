@@ -3,6 +3,7 @@
         appFadeIn
         class="season-list-item"
         [routerLink]="['/tv-shows', 'tv-show', tvShowId, 'seasons', season?.season_number]"
+        [title]="season?.name"
     >
         <div class="season-main">
             <div class="poster-wrapper">

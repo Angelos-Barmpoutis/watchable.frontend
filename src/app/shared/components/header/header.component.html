@@ -61,7 +61,7 @@
                         <i class="fa-regular fa-user"></i>
                     </button>
 
-                    <div *ngIf="isProfileDropdownOpen" class="dropdown-menu" appFadeIn>
+                    <div *ngIf="isProfileDropdownOpen" class="dropdown-menu" appDropdownAnimation>
                         <ng-container *ngIf="isLoggedIn; else notLoggedIn">
                             <div class="dropdown-header">
                                 <div class="user-info">
@@ -111,7 +111,7 @@
                             </div>
                             <ul class="dropdown-list">
                                 <li>
-                                    <a class="dropdown-item" [routerLink]="['/', 'login']">
+                                    <a class="dropdown-item" (click)="openSignInDialog()">
                                         <i class="fas fa-sign-in-alt"></i>
                                         <span>Sign in</span>
                                     </a>

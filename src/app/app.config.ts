@@ -1,3 +1,4 @@
+import { Overlay } from '@angular/cdk/overlay';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -32,5 +33,6 @@ export const appConfig: ApplicationConfig = {
         { provide: TitleStrategy, useClass: WindowTitleService },
         provideHttpClient(withInterceptorsFromDi()),
         { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+        Overlay,
     ],
 };

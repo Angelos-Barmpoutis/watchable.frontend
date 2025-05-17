@@ -3,6 +3,7 @@
         appFadeIn
         class="episode"
         [routerLink]="['/tv-shows', 'tv-show', tvShowId, 'seasons', seasonNumber, 'episode', episode?.episode_number]"
+        [title]="episode?.name"
     >
         <div class="episode-poster">
             <img

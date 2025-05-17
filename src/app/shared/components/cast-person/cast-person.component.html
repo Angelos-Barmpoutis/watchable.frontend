@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isLoading; else skeleton">
-    <a appFadeIn class="cast-person" [routerLink]="['/', 'people', 'person', person.id]">
+    <a appFadeIn class="cast-person" [routerLink]="['/', 'people', 'person', person.id]" [title]="person.name">
         <div class="cast-photo">
             <img
                 *ngIf="person.profile_path"

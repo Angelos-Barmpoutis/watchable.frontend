@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isLoading; else skeletonTemplate">
-    <a appFadeIn class="person-list-item" [routerLink]="['/', 'people', 'person', person.id]">
+    <a appFadeIn class="person-list-item" [routerLink]="['/', 'people', 'person', person.id]" [title]="person.name">
         <div class="person-main">
             <div class="person-avatar">
                 <ng-container *ngIf="person?.profile_path; else altProfilePath">

@@ -27,39 +27,6 @@
                 </ng-template>
             </section>
 
-            <section *ngIf="cast?.length || isLoading">
-                <header>
-                    <app-section-header title="Cast" [isLoading]="isLoading"></app-section-header>
-                </header>
-                <app-cast-grid [cast]="cast" [isLoading]="isLoading"></app-cast-grid>
-            </section>
-
-            <section *ngIf="episodeDetails?.crew?.length || isLoading">
-                <header>
-                    <app-section-header title="Crew" [isLoading]="isLoading"></app-section-header>
-                </header>
-                <app-cast-grid [cast]="transformedCrew" [isLoading]="isLoading"></app-cast-grid>
-            </section>
-
-            <section *ngIf="episodeDetails?.guest_stars?.length || isLoading">
-                <header>
-                    <app-section-header title="Guest Stars" [isLoading]="isLoading"></app-section-header>
-                </header>
-                <app-cast-grid [cast]="episodeDetails?.guest_stars ?? []" [isLoading]="isLoading"></app-cast-grid>
-            </section>
-
-            <section *ngIf="episodeDetails?.images?.backdrops?.length || isLoading">
-                <header>
-                    <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
-                </header>
-                <app-image-grid
-                    [images]="episodeDetails?.images?.backdrops ?? []"
-                    [isLoading]="isLoading"
-                    [imagesCount]="7"
-                    [aspectRatio]="aspectRatio['16/9']"
-                ></app-image-grid>
-            </section>
-
             <section *ngIf="episodeDetails?.images?.stills?.length || isLoading">
                 <header>
                     <app-section-header title="Images" [isLoading]="isLoading"></app-section-header>
@@ -81,6 +48,27 @@
                     [isLoading]="isLoading"
                     [videosCount]="3"
                 ></app-video-grid>
+            </section>
+
+            <section *ngIf="cast?.length || isLoading">
+                <header>
+                    <app-section-header title="Cast" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-cast-grid [cast]="cast" [isLoading]="isLoading"></app-cast-grid>
+            </section>
+
+            <section *ngIf="episodeDetails?.crew?.length || isLoading">
+                <header>
+                    <app-section-header title="Crew" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-cast-grid [cast]="transformedCrew" [isLoading]="isLoading"></app-cast-grid>
+            </section>
+
+            <section *ngIf="episodeDetails?.guest_stars?.length || isLoading">
+                <header>
+                    <app-section-header title="Guest Stars" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-cast-grid [cast]="episodeDetails?.guest_stars ?? []" [isLoading]="isLoading"></app-cast-grid>
             </section>
         </div>
 

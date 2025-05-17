@@ -9,7 +9,7 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 import { ButtonType } from '../../../../shared/components/button/enumerations/button-type.enum';
 import { ButtonLink } from '../../../../shared/components/button/models/button.model';
 import { ImageGridComponent } from '../../../../shared/components/image-grid/image-grid.component';
-import { MediaListGridComponent } from '../../../../shared/components/media-list-grid/media-list-grid.component';
+import { MediaGridComponent } from '../../../../shared/components/media-grid/media-grid.component';
 import { PersonDetailsComponent } from '../../../../shared/components/person-details/person-details.component';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { DEFAULT } from '../../../../shared/constants/defaults.constant';
@@ -38,7 +38,7 @@ import { TvShowItem } from '../../../../shared/models/tv-show.model';
         ImageGridComponent,
         ButtonComponent,
         PersonDetailsComponent,
-        MediaListGridComponent,
+        MediaGridComponent,
         FadeInDirective,
     ],
     templateUrl: './person.component.html',

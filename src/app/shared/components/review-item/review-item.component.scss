@@ -8,6 +8,12 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    min-height: 259px;
+
+    @media (max-width: map-get($breakpoints, "sm")) {
+        padding: calc($spacing-sm * 1.5);
+        min-height: 215px;
+    }
 
     .review-header {
         display: flex;
@@ -135,10 +141,6 @@
             }
         }
     }
-
-    @media (max-width: map-get($breakpoints, "sm")) {
-        padding: calc($spacing-sm * 1.5);
-    }
 }
 
 // Skeleton styles
@@ -147,7 +149,12 @@
     height: 48px;
     border-radius: 50%;
     background-color: $surface-color;
+    min-height: 259px;
     @include skeleton-loading;
+
+    @media (max-width: map-get($breakpoints, "sm")) {
+        min-height: 215px;
+    }
 }
 
 .skeleton-reviewer-info {
