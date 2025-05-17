@@ -7,11 +7,12 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { NAVIGATION_LINKS, NavigationLink } from '../../config/navigation.config';
 import { DropdownAnimationDirective } from '../../directives/dropdown-animation.directive';
-import { DialogService } from '../../services/dialog.service';
+import { AvatarLetterPipe } from '../../pipes/avatar-letter.pipe';
+import { AuthService } from '../../services/auth.service';
 import { SearchService } from '../../services/search.service';
 import { ButtonComponent } from '../button/button.component';
 import { ButtonType } from '../button/enumerations/button-type.enum';
-import { SignInDialogComponent } from '../sign-in-dialog/sign-in-dialog.component';
+import { UserInfo } from '../../models/auth.model';
 
 @Component({
     selector: 'app-header',
@@ -25,6 +26,7 @@ import { SignInDialogComponent } from '../sign-in-dialog/sign-in-dialog.componen
         RouterLinkActive,
         DropdownAnimationDirective,
         ButtonComponent,
+        AvatarLetterPipe,
     ],
 })
 export class HeaderComponent implements OnInit {
@@ -42,17 +44,44 @@ export class HeaderComponent implements OnInit {
     isProfileDropdownOpen = false;
     isSearchVisible = false;
     isLoggedIn = false;
+    userInfo: UserInfo | null = null;
     searchForm!: FormGroup;
 
     constructor(
         private searchService: SearchService,
         private fb: FormBuilder,
         private destroyRef: DestroyRef,
-        private dialogService: DialogService,
+        private authService: AuthService,
     ) {}
 
     ngOnInit(): void {
         this.initSearchForm();
+        this.initAuthState();
+    }
+
+    private initAuthState(): void {
+        this.authService.isAuthenticated$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((isAuthenticated) => {
+            this.isLoggedIn = isAuthenticated;
+            if (isAuthenticated) {
+                this.loadUserInfo();
+            } else {
+                this.userInfo = null;
+            }
+        });
+    }
+
+    private loadUserInfo(): void {
+        this.authService
+            .getUserInfo()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe({
+                next: (userInfo) => {
+                    this.userInfo = userInfo;
+                },
+                error: (error) => {
+                    console.error('Error loading user info:', error);
+                },
+            });
     }
 
     private initSearchForm(): void {
@@ -91,8 +120,13 @@ export class HeaderComponent implements OnInit {
         this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
     }
 
-    openSignInDialog(): void {
-        this.dialogService.open(SignInDialogComponent);
+    signIn(): void {
+        this.authService.signIn();
+        this.isProfileDropdownOpen = false;
+    }
+
+    logout(): void {
+        this.authService.logout();
         this.isProfileDropdownOpen = false;
     }
 

@@ -26,6 +26,12 @@ export const routes: Routes = [
         title: 'Search',
     },
     {
+        path: 'auth-callback',
+        loadComponent: () =>
+            import('./features/auth/auth-callback/auth-callback.component').then((c) => c.AuthCallbackComponent),
+        title: 'Authentication',
+    },
+    {
         path: '**',
         redirectTo: '/',
     },

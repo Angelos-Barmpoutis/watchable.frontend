@@ -147,14 +147,9 @@
 .skeleton-avatar {
     width: 48px;
     height: 48px;
-    border-radius: 50%;
+    border-radius: 50% !important;
     background-color: $surface-color;
-    min-height: 259px;
     @include skeleton-loading;
-
-    @media (max-width: map-get($breakpoints, "sm")) {
-        min-height: 215px;
-    }
 }
 
 .skeleton-reviewer-info {
@@ -168,7 +163,7 @@
     width: 120px;
     height: $font-size-sm;
     background-color: $surface-color;
-    border-radius: $border-radius-sm;
+    border-radius: $border-radius-sm !important;
     @include skeleton-loading;
 }
 
@@ -176,7 +171,7 @@
     width: 80px;
     height: $font-size-xs;
     background-color: $surface-color;
-    border-radius: $border-radius-sm;
+    border-radius: $border-radius-sm !important;
     @include skeleton-loading;
 }
 
@@ -184,7 +179,6 @@
     width: 60px;
     height: 28px;
     background-color: $surface-color;
-    border-radius: $border-radius-full;
     @include skeleton-loading;
 }
 
@@ -197,22 +191,14 @@
 .skeleton-review-text {
     height: $font-size-sm;
     background-color: $surface-color;
-    border-radius: $border-radius-sm;
+    border-radius: $border-radius-sm !important;
     @include skeleton-loading;
 
     @media (max-width: map-get($breakpoints, "sm")) {
         height: $font-size-xs;
     }
 
-    &:nth-child(1) {
-        width: 100%;
-    }
-
-    &:nth-child(2) {
-        width: 95%;
-    }
-
-    &:nth-child(3) {
+    &:last-child {
         width: 90%;
     }
 }

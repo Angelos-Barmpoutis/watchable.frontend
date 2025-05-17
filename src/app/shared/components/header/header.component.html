@@ -58,7 +58,20 @@
                         [class.active]="isProfileDropdownOpen"
                         (click)="toggleProfileDropdown($event)"
                     >
-                        <i class="fa-regular fa-user"></i>
+                        <ng-container *ngIf="isLoggedIn && userInfo; else defaultAvatar">
+                            <img
+                                *ngIf="userInfo.avatar_path"
+                                class="avatar-image"
+                                [src]="'https://image.tmdb.org/t/p/w92' + userInfo.avatar_path"
+                                [alt]="userInfo.name || userInfo.username"
+                            />
+                            <div *ngIf="!userInfo.avatar_path" class="avatar-initials">
+                                {{ userInfo.name || userInfo.username | avatarLetter }}
+                            </div>
+                        </ng-container>
+                        <ng-template #defaultAvatar>
+                            <i class="fa-regular fa-user"></i>
+                        </ng-template>
                     </button>
 
                     <div *ngIf="isProfileDropdownOpen" class="dropdown-menu" appDropdownAnimation>
@@ -66,31 +79,61 @@
                             <div class="dropdown-header">
                                 <div class="user-info">
                                     <div class="avatar">
-                                        <i class="fa-regular fa-user"></i>
+                                        <img
+                                            *ngIf="userInfo?.avatar_path"
+                                            class="avatar-image"
+                                            [src]="'https://image.tmdb.org/t/p/w92' + (userInfo?.avatar_path || '')"
+                                            [alt]="userInfo?.name || userInfo?.username || ''"
+                                        />
+                                        <div *ngIf="!userInfo?.avatar_path" class="avatar-initials">
+                                            {{ userInfo?.name || userInfo?.username || "" | avatarLetter }}
+                                        </div>
                                     </div>
                                     <div class="user-details">
-                                        <span class="username">TMDB Account</span>
-                                        <span class="email">Connected to TMDB</span>
+                                        <span class="username">{{ userInfo?.name || "TMDB Account" }}</span>
+                                        <span class="email">{{ userInfo?.username || "Connected to TMDB" }}</span>
                                     </div>
                                 </div>
                             </div>
                             <ul class="dropdown-list">
                                 <li>
-                                    <a class="dropdown-item" [routerLink]="['/', 'profile']">
-                                        <i class="fas fa-user-circle"></i>
-                                        <span>Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" [routerLink]="['/', 'settings']">
-                                        <i class="fas fa-cog"></i>
-                                        <span>Settings</span>
+                                    <a class="dropdown-item" [routerLink]="['/', 'watchlist']">
+                                        <i class="fas fa-bookmark"></i>
+                                        <span>Watchlist</span>
                                     </a>
                                 </li>
                             </ul>
                             <ul class="dropdown-list">
                                 <li>
-                                    <a class="dropdown-item text-danger" [routerLink]="['/', 'logout']">
+                                    <a class="dropdown-item" [routerLink]="['/', 'lists']">
+                                        <i class="fas fa-list"></i>
+                                        <span>Lists</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="dropdown-list">
+                                <li>
+                                    <a class="dropdown-item" [routerLink]="['/', 'rated', 'movies']">
+                                        <i class="fas fa-film"></i>
+                                        <span>Rated Movies</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" [routerLink]="['/', 'rated', 'tv-shows']">
+                                        <i class="fas fa-tv"></i>
+                                        <span>Rated TV Shows</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" [routerLink]="['/', 'rated', 'episodes']">
+                                        <i class="fas fa-video"></i>
+                                        <span>Rated Episodes</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="dropdown-list">
+                                <li>
+                                    <a class="dropdown-item text-danger" (click)="logout()">
                                         <i class="fas fa-sign-out-alt"></i>
                                         <span>Logout</span>
                                     </a>
@@ -111,7 +154,7 @@
                             </div>
                             <ul class="dropdown-list">
                                 <li>
-                                    <a class="dropdown-item" (click)="openSignInDialog()">
+                                    <a class="dropdown-item" (click)="signIn()">
                                         <i class="fas fa-sign-in-alt"></i>
                                         <span>Sign in</span>
                                     </a>

@@ -1,6 +1,8 @@
 export const environment = {
     production: false,
+    origin: 'http://localhost:4200',
     TMDBBaseUrl: 'https://api.themoviedb.org/3/',
+    TMDBAuthUrl: 'https://www.themoviedb.org/authenticate/',
     imageBaseUrl: 'https://image.tmdb.org/t/p/',
     placeholdBaseUrl: 'https://placehold.co/',
     ipapiUrl: 'https://ipapi.co/country_code/',
