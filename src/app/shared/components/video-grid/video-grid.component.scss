@@ -35,7 +35,7 @@
                 transform: translate(-50%, -50%);
                 width: 48px;
                 height: 48px;
-                background-color: rgba($surface-color, 0.8);
+                background-color: rgb(40, 44, 53);
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
@@ -54,7 +54,7 @@
                 }
 
                 .play-button {
-                    background-color: rgba($surface-color, 1);
+                    background-color: $surface-color;
                     transform: translate(-50%, -50%) scale(1.1);
                 }
             }

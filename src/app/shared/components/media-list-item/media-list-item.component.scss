@@ -31,8 +31,7 @@
             flex-direction: column;
             gap: $spacing-md;
             padding: $spacing-md;
-            background-color: rgba($surface-color, 0.6);
-            backdrop-filter: blur(14px);
+            background-color: rgb(40, 44, 53);
             border-radius: $border-radius-lg;
 
             .info-header {
@@ -88,6 +87,22 @@
                             backdrop-filter: blur(10px);
                             border-radius: $border-radius-md;
                             transition: transform $transition-normal;
+
+                            &:has(.rating-value.rating-low) {
+                                background-color: rgba($error-color, 0.15);
+                            }
+
+                            &:has(.rating-value.rating-medium) {
+                                background-color: rgba($warning-color, 0.15);
+                            }
+
+                            &:has(.rating-value.rating-high) {
+                                background-color: rgba($success-color, 0.15);
+                            }
+
+                            &:has(.rating-value.rating-top) {
+                                background-color: rgba($primary-color, 0.15);
+                            }
 
                             .rating-value {
                                 font-size: $font-size-sm;
@@ -157,8 +172,7 @@
             flex-direction: column;
             gap: $spacing-md;
             padding: $spacing-md;
-            background-color: rgba($surface-color, 0.6);
-            backdrop-filter: blur(14px);
+            background-color: rgb(40, 44, 53);
             border-radius: $border-radius-lg;
 
             .header-skeleton {

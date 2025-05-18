@@ -1,8 +1,7 @@
 @import "../../../../styles.scss";
 
 .review-card {
-    background-color: rgba($surface-color, 0.6);
-    backdrop-filter: blur(14px);
+    background-color: rgb(40, 44, 53);
     border-radius: $border-radius-lg;
     padding: $spacing-md;
     display: flex;
@@ -70,6 +69,22 @@
                 background-color: rgba($background-color, 0.6);
                 backdrop-filter: blur(10px);
                 border-radius: $border-radius-md;
+
+                &:has(.rating-value.rating-low) {
+                    background-color: rgba($error-color, 0.15);
+                }
+
+                &:has(.rating-value.rating-medium) {
+                    background-color: rgba($warning-color, 0.15);
+                }
+
+                &:has(.rating-value.rating-high) {
+                    background-color: rgba($success-color, 0.15);
+                }
+
+                &:has(.rating-value.rating-top) {
+                    background-color: rgba($primary-color, 0.15);
+                }
 
                 .rating-value {
                     font-weight: $font-weight-bold;

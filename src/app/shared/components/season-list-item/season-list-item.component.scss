@@ -31,8 +31,7 @@
             flex-direction: column;
             gap: $spacing-md;
             padding: $spacing-md;
-            background-color: rgba($surface-color, 0.6);
-            backdrop-filter: blur(14px);
+            background-color: rgb(40, 44, 53);
             border-radius: $border-radius-lg;
 
             .info-header {
@@ -113,8 +112,7 @@
             flex-direction: column;
             gap: $spacing-md;
             padding: $spacing-md;
-            background-color: rgba($surface-color, 0.6);
-            backdrop-filter: blur(14px);
+            background-color: rgb(40, 44, 53);
             border-radius: $border-radius-lg;
 
             .header-skeleton {
