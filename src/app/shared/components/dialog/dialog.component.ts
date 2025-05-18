@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
     Component,
     ComponentRef,
-    createComponent,
     EnvironmentInjector,
     OnDestroy,
     OnInit,
@@ -34,17 +33,13 @@ export class DialogComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        if (this.contentComponent) {
-            this.contentComponentRef = createComponent(this.contentComponent, {
-                environmentInjector: this.environmentInjector,
-                elementInjector: this.contentContainer.injector,
-            });
+        this.contentContainer.clear();
+        this.contentComponentRef = this.contentContainer.createComponent(this.contentComponent, {
+            environmentInjector: this.environmentInjector,
+        });
 
-            if (this.data) {
-                Object.assign(this.contentComponentRef.instance, this.data);
-            }
-
-            this.contentContainer.insert(this.contentComponentRef.hostView);
+        if (this.data) {
+            Object.assign(this.contentComponentRef.instance, this.data);
         }
     }
 

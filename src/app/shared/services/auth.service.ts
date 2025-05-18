@@ -30,18 +30,21 @@ export class AuthService {
         this.listenForAuthSuccess();
     }
 
-    private listenForAuthSuccess(): void {
-        window.addEventListener('message', (event) => {
-            if (event.origin === this.ORIGIN && event.data.type === 'AUTH_SUCCESS') {
-                this.createSession(event.data.requestToken).subscribe((response) => this.handleAuthSuccess(response));
-            }
-        });
-    }
-
-    private handleAuthSuccess(response: SessionResponse): void {
+    handleAuthSuccess(response: SessionResponse): void {
         if (response.success) {
+            this.localStorageService.setItem(this.SESSION_KEY, response.session_id);
             this.isAuthenticatedSubject.next(true);
         }
+    }
+
+    private listenForAuthSuccess(): void {
+        window.addEventListener('message', (event: MessageEvent<{ type: string; requestToken: string }>) => {
+            if (event.origin === this.ORIGIN && event.data.type === 'AUTH_SUCCESS') {
+                this.createSession(event.data.requestToken)
+                    .pipe(takeUntilDestroyed(this.destroyRef))
+                    .subscribe((response) => this.handleAuthSuccess(response));
+            }
+        });
     }
 
     private createSession(requestToken: string): Observable<SessionResponse> {
@@ -54,14 +57,25 @@ export class AuthService {
         );
     }
 
+    private isMobileDevice(): boolean {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
     signIn(): void {
         this.authFacade
             .createRequestToken()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((response) => {
                 if (response.success) {
-                    const authUrl = `${this.TMDB_AUTH_URL}${response.request_token}?redirect_to=${this.ORIGIN}/auth-callback`;
-                    window.open(authUrl, 'TMDB Authentication', 'width=800,height=600');
+                    const currentPath = window.location.pathname;
+                    const authUrl = `${this.TMDB_AUTH_URL}${response.request_token}?redirect_to=${this.ORIGIN}${currentPath}`;
+                    if (this.isMobileDevice()) {
+                        // On mobile, redirect directly to the auth page
+                        window.location.href = authUrl;
+                    } else {
+                        // On desktop, use popup window
+                        window.open(authUrl, 'TMDB Authentication', 'width=800,height=600');
+                    }
                 }
             });
     }
