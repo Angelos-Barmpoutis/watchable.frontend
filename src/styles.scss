@@ -34,7 +34,8 @@ body {
 
     &:has(.image-viewer),
     &:has(.video-viewer),
-    &:has(.dialog-container) {
+    &:has(.dialog-container),
+    &:has(.loading-overlay) {
         overflow: hidden;
         scroll-behavior: none;
     }

@@ -124,20 +124,27 @@
                 .title-container-skeleton {
                     display: flex;
                     flex-direction: column;
-                    gap: $spacing-xs;
+                    gap: $spacing-sm;
                     flex: 1;
                     margin-right: $spacing-md;
 
                     .title-skeleton {
-                        width: 70%;
+                        width: 200px;
                         height: $font-size-sm;
                         @include skeleton-loading;
+                        border-radius: $spacing-xs;
                     }
 
                     .meta-skeleton {
-                        width: 50%;
-                        height: $font-size-xs;
-                        @include skeleton-loading;
+                        display: flex;
+                        gap: $spacing-sm;
+
+                        .meta-skeleton-item {
+                            width: 80px;
+                            height: $font-size-xs;
+                            @include skeleton-loading;
+                            border-radius: $spacing-xs;
+                        }
                     }
                 }
             }
@@ -145,13 +152,13 @@
             .overview-skeleton {
                 display: flex;
                 flex-direction: column;
-                gap: $spacing-xs;
-                margin-top: $spacing-md;
+                gap: $spacing-sm;
 
                 .line {
                     width: 100%;
                     height: $font-size-sm;
                     @include skeleton-loading;
+                    border-radius: $spacing-xs;
 
                     &:nth-child(3) {
                         width: 80%;

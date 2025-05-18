@@ -8,6 +8,7 @@ import { BehaviorSubject, EMPTY, forkJoin, switchMap, take } from 'rxjs';
 import { BackToTopButtonComponent } from './shared/components/back-to-top-button/back-to-top-button.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
+import { LoadingComponent } from './shared/components/loading/loading.component';
 import { MobileNavigationComponent } from './shared/components/mobile-navigation/mobile-navigation.component';
 import { AuthFacade } from './shared/facades/auth.facade';
 import { GenreFacade } from './shared/facades/genre.facade';
@@ -27,12 +28,14 @@ import { SearchService } from './shared/services/search.service';
         MobileNavigationComponent,
         FooterComponent,
         BackToTopButtonComponent,
+        LoadingComponent,
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
     isAppReady$ = new BehaviorSubject<boolean>(false);
+    isAuthLoading$ = new BehaviorSubject<boolean>(false);
 
     constructor(
         public searchService: SearchService,
@@ -41,7 +44,7 @@ export class AppComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authFacade: AuthFacade,
-        private authService: AuthService,
+        public authService: AuthService,
         private destroyRef: DestroyRef,
     ) {}
 
@@ -54,36 +57,50 @@ export class AppComponent implements OnInit {
         this.route.queryParams
             .pipe(
                 takeUntilDestroyed(this.destroyRef),
-                switchMap((params: { request_token?: string; approved?: string }) => {
+                switchMap((params: { request_token?: string; approved?: string; denied?: string }) => {
                     const requestToken = params.request_token;
                     const approved = params.approved;
+                    const denied = params.denied;
 
                     if (this.authService.isAuthenticated()) {
                         return EMPTY;
                     }
 
-                    if (approved === 'true' && requestToken != null) {
-                        if (window.opener) {
-                            window.opener.postMessage(
-                                {
-                                    type: 'AUTH_SUCCESS',
-                                    requestToken: requestToken,
-                                },
-                                window.location.origin,
-                            );
+                    if (requestToken != null) {
+                        if (approved === 'true') {
+                            if (window.opener) {
+                                (window.opener as Window).postMessage(
+                                    {
+                                        type: 'AUTH_SUCCESS',
+                                        requestToken: requestToken,
+                                    },
+                                    window.location.origin,
+                                );
+                                window.close();
+                                return EMPTY;
+                            }
+                            this.isAuthLoading$.next(true);
+                            return this.authFacade.createSession(requestToken);
+                        }
+
+                        if (denied === 'true') {
                             window.close();
                             return EMPTY;
                         }
-                        return this.authFacade.createSession(requestToken);
                     }
                     return EMPTY;
                 }),
             )
-            .subscribe((response) => {
-                if (response?.success) {
-                    this.authService.handleAuthSuccess(response);
-                    this.router.navigate([this.router.url.split('?')[0]]);
-                }
+            .subscribe({
+                next: (response) => {
+                    if (response?.success) {
+                        this.authService.handleAuthSuccess(response);
+                        this.router.navigate([this.router.url.split('?')[0]]);
+                    }
+                },
+                complete: () => {
+                    this.isAuthLoading$.next(false);
+                },
             });
     }
 

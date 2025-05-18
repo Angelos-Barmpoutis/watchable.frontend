@@ -11,7 +11,11 @@
 </ng-container>
 
 <ng-template #loading>
-    <div class="loading-container">
-        <div class="loading-spinner"></div>
-    </div>
+    <app-loading message="Loading application..."></app-loading>
 </ng-template>
+
+<app-loading
+    *ngIf="authService.isLoading$ | async"
+    message="Processing authentication..."
+    [overlay]="true"
+></app-loading>

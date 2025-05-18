@@ -16,8 +16,10 @@ export class AuthService {
     private readonly TMDB_AUTH_URL = environment.TMDBAuthUrl;
     private readonly ORIGIN = environment.origin;
     private readonly isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+    private readonly isLoadingSubject = new BehaviorSubject<boolean>(false);
 
     readonly isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+    readonly isLoading$ = this.isLoadingSubject.asObservable();
 
     constructor(
         private authFacade: AuthFacade,
@@ -62,21 +64,37 @@ export class AuthService {
     }
 
     signIn(): void {
+        this.isLoadingSubject.next(true);
         this.authFacade
             .createRequestToken()
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((response) => {
-                if (response.success) {
-                    const currentPath = window.location.pathname;
-                    const authUrl = `${this.TMDB_AUTH_URL}${response.request_token}?redirect_to=${this.ORIGIN}${currentPath}`;
-                    if (this.isMobileDevice()) {
-                        // On mobile, redirect directly to the auth page
-                        window.location.href = authUrl;
-                    } else {
-                        // On desktop, use popup window
-                        window.open(authUrl, 'TMDB Authentication', 'width=800,height=600');
+            .subscribe({
+                next: (response) => {
+                    if (response.success) {
+                        const currentPath = window.location.pathname;
+                        const authUrl = `${this.TMDB_AUTH_URL}${response.request_token}?redirect_to=${this.ORIGIN}${currentPath}`;
+
+                        if (this.isMobileDevice()) {
+                            window.location.href = authUrl;
+                        } else {
+                            const popup = window.open(authUrl, 'TMDB Authentication', 'width=800,height=600');
+
+                            if (popup) {
+                                const checkPopup = setInterval(() => {
+                                    if (popup.closed) {
+                                        clearInterval(checkPopup);
+                                        this.isLoadingSubject.next(false);
+                                    }
+                                }, 500);
+                            } else {
+                                this.isLoadingSubject.next(false);
+                            }
+                        }
                     }
-                }
+                },
+                error: () => {
+                    this.isLoadingSubject.next(false);
+                },
             });
     }
 

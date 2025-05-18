@@ -21,6 +21,7 @@
                         <h3 class="title">{{ season?.name }}</h3>
                         <div class="meta">
                             <span class="episodes">{{ season?.episode_count }} Episodes</span>
+                            <span class="air-date">{{ season?.air_date | date: "MMM d, yyyy" }}</span>
                         </div>
                     </div>
                 </div>
@@ -40,7 +41,10 @@
                 <div class="header-skeleton">
                     <div class="title-container-skeleton">
                         <div class="title-skeleton"></div>
-                        <div class="meta-skeleton"></div>
+                        <div class="meta-skeleton">
+                            <div class="meta-skeleton-item"></div>
+                            <div class="meta-skeleton-item"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="overview-skeleton">
