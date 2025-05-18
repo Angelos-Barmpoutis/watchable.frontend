@@ -110,7 +110,7 @@ export class AuthService {
         return this.authFacade.getUserInfo();
     }
 
-    logout(): void {
+    signOut(): void {
         this.localStorageService.removeItem(this.SESSION_KEY);
         this.isAuthenticatedSubject.next(false);
     }

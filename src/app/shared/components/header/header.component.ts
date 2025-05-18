@@ -125,8 +125,8 @@ export class HeaderComponent implements OnInit {
         this.isProfileDropdownOpen = false;
     }
 
-    logout(): void {
-        this.authService.logout();
+    signOut(): void {
+        this.authService.signOut();
         this.isProfileDropdownOpen = false;
     }
 
