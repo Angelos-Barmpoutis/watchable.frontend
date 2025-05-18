@@ -252,12 +252,14 @@ header {
                                     font-weight: $font-weight-semibold;
                                     color: $text-primary;
                                     letter-spacing: -0.01em;
+                                    text-decoration: none;
                                 }
 
                                 .email {
                                     font-size: $font-size-sm;
                                     line-height: $line-height-tight;
                                     color: $text-secondary;
+                                    text-decoration: none;
 
                                     @media (max-width: map-get($breakpoints, "sm")) {
                                         font-size: $font-size-xs;
