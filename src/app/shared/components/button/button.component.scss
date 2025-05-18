@@ -107,10 +107,10 @@
         @include skeleton-loading;
         min-width: 100px;
         height: 40px;
-        border-radius: 4px;
 
         &.no-padding {
             height: 17px;
+            border-radius: $spacing-xs;
         }
     }
 
@@ -119,6 +119,7 @@
     }
 
     &.no-padding {
-        padding: 0 2px;
+        padding: 0;
+        border-radius: 0;
     }
 }

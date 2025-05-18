@@ -10,8 +10,8 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(17px);
+    background: rgba($background-color, 0.6);
+    backdrop-filter: blur(10px);
 
     .viewer-content {
         position: relative;

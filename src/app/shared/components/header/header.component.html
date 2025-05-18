@@ -55,6 +55,7 @@
                         title="User profile"
                         class="profile-button"
                         aria-label="User profile"
+                        [class.search-trigger]="!isLoggedIn"
                         [class.active]="isProfileDropdownOpen"
                         (click)="toggleProfileDropdown($event)"
                     >

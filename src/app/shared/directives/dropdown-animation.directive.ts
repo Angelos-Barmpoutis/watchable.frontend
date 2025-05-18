@@ -17,14 +17,12 @@ export class DropdownAnimationDirective implements OnInit {
         const dropdownAnimation = this.animationBuilder.build([
             style({
                 opacity: 0,
-                scale: 0.9,
-                transform: 'translateY(-10px)',
+                scale: 0.85,
             }),
             animate(
-                '300ms ease-out',
+                '200ms ease-out',
                 style({
                     opacity: 1,
-                    transform: 'translateY(0)',
                     scale: 1,
                 }),
             ),
