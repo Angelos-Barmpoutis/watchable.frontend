@@ -30,16 +30,14 @@
 
     @media (max-width: map-get($breakpoints, "sm")) {
         right: $spacing-md;
-        bottom: $mobile-nav-height + 24px;
+        bottom: $mobile-nav-height + $spacing-md;
 
         // Only apply bottom padding if there's a bottom bar
         @supports (padding-bottom: env(safe-area-inset-bottom)) {
-            bottom: min($mobile-nav-height + 24px + env(safe-area-inset-bottom), $mobile-nav-height + 40px);
+            bottom: min(
+                $mobile-nav-height + $spacing-md + env(safe-area-inset-bottom),
+                $mobile-nav-height + $spacing-md + $spacing-md
+            );
         }
-
-        // For Android devices with bottom navigation bar
-        // @media (hover: none) and (pointer: coarse) {
-        //     bottom: 16px;
-        // }
     }
 }
