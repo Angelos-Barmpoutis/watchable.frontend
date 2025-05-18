@@ -6,7 +6,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba($background-color, 0.8);
+    background-color: rgba($background-color, 0.6);
     backdrop-filter: blur(17px);
     z-index: map-get($z-layers, "header");
     border-bottom: 1px solid rgba($text-secondary, 0.2);
