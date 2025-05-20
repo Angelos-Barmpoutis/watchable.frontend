@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    origin: 'https://watchable-frontend.netlify.app/',
+    origin: 'https://watchable-frontend.netlify.app',
     TMDBBaseUrl: 'https://api.themoviedb.org/3/',
     imageBaseUrl: 'https://image.tmdb.org/t/p/',
     placeholdBaseUrl: 'https://placehold.co/',
