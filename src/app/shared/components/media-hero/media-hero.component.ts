@@ -79,6 +79,9 @@ export class MediaHeroComponent implements OnChanges {
 
             if (this.authService.isAuthenticated()) {
                 this.checkWatchlistStatus();
+            } else {
+                this.isInWatchlist = false;
+                this.cdr.detectChanges();
             }
         }
     }
@@ -90,6 +93,8 @@ export class MediaHeroComponent implements OnChanges {
     toggleWatchlist(): void {
         if (!this.authService.isAuthenticated()) {
             this.snackbarService.warning('Please sign in to add items to your watchlist');
+            this.isInWatchlist = false;
+            this.cdr.detectChanges();
             return;
         }
 
