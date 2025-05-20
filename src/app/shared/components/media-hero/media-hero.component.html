@@ -4,6 +4,9 @@
             <div class="wrapper">
                 <div class="media-content">
                     <div class="media-poster">
+                        <div *ngIf="isInWatchlist" class="bookmark-ribbon">
+                            <i class="fas fa-bookmark"></i>
+                        </div>
                         <img
                             *ngIf="mediaDetails?.poster_path"
                             appPosterPath
@@ -13,6 +16,10 @@
                         <img *ngIf="!mediaDetails?.poster_path" [src]="default.largePosterFallback" />
                     </div>
                     <div class="media-info">
+                        <div *ngIf="isInWatchlist" class="mobile-watchlist-badge">
+                            <i class="fas fa-bookmark"></i>
+                            <span>In Watchlist</span>
+                        </div>
                         <h2 class="media-title">
                             {{ title }}
                             <span *ngIf="subtitle" class="media-subtitle">({{ subtitle }})</span>

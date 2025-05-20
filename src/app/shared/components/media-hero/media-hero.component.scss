@@ -35,9 +35,34 @@
             border-radius: $border-radius-lg;
             overflow: hidden;
             box-shadow: $shadow-lg;
+            position: relative;
 
-            &:hover img {
-                transform: scale(1.02);
+            .bookmark-ribbon {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 40px;
+                height: 50px;
+                background: linear-gradient(135deg, rgba($primary-color, 0.8), darken($primary-color, 15%));
+                clip-path: polygon(100% 0, 100% 100%, 50% 75%, 0 100%, 0 0);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1;
+                animation: ribbon-appear 0.3s ease-out;
+                box-shadow: $shadow-md;
+
+                i {
+                    color: $text-primary;
+                    font-size: $font-size-lg;
+                    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+                }
+            }
+
+            &:hover {
+                img {
+                    transform: scale(1.02);
+                }
             }
 
             img {
@@ -171,6 +196,26 @@
                 gap: $spacing-md;
                 align-items: center;
             }
+
+            .mobile-watchlist-badge {
+                display: none;
+                align-items: center;
+                gap: $spacing-sm;
+                background: linear-gradient(135deg, rgba($primary-color, 0.8), darken($primary-color, 15%));
+                color: $text-primary;
+                padding: $spacing-sm / 2 $spacing-sm * 1.5;
+                border-radius: $border-radius-full;
+                font-size: $font-size-xs;
+                font-weight: $font-weight-medium;
+                margin-bottom: $spacing-sm;
+                box-shadow: $shadow-sm;
+                animation: badge-appear 0.3s ease-out;
+                width: fit-content;
+
+                i {
+                    font-size: $font-size-sm;
+                }
+            }
         }
     }
 
@@ -226,6 +271,10 @@
                     p {
                         font-size: $font-size-xs;
                     }
+                }
+
+                .mobile-watchlist-badge {
+                    display: flex;
                 }
             }
         }

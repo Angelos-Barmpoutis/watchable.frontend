@@ -22,7 +22,7 @@ export const DEFAULT = {
     infiniteScrollRootMargin: 278,
     scrollThreshold: 700,
     carouselAnimationDuration: 500,
-    snackbarDuration: 5000,
+    snackbarDuration: 3500,
     snackbarType: 'info' as SnackbarType,
     searchOption: SearchOption.Movie,
     timeOption: TimeOption.Day,

@@ -3,6 +3,10 @@
         <div class="overlay">
             <div class="wrapper">
                 <div class="featured-details">
+                    <div class="featured-badge">
+                        <i class="fas fa-bookmark"></i>
+                        <span>{{ type === mediaType.Movie ? "Featured Movie" : "Featured TV Show" }}</span>
+                    </div>
                     <h2 class="featured-title">{{ featuredTitle }}</h2>
                     <div class="featured-meta">
                         <span *ngIf="featuredDate" class="movie-year">
@@ -46,7 +50,6 @@
 
                     <div class="featured-actions">
                         <app-button
-                            *ngIf="type === mediaType.Movie"
                             [link]="link"
                             [variant]="buttonType.Primary"
                             [type]="'button'"

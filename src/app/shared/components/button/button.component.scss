@@ -105,7 +105,7 @@
         cursor: default;
         pointer-events: none;
         @include skeleton-loading;
-        min-width: 100px;
+        min-width: 120px;
         height: 40px;
 
         &.no-padding {

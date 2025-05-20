@@ -65,7 +65,7 @@ export class MediaHeroComponent implements OnChanges {
 
     showTrailer = false;
     trailerVideo: Video | null = null;
-    isInWatchlist = true;
+    isInWatchlist = false;
 
     private destroyRef = inject(DestroyRef);
     private accountFacade = inject(AccountFacade);

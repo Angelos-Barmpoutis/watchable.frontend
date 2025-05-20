@@ -29,6 +29,25 @@
         display: flex;
         flex-direction: column;
 
+        .featured-badge {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+            background: linear-gradient(135deg, rgba($primary-color, 0.8), darken($primary-color, 15%));
+            color: $text-primary;
+            padding: $spacing-sm / 2 $spacing-sm * 1.5;
+            border-radius: $border-radius-full;
+            font-size: $font-size-sm;
+            font-weight: $font-weight-medium;
+            margin-bottom: $spacing-sm;
+            box-shadow: $shadow-sm;
+            width: fit-content;
+
+            i {
+                font-size: $font-size-md;
+            }
+        }
+
         .featured-title {
             font-size: $font-size-3xl;
             font-weight: $font-weight-semibold;
@@ -158,11 +177,20 @@
     .featured-details {
         max-width: 700px;
 
+        .skeleton-badge {
+            width: 150px;
+            height: 30px;
+            @include skeleton-loading;
+            border-radius: $border-radius-full;
+            margin-bottom: $spacing-md;
+        }
+
         .skeleton-title {
             height: $font-size-3xl;
             width: 40%;
             @include skeleton-loading;
             border-radius: $border-radius-md;
+            margin-bottom: $spacing-md;
         }
 
         .skeleton-meta {
@@ -206,7 +234,7 @@
                 width: 100%;
                 @include skeleton-loading;
                 border-radius: $border-radius-sm;
-                margin-bottom: $spacing-sm;
+                margin-bottom: $spacing-sm / 2;
 
                 &:last-child {
                     width: 70%;
@@ -274,6 +302,25 @@
         .featured-details {
             margin-bottom: $spacing-md;
 
+            .featured-badge {
+                display: flex;
+                align-items: center;
+                gap: $spacing-sm;
+                background: linear-gradient(135deg, rgba($primary-color, 0.8), darken($primary-color, 15%));
+                color: $text-primary;
+                padding: $spacing-sm / 2 $spacing-sm * 1.5;
+                border-radius: $border-radius-full;
+                font-size: $font-size-xs;
+                font-weight: $font-weight-medium;
+                margin-bottom: $spacing-sm;
+                box-shadow: $shadow-sm;
+                width: fit-content;
+
+                i {
+                    font-size: $font-size-sm;
+                }
+            }
+
             .featured-meta {
                 font-size: $font-size-xs;
             }
@@ -289,6 +336,11 @@
     .featured-banner-skeleton {
         .featured-details {
             margin-bottom: $spacing-md;
+
+            .skeleton-badge {
+                width: 135px;
+                height: 26px;
+            }
 
             .featured-meta {
                 font-size: $font-size-xs;
