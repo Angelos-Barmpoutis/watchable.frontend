@@ -1,4 +1,5 @@
 import { environment } from '../../../environments/environment';
+import { SnackbarType } from '../components/snackbar/snackbar.component';
 import { BackdropSize } from '../enumerations/backdrop-size.enum';
 import { PosterSize } from '../enumerations/poster-size.enum';
 import { ProfileSize } from '../enumerations/profile-size.enum';
@@ -21,6 +22,8 @@ export const DEFAULT = {
     infiniteScrollRootMargin: 278,
     scrollThreshold: 700,
     carouselAnimationDuration: 500,
+    snackbarDuration: 3000,
+    snackbarType: 'info' as SnackbarType,
     searchOption: SearchOption.Movie,
     timeOption: TimeOption.Day,
     smallPosterSize: PosterSize.w92,

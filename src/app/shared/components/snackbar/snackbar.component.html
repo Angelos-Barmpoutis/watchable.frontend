@@ -1,0 +1,14 @@
+<div
+    *ngIf="show"
+    appFadeIn
+    class="snackbar"
+    [class.snackbar-success]="type === 'success'"
+    [class.snackbar-error]="type === 'error'"
+    [class.snackbar-warning]="type === 'warning'"
+    [class.snackbar-info]="type === 'info'"
+>
+    <div class="snackbar-content">
+        <i [class]="icon"></i>
+        <span>{{ message }}</span>
+    </div>
+</div>

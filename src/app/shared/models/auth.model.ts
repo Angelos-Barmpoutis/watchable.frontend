@@ -7,6 +7,10 @@ export interface RequestTokenResponse {
 export interface SessionResponse {
     success: boolean;
     session_id: string;
+    account: {
+        id: number;
+        username: string;
+    };
 }
 
 export interface UserInfo {

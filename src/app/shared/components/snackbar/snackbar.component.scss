@@ -1,0 +1,66 @@
+@import "../../../../styles.scss";
+
+.snackbar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    min-width: 300px;
+    max-width: 400px;
+    padding: $spacing-md;
+    border-radius: $border-radius-md;
+    background-color: rgb(40, 44, 53);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: map-get($z-layers, "header") + 1;
+    animation: slideIn 0.3s ease-out;
+
+    @media (max-width: map-get($breakpoints, "sm")) {
+        max-width: calc(100vw - 40px);
+    }
+
+    .snackbar-content {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+
+        i {
+            font-size: $font-size-lg;
+        }
+
+        span {
+            font-size: $font-size-sm;
+            color: $text-primary;
+        }
+    }
+
+    &.snackbar-success {
+        border-left: 4px solid $success-color;
+
+        i {
+            color: $success-color;
+        }
+    }
+
+    &.snackbar-error {
+        border-left: 4px solid $error-color;
+
+        i {
+            color: $error-color;
+        }
+    }
+
+    &.snackbar-warning {
+        border-left: 4px solid $warning-color;
+
+        i {
+            color: $warning-color;
+        }
+    }
+
+    &.snackbar-info {
+        border-left: 4px solid $primary-color;
+
+        i {
+            color: $primary-color;
+        }
+    }
+}

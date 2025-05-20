@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { AuthFacade } from '../facades/auth.facade';
 import { SessionResponse, UserInfo } from '../models/auth.model';
 import { LocalStorageService } from './local-storage.service';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
     providedIn: 'root',
@@ -25,6 +26,7 @@ export class AuthService {
         private authFacade: AuthFacade,
         private localStorageService: LocalStorageService,
         private destroyRef: DestroyRef,
+        private snackbarService: SnackbarService,
     ) {
         const sessionId = this.getSessionId();
         this.isAuthenticatedSubject.next(!!sessionId);
@@ -36,6 +38,18 @@ export class AuthService {
         if (response.success) {
             this.localStorageService.setItem(this.SESSION_KEY, response.session_id);
             this.isAuthenticatedSubject.next(true);
+
+            // Get user info to show username in the success message
+            this.getUserInfo()
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe({
+                    next: (userInfo) => {
+                        this.snackbarService.success(`Successfully signed in as ${userInfo.username}`);
+                    },
+                    error: () => {
+                        this.snackbarService.success('Successfully signed in');
+                    },
+                });
         }
     }
 
@@ -44,7 +58,10 @@ export class AuthService {
             if (event.origin === this.ORIGIN && event.data.type === 'AUTH_SUCCESS') {
                 this.createSession(event.data.requestToken)
                     .pipe(takeUntilDestroyed(this.destroyRef))
-                    .subscribe((response) => this.handleAuthSuccess(response));
+                    .subscribe({
+                        next: (response) => this.handleAuthSuccess(response),
+                        error: () => this.snackbarService.error('Failed to sign in'),
+                    });
             }
         });
     }
@@ -94,6 +111,7 @@ export class AuthService {
                 },
                 error: () => {
                     this.isLoadingSubject.next(false);
+                    this.snackbarService.error('Failed to start authentication process');
                 },
             });
     }
@@ -113,5 +131,6 @@ export class AuthService {
     signOut(): void {
         this.localStorageService.removeItem(this.SESSION_KEY);
         this.isAuthenticatedSubject.next(false);
+        this.snackbarService.success('Successfully signed out');
     }
 }

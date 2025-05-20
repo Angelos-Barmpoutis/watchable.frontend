@@ -5,6 +5,17 @@
             <router-outlet />
             <app-mobile-navigation></app-mobile-navigation>
             <app-back-to-top-button></app-back-to-top-button>
+            <app-loading
+                *ngIf="authService.isLoading$ | async"
+                message="Processing authentication..."
+                [overlay]="true"
+            ></app-loading>
+
+            <app-snackbar
+                [message]="(snackbarService.state$ | async)!.message"
+                [type]="(snackbarService.state$ | async)!.type"
+                [show]="(snackbarService.state$ | async)!.show"
+            ></app-snackbar>
         </main>
         <app-footer></app-footer>
     </div>
@@ -13,9 +24,3 @@
 <ng-template #loading>
     <app-loading message="Loading application..."></app-loading>
 </ng-template>
-
-<app-loading
-    *ngIf="authService.isLoading$ | async"
-    message="Processing authentication..."
-    [overlay]="true"
-></app-loading>
