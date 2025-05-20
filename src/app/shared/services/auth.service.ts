@@ -4,8 +4,10 @@ import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
+import { AccountFacade } from '../facades/account.facade';
 import { AuthFacade } from '../facades/auth.facade';
-import { SessionResponse, UserInfo } from '../models/auth.model';
+import { Account } from '../models/account.model';
+import { SessionResponse } from '../models/auth.model';
 import { LocalStorageService } from './local-storage.service';
 import { SnackbarService } from './snackbar.service';
 
@@ -24,6 +26,7 @@ export class AuthService {
 
     constructor(
         private authFacade: AuthFacade,
+        private accountFacade: AccountFacade,
         private localStorageService: LocalStorageService,
         private destroyRef: DestroyRef,
         private snackbarService: SnackbarService,
@@ -54,6 +57,7 @@ export class AuthService {
                 });
         } else {
             this.snackbarService.error('Failed to create session');
+            this.isLoadingSubject.next(false);
         }
     }
 
@@ -133,8 +137,8 @@ export class AuthService {
             });
     }
 
-    getUserInfo(): Observable<UserInfo | null> {
-        return this.authFacade.getUserInfo().pipe(
+    getUserInfo(): Observable<Account | null> {
+        return this.accountFacade.getAccountInfo().pipe(
             catchError(() => {
                 this.snackbarService.error('Failed to get user information');
                 return of(null);

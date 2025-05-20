@@ -4,7 +4,7 @@ import { DEFAULT } from '../constants/defaults.constant';
 
 export const SWIPER_CONFIG: SwiperOptions = {
     slidesPerView: 'auto',
-    spaceBetween: 8,
+    spaceBetween: 12,
     speed: DEFAULT.carouselAnimationDuration,
     freeMode: {
         sticky: true,

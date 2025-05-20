@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AuthDriver } from '../drivers/auth.driver';
-import { RequestTokenResponse, SessionResponse, UserInfo } from '../models/auth.model';
+import { RequestTokenResponse, SessionResponse } from '../models/auth.model';
 
 @Injectable({
     providedIn: 'root',
@@ -16,9 +16,5 @@ export class AuthGateway {
 
     createSession(requestToken: string): Observable<SessionResponse> {
         return this.authDriver.createSession(requestToken);
-    }
-
-    getUserInfo(): Observable<UserInfo> {
-        return this.authDriver.getUserInfo();
     }
 }

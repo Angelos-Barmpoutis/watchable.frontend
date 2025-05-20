@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { RequestTokenResponse, SessionResponse, UserInfo } from '../models/auth.model';
+import { RequestTokenResponse, SessionResponse } from '../models/auth.model';
 
 @Injectable({
     providedIn: 'root',
@@ -19,9 +19,5 @@ export class AuthDriver {
         return this.http.post<SessionResponse>(`${environment.TMDBBaseUrl}authentication/session/new`, {
             request_token: requestToken,
         });
-    }
-
-    getUserInfo(): Observable<UserInfo> {
-        return this.http.get<UserInfo>(`${environment.TMDBBaseUrl}account`);
     }
 }

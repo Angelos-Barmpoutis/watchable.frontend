@@ -12,8 +12,7 @@ import { AuthService } from '../../services/auth.service';
 import { SearchService } from '../../services/search.service';
 import { ButtonComponent } from '../button/button.component';
 import { ButtonType } from '../button/enumerations/button-type.enum';
-import { UserInfo } from '../../models/auth.model';
-
+import { Account } from '../../models/account.model';
 @Component({
     selector: 'app-header',
     standalone: true,
@@ -44,7 +43,7 @@ export class HeaderComponent implements OnInit {
     isProfileDropdownOpen = false;
     isSearchVisible = false;
     isLoggedIn = false;
-    userInfo: UserInfo | null = null;
+    userInfo: Account | null = null;
     searchForm!: FormGroup;
 
     constructor(

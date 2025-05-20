@@ -12,9 +12,3 @@ export interface SessionResponse {
         username: string;
     };
 }
-
-export interface UserInfo {
-    name: string;
-    username: string;
-    avatar_path: string | null;
-}
