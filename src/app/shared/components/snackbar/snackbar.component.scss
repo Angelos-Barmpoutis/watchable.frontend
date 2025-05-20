@@ -43,8 +43,8 @@
 
         .dismiss-container {
             position: relative;
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             flex-shrink: 0;
 
             .progress-ring {
@@ -52,8 +52,8 @@
                 top: 0;
                 left: 0;
                 transform: translate(-50%, -50%);
-                width: 24px;
-                height: 24px;
+                width: 32px;
+                height: 32px;
                 transform-origin: center;
                 transform: rotate(-90deg);
 
@@ -73,8 +73,8 @@
                 cursor: pointer;
                 border-radius: $border-radius-full;
                 transition: all $transition-normal;
-                width: 24px;
-                height: 24px;
+                width: 32px;
+                height: 32px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -85,7 +85,7 @@
                 }
 
                 i {
-                    font-size: $font-size-sm;
+                    font-size: $font-size-md;
                 }
             }
         }

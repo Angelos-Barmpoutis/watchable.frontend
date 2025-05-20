@@ -1,6 +1,6 @@
 import { DestroyRef, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
@@ -39,29 +39,41 @@ export class AuthService {
             this.localStorageService.setItem(this.SESSION_KEY, response.session_id);
             this.isAuthenticatedSubject.next(true);
 
-            // Get user info to show username in the success message
             this.getUserInfo()
-                .pipe(takeUntilDestroyed(this.destroyRef))
-                .subscribe({
-                    next: (userInfo) => {
-                        this.snackbarService.success(`Successfully signed in as ${userInfo.username}`);
-                    },
-                    error: () => {
+                .pipe(
+                    takeUntilDestroyed(this.destroyRef),
+                    catchError(() => {
                         this.snackbarService.success('Successfully signed in');
-                    },
+                        return of(null);
+                    }),
+                )
+                .subscribe((userInfo) => {
+                    if (userInfo) {
+                        this.snackbarService.success(`Successfully signed in as ${userInfo.username}`);
+                    }
                 });
+        } else {
+            this.snackbarService.error('Failed to create session');
         }
     }
 
     private listenForAuthSuccess(): void {
         window.addEventListener('message', (event: MessageEvent<{ type: string; requestToken: string }>) => {
-            if (event.origin === this.ORIGIN && event.data.type === 'AUTH_SUCCESS') {
-                this.createSession(event.data.requestToken)
-                    .pipe(takeUntilDestroyed(this.destroyRef))
-                    .subscribe({
-                        next: (response) => this.handleAuthSuccess(response),
-                        error: () => this.snackbarService.error('Failed to sign in'),
-                    });
+            if (event.origin === this.ORIGIN) {
+                if (event.data.type === 'AUTH_SUCCESS') {
+                    this.createSession(event.data.requestToken)
+                        .pipe(takeUntilDestroyed(this.destroyRef))
+                        .subscribe({
+                            next: (response) => this.handleAuthSuccess(response),
+                            error: () => {
+                                this.snackbarService.error('Failed to sign in');
+                                this.isLoadingSubject.next(false);
+                            },
+                        });
+                } else if (event.data.type === 'AUTH_DENIED') {
+                    this.snackbarService.error('Authentication was denied');
+                    this.isLoadingSubject.next(false);
+                }
             }
         });
     }
@@ -76,10 +88,6 @@ export class AuthService {
         );
     }
 
-    private isMobileDevice(): boolean {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-
     signIn(): void {
         this.isLoadingSubject.next(true);
         this.authFacade
@@ -87,7 +95,7 @@ export class AuthService {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
                 next: (response) => {
-                    if (response.success) {
+                    if (response?.success) {
                         const currentPath = window.location.pathname;
                         const authUrl = `${this.TMDB_AUTH_URL}${response.request_token}?redirect_to=${this.ORIGIN}${currentPath}`;
 
@@ -100,13 +108,22 @@ export class AuthService {
                                 const checkPopup = setInterval(() => {
                                     if (popup.closed) {
                                         clearInterval(checkPopup);
-                                        this.isLoadingSubject.next(false);
+                                        setTimeout(() => {
+                                            if (!this.getSessionId()) {
+                                                this.snackbarService.error('Authentication was denied');
+                                            }
+                                            this.isLoadingSubject.next(false);
+                                        }, 500);
                                     }
                                 }, 500);
                             } else {
                                 this.isLoadingSubject.next(false);
+                                this.snackbarService.error('Failed to open authentication window');
                             }
                         }
+                    } else {
+                        this.isLoadingSubject.next(false);
+                        this.snackbarService.error('Failed to create request token');
                     }
                 },
                 error: () => {
@@ -116,21 +133,34 @@ export class AuthService {
             });
     }
 
+    getUserInfo(): Observable<UserInfo | null> {
+        return this.authFacade.getUserInfo().pipe(
+            catchError(() => {
+                this.snackbarService.error('Failed to get user information');
+                return of(null);
+            }),
+        );
+    }
+
+    signOut(): void {
+        try {
+            this.localStorageService.removeItem(this.SESSION_KEY);
+            this.isAuthenticatedSubject.next(false);
+            this.snackbarService.success('Successfully signed out');
+        } catch (error) {
+            this.snackbarService.error('Failed to sign out');
+        }
+    }
+
+    private isMobileDevice(): boolean {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
     getSessionId(): string | null {
         return this.localStorageService.getItem<string>(this.SESSION_KEY);
     }
 
     isAuthenticated(): boolean {
         return this.isAuthenticatedSubject.value;
-    }
-
-    getUserInfo(): Observable<UserInfo> {
-        return this.authFacade.getUserInfo();
-    }
-
-    signOut(): void {
-        this.localStorageService.removeItem(this.SESSION_KEY);
-        this.isAuthenticatedSubject.next(false);
-        this.snackbarService.success('Successfully signed out');
     }
 }

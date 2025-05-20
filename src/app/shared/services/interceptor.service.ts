@@ -1,4 +1,4 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 
@@ -17,7 +17,7 @@ export class InterceptorService implements HttpInterceptor {
         });
         return next.handle(authReq).pipe(
             catchError((error: unknown) => {
-                this.errorService.handleError(error);
+                this.errorService.handleError(error as HttpErrorResponse);
                 return throwError(() => error);
             }),
         );
