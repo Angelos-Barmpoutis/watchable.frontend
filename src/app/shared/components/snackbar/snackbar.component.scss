@@ -2,40 +2,100 @@
 
 .snackbar {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: $spacing-xl;
+    right: $spacing-lg;
     min-width: 300px;
-    max-width: 400px;
+    width: 400px;
     padding: $spacing-md;
-    border-radius: $border-radius-md;
+    border-radius: $border-radius-lg;
     background-color: rgb(40, 44, 53);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: map-get($z-layers, "header") + 1;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1001;
     animation: slideIn 0.3s ease-out;
 
-    @media (max-width: map-get($breakpoints, "sm")) {
-        max-width: calc(100vw - 40px);
+    @media (max-width: map-get($breakpoints, "md")) {
+        width: calc(100vw - $spacing-lg * 2);
     }
 
     .snackbar-content {
         display: flex;
         align-items: center;
-        gap: $spacing-sm;
+        justify-content: space-between;
+        gap: $spacing-md;
 
-        i {
-            font-size: $font-size-lg;
+        .snackbar-message {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm * 1.5;
+            flex: 1;
+
+            i {
+                font-size: $font-size-lg;
+                flex-shrink: 0;
+            }
+
+            span {
+                font-size: $font-size-sm;
+                color: $text-primary;
+                line-height: 1.4;
+            }
         }
 
-        span {
-            font-size: $font-size-sm;
-            color: $text-primary;
+        .dismiss-container {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+
+            .progress-ring {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: translate(-50%, -50%);
+                width: 24px;
+                height: 24px;
+                transform-origin: center;
+                transform: rotate(-90deg);
+
+                .progress-ring-circle {
+                    stroke: currentColor;
+                    stroke-linecap: round;
+                    animation: progress-ring 3s linear forwards;
+                }
+            }
+
+            .dismiss-button {
+                position: relative;
+                background: none;
+                border: none;
+                padding: $spacing-xs;
+                color: $text-secondary;
+                cursor: pointer;
+                border-radius: $border-radius-full;
+                transition: all $transition-normal;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &:hover {
+                    background-color: rgba($text-secondary, 0.1);
+                    color: $text-primary;
+                }
+
+                i {
+                    font-size: $font-size-sm;
+                }
+            }
         }
     }
 
     &.snackbar-success {
         border-left: 4px solid $success-color;
 
-        i {
+        .icon,
+        .progress-ring-circle {
             color: $success-color;
         }
     }
@@ -43,7 +103,8 @@
     &.snackbar-error {
         border-left: 4px solid $error-color;
 
-        i {
+        .icon,
+        .progress-ring-circle {
             color: $error-color;
         }
     }
@@ -51,7 +112,8 @@
     &.snackbar-warning {
         border-left: 4px solid $warning-color;
 
-        i {
+        .icon,
+        .progress-ring-circle {
             color: $warning-color;
         }
     }
@@ -59,7 +121,8 @@
     &.snackbar-info {
         border-left: 4px solid $primary-color;
 
-        i {
+        .icon,
+        .progress-ring-circle {
             color: $primary-color;
         }
     }

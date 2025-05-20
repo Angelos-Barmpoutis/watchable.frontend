@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
@@ -19,6 +19,7 @@ export class SnackbarComponent {
     @Input() type: SnackbarType = DEFAULT.snackbarType;
     @Input() duration = DEFAULT.snackbarDuration;
     @Input() show = false;
+    @Output() dismiss = new EventEmitter<void>();
 
     get icon(): string {
         switch (this.type) {
@@ -31,5 +32,9 @@ export class SnackbarComponent {
             default:
                 return 'fas fa-info-circle';
         }
+    }
+
+    onDismiss(): void {
+        this.dismiss.emit();
     }
 }

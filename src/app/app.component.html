@@ -15,6 +15,7 @@
                 [message]="(snackbarService.state$ | async)!.message"
                 [type]="(snackbarService.state$ | async)!.type"
                 [show]="(snackbarService.state$ | async)!.show"
+                (dismiss)="snackbarService.hide()"
             ></app-snackbar>
         </main>
         <app-footer></app-footer>
@@ -22,5 +23,5 @@
 </ng-container>
 
 <ng-template #loading>
-    <app-loading message="Loading application..."></app-loading>
+    <app-loading message="Loading Watchable..."></app-loading>
 </ng-template>
