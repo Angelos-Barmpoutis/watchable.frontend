@@ -43,13 +43,13 @@ export class AuthService {
                 .pipe(
                     takeUntilDestroyed(this.destroyRef),
                     catchError(() => {
-                        this.snackbarService.success('Successfully signed in');
+                        this.snackbarService.success('Signed in');
                         return of(null);
                     }),
                 )
                 .subscribe((userInfo) => {
                     if (userInfo) {
-                        this.snackbarService.success(`Successfully signed in as ${userInfo.username}`);
+                        this.snackbarService.success(`Signed in as ${userInfo.username}`);
                     }
                 });
         } else {
@@ -146,7 +146,7 @@ export class AuthService {
         try {
             this.localStorageService.removeItem(this.SESSION_KEY);
             this.isAuthenticatedSubject.next(false);
-            this.snackbarService.success('Successfully signed out');
+            this.snackbarService.success('Signed out');
         } catch (error) {
             this.snackbarService.error('Failed to sign out');
         }
