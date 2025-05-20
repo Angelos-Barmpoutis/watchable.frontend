@@ -88,7 +88,7 @@ export class AppComponent implements OnInit {
                         }
 
                         if (denied === 'true') {
-                            this.snackbarService.error('Authentication was denied');
+                            this.snackbarService.error('Authentication was denied. Please try again.');
                             window.close();
                             return EMPTY;
                         }
@@ -96,19 +96,12 @@ export class AppComponent implements OnInit {
                     return EMPTY;
                 }),
             )
-            .subscribe({
-                next: (response) => {
-                    if (response?.success) {
-                        this.authService.handleAuthSuccess(response);
-                        this.router.navigate([this.router.url.split('?')[0]]);
-                    }
-                },
-                error: () => {
-                    this.snackbarService.error('Failed to sign in');
-                },
-                complete: () => {
-                    this.isAuthLoading$.next(false);
-                },
+            .subscribe((response) => {
+                if (response?.success) {
+                    this.authService.handleAuthSuccess(response);
+                    this.router.navigate([this.router.url.split('?')[0]]);
+                }
+                this.isAuthLoading$.next(false);
             });
     }
 

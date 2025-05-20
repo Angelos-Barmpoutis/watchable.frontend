@@ -79,9 +79,10 @@
                             <app-button
                                 [variant]="ButtonType.Secondary"
                                 [type]="'button'"
-                                [icon]="'fas fa-bookmark'"
-                                [text]="'Add to Watchlist'"
+                                [icon]="isInWatchlist ? 'far fa-bookmark' : 'fas fa-bookmark'"
+                                [text]="isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'"
                                 [hasPadding]="false"
+                                (click)="toggleWatchlist()"
                             >
                             </app-button>
                         </div>

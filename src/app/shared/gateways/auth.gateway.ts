@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AuthDriver } from '../drivers/auth.driver';
-import { RequestTokenResponse, SessionResponse } from '../models/auth.model';
+import { CreateSessionResponse, DeleteSessionResponse, RequestTokenResponse } from '../models/auth.model';
 
 @Injectable({
     providedIn: 'root',
@@ -14,7 +14,11 @@ export class AuthGateway {
         return this.authDriver.createRequestToken();
     }
 
-    createSession(requestToken: string): Observable<SessionResponse> {
+    createSession(requestToken: string): Observable<CreateSessionResponse> {
         return this.authDriver.createSession(requestToken);
+    }
+
+    deleteSession(sessionId: string): Observable<DeleteSessionResponse> {
+        return this.authDriver.deleteSession(sessionId);
     }
 }

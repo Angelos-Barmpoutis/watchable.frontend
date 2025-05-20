@@ -5,7 +5,8 @@
     top: $spacing-xl;
     right: $spacing-lg;
     min-width: 300px;
-    width: 400px;
+    width: 100%;
+    max-width: 500px;
     padding: $spacing-md;
     border-radius: $border-radius-lg;
     background-color: rgb(40, 44, 53);

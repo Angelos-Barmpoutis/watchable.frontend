@@ -21,14 +21,31 @@ export class SnackbarService {
         show: false,
     });
 
+    private timeoutId: number | null = null;
+
     readonly state$ = this.state.asObservable();
 
-    show(message: string, type: SnackbarType = 'info', duration: number = this.defaultDuration): void {
-        this.state.next({ message, type, show: true });
+    private show(message: string, type: SnackbarType = 'info', duration: number = this.defaultDuration): void {
+        // Clear any existing timeout
+        if (this.timeoutId !== null) {
+            window.clearTimeout(this.timeoutId);
+            this.timeoutId = null;
+        }
 
+        // Hide current snackbar to reset animation
+        this.hide();
+
+        // Use setTimeout to ensure the hide animation completes before showing new message
         setTimeout(() => {
-            this.hide();
-        }, duration);
+            // Update state with new message
+            this.state.next({ message, type, show: true });
+
+            // Set new timeout
+            this.timeoutId = window.setTimeout(() => {
+                this.hide();
+                this.timeoutId = null;
+            }, duration);
+        }, 300); // Wait for hide animation to complete
     }
 
     hide(): void {

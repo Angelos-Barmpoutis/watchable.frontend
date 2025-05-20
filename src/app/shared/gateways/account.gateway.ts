@@ -22,29 +22,32 @@ export class AccountGateway {
 
     getRatedMovies(page = 1): Observable<PaginatedMovies> {
         return this.accountDriver.getRatedMovies(
-            this.urlService.createUrlForTMDB(['account', 'rated', 'movies', `page=${page}`]),
+            this.urlService.createUrlForTMDB(['account', 'rated', `movies?page=${page}`]),
         );
     }
 
     getRatedTVShows(page = 1): Observable<PaginatedTvShows> {
         return this.accountDriver.getRatedTVShows(
-            this.urlService.createUrlForTMDB(['account', 'rated', 'tv', `page=${page}`]),
+            this.urlService.createUrlForTMDB(['account', 'rated', `tv?page=${page}`]),
         );
     }
 
-    getWatchlistMovies(page = 1): Observable<PaginatedMovies> {
+    getWatchlistMovies(accountId: number, page = 1): Observable<PaginatedMovies> {
         return this.accountDriver.getWatchlistMovies(
-            this.urlService.createUrlForTMDB(['account', 'watchlist', 'movies', `page=${page}`]),
+            this.urlService.createUrlForTMDB(['account', accountId.toString(), 'watchlist', `movies?page=${page}`]),
         );
     }
 
-    getWatchlistTVShows(page = 1): Observable<PaginatedTvShows> {
+    getWatchlistTVShows(accountId: number, page = 1): Observable<PaginatedTvShows> {
         return this.accountDriver.getWatchlistTVShows(
-            this.urlService.createUrlForTMDB(['account', 'watchlist', 'tv', `page=${page}`]),
+            this.urlService.createUrlForTMDB(['account', accountId.toString(), 'watchlist', `tv?page=${page}`]),
         );
     }
 
-    addToWatchlist(request: AddToWatchlistRequest): Observable<AddToWatchlistResponse> {
-        return this.accountDriver.addToWatchlist(this.urlService.createUrlForTMDB(['account', 'watchlist']), request);
+    addToWatchlist(accountId: number, request: AddToWatchlistRequest): Observable<AddToWatchlistResponse> {
+        return this.accountDriver.addToWatchlist(
+            this.urlService.createUrlForTMDB(['account', accountId.toString(), 'watchlist']),
+            request,
+        );
     }
 }

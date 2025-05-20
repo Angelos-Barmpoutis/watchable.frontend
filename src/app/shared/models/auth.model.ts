@@ -4,11 +4,15 @@ export interface RequestTokenResponse {
     expires_at: string;
 }
 
-export interface SessionResponse {
+export interface CreateSessionResponse {
     success: boolean;
     session_id: string;
     account: {
         id: number;
         username: string;
     };
+}
+
+export interface DeleteSessionResponse {
+    success: boolean;
 }

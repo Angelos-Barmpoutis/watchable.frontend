@@ -7,12 +7,13 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { NAVIGATION_LINKS, NavigationLink } from '../../config/navigation.config';
 import { DropdownAnimationDirective } from '../../directives/dropdown-animation.directive';
+import { Account } from '../../models/account.model';
 import { AvatarLetterPipe } from '../../pipes/avatar-letter.pipe';
 import { AuthService } from '../../services/auth.service';
 import { SearchService } from '../../services/search.service';
 import { ButtonComponent } from '../button/button.component';
 import { ButtonType } from '../button/enumerations/button-type.enum';
-import { Account } from '../../models/account.model';
+
 @Component({
     selector: 'app-header',
     standalone: true,
@@ -54,33 +55,18 @@ export class HeaderComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.initSearchForm();
         this.initAuthState();
+        this.initSearchForm();
     }
 
     private initAuthState(): void {
         this.authService.isAuthenticated$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((isAuthenticated) => {
             this.isLoggedIn = isAuthenticated;
-            if (isAuthenticated) {
-                this.loadUserInfo();
-            } else {
-                this.userInfo = null;
-            }
         });
-    }
 
-    private loadUserInfo(): void {
-        this.authService
-            .getUserInfo()
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe({
-                next: (userInfo) => {
-                    this.userInfo = userInfo;
-                },
-                error: (error) => {
-                    console.error('Error loading user info:', error);
-                },
-            });
+        this.authService.userInfo$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((userInfo) => {
+            this.userInfo = userInfo;
+        });
     }
 
     private initSearchForm(): void {

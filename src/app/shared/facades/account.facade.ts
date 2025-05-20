@@ -25,15 +25,20 @@ export class AccountFacade {
         return this.accountGateway.getRatedTVShows(page);
     }
 
-    getWatchlistMovies(page = 1): Observable<PaginatedMovies> {
-        return this.accountGateway.getWatchlistMovies(page);
+    getWatchlistMovies(accountId: number, page = 1): Observable<PaginatedMovies> {
+        return this.accountGateway.getWatchlistMovies(accountId, page);
     }
 
-    getWatchlistTVShows(page = 1): Observable<PaginatedTvShows> {
-        return this.accountGateway.getWatchlistTVShows(page);
+    getWatchlistTVShows(accountId: number, page = 1): Observable<PaginatedTvShows> {
+        return this.accountGateway.getWatchlistTVShows(accountId, page);
     }
 
-    addToWatchlist(mediaId: number, mediaType: MediaType, watchlist: boolean): Observable<AddToWatchlistResponse> {
-        return this.accountGateway.addToWatchlist({ media_id: mediaId, media_type: mediaType, watchlist });
+    addToWatchlist(
+        accountId: number,
+        mediaId: number,
+        mediaType: MediaType,
+        watchlist: boolean,
+    ): Observable<AddToWatchlistResponse> {
+        return this.accountGateway.addToWatchlist(accountId, { media_id: mediaId, media_type: mediaType, watchlist });
     }
 }
