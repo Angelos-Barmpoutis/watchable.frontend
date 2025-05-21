@@ -43,19 +43,3 @@
         }
     }
 }
-
-.list-container {
-    .empty-state {
-        text-align: center;
-        color: $text-secondary;
-        font-size: $font-size-md;
-        margin: $spacing-xl 0;
-    }
-
-    .no-results {
-        text-align: center;
-        color: $text-secondary;
-        font-size: $font-size-md;
-        margin: $spacing-xl 0;
-    }
-}

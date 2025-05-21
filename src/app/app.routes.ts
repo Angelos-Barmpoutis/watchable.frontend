@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { authGuard } from './shared/guards/auth.guard';
+
 export const routes: Routes = [
     {
         path: '',
@@ -24,6 +26,12 @@ export const routes: Routes = [
         path: 'search',
         loadComponent: () => import('./features/search/search.component').then((c) => c.SearchComponent),
         title: 'Search',
+    },
+    {
+        path: 'watchlist',
+        loadComponent: () => import('./features/watchlist/watchlist.component').then((c) => c.WatchlistComponent),
+        title: 'My Watchlist',
+        canActivate: [authGuard],
     },
     {
         path: '**',

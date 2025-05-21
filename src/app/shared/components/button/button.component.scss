@@ -92,7 +92,6 @@
 
     &.loading-skeleton {
         cursor: default;
-        pointer-events: none;
         @include skeleton-loading;
         min-width: 120px;
         height: 40px;

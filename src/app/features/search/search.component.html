@@ -21,7 +21,7 @@
                                 [type]="mediaType.Movie"
                             ></app-media-list-item>
                         </ng-container>
-                        <p *ngIf="!isLoading && searchMovies.length === 0" class="no-results">
+                        <p *ngIf="!isLoading && searchMovies.length === 0" class="no-results" appFadeIn>
                             No movies found for "{{ searchQuery }}"
                         </p>
                     </ng-container>
@@ -39,7 +39,7 @@
                                 [type]="mediaType.TvShow"
                             ></app-media-list-item>
                         </ng-container>
-                        <p *ngIf="!isLoading && searchTvShows.length === 0" class="no-results">
+                        <p *ngIf="!isLoading && searchTvShows.length === 0" class="no-results" appFadeIn>
                             No TV shows found for "{{ searchQuery }}"
                         </p>
                     </ng-container>
@@ -57,7 +57,7 @@
                             >
                             </app-person-list-item>
                         </ng-container>
-                        <p *ngIf="!isLoading && searchPeople.length === 0" class="no-results">
+                        <p *ngIf="!isLoading && searchPeople.length === 0" class="no-results" appFadeIn>
                             No people found for "{{ searchQuery }}"
                         </p>
                     </ng-container>
@@ -72,34 +72,3 @@
         </div>
     </section>
 </div>
-
-<ng-template #loadingState>
-    <ng-container [ngSwitch]="option">
-        <ng-container *ngSwitchCase="searchOption.Movie">
-            <ng-container *ngIf="searchMovies.length === 0">
-                <app-media-list-item
-                    *ngFor="let item of skeletonArray; trackBy: trackByIndex"
-                    [isLoading]="true"
-                    [type]="mediaType.Movie"
-                >
-                </app-media-list-item>
-            </ng-container>
-        </ng-container>
-        <ng-container *ngSwitchCase="searchOption.Tv">
-            <ng-container *ngIf="searchTvShows.length === 0">
-                <app-media-list-item
-                    *ngFor="let item of skeletonArray; trackBy: trackByIndex"
-                    [isLoading]="true"
-                    [type]="mediaType.TvShow"
-                >
-                </app-media-list-item>
-            </ng-container>
-        </ng-container>
-        <ng-container *ngSwitchCase="searchOption.Person">
-            <ng-container *ngIf="searchPeople.length === 0">
-                <app-person-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
-                </app-person-list-item>
-            </ng-container>
-        </ng-container>
-    </ng-container>
-</ng-template>

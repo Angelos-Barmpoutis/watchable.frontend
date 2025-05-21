@@ -20,7 +20,6 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 @Component({
     selector: 'app-trending-movies',
     standalone: true,
-    providers: [],
     templateUrl: './movies.component.html',
     styleUrl: './movies.component.scss',
     imports: [
@@ -35,7 +34,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 export class TrendingMoviesComponent extends BaseMediaListItemComponent<MovieItem> {
     override items: Array<MovieItem> = [];
     timeOption = DEFAULT.timeOption;
-    timeTabs: Array<TabItem<TimeOption>> = [
+    readonly timeTabs: Array<TabItem<TimeOption>> = [
         { id: 0, value: TimeOption.Day, label: 'Today' },
         { id: 1, value: TimeOption.Week, label: 'This Week' },
     ];

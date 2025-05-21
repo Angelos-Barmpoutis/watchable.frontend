@@ -3,8 +3,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
-import { ButtonType } from '../button/enumerations/button-type.enum';
 import { ButtonComponent } from '../button/button.component';
+import { ButtonType } from '../button/enumerations/button-type.enum';
 
 export interface TabItem<T> {
     id: number;
@@ -29,6 +29,10 @@ export class TabsComponent<T = unknown> {
     readonly ButtonType = ButtonType;
 
     selectTab(value: T): void {
+        if (this.isLoading) {
+            return;
+        }
+
         if (this.selectedTabId !== value) {
             this.selectedTabId = this.tabs.find((tab) => tab.value === value)?.id ?? DEFAULT.selectedTabId;
             this.tabChange.emit(value);

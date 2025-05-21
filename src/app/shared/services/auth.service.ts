@@ -1,5 +1,6 @@
 import { DestroyRef, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -31,6 +32,7 @@ export class AuthService {
         private localStorageService: LocalStorageService,
         private destroyRef: DestroyRef,
         private snackbarService: SnackbarService,
+        private router: Router,
     ) {
         const sessionId = this.getSessionId();
         const userInfo = this.getUserInfoFromStorage();
@@ -162,6 +164,7 @@ export class AuthService {
                     if (response.success) {
                         this.clearAuthData();
                         this.snackbarService.success('Signed out');
+                        this.router.navigate(['/']);
                     } else {
                         this.snackbarService.error('Failed to sign out. Please try again.');
                     }

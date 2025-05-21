@@ -11,6 +11,7 @@ import { PersonListItemComponent } from '../../shared/components/person-list-ite
 import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
 import { TabItem, TabsComponent } from '../../shared/components/tabs/tabs.component';
 import { DEFAULT } from '../../shared/constants/defaults.constant';
+import { FadeInDirective } from '../../shared/directives/fade-in.directive';
 import { MediaType } from '../../shared/enumerations/media-type.enum';
 import { SearchOption } from '../../shared/enumerations/search-option.enum';
 import { SearchFacade } from '../../shared/facades/search.facade';
@@ -33,6 +34,7 @@ import { SearchService } from '../../shared/services/search.service';
         InfiniteScrollLoaderComponent,
         TabsComponent,
         SectionHeaderComponent,
+        FadeInDirective,
     ],
     templateUrl: './search.component.html',
     styleUrl: './search.component.scss',
@@ -51,7 +53,7 @@ export class SearchComponent extends BaseMediaListItemComponent<MovieItem | TvSh
     override totalPages: number = 1;
     override isLoading: boolean = false;
     option: SearchOption = SearchOption.Movie;
-    searchTabs: Array<TabItem<SearchOption>> = [
+    readonly searchTabs: Array<TabItem<SearchOption>> = [
         { id: 0, label: 'Movies', value: SearchOption.Movie },
         { id: 1, label: 'TV Shows', value: SearchOption.Tv },
         { id: 2, label: 'People', value: SearchOption.Person },

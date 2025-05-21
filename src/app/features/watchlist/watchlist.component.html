@@ -1,0 +1,32 @@
+<div class="wrapper">
+    <section>
+        <header>
+            <app-section-header title="Watchlist" [isLoading]="isLoading"> </app-section-header>
+            <app-tabs [isLoading]="isLoading" [tabs]="tabs" (tabChange)="changeMediaType($event)"> </app-tabs>
+        </header>
+        <div class="list-container">
+            <app-media-list-item
+                *ngFor="let item of items; trackBy: trackByItemId"
+                [media]="item"
+                [type]="selectedMediaType"
+            >
+            </app-media-list-item>
+            <ng-container *ngIf="isLoading && items.length === 0">
+                <app-media-list-item
+                    *ngFor="let item of skeletonArray; trackBy: trackByIndex"
+                    [type]="selectedMediaType"
+                    [isLoading]="true"
+                >
+                </app-media-list-item>
+            </ng-container>
+            <p *ngIf="!isLoading && items.length === 0" class="no-results" appFadeIn>
+                No {{ selectedMediaType === this.MediaType ? "movies" : "TV shows" }} found in your watchlist
+            </p>
+        </div>
+        <app-infinite-scroll-loader
+            *ngIf="currentPage < totalPages"
+            [disabled]="isLoading"
+            (scrolled)="loadMore()"
+        ></app-infinite-scroll-loader>
+    </section>
+</div>

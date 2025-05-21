@@ -1,13 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    DestroyRef,
-    inject,
-    Input,
-    OnChanges,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, Input, OnChanges } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, of, switchMap } from 'rxjs';
 
@@ -67,11 +59,13 @@ export class MediaHeroComponent implements OnChanges {
     trailerVideo: Video | null = null;
     isInWatchlist = false;
 
-    private destroyRef = inject(DestroyRef);
-    private accountFacade = inject(AccountFacade);
-    private authService = inject(AuthService);
-    private snackbarService = inject(SnackbarService);
-    private cdr = inject(ChangeDetectorRef);
+    constructor(
+        private accountFacade: AccountFacade,
+        private authService: AuthService,
+        private snackbarService: SnackbarService,
+        private cdr: ChangeDetectorRef,
+        private destroyRef: DestroyRef,
+    ) {}
 
     ngOnChanges(): void {
         if (this.mediaDetails) {

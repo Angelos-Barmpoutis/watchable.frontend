@@ -19,6 +19,13 @@
     @media (max-width: map-get($breakpoints, "sm")) {
         gap: $spacing-md;
     }
+
+    .no-results {
+        text-align: center;
+        color: $text-secondary;
+        font-size: $font-size-sm;
+        margin: $spacing-xl 0;
+    }
 }
 
 .media-details-grid {
