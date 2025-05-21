@@ -70,13 +70,18 @@ export class HeaderComponent implements OnInit {
     }
 
     private initSearchForm(): void {
+        // Get initial search query from URL
+        const currentUrl = window.location.href;
+        const searchParams = new URLSearchParams(currentUrl.split('?')[1]);
+        const initialQuery = searchParams.get('q') || '';
+
         this.searchForm = this.fb.group({
-            searchQuery: [''],
+            searchQuery: [initialQuery],
         });
 
         this.searchQueryFormField.valueChanges
             .pipe(takeUntilDestroyed(this.destroyRef), debounceTime(300), distinctUntilChanged())
-            .subscribe((value) => {
+            .subscribe((value: string) => {
                 this.searchService.updateSearchQuery(value);
             });
     }
