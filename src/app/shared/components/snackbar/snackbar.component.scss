@@ -7,7 +7,7 @@
     min-width: 300px;
     width: 100%;
     max-width: 500px;
-    padding: $spacing-md;
+    padding: $spacing-sm * 1.5 $spacing-md;
     border-radius: $border-radius-lg;
     background-color: rgb(40, 44, 53);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -16,6 +16,7 @@
 
     @media (max-width: map-get($breakpoints, "md")) {
         width: calc(100vw - $spacing-lg * 2);
+        padding: $spacing-sm * 1.5;
     }
 
     .snackbar-content {

@@ -58,17 +58,6 @@
         }
     }
 
-    &.button-outlined {
-        background: transparent;
-        border-color: $text-secondary;
-        color: $text-secondary;
-
-        &:hover {
-            background: rgba($text-secondary, 0.15);
-            color: $text-primary;
-        }
-    }
-
     &.imdb-button {
         background: #f5c518;
         color: #000;

@@ -204,7 +204,7 @@ header {
                         .user-info {
                             display: flex;
                             align-items: center;
-                            gap: $spacing-sm;
+                            gap: $spacing-md;
 
                             .avatar {
                                 width: 40px;
@@ -237,18 +237,15 @@ header {
                             .user-details {
                                 display: flex;
                                 flex-direction: column;
-                                gap: $spacing-xs;
 
                                 .username {
                                     font-size: $font-size-sm;
                                     font-weight: $font-weight-semibold;
                                     color: $text-primary;
-                                    letter-spacing: -0.01em;
                                 }
 
                                 .email {
-                                    font-size: $font-size-sm;
-                                    line-height: $line-height-tight;
+                                    font-size: $font-size-xs;
                                     color: $text-secondary;
 
                                     @media (max-width: map-get($breakpoints, "sm")) {
@@ -421,6 +418,18 @@ header {
                 .search-container {
                     .search-trigger {
                         width: 48px;
+                    }
+                }
+
+                .profile-dropdown {
+                    .dropdown-menu {
+                        .dropdown-header {
+                            .user-info {
+                                display: flex;
+                                align-items: center;
+                                gap: $spacing-sm * 1.5;
+                            }
+                        }
                     }
                 }
             }

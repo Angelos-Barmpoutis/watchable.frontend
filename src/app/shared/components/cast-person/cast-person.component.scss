@@ -38,7 +38,6 @@
         flex-direction: column;
         overflow: hidden;
         padding: $spacing-md;
-        gap: $spacing-xs;
         background-color: rgb(40, 44, 53);
         border-radius: $border-radius-lg;
         flex: 1;
@@ -83,7 +82,7 @@
     .cast-info {
         display: flex;
         flex-direction: column;
-        gap: $spacing-sm;
+        gap: $spacing-xs * 1.5;
         padding: $spacing-md;
         overflow: hidden;
         background-color: rgb(40, 44, 53);

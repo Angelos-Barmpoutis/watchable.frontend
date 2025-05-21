@@ -119,11 +119,7 @@ export class MediaHeroComponent implements OnChanges {
             )
             .subscribe({
                 next: (response) => {
-                    if (response.status_code === 1 || response.status_code === 13) {
-                        this.snackbarService.success(
-                            this.isInWatchlist ? 'Added to watchlist' : 'Removed from watchlist',
-                        );
-                    } else {
+                    if (response.status_code !== 1 && response.status_code !== 13 && response.status_code !== 12) {
                         this.isInWatchlist = previousState;
                         this.cdr.detectChanges();
                         this.snackbarService.error('Failed to update watchlist');
