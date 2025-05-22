@@ -3,6 +3,27 @@
 <div class="wrapper">
     <div class="media-details-grid">
         <div class="media-details-grid-content">
+            <section *ngIf="tvShowDetails?.overview || isLoading" class="overview-section">
+                <header>
+                    <app-section-header title="Overview" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <p
+                    *ngIf="tvShowDetails?.overview && !isLoading; else loadingOverviewTemplate"
+                    class="overview"
+                    appFadeIn
+                >
+                    {{ tvShowDetails?.overview }}
+                </p>
+                <ng-template #loadingOverviewTemplate>
+                    <div class="skeleton-overview">
+                        <div class="skeleton-overview-line"></div>
+                        <div class="skeleton-overview-line"></div>
+                        <div class="skeleton-overview-line"></div>
+                        <div class="skeleton-overview-line"></div>
+                    </div>
+                </ng-template>
+            </section>
+
             <section *ngIf="tvShowDetails?.seasons?.length || isLoading">
                 <header>
                     <app-section-header
@@ -74,9 +95,6 @@
 
         <aside>
             <section *ngIf="tvShowDetails || isLoading">
-                <header>
-                    <app-section-header title="TV Show Info" [isLoading]="isLoading"></app-section-header>
-                </header>
                 <app-media-details
                     [mediaDetails]="tvShowDetails"
                     [type]="mediaType.TvShow"
@@ -85,9 +103,6 @@
             </section>
 
             <section *ngIf="isExternalIdAvailable || isLoading">
-                <header>
-                    <app-section-header title="Media" [isLoading]="isLoading"></app-section-header>
-                </header>
                 <div class="social-links">
                     <app-button
                         *ngIf="tvShowDetails?.external_ids?.imdb_id || isLoading"

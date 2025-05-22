@@ -16,6 +16,7 @@ import { MediaHeroComponent } from '../../../../shared/components/media-hero/med
 import { ReviewGridComponent } from '../../../../shared/components/review-grid/review-grid.component';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { VideoGridComponent } from '../../../../shared/components/video-grid/video-grid.component';
+import { FadeInDirective } from '../../../../shared/directives/fade-in.directive';
 import { MediaType } from '../../../../shared/enumerations/media-type.enum';
 import { MovieGateway } from '../../../../shared/gateways/movie.gateway';
 import { filterMediaItems } from '../../../../shared/helpers/filter-items.helper';
@@ -35,6 +36,7 @@ import { Movie, MovieDetails } from '../../../../shared/models/movie.model';
         SectionHeaderComponent,
         VideoGridComponent,
         ButtonComponent,
+        FadeInDirective,
     ],
     templateUrl: './movie.component.html',
     styleUrls: ['./movie.component.scss'],

@@ -36,7 +36,7 @@
             background: linear-gradient(135deg, rgba($accent-color, 0.8), darken($accent-color, 30%));
             backdrop-filter: blur(10px);
             color: $text-primary;
-            padding: $spacing-xs * 1.5 $spacing-sm * 1.5;
+            padding: $spacing-xs $spacing-sm * 1.5;
             border-radius: $border-radius-full;
             font-size: $font-size-sm;
             font-weight: $font-weight-medium;
@@ -50,14 +50,13 @@
         }
 
         .featured-title {
-            font-size: $font-size-3xl;
+            font-size: $font-size-2xl;
             font-weight: $font-weight-semibold;
             margin: 0;
             line-height: 1.2;
         }
 
         .featured-meta {
-            margin-block-start: $spacing-xs;
             color: $text-secondary;
             font-size: $font-size-sm;
 
@@ -69,77 +68,6 @@
                     margin-right: $spacing-xs;
                     margin-left: $spacing-xs;
                     opacity: 0.5;
-                }
-            }
-        }
-
-        .rating-container {
-            display: flex;
-            align-items: center;
-            gap: $spacing-md;
-            margin-block-start: $spacing-md;
-
-            .rating {
-                display: flex;
-                align-items: center;
-                gap: $spacing-sm;
-
-                .rating-badge {
-                    display: flex;
-                    align-items: center;
-                    gap: $spacing-xs;
-                    padding: $spacing-xs $spacing-sm;
-                    background-color: rgba($background-color, 0.8);
-                    backdrop-filter: blur(10px);
-                    border-radius: $border-radius-md;
-
-                    &:has(.rating-value.rating-low) {
-                        background-color: rgba($error-color, 0.15);
-                    }
-
-                    &:has(.rating-value.rating-medium) {
-                        background-color: rgba($warning-color, 0.15);
-                    }
-
-                    &:has(.rating-value.rating-high) {
-                        background-color: rgba($success-color, 0.15);
-                    }
-
-                    &:has(.rating-value.rating-top) {
-                        background-color: rgba($primary-color, 0.15);
-                    }
-
-                    .rating-value {
-                        font-size: $font-size-sm;
-                        font-weight: $font-weight-semibold;
-                        color: $text-primary;
-
-                        &.rating-low {
-                            color: rgba($error-color, 0.8);
-                        }
-
-                        &.rating-medium {
-                            color: rgba($warning-color, 0.8);
-                        }
-
-                        &.rating-high {
-                            color: rgba($success-color, 0.8);
-                        }
-
-                        &.rating-top {
-                            color: rgba($primary-color, 0.8);
-                        }
-                    }
-
-                    .rating-total {
-                        font-size: $font-size-xs;
-                        color: $text-secondary;
-                    }
-                }
-
-                .rating-details {
-                    font-size: $font-size-xs;
-                    color: $text-secondary;
                 }
             }
         }
@@ -180,22 +108,21 @@
 
         .skeleton-badge {
             width: 150px;
-            height: 33px;
+            height: 29px;
             @include skeleton-loading;
             border-radius: $border-radius-full;
             margin-bottom: $spacing-md;
         }
 
         .skeleton-title {
-            height: $font-size-3xl;
+            height: $font-size-2xl;
             width: 40%;
             @include skeleton-loading;
             border-radius: $border-radius-md;
-            margin-bottom: $spacing-md;
+            margin-bottom: $spacing-sm;
         }
 
         .skeleton-meta {
-            margin-block-start: $spacing-sm;
             display: flex;
             gap: $spacing-sm;
 
@@ -207,28 +134,8 @@
             }
         }
 
-        .skeleton-rating-container {
-            display: flex;
-            align-items: center;
-            gap: $spacing-md;
-            margin-block-start: $spacing-md;
-
-            .skeleton-rating {
-                width: 80px;
-                height: 30px;
-                @include skeleton-loading;
-            }
-
-            .skeleton-rating-details {
-                width: 100px;
-                height: 20px;
-                @include skeleton-loading;
-                border-radius: $border-radius-sm;
-            }
-        }
-
         .skeleton-overview {
-            margin-block-start: $spacing-md;
+            margin-block-start: $spacing-lg;
 
             .skeleton-line {
                 height: $font-size-sm;
@@ -253,7 +160,7 @@
 
 @media (max-width: map-get($breakpoints, "md")) {
     .featured-banner {
-        height: calc(85vh - $mobile-nav-height - $desktop-header-height);
+        height: calc(65vh - $mobile-nav-height - $desktop-header-height);
 
         .overlay {
             align-items: flex-end;
@@ -274,7 +181,7 @@
     }
 
     .featured-banner-skeleton {
-        height: calc(85vh - $mobile-nav-height - $desktop-header-height);
+        height: calc(65vh - $mobile-nav-height - $desktop-header-height);
 
         .overlay {
             align-items: flex-end;
@@ -313,6 +220,10 @@
                 }
             }
 
+            .featured-title {
+                font-size: 20px;
+            }
+
             .featured-meta {
                 font-size: $font-size-xs;
             }
@@ -332,6 +243,10 @@
             .skeleton-badge {
                 width: 135px;
                 height: 26px;
+            }
+
+            .skeleton-title {
+                height: 20px;
             }
 
             .featured-meta {

@@ -6,7 +6,16 @@ import { MediaType } from '../enumerations/media-type.enum';
 import { DiscoverGateway } from '../gateways/discover.gateway';
 import { TvShowGateway } from '../gateways/tv-show.gateway';
 import { Genre } from '../models/genre.model';
-import { PaginatedTvShows, TvShowDetails, TvShowEpisodeDetails, TvShowSeasonDetails } from '../models/tv-show.model';
+import {
+    AddTvShowEpisodeRatingRequest,
+    AddTvShowEpisodeRatingResponse,
+    AddTvShowRatingRequest,
+    AddTvShowRatingResponse,
+    PaginatedTvShows,
+    TvShowDetails,
+    TvShowEpisodeDetails,
+    TvShowSeasonDetails,
+} from '../models/tv-show.model';
 import { LocalStorageService } from '../services/local-storage.service';
 
 export interface AllTvShows {
@@ -91,5 +100,18 @@ export class TvShowFacade {
         episodeNumber: number,
     ): Observable<TvShowEpisodeDetails> {
         return this.tvShowGateway.getTvShowEpisodeDetails(tvShowId, seasonNumber, episodeNumber);
+    }
+
+    addTvShowRating(tvShowId: number, request: AddTvShowRatingRequest): Observable<AddTvShowRatingResponse> {
+        return this.tvShowGateway.addTvShowRating(tvShowId, request);
+    }
+
+    addTvShowEpisodeRating(
+        tvShowId: number,
+        seasonNumber: number,
+        episodeNumber: number,
+        request: AddTvShowEpisodeRatingRequest,
+    ): Observable<AddTvShowEpisodeRatingResponse> {
+        return this.tvShowGateway.addTvShowEpisodeRating(tvShowId, seasonNumber, episodeNumber, request);
     }
 }

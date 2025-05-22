@@ -1,7 +1,7 @@
 <div class="wrapper">
     <section>
         <header>
-            <app-section-header title="My Watchlist" [isLoading]="isLoading"> </app-section-header>
+            <app-section-header title="My Ratings" [isLoading]="isLoading"> </app-section-header>
             <app-tabs [isLoading]="isLoading" [tabs]="tabs" (tabChange)="changeMediaType($event)"> </app-tabs>
         </header>
         <div class="list-container">
@@ -20,7 +20,7 @@
                 </app-media-list-item>
             </ng-container>
             <p *ngIf="!isLoading && items.length === 0" class="no-results" appFadeIn>
-                No {{ selectedMediaType === this.MediaType ? "movies" : "TV shows" }} found in your watchlist
+                No {{ selectedMediaType === this.MediaType ? "movies" : "TV shows" }} found in your ratings
             </p>
         </div>
         <app-infinite-scroll-loader

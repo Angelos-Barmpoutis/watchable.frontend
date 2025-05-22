@@ -4,6 +4,27 @@
     <div class="media-details-grid">
         <ng-container>
             <div class="media-details-grid-content">
+                <section *ngIf="movieDetails?.overview || isLoading" class="overview-section">
+                    <header>
+                        <app-section-header title="Overview" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <p
+                        *ngIf="movieDetails?.overview && !isLoading; else loadingOverviewTemplate"
+                        class="overview"
+                        appFadeIn
+                    >
+                        {{ movieDetails?.overview }}
+                    </p>
+                    <ng-template #loadingOverviewTemplate>
+                        <div class="skeleton-overview">
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                        </div>
+                    </ng-template>
+                </section>
+
                 <section *ngIf="movieDetails?.credits?.cast?.length || isLoading">
                     <header>
                         <app-section-header title="Top Cast" [isLoading]="isLoading"></app-section-header>
@@ -59,9 +80,6 @@
 
         <aside>
             <section *ngIf="movieDetails || isLoading">
-                <header>
-                    <app-section-header title="Movie Info" [isLoading]="isLoading"></app-section-header>
-                </header>
                 <app-media-details
                     [mediaDetails]="movieDetails"
                     [type]="mediaType.Movie"
@@ -70,9 +88,6 @@
             </section>
 
             <section *ngIf="isExternalIdAvailable || isLoading">
-                <header>
-                    <app-section-header title="Media" [isLoading]="isLoading"></app-section-header>
-                </header>
                 <div class="social-links">
                     <app-button
                         *ngIf="movieDetails?.external_ids?.imdb_id || isLoading"

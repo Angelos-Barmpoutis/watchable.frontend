@@ -18,6 +18,7 @@ import { MediaHeroComponent } from '../../../../shared/components/media-hero/med
 import { ReviewGridComponent } from '../../../../shared/components/review-grid/review-grid.component';
 import { SectionHeaderComponent } from '../../../../shared/components/section-header/section-header.component';
 import { VideoGridComponent } from '../../../../shared/components/video-grid/video-grid.component';
+import { FadeInDirective } from '../../../../shared/directives/fade-in.directive';
 import { MediaType } from '../../../../shared/enumerations/media-type.enum';
 import { TvShowFacade } from '../../../../shared/facades/tv-show.facade';
 import { filterMediaItems } from '../../../../shared/helpers/filter-items.helper';
@@ -38,6 +39,7 @@ import { TvShow, TvShowDetails } from '../../../../shared/models/tv-show.model';
         VideoGridComponent,
         ReviewGridComponent,
         ButtonComponent,
+        FadeInDirective,
     ],
     templateUrl: './tv-show.component.html',
     styleUrls: ['./tv-show.component.scss'],

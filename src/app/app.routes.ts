@@ -34,6 +34,12 @@ export const routes: Routes = [
         canActivate: [authGuard],
     },
     {
+        path: 'ratings',
+        loadComponent: () => import('./features/ratings/ratings.component').then((c) => c.RatingsComponent),
+        title: 'My Ratings',
+        canActivate: [authGuard],
+    },
+    {
         path: '**',
         redirectTo: '/',
     },

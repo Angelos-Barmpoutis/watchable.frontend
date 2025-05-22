@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { MovieDriver } from '../drivers/movie.driver';
-import { MovieDetails, PaginatedMovies } from '../models/movie.model';
+import { AddMovieRatingRequest, AddMovieRatingResponse, MovieDetails, PaginatedMovies } from '../models/movie.model';
 import { UrlService } from '../services/url.service';
 
 @Injectable({
@@ -39,5 +39,11 @@ export class MovieGateway {
                 `${movieId}?append_to_response=videos,images,reviews,credits,similar,recommendations,external_ids`,
             ]),
         );
+    }
+
+    addMovieRating(id: number, request: AddMovieRatingRequest): Observable<AddMovieRatingResponse> {
+        const movieId = id.toString();
+
+        return this.movieDriver.addMovieRating(this.urlService.createUrlForTMDB(['movie', movieId, 'rating']), request);
     }
 }

@@ -59,7 +59,6 @@
     margin-top: $spacing-xl;
 }
 
-// skeleton loading
 .skeleton-media-details {
     .skeleton-media-content {
         display: flex;
@@ -82,7 +81,7 @@
         @include skeleton-loading;
         height: $font-size-sm;
         width: 116px;
-        border-radius: $border-radius-sm;
+        border-radius: $spacing-xs !important;
 
         @media (max-width: map-get($breakpoints, "sm")) {
             height: $font-size-xs;
@@ -94,7 +93,8 @@
         @include skeleton-loading;
         flex: 1;
         height: $font-size-sm;
-        border-radius: $border-radius-sm;
+        border-radius: $spacing-xs !important;
+
         @media (max-width: map-get($breakpoints, "sm")) {
             height: $font-size-xs;
         }

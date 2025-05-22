@@ -30,7 +30,7 @@
             flex-shrink: 0;
 
             @media (max-width: map-get($breakpoints, "sm")) {
-                width: 72px;
+                width: 110px;
             }
         }
 
@@ -85,7 +85,7 @@
         border-radius: $border-radius-sm;
 
         @media (max-width: map-get($breakpoints, "sm")) {
-            width: 72px;
+            width: 110px;
             height: $font-size-xs;
         }
     }

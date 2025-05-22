@@ -7,7 +7,7 @@
                         <i class="fas fa-star"></i>
                         <span>{{ type === mediaType.Movie ? "Featured Movie" : "Featured TV Show" }}</span>
                     </div>
-                    <h2 class="featured-title">{{ featuredTitle }}</h2>
+                    <h1 class="featured-title">{{ featuredTitle }}</h1>
                     <div class="featured-meta">
                         <span *ngIf="featuredDate" class="movie-year">
                             {{ featuredDate | date: "yyyy" }}
@@ -15,33 +15,6 @@
                         <span *ngIf="genresList.length" class="genres">
                             {{ genresList }}
                         </span>
-                    </div>
-                    <div class="rating-container">
-                        <div class="rating">
-                            <div class="rating-badge">
-                                <span
-                                    *ngIf="featuredItem.vote_average; else noRating"
-                                    class="rating-value"
-                                    [class.rating-low]="featuredItem.vote_average < 5"
-                                    [class.rating-medium]="
-                                        featuredItem.vote_average >= 5 && featuredItem.vote_average < 7
-                                    "
-                                    [class.rating-high]="
-                                        featuredItem.vote_average >= 7 && featuredItem.vote_average < 8.5
-                                    "
-                                    [class.rating-top]="featuredItem.vote_average >= 8.5"
-                                >
-                                    {{ featuredItem.vote_average | number: "1.1-1" }}
-                                </span>
-                                <ng-template #noRating>
-                                    <span class="rating-value">-</span>
-                                </ng-template>
-                                <span class="rating-total">/10</span>
-                            </div>
-                            <div class="rating-details">
-                                <span class="vote-count">{{ featuredItem.vote_count }} votes</span>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="overview">
@@ -76,10 +49,6 @@
                         <div class="skeleton-meta-item"></div>
                         <div class="skeleton-meta-item"></div>
                         <div class="skeleton-meta-item"></div>
-                    </div>
-                    <div class="skeleton-rating-container">
-                        <div class="skeleton-rating"></div>
-                        <div class="skeleton-rating-details"></div>
                     </div>
                     <div class="skeleton-overview">
                         <div class="skeleton-line"></div>

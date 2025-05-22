@@ -138,6 +138,13 @@ export interface TvShowEpisode {
     still_path: string;
 }
 
+export interface PaginatedTvShowEpisodes {
+    page: number;
+    results: Array<TvShowEpisode>;
+    total_pages: number;
+    total_results: number;
+}
+
 export interface TvShowEpisodeDetails {
     air_date: string;
     crew: Array<MediaCreditsCrewPerson>;
@@ -165,4 +172,22 @@ export interface TvShowEpisodeCreditsPerson extends Person {
     character: string;
     credit_id: string;
     order: number;
+}
+
+export interface AddTvShowRatingRequest {
+    value: number;
+}
+
+export interface AddTvShowEpisodeRatingRequest {
+    value: number;
+}
+
+export interface AddTvShowRatingResponse {
+    status_code: number;
+    status_message: string;
+}
+
+export interface AddTvShowEpisodeRatingResponse {
+    status_code: number;
+    status_message: string;
 }

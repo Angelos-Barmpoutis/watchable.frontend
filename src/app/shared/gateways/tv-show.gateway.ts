@@ -4,7 +4,16 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { TvShowDriver } from '../drivers/tv-show.driver';
-import { PaginatedTvShows, TvShowDetails, TvShowEpisodeDetails, TvShowSeasonDetails } from '../models/tv-show.model';
+import {
+    AddTvShowEpisodeRatingRequest,
+    AddTvShowEpisodeRatingResponse,
+    AddTvShowRatingRequest,
+    AddTvShowRatingResponse,
+    PaginatedTvShows,
+    TvShowDetails,
+    TvShowEpisodeDetails,
+    TvShowSeasonDetails,
+} from '../models/tv-show.model';
 import { UrlService } from '../services/url.service';
 
 @Injectable({
@@ -68,5 +77,35 @@ export class TvShowGateway {
             page,
         });
         return this.tvShowDriver.getTvShowsByGenre(url);
+    }
+
+    addTvShowRating(tvShowId: number, request: AddTvShowRatingRequest): Observable<AddTvShowRatingResponse> {
+        const url = this.urlService.createUrlForTMDB(['tv', tvShowId.toString(), 'rating'], {
+            value: request.value,
+        });
+        return this.tvShowDriver.addTvShowRating(url, request);
+    }
+
+    addTvShowEpisodeRating(
+        tvShowId: number,
+        seasonNumber: number,
+        episodeNumber: number,
+        request: AddTvShowEpisodeRatingRequest,
+    ): Observable<AddTvShowEpisodeRatingResponse> {
+        const url = this.urlService.createUrlForTMDB(
+            [
+                'tv',
+                tvShowId.toString(),
+                'season',
+                seasonNumber.toString(),
+                'episode',
+                episodeNumber.toString(),
+                'rating',
+            ],
+            {
+                value: request.value,
+            },
+        );
+        return this.tvShowDriver.addTvShowEpisodeRating(url, request);
     }
 }

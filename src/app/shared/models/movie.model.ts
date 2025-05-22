@@ -75,3 +75,12 @@ export interface PaginatedMovies {
 }
 
 export type MovieExternalIds = ExternalIds;
+
+export interface AddMovieRatingRequest {
+    value: number;
+}
+
+export interface AddMovieRatingResponse {
+    status_code: number;
+    status_message: string;
+}

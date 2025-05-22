@@ -6,11 +6,11 @@
 ></app-media-hero>
 
 <div class="wrapper">
-    <section *ngIf="seasonDetails?.overview || isLoading">
+    <section *ngIf="seasonDetails?.overview">
         <header>
             <app-section-header title="Season Overview" [isLoading]="isLoading"></app-section-header>
         </header>
-        <p *ngIf="seasonDetails?.overview && !isLoading; else loadingOverviewTemplate" class="overview" appFadeIn>
+        <p *ngIf="!isLoading; else loadingOverviewTemplate" class="overview" appFadeIn>
             {{ seasonDetails?.overview }}
         </p>
         <ng-template #loadingOverviewTemplate>
@@ -32,7 +32,7 @@
             [tvShowId]="tvShowId"
             [seasonNumber]="seasonNumber"
             [isLoading]="isLoading"
-            [episodesCount]="5"
+            [episodesCount]="6"
         ></app-episode-grid>
     </section>
 
@@ -43,7 +43,7 @@
         <app-image-grid
             [images]="seasonDetails?.images?.posters ?? []"
             [isLoading]="isLoading"
-            [imagesCount]="7"
+            [imagesCount]="9"
             [aspectRatio]="aspectRatio['2/3']"
         ></app-image-grid>
     </section>
@@ -55,7 +55,7 @@
         <app-video-grid
             [videos]="seasonDetails?.videos?.results ?? []"
             [isLoading]="isLoading"
-            [videosCount]="5"
+            [videosCount]="9"
         ></app-video-grid>
     </section>
 
@@ -66,7 +66,7 @@
         <app-cast-grid
             [cast]="seasonDetails?.credits?.cast ?? []"
             [isLoading]="isLoading"
-            [castCount]="10"
+            [castCount]="12"
         ></app-cast-grid>
     </section>
 </div>

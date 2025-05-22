@@ -16,14 +16,10 @@
                         <img *ngIf="!mediaDetails?.poster_path" [src]="default.largePosterFallback" />
                     </div>
                     <div class="media-info">
-                        <div *ngIf="isInWatchlist" class="mobile-watchlist-badge">
-                            <i class="fas fa-bookmark"></i>
-                            <span>In Watchlist</span>
-                        </div>
-                        <h2 class="media-title">
+                        <h1 class="media-title">
                             {{ title }}
                             <span *ngIf="subtitle" class="media-subtitle">({{ subtitle }})</span>
-                        </h2>
+                        </h1>
                         <div class="media-meta">
                             <span *ngIf="releaseDate" class="media-year">
                                 {{ releaseDate | date: "yyyy" }}
@@ -38,7 +34,7 @@
                             </span>
                         </div>
 
-                        <div class="rating-container">
+                        <!-- <div class="rating-container">
                             <div class="rating">
                                 <div class="rating-badge">
                                     <span
@@ -60,14 +56,22 @@
                                     <span class="vote-count">{{ voteCount | formatNumberWithK }} votes</span>
                                 </div>
                             </div>
-                            <app-button
-                                [variant]="ButtonType.Secondary"
-                                [type]="'button'"
-                                [icon]="'fas fa-star'"
-                                [text]="'Rate'"
-                                [hasPadding]="false"
-                            ></app-button>
-                        </div>
+                            <div class="user-rating">
+                                <div class="rating-stars">
+                                    <button
+                                        *ngFor="let star of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+                                        class="star-button"
+                                        [class.active]="userRating === star"
+                                        (click)="toggleRating(star)"
+                                    >
+                                        <i class="fas fa-star"></i>
+                                    </button>
+                                </div>
+                                <span *ngIf="userRating" class="user-rating-value"
+                                    >Your rating: {{ userRating }}/10</span
+                                >
+                            </div>
+                        </div> -->
 
                         <div class="overview">
                             <p>{{ mediaDetails?.overview }}</p>
@@ -119,7 +123,7 @@
                         <div class="skeleton-media-meta-item"></div>
                         <div class="skeleton-media-meta-item"></div>
                     </div>
-                    <div class="skeleton-media-rating-container">
+                    <!-- <div class="skeleton-media-rating-container">
                         <div class="skeleton-media-rating"></div>
                         <div class="skeleton-media-rating-details"></div>
                         <app-button
@@ -130,7 +134,7 @@
                             [isLoading]="true"
                             [hasPadding]="false"
                         ></app-button>
-                    </div>
+                    </div> -->
                     <div class="skeleton-media-overview">
                         <div class="skeleton-media-overview-line"></div>
                         <div class="skeleton-media-overview-line"></div>

@@ -43,7 +43,6 @@ import { TvShowItem } from '../../../../shared/models/tv-show.model';
     ],
     templateUrl: './person.component.html',
     styleUrl: './person.component.scss',
-    // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersonComponent implements OnInit {
     personId!: number;
@@ -51,8 +50,6 @@ export class PersonComponent implements OnInit {
     isLoading = true;
     movieCastItems: Array<MovieItem> = [];
     tvCastItems: Array<TvShowItem> = [];
-
-    // Regular properties instead of getters
     images: Array<Poster | Backdrop | Logo> = [];
     movieCast: Array<MovieCreditsCastPerson> = [];
     tvCast: Array<TvCreditsCastPerson> = [];

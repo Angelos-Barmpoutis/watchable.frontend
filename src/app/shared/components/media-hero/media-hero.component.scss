@@ -80,7 +80,7 @@
             max-width: 700px;
 
             .media-title {
-                font-size: $font-size-3xl;
+                font-size: $font-size-2xl;
                 font-weight: $font-weight-semibold;
                 margin: 0;
                 line-height: 1.2;
@@ -92,9 +92,9 @@
             }
 
             .media-meta {
-                margin-block-start: $spacing-xs;
                 color: $text-secondary;
                 font-size: $font-size-sm;
+                margin-block-start: $spacing-xs;
 
                 > span {
                     position: relative;
@@ -116,53 +116,33 @@
 
                 .rating {
                     display: flex;
-                    align-items: center;
-                    gap: $spacing-sm;
+                    flex-direction: column;
+                    gap: $spacing-xs;
 
                     .rating-badge {
                         display: flex;
-                        align-items: center;
+                        align-items: baseline;
                         gap: $spacing-xs;
-                        padding: $spacing-xs $spacing-sm;
-                        background-color: rgba($background-color, 0.8);
-                        backdrop-filter: blur(10px);
-                        border-radius: $border-radius-md;
-
-                        &:has(.rating-value.rating-low) {
-                            background-color: rgba($error-color, 0.15);
-                        }
-
-                        &:has(.rating-value.rating-medium) {
-                            background-color: rgba($warning-color, 0.15);
-                        }
-
-                        &:has(.rating-value.rating-high) {
-                            background-color: rgba($success-color, 0.15);
-                        }
-
-                        &:has(.rating-value.rating-top) {
-                            background-color: rgba($primary-color, 0.15);
-                        }
 
                         .rating-value {
-                            font-size: $font-size-sm;
-                            font-weight: $font-weight-semibold;
+                            font-size: $font-size-lg;
+                            font-weight: $font-weight-bold;
                             color: $text-primary;
 
                             &.rating-low {
-                                color: rgba($error-color, 0.8);
+                                color: $error-color;
                             }
 
                             &.rating-medium {
-                                color: rgba($warning-color, 0.8);
+                                color: $warning-color;
                             }
 
                             &.rating-high {
-                                color: rgba($success-color, 0.8);
+                                color: $success-color;
                             }
 
                             &.rating-top {
-                                color: rgba($primary-color, 0.8);
+                                color: $accent-color;
                             }
                         }
 
@@ -173,6 +153,43 @@
                     }
 
                     .rating-details {
+                        font-size: $font-size-xs;
+                        color: $text-secondary;
+                    }
+                }
+
+                .user-rating {
+                    display: flex;
+                    flex-direction: column;
+                    gap: $spacing-xs;
+
+                    .rating-stars {
+                        display: flex;
+                        gap: $spacing-xs;
+
+                        .star-button {
+                            background: none;
+                            border: none;
+                            padding: 0;
+                            cursor: pointer;
+                            color: $text-secondary;
+                            transition: color 0.2s ease;
+
+                            &:hover {
+                                color: $accent-color;
+                            }
+
+                            &.active {
+                                color: $accent-color;
+                            }
+
+                            i {
+                                font-size: $font-size-md;
+                            }
+                        }
+                    }
+
+                    .user-rating-value {
                         font-size: $font-size-xs;
                         color: $text-secondary;
                     }
@@ -196,38 +213,18 @@
                 gap: $spacing-md;
                 align-items: center;
             }
-
-            .mobile-watchlist-badge {
-                display: none;
-                align-items: center;
-                gap: $spacing-sm;
-                background: linear-gradient(135deg, rgba($accent-color, 0.8), darken($accent-color, 30%));
-                backdrop-filter: blur(10px);
-                color: $text-primary;
-                padding: $spacing-sm / 2 $spacing-sm * 1.5;
-                border-radius: $border-radius-full;
-                font-size: $font-size-xs;
-                font-weight: $font-weight-medium;
-                margin-bottom: $spacing-sm;
-                box-shadow: $shadow-sm;
-                animation: badge-appear 0.3s ease-out;
-                width: fit-content;
-
-                i {
-                    font-size: $font-size-sm;
-                }
-            }
         }
     }
 
     @media (max-width: map-get($breakpoints, "md")) {
-        height: calc(85vh - $mobile-nav-height - $desktop-header-height);
+        height: calc(50vh - $mobile-nav-height - $desktop-header-height);
 
         .overlay {
             align-items: flex-end;
         }
 
         .media-content {
+            margin-bottom: $spacing-xl;
             gap: $spacing-lg;
 
             .media-poster {
@@ -248,6 +245,7 @@
                 }
 
                 .overview {
+                    display: none;
                     max-width: unset;
                     font-size: $font-size-sm;
                 }
@@ -257,13 +255,33 @@
 
     @media (max-width: map-get($breakpoints, "sm")) {
         .media-content {
-            margin-bottom: $spacing-md;
+            gap: $spacing-md;
 
             .media-poster {
-                display: none;
+                flex: 0 0 112px;
+                height: 168px;
+
+                .bookmark-ribbon {
+                    width: 32px;
+                    height: 40px;
+
+                    i {
+                        color: $text-primary;
+                        font-size: $font-size-md;
+                        filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+                    }
+                }
             }
 
             .media-info {
+                .media-title {
+                    font-size: 20px;
+
+                    .media-subtitle {
+                        font-size: $font-size-md;
+                    }
+                }
+
                 .media-meta {
                     font-size: $font-size-xs;
                 }
@@ -274,8 +292,8 @@
                     }
                 }
 
-                .mobile-watchlist-badge {
-                    display: flex;
+                .action-buttons {
+                    display: none;
                 }
             }
         }
@@ -310,7 +328,7 @@
             max-width: 700px;
 
             .skeleton-media-title {
-                height: $font-size-3xl;
+                height: $font-size-2xl;
                 width: 60%;
                 @include skeleton-loading;
                 border-radius: $border-radius-md;
@@ -375,11 +393,12 @@
     }
 
     @media (max-width: map-get($breakpoints, "md")) {
-        height: calc(85vh - $mobile-nav-height - $desktop-header-height);
+        height: calc(50vh - $mobile-nav-height - $desktop-header-height);
         align-items: flex-end;
 
         .skeleton-media-content {
             gap: $spacing-lg;
+            margin-bottom: $spacing-xl;
 
             .skeleton-media-poster {
                 height: 228px;
@@ -396,6 +415,8 @@
                 }
 
                 .skeleton-media-overview {
+                    display: none;
+
                     .skeleton-media-overview-text {
                         height: $font-size-sm;
                         width: 68%;
@@ -407,15 +428,29 @@
 
     @media (max-width: map-get($breakpoints, "sm")) {
         .skeleton-media-content {
-            margin-bottom: $spacing-md;
+            gap: $spacing-md;
 
             .skeleton-media-poster {
-                display: none;
+                flex: 0 0 112px;
+                height: 168px;
             }
 
             .skeleton-media-info {
+                .skeleton-media-title {
+                    height: 20px;
+
+                    .skeleton-media-subtitle {
+                        height: $font-size-md;
+                    }
+                }
+
                 .skeleton-media-meta {
-                    font-size: $font-size-xs;
+                    height: $font-size-xs;
+
+                    .skeleton-media-meta-item {
+                        width: 100%;
+                        max-width: 60px;
+                    }
                 }
             }
 
@@ -423,6 +458,10 @@
                 .skeleton-media-overview-text {
                     height: $font-size-xs;
                 }
+            }
+
+            .skeleton-media-buttons {
+                display: none !important;
             }
         }
     }

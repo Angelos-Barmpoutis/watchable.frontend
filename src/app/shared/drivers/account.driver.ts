@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { Account, AddToWatchlistRequest, AddToWatchlistResponse } from '../models/account.model';
 import { PaginatedMovies } from '../models/movie.model';
-import { PaginatedTvShows } from '../models/tv-show.model';
+import { PaginatedTvShowEpisodes, PaginatedTvShows } from '../models/tv-show.model';
 import { HttpService } from '../services/http.service';
 
 @Injectable({
@@ -22,6 +22,10 @@ export class AccountDriver {
 
     getRatedTVShows(url: string): Observable<PaginatedTvShows> {
         return this.httpService.get<PaginatedTvShows>(url);
+    }
+
+    getRatedTvShowEpisodes(url: string): Observable<PaginatedTvShowEpisodes> {
+        return this.httpService.get<PaginatedTvShowEpisodes>(url);
     }
 
     getWatchlistMovies(url: string): Observable<PaginatedMovies> {

@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, Input, OnChanges } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    DestroyRef,
+    Input,
+    OnChanges,
+    SimpleChanges,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, of, switchMap } from 'rxjs';
 
@@ -11,6 +19,8 @@ import { BackdropSize } from '../../enumerations/backdrop-size.enum';
 import { MediaType } from '../../enumerations/media-type.enum';
 import { PosterSize } from '../../enumerations/poster-size.enum';
 import { AccountFacade } from '../../facades/account.facade';
+import { MovieFacade } from '../../facades/movie.facade';
+import { TvShowFacade } from '../../facades/tv-show.facade';
 import { getTrailerVideo } from '../../helpers/trailer-url.helper';
 import { Video } from '../../models/media.model';
 import { MovieDetails, PaginatedMovies } from '../../models/movie.model';
@@ -58,23 +68,28 @@ export class MediaHeroComponent implements OnChanges {
     showTrailer = false;
     trailerVideo: Video | null = null;
     isInWatchlist = false;
+    userRating: number | null = null;
 
     constructor(
         private accountFacade: AccountFacade,
+        private movieFacade: MovieFacade,
+        private tvShowFacade: TvShowFacade,
         private authService: AuthService,
         private snackbarService: SnackbarService,
         private cdr: ChangeDetectorRef,
         private destroyRef: DestroyRef,
     ) {}
 
-    ngOnChanges(): void {
-        if (this.mediaDetails) {
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['mediaDetails'] && this.mediaDetails) {
             this.trailerVideo = getTrailerVideo(this.mediaDetails.videos?.results);
 
             if (this.authService.isAuthenticated()) {
                 this.checkWatchlistStatus();
+                this.checkRatingStatus();
             } else {
                 this.isInWatchlist = false;
+                this.userRating = null;
                 this.cdr.detectChanges();
             }
         }
@@ -127,6 +142,57 @@ export class MediaHeroComponent implements OnChanges {
             });
     }
 
+    toggleRating(rating: number): void {
+        if (!this.authService.isAuthenticated()) {
+            this.snackbarService.warning('Please sign in to rate items');
+            this.userRating = null;
+            this.cdr.detectChanges();
+            return;
+        }
+
+        const previousRating = this.userRating;
+        this.userRating = rating;
+        this.cdr.detectChanges();
+
+        const request = { value: rating };
+
+        if (this.type === MediaType.Movie) {
+            this.movieFacade.addMovieRating(this.mediaDetails!.id, request).subscribe({
+                next: (response) => {
+                    if (response.status_code !== 1 && response.status_code !== 13 && response.status_code !== 12) {
+                        this.userRating = previousRating;
+                        this.cdr.detectChanges();
+                        this.snackbarService.error('Failed to update rating');
+                    } else {
+                        this.snackbarService.success('Rating updated successfully');
+                    }
+                },
+                error: () => {
+                    this.userRating = previousRating;
+                    this.cdr.detectChanges();
+                    this.snackbarService.error('Failed to update rating');
+                },
+            });
+        } else {
+            this.tvShowFacade.addTvShowRating(this.mediaDetails!.id, request).subscribe({
+                next: (response) => {
+                    if (response.status_code !== 1 && response.status_code !== 13 && response.status_code !== 12) {
+                        this.userRating = previousRating;
+                        this.cdr.detectChanges();
+                        this.snackbarService.error('Failed to update rating');
+                    } else {
+                        this.snackbarService.success('Rating updated successfully');
+                    }
+                },
+                error: () => {
+                    this.userRating = previousRating;
+                    this.cdr.detectChanges();
+                    this.snackbarService.error('Failed to update rating');
+                },
+            });
+        }
+    }
+
     private checkWatchlistStatus(): void {
         if (!this.mediaDetails) return;
 
@@ -159,6 +225,43 @@ export class MediaHeroComponent implements OnChanges {
                 },
                 error: () => {
                     this.snackbarService.error('Failed to check watchlist status');
+                },
+            });
+    }
+
+    private checkRatingStatus(): void {
+        if (!this.mediaDetails) return;
+
+        this.authService.userInfo$
+            .pipe(
+                takeUntilDestroyed(this.destroyRef),
+                switchMap((userInfo) => {
+                    if (!userInfo) {
+                        this.snackbarService.error('Failed to get user information');
+                        return of(null);
+                    }
+
+                    const rated$: Observable<PaginatedMovies | PaginatedTvShows> =
+                        this.type === MediaType.Movie
+                            ? this.accountFacade.getRatedMovies(userInfo.id)
+                            : this.accountFacade.getRatedTVShows(userInfo.id);
+
+                    return rated$;
+                }),
+                takeUntilDestroyed(this.destroyRef),
+            )
+            .subscribe({
+                next: (rated) => {
+                    if (rated) {
+                        const ratedItem = rated.results.find(
+                            (item: { id: number }) => item.id === this.mediaDetails?.id,
+                        );
+                        this.userRating = ratedItem?.vote_average || null;
+                        this.cdr.detectChanges();
+                    }
+                },
+                error: () => {
+                    this.snackbarService.error('Failed to check rating status');
                 },
             });
     }

@@ -6,6 +6,7 @@
     gap: $spacing-md;
 
     @media (max-width: map-get($breakpoints, "sm")) {
+        gap: $spacing-sm * 1.5;
         grid-template-columns: repeat(2, 1fr);
     }
 }

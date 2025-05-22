@@ -2,7 +2,7 @@
 
 .wrapper {
     width: 100%;
-    max-width: $container-2xl;
+    max-width: 1680px;
     margin: 0 auto;
     padding: 0 $spacing-lg;
 
@@ -31,7 +31,7 @@
 .media-details-grid {
     display: grid;
     grid-template-columns: 3fr 1fr;
-    gap: $spacing-2xl;
+    gap: $spacing-xl;
 
     @media (max-width: map-get($breakpoints, "lg")) {
         gap: 0;
@@ -58,7 +58,7 @@
 .person-details-grid {
     display: grid;
     grid-template-columns: 3fr 1fr;
-    gap: $spacing-2xl;
+    gap: $spacing-xl;
 
     @media (max-width: map-get($breakpoints, "lg")) {
         gap: 0;
@@ -82,6 +82,10 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, calc(50% - $spacing-sm)));
     gap: $spacing-md;
+
+    @media (max-width: map-get($breakpoints, "sm")) {
+        gap: $spacing-sm * 1.5;
+    }
 }
 
 .view-all-container {
@@ -134,5 +138,13 @@
 
     i {
         font-size: $font-size-sm;
+    }
+}
+
+.overview-section {
+    display: none;
+
+    @media (max-width: map-get($breakpoints, "md")) {
+        display: block;
     }
 }

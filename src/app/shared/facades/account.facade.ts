@@ -5,7 +5,7 @@ import { MediaType } from '../enumerations/media-type.enum';
 import { AccountGateway } from '../gateways/account.gateway';
 import { Account, AddToWatchlistResponse } from '../models/account.model';
 import { PaginatedMovies } from '../models/movie.model';
-import { PaginatedTvShows } from '../models/tv-show.model';
+import { PaginatedTvShowEpisodes, PaginatedTvShows } from '../models/tv-show.model';
 
 @Injectable({
     providedIn: 'root',
@@ -17,12 +17,16 @@ export class AccountFacade {
         return this.accountGateway.getAccountInfo();
     }
 
-    getRatedMovies(page = 1): Observable<PaginatedMovies> {
-        return this.accountGateway.getRatedMovies(page);
+    getRatedMovies(accountId: number, page = 1): Observable<PaginatedMovies> {
+        return this.accountGateway.getRatedMovies(accountId, page);
     }
 
-    getRatedTVShows(page = 1): Observable<PaginatedTvShows> {
-        return this.accountGateway.getRatedTVShows(page);
+    getRatedTVShows(accountId: number, page = 1): Observable<PaginatedTvShows> {
+        return this.accountGateway.getRatedTVShows(accountId, page);
+    }
+
+    getRatedTvShowEpisodes(accountId: number, page = 1): Observable<PaginatedTvShowEpisodes> {
+        return this.accountGateway.getRatedTvShowEpisodes(accountId, page);
     }
 
     getWatchlistMovies(accountId: number, page = 1): Observable<PaginatedMovies> {

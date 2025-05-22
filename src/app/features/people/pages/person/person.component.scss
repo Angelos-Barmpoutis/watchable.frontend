@@ -35,10 +35,10 @@
         max-width: 50%;
 
         h1 {
-            font-size: $font-size-3xl;
+            font-size: $font-size-2xl;
             font-weight: $font-weight-semibold;
-            line-height: 1.2;
             margin: 0;
+            line-height: 1.2;
         }
 
         .meta {
@@ -60,7 +60,7 @@
     }
 
     @media (max-width: map-get($breakpoints, "md")) {
-        height: auto;
+        height: calc(50vh - $mobile-nav-height - $desktop-header-height);
         gap: $spacing-lg;
 
         .profile-image {
@@ -94,6 +94,10 @@
         .hero-info {
             max-width: 100%;
 
+            h1 {
+                font-size: 20px;
+            }
+
             .meta {
                 font-size: $font-size-xs;
             }
@@ -123,29 +127,31 @@
         display: flex;
         flex-direction: column;
         max-width: 50%;
-        gap: $spacing-sm;
+        gap: $spacing-xs;
 
         .hero-info-skeleton-title {
             width: 70%;
-            height: $font-size-3xl;
+            height: $font-size-2xl;
             @include skeleton-loading;
+            border-radius: $spacing-xs;
         }
 
         .hero-info-skeleton-meta {
             display: flex;
-            gap: $spacing-xs;
+            gap: $spacing-sm;
             margin-block-start: $spacing-xs;
 
             .hero-info-skeleton-meta-item {
                 width: 100px;
                 height: $font-size-sm;
                 @include skeleton-loading;
+                border-radius: $spacing-xs;
             }
         }
     }
 
     @media (max-width: map-get($breakpoints, "md")) {
-        height: auto;
+        height: calc(50vh - $mobile-nav-height - $desktop-header-height);
         padding-top: $spacing-lg;
         gap: $spacing-lg;
 
@@ -190,6 +196,10 @@
         }
 
         .hero-info-skeleton {
+            .hero-info-skeleton-title {
+                height: 20px;
+            }
+
             .hero-info-skeleton-meta {
                 .hero-info-skeleton-meta-item {
                     width: 60px;

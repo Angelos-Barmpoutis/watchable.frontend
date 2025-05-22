@@ -17,10 +17,12 @@
         grid-template-columns: 1fr;
 
         &:has(.aspect-ratio-3-4) {
+            gap: $spacing-sm * 1.5;
             grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
         }
 
         &:has(.aspect-ratio-2-3) {
+            gap: $spacing-sm * 1.5;
             grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
         }
     }
@@ -98,10 +100,12 @@
         grid-template-columns: 1fr;
 
         &:has(.aspect-ratio-3-4) {
+            gap: $spacing-sm * 1.5;
             grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
         }
 
         &:has(.aspect-ratio-2-3) {
+            gap: $spacing-sm * 1.5;
             grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
         }
     }

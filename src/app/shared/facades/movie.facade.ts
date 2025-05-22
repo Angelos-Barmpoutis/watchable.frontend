@@ -6,7 +6,7 @@ import { MediaType } from '../enumerations/media-type.enum';
 import { DiscoverGateway } from '../gateways/discover.gateway';
 import { MovieGateway } from '../gateways/movie.gateway';
 import { Genre } from '../models/genre.model';
-import { MovieDetails, PaginatedMovies } from '../models/movie.model';
+import { AddMovieRatingRequest, AddMovieRatingResponse, MovieDetails, PaginatedMovies } from '../models/movie.model';
 import { LocalStorageService } from '../services/local-storage.service';
 
 export interface AllMovies {
@@ -30,27 +30,27 @@ export class MovieFacade {
         private localStorageService: LocalStorageService,
     ) {}
 
-    public getNowPlaying(page: number = DEFAULT.page): Observable<PaginatedMovies> {
+    getNowPlaying(page: number = DEFAULT.page): Observable<PaginatedMovies> {
         return this.movieGateway.getNowPlaying(page);
     }
 
-    public getPopular(page: number = DEFAULT.page): Observable<PaginatedMovies> {
+    getPopular(page: number = DEFAULT.page): Observable<PaginatedMovies> {
         return this.movieGateway.getPopular(page);
     }
 
-    public getTopRated(page: number = DEFAULT.page): Observable<PaginatedMovies> {
+    getTopRated(page: number = DEFAULT.page): Observable<PaginatedMovies> {
         return this.movieGateway.getTopRated(page);
     }
 
-    public getUpcoming(page: number = DEFAULT.page): Observable<PaginatedMovies> {
+    getUpcoming(page: number = DEFAULT.page): Observable<PaginatedMovies> {
         return this.movieGateway.getUpcoming(page);
     }
 
-    public getDetails(id: number): Observable<MovieDetails> {
+    getDetails(id: number): Observable<MovieDetails> {
         return this.movieGateway.getDetails(id);
     }
 
-    public getAllMovies(): Observable<AllMovies> {
+    getAllMovies(): Observable<AllMovies> {
         return forkJoin({
             nowPlaying: this.getNowPlaying(),
             popular: this.getPopular(),
@@ -59,11 +59,11 @@ export class MovieFacade {
         });
     }
 
-    public getMovies(page: number = DEFAULT.page, genreId: number): Observable<PaginatedMovies> {
+    getMovies(page: number = DEFAULT.page, genreId: number): Observable<PaginatedMovies> {
         return this.discoverGateway.getMovies(page, genreId);
     }
 
-    public getMoviesByGenreIds(
+    getMoviesByGenreIds(
         currentMovieGenreIndex: number,
         genresPerBatch: number = DEFAULT.genresBatchSize,
     ): Observable<GenreContentBatch> {
@@ -85,5 +85,9 @@ export class MovieFacade {
 
         // Load the genres
         return forkJoin(genresToLoad);
+    }
+
+    addMovieRating(id: number, request: AddMovieRatingRequest): Observable<AddMovieRatingResponse> {
+        return this.movieGateway.addMovieRating(id, request);
     }
 }

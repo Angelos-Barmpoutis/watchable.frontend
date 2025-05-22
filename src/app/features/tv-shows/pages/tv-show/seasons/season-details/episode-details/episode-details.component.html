@@ -34,7 +34,7 @@
                 <app-image-grid
                     [images]="episodeDetails?.images?.stills ?? []"
                     [isLoading]="isLoading"
-                    [imagesCount]="3"
+                    [imagesCount]="4"
                     [aspectRatio]="aspectRatio['16/9']"
                 ></app-image-grid>
             </section>
@@ -46,7 +46,7 @@
                 <app-video-grid
                     [videos]="episodeDetails?.videos?.results ?? []"
                     [isLoading]="isLoading"
-                    [videosCount]="3"
+                    [videosCount]="4"
                 ></app-video-grid>
             </section>
 
@@ -74,9 +74,6 @@
 
         <aside>
             <section *ngIf="episodeDetails || isLoading">
-                <header>
-                    <app-section-header title="Episode Info" [isLoading]="isLoading"></app-section-header>
-                </header>
                 <app-episode-details [episodeDetails]="episodeDetails" [isLoading]="isLoading"></app-episode-details>
             </section>
         </aside>
