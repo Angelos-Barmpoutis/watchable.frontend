@@ -6,7 +6,7 @@
     background-size: cover;
     background-position: center 10%;
     position: relative;
-    transition: height 0.3s ease-in-out;
+
     @media (min-width: 780px) {
         background-image: var(--background-image-1280);
     }
@@ -97,7 +97,6 @@
     height: calc(75dvh - $desktop-header-height);
     background-color: $background-color;
     position: relative;
-    transition: height 0.3s linear;
 
     .overlay {
         width: 100%;
@@ -163,7 +162,7 @@
 
 @media (max-width: map-get($breakpoints, "md")) {
     .featured-banner {
-        height: calc(100dvh - $mobile-nav-height - $mobile-header-height - $spacing-md);
+        height: calc(100svh - $mobile-nav-height - $mobile-header-height - $spacing-md);
 
         .overlay {
             background: linear-gradient(
@@ -190,7 +189,7 @@
     }
 
     .featured-banner-skeleton {
-        height: calc(100dvh - $mobile-nav-height - $mobile-header-height - $spacing-md);
+        height: calc(100svh - $mobile-nav-height - $mobile-header-height - $spacing-md);
 
         .overlay {
             align-items: flex-end;
