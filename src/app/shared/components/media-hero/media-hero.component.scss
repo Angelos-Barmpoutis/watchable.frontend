@@ -6,7 +6,7 @@
     background-size: cover;
     background-position: center 10%;
     position: relative;
-
+    transition: height 0.3s ease-in-out;
     @media (min-width: 780px) {
         background-image: var(--background-image-1280);
     }
@@ -251,6 +251,7 @@
     width: 100%;
     display: flex;
     align-items: center;
+    transition: height 0.3s ease-in-out;
 
     .skeleton-media-content {
         display: flex;

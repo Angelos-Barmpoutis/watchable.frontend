@@ -6,7 +6,7 @@
     background-size: cover;
     background-position: center 10%;
     position: relative;
-
+    transition: height 0.3s ease-in-out;
     @media (min-width: 780px) {
         background-image: var(--background-image-1280);
     }
@@ -97,6 +97,7 @@
     height: calc(75dvh - $desktop-header-height);
     background-color: $background-color;
     position: relative;
+    transition: height 0.3s ease-in-out;
 
     .overlay {
         width: 100%;
