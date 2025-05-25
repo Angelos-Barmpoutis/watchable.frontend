@@ -136,7 +136,7 @@
     }
 
     @media (max-width: map-get($breakpoints, "md")) {
-        height: calc(87vh - $mobile-nav-height - $desktop-header-height);
+        height: calc(100dvh - $mobile-nav-height - $mobile-header-height);
 
         .overlay {
             align-items: flex-end;
@@ -318,7 +318,7 @@
     }
 
     @media (max-width: map-get($breakpoints, "md")) {
-        height: calc(87vh - $mobile-nav-height - $desktop-header-height);
+        height: calc(100dvh - $mobile-nav-height - $mobile-header-height);
         align-items: flex-end;
 
         .skeleton-media-content {
