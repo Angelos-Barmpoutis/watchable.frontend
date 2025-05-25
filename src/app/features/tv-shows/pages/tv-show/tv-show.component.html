@@ -24,6 +24,13 @@
                 </ng-template>
             </section>
 
+            <section *ngIf="tvShowDetails?.credits?.cast?.length || isLoading">
+                <header>
+                    <app-section-header title="Top Cast" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-cast-grid [cast]="tvShowDetails?.credits?.cast ?? []" [isLoading]="isLoading"></app-cast-grid>
+            </section>
+
             <section *ngIf="tvShowDetails?.seasons?.length || isLoading">
                 <header>
                     <app-section-header
@@ -39,13 +46,6 @@
                     [isLoading]="isLoading"
                 >
                 </app-carousel-season>
-            </section>
-
-            <section *ngIf="tvShowDetails?.credits?.cast?.length || isLoading">
-                <header>
-                    <app-section-header title="Top Cast" [isLoading]="isLoading"></app-section-header>
-                </header>
-                <app-cast-grid [cast]="tvShowDetails?.credits?.cast ?? []" [isLoading]="isLoading"></app-cast-grid>
             </section>
 
             <section *ngIf="tvShowDetails?.images?.backdrops?.length || isLoading">
@@ -66,6 +66,13 @@
                     [videos]="tvShowDetails?.videos?.results ?? []"
                     [isLoading]="isLoading"
                 ></app-video-grid>
+            </section>
+
+            <section *ngIf="tvShowDetails?.credits?.crew?.length || isLoading">
+                <header>
+                    <app-section-header title="Top Crew" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-cast-grid [cast]="tvShowDetails?.credits?.crew ?? []" [isLoading]="isLoading"></app-cast-grid>
             </section>
 
             <section *ngIf="tvShowDetails?.similar?.results?.length || isLoading">

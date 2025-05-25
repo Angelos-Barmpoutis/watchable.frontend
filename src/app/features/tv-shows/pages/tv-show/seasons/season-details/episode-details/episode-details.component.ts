@@ -4,6 +4,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap, tap } from 'rxjs/operators';
 
+import { ButtonComponent } from '../../../../../../../shared/components/button/button.component';
+import { ButtonType } from '../../../../../../../shared/components/button/enumerations/button-type.enum';
+import { ButtonLink } from '../../../../../../../shared/components/button/models/button.model';
 import { CastGridComponent } from '../../../../../../../shared/components/cast-grid/cast-grid.component';
 import { EpisodeDetailsComponent } from '../../../../../../../shared/components/episode-details/episode-details.component';
 import { ImageGridComponent } from '../../../../../../../shared/components/image-grid/image-grid.component';
@@ -29,6 +32,7 @@ import { TvShowDetails, TvShowEpisodeDetails } from '../../../../../../../shared
         ImageGridComponent,
         VideoGridComponent,
         EpisodeDetailsComponent,
+        ButtonComponent,
     ],
     templateUrl: './episode-details.component.html',
     styleUrl: './episode-details.component.scss',
@@ -44,6 +48,7 @@ export class EpisodeDetailsPageComponent implements OnInit {
     transformedCrew: Array<MediaCreditsCastPerson> = [];
     cast: Array<MediaCreditsCastPerson> = [];
     readonly aspectRatio = AspectRatio;
+    readonly buttonType = ButtonType;
 
     constructor(
         private route: ActivatedRoute,
@@ -53,6 +58,24 @@ export class EpisodeDetailsPageComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadDetails();
+    }
+
+    get mediaLinks(): Array<ButtonLink> {
+        return [
+            { path: 'https://www.imdb.com/title/' + this.episodeDetails?.external_ids?.imdb_id, isExternal: true },
+            { path: 'https://www.facebook.com/' + this.episodeDetails?.external_ids?.facebook_id, isExternal: true },
+            { path: 'https://www.instagram.com/' + this.episodeDetails?.external_ids?.instagram_id, isExternal: true },
+            { path: 'https://www.twitter.com/' + this.episodeDetails?.external_ids?.twitter_id, isExternal: true },
+        ];
+    }
+
+    get isExternalIdAvailable(): boolean {
+        return (
+            !!this.episodeDetails?.external_ids?.imdb_id ||
+            !!this.episodeDetails?.external_ids?.facebook_id ||
+            !!this.episodeDetails?.external_ids?.instagram_id ||
+            !!this.episodeDetails?.external_ids?.twitter_id
+        );
     }
 
     private loadDetails(): void {

@@ -27,6 +27,20 @@
                 </ng-template>
             </section>
 
+            <section *ngIf="cast?.length || isLoading">
+                <header>
+                    <app-section-header title="Cast" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-cast-grid [cast]="cast" [isLoading]="isLoading"></app-cast-grid>
+            </section>
+
+            <section *ngIf="episodeDetails?.guest_stars?.length || isLoading">
+                <header>
+                    <app-section-header title="Guest Stars" [isLoading]="isLoading"></app-section-header>
+                </header>
+                <app-cast-grid [cast]="episodeDetails?.guest_stars ?? []" [isLoading]="isLoading"></app-cast-grid>
+            </section>
+
             <section *ngIf="episodeDetails?.images?.stills?.length || isLoading">
                 <header>
                     <app-section-header title="Images" [isLoading]="isLoading"></app-section-header>
@@ -50,31 +64,66 @@
                 ></app-video-grid>
             </section>
 
-            <section *ngIf="cast?.length || isLoading">
-                <header>
-                    <app-section-header title="Cast" [isLoading]="isLoading"></app-section-header>
-                </header>
-                <app-cast-grid [cast]="cast" [isLoading]="isLoading"></app-cast-grid>
-            </section>
-
             <section *ngIf="episodeDetails?.crew?.length || isLoading">
                 <header>
                     <app-section-header title="Crew" [isLoading]="isLoading"></app-section-header>
                 </header>
                 <app-cast-grid [cast]="transformedCrew" [isLoading]="isLoading"></app-cast-grid>
             </section>
-
-            <section *ngIf="episodeDetails?.guest_stars?.length || isLoading">
-                <header>
-                    <app-section-header title="Guest Stars" [isLoading]="isLoading"></app-section-header>
-                </header>
-                <app-cast-grid [cast]="episodeDetails?.guest_stars ?? []" [isLoading]="isLoading"></app-cast-grid>
-            </section>
         </div>
 
         <aside>
             <section *ngIf="episodeDetails || isLoading">
-                <app-episode-details [episodeDetails]="episodeDetails" [isLoading]="isLoading"></app-episode-details>
+                <app-episode-details
+                    [episodeDetails]="episodeDetails"
+                    [isLoading]="isLoading"
+                    [tvShowId]="tvShowDetails?.id ?? 0"
+                ></app-episode-details>
+            </section>
+
+            <section *ngIf="isExternalIdAvailable || isLoading">
+                <div class="social-links">
+                    <app-button
+                        *ngIf="episodeDetails?.external_ids?.imdb_id || isLoading"
+                        [variant]="buttonType.Imdb"
+                        [type]="'button'"
+                        [icon]="'fab fa-imdb'"
+                        [link]="mediaLinks[0]"
+                        [isLoading]="isLoading"
+                        [text]="'IMDb'"
+                    >
+                    </app-button>
+                    <app-button
+                        *ngIf="episodeDetails?.external_ids?.facebook_id || isLoading"
+                        [variant]="buttonType.Facebook"
+                        [type]="'button'"
+                        [icon]="'fab fa-facebook'"
+                        [link]="mediaLinks[1]"
+                        [isLoading]="isLoading"
+                        [text]="'Facebook'"
+                    >
+                    </app-button>
+                    <app-button
+                        *ngIf="episodeDetails?.external_ids?.instagram_id || isLoading"
+                        [variant]="buttonType.Instagram"
+                        [type]="'button'"
+                        [icon]="'fab fa-instagram'"
+                        [link]="mediaLinks[2]"
+                        [isLoading]="isLoading"
+                        [text]="'Instagram'"
+                    >
+                    </app-button>
+                    <app-button
+                        *ngIf="episodeDetails?.external_ids?.twitter_id || isLoading"
+                        [variant]="buttonType.Twitter"
+                        [type]="'button'"
+                        [icon]="'fab fa-twitter'"
+                        [link]="mediaLinks[3]"
+                        [isLoading]="isLoading"
+                        [text]="'Twitter'"
+                    >
+                    </app-button>
+                </div>
             </section>
         </aside>
     </div>

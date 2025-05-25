@@ -32,10 +32,10 @@
                     </div>
                     <div class="rating-container">
                         <div class="rating">
-                            <div class="rating-badge">
-                                <span class="rating-value" [class]="ratingClass">{{ rating | number: "1.1-1" }}</span>
-                                <span class="rating-total">/10</span>
-                            </div>
+                            <app-rating-badge
+                                [rating]="media?.vote_average ?? 0"
+                                [isLoading]="isLoading"
+                            ></app-rating-badge>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                         <div class="title-skeleton"></div>
                         <div class="meta-skeleton"></div>
                     </div>
-                    <div class="rating-skeleton"></div>
+                    <app-rating-badge [rating]="media?.vote_average ?? 0" [isLoading]="true"></app-rating-badge>
                 </div>
                 <div class="overview-skeleton">
                     <div class="line"></div>

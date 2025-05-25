@@ -9,7 +9,7 @@ import {
     SimpleChanges,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Observable, of, switchMap } from 'rxjs';
+import { forkJoin, map, of, switchMap, tap } from 'rxjs';
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { BackgroundPathDirective } from '../../directives/background-path.directive';
@@ -19,13 +19,10 @@ import { BackdropSize } from '../../enumerations/backdrop-size.enum';
 import { MediaType } from '../../enumerations/media-type.enum';
 import { PosterSize } from '../../enumerations/poster-size.enum';
 import { AccountFacade } from '../../facades/account.facade';
-import { MovieFacade } from '../../facades/movie.facade';
-import { TvShowFacade } from '../../facades/tv-show.facade';
 import { getTrailerVideo } from '../../helpers/trailer-url.helper';
 import { Video } from '../../models/media.model';
-import { MovieDetails, PaginatedMovies } from '../../models/movie.model';
-import { PaginatedTvShows, TvShowDetails } from '../../models/tv-show.model';
-import { FormatNumberWithKPipe } from '../../pipes/format-number.pipe';
+import { MovieDetails } from '../../models/movie.model';
+import { TvShowDetails } from '../../models/tv-show.model';
 import { TimePipe } from '../../pipes/time.pipe';
 import { AuthService } from '../../services/auth.service';
 import { SnackbarService } from '../../services/snackbar.service';
@@ -42,7 +39,6 @@ type MediaDetails = MovieDetails | TvShowDetails;
         CommonModule,
         FadeInDirective,
         TimePipe,
-        FormatNumberWithKPipe,
         PosterPathDirective,
         BackgroundPathDirective,
         VideoGalleryComponent,
@@ -68,12 +64,9 @@ export class MediaHeroComponent implements OnChanges {
     showTrailer = false;
     trailerVideo: Video | null = null;
     isInWatchlist = false;
-    userRating: number | null = null;
 
     constructor(
         private accountFacade: AccountFacade,
-        private movieFacade: MovieFacade,
-        private tvShowFacade: TvShowFacade,
         private authService: AuthService,
         private snackbarService: SnackbarService,
         private cdr: ChangeDetectorRef,
@@ -85,11 +78,9 @@ export class MediaHeroComponent implements OnChanges {
             this.trailerVideo = getTrailerVideo(this.mediaDetails.videos?.results);
 
             if (this.authService.isAuthenticated()) {
-                this.checkWatchlistStatus();
-                this.checkRatingStatus();
+                this.getWatchlist();
             } else {
                 this.isInWatchlist = false;
-                this.userRating = null;
                 this.cdr.detectChanges();
             }
         }
@@ -132,6 +123,10 @@ export class MediaHeroComponent implements OnChanges {
                         this.isInWatchlist = previousState;
                         this.cdr.detectChanges();
                         this.snackbarService.error('Failed to update watchlist');
+                    } else {
+                        this.snackbarService.success(
+                            !this.isInWatchlist ? 'Removed from Watchlist' : 'Added to Watchlist',
+                        );
                     }
                 },
                 error: () => {
@@ -142,75 +137,61 @@ export class MediaHeroComponent implements OnChanges {
             });
     }
 
-    toggleRating(rating: number): void {
-        if (!this.authService.isAuthenticated()) {
-            this.snackbarService.warning('Please sign in to rate items');
-            this.userRating = null;
-            this.cdr.detectChanges();
-            return;
-        }
-
-        const previousRating = this.userRating;
-        this.userRating = rating;
-        this.cdr.detectChanges();
-
-        const request = { value: rating };
-
-        if (this.type === MediaType.Movie) {
-            this.movieFacade.addMovieRating(this.mediaDetails!.id, request).subscribe({
-                next: (response) => {
-                    if (response.status_code !== 1 && response.status_code !== 13 && response.status_code !== 12) {
-                        this.userRating = previousRating;
-                        this.cdr.detectChanges();
-                        this.snackbarService.error('Failed to update rating');
-                    } else {
-                        this.snackbarService.success('Rating updated successfully');
-                    }
-                },
-                error: () => {
-                    this.userRating = previousRating;
-                    this.cdr.detectChanges();
-                    this.snackbarService.error('Failed to update rating');
-                },
-            });
-        } else {
-            this.tvShowFacade.addTvShowRating(this.mediaDetails!.id, request).subscribe({
-                next: (response) => {
-                    if (response.status_code !== 1 && response.status_code !== 13 && response.status_code !== 12) {
-                        this.userRating = previousRating;
-                        this.cdr.detectChanges();
-                        this.snackbarService.error('Failed to update rating');
-                    } else {
-                        this.snackbarService.success('Rating updated successfully');
-                    }
-                },
-                error: () => {
-                    this.userRating = previousRating;
-                    this.cdr.detectChanges();
-                    this.snackbarService.error('Failed to update rating');
-                },
-            });
-        }
-    }
-
-    private checkWatchlistStatus(): void {
-        if (!this.mediaDetails) return;
-
+    private getWatchlist(): void {
         this.authService.userInfo$
             .pipe(
+                tap(() => {
+                    this.isLoading = true;
+                    this.cdr.detectChanges();
+                }),
                 takeUntilDestroyed(this.destroyRef),
                 switchMap((userInfo) => {
-                    if (!userInfo) {
-                        this.snackbarService.error('Failed to get user information');
-                        return of(null);
+                    switch (this.type) {
+                        case MediaType.Movie:
+                            return this.accountFacade.getWatchlistMovies(userInfo?.id ?? 0, 1).pipe(
+                                switchMap((firstPage) => {
+                                    if (!firstPage || firstPage.total_pages <= 1) {
+                                        return of(firstPage);
+                                    }
+
+                                    // Create an array of observables for all pages
+                                    const pageRequests = Array.from({ length: firstPage.total_pages - 1 }, (_, i) =>
+                                        this.accountFacade.getWatchlistMovies(userInfo?.id ?? 0, i + 2),
+                                    );
+
+                                    // Combine all pages
+                                    return forkJoin([of(firstPage), ...pageRequests]).pipe(
+                                        map((pages) => ({
+                                            ...firstPage,
+                                            results: pages.flatMap((page) => page.results),
+                                        })),
+                                    );
+                                }),
+                            );
+                        case MediaType.TvShow:
+                            return this.accountFacade.getWatchlistTVShows(userInfo?.id ?? 0, 1).pipe(
+                                switchMap((firstPage) => {
+                                    if (!firstPage || firstPage.total_pages <= 1) {
+                                        return of(firstPage);
+                                    }
+
+                                    // Create an array of observables for all pages
+                                    const pageRequests = Array.from({ length: firstPage.total_pages - 1 }, (_, i) =>
+                                        this.accountFacade.getWatchlistTVShows(userInfo?.id ?? 0, i + 2),
+                                    );
+
+                                    // Combine all pages
+                                    return forkJoin([of(firstPage), ...pageRequests]).pipe(
+                                        map((pages) => ({
+                                            ...firstPage,
+                                            results: pages.flatMap((page) => page.results),
+                                        })),
+                                    );
+                                }),
+                            );
+                        default:
+                            return of(null);
                     }
-
-                    const watchlist$: Observable<PaginatedMovies | PaginatedTvShows> =
-                        this.type === MediaType.Movie
-                            ? this.accountFacade.getWatchlistMovies(userInfo.id)
-                            : this.accountFacade.getWatchlistTVShows(userInfo.id);
-
-                    return watchlist$;
                 }),
                 takeUntilDestroyed(this.destroyRef),
             )
@@ -220,48 +201,14 @@ export class MediaHeroComponent implements OnChanges {
                         this.isInWatchlist = watchlist.results.some(
                             (item: { id: number }) => item.id === this.mediaDetails?.id,
                         );
+                        this.isLoading = false;
                         this.cdr.detectChanges();
                     }
                 },
                 error: () => {
+                    this.isLoading = false;
+                    this.cdr.detectChanges();
                     this.snackbarService.error('Failed to check watchlist status');
-                },
-            });
-    }
-
-    private checkRatingStatus(): void {
-        if (!this.mediaDetails) return;
-
-        this.authService.userInfo$
-            .pipe(
-                takeUntilDestroyed(this.destroyRef),
-                switchMap((userInfo) => {
-                    if (!userInfo) {
-                        this.snackbarService.error('Failed to get user information');
-                        return of(null);
-                    }
-
-                    const rated$: Observable<PaginatedMovies | PaginatedTvShows> =
-                        this.type === MediaType.Movie
-                            ? this.accountFacade.getRatedMovies(userInfo.id)
-                            : this.accountFacade.getRatedTVShows(userInfo.id);
-
-                    return rated$;
-                }),
-                takeUntilDestroyed(this.destroyRef),
-            )
-            .subscribe({
-                next: (rated) => {
-                    if (rated) {
-                        const ratedItem = rated.results.find(
-                            (item: { id: number }) => item.id === this.mediaDetails?.id,
-                        );
-                        this.userRating = ratedItem?.vote_average || null;
-                        this.cdr.detectChanges();
-                    }
-                },
-                error: () => {
-                    this.snackbarService.error('Failed to check rating status');
                 },
             });
     }
@@ -288,6 +235,12 @@ export class MediaHeroComponent implements OnChanges {
         return this.type === MediaType.Movie
             ? (this.mediaDetails as MovieDetails).release_date
             : (this.mediaDetails as TvShowDetails).first_air_date;
+    }
+
+    get endDate(): string {
+        return this.type === MediaType.Movie
+            ? (this.mediaDetails as MovieDetails).release_date
+            : (this.mediaDetails as TvShowDetails).last_air_date;
     }
 
     get runtime(): number | null {

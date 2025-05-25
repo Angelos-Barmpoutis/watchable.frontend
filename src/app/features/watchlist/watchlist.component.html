@@ -19,6 +19,8 @@
                 >
                 </app-media-list-item>
             </ng-container>
+        </div>
+        <div class="no-results-container">
             <p *ngIf="!isLoading && items.length === 0" class="no-results" appFadeIn>
                 No {{ selectedMediaType === this.MediaType ? "movies" : "TV shows" }} found in your watchlist
             </p>

@@ -19,6 +19,7 @@ export interface TvShow {
     name: string;
     vote_average: number;
     vote_count: number;
+    rating?: number;
 }
 
 export interface TvShowItem extends TvShow {
@@ -113,6 +114,7 @@ export interface TvShowSeasonDetails {
         posters: Array<Poster>;
     };
     videos: { results: Array<Video> };
+    external_ids: ExternalIds;
 }
 
 export interface TvShowExternalIds extends ExternalIds {
@@ -136,6 +138,7 @@ export interface TvShowEpisode {
     season_number: number;
     show_id: number;
     still_path: string;
+    rating?: number;
 }
 
 export interface PaginatedTvShowEpisodes {
@@ -166,6 +169,7 @@ export interface TvShowEpisodeDetails {
         stills: Array<Backdrop>;
     };
     credits?: MediaCredits;
+    external_ids?: ExternalIds;
 }
 
 export interface TvShowEpisodeCreditsPerson extends Person {

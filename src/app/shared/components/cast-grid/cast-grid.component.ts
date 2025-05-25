@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
-import { MediaCreditsCastPerson } from '../../models/media.model';
+import { MediaCreditsCastPerson, MediaCreditsCrewPerson } from '../../models/media.model';
 import { ButtonComponent } from '../button/button.component';
 import { ButtonType } from '../button/enumerations/button-type.enum';
 import { CastPersonComponent } from '../cast-person/cast-person.component';
@@ -17,7 +17,7 @@ import { CastPersonComponent } from '../cast-person/cast-person.component';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CastGridComponent {
-    @Input() cast: Array<MediaCreditsCastPerson> = [];
+    @Input() cast: Array<MediaCreditsCastPerson | MediaCreditsCrewPerson> = [];
     @Input() isLoading = false;
     @Input() castCount = DEFAULT.castCount;
 

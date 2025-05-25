@@ -1,0 +1,39 @@
+<ng-container *ngIf="!isLoading; else loadingTemplate">
+    <div appFadeIn>
+        <ul class="details-list">
+            <li *ngIf="seasonDetails?.name">
+                <span class="detail-label">Title:</span>
+                <span class="detail-value">{{ seasonDetails?.name }}</span>
+            </li>
+            <li *ngIf="seasonDetails?.air_date">
+                <span class="detail-label">Air Date:</span>
+                <span class="detail-value">{{ seasonDetails?.air_date | date: "longDate" }}</span>
+            </li>
+            <li *ngIf="seasonDetails?.season_number">
+                <span class="detail-label">Season Number:</span>
+                <span class="detail-value">{{ seasonDetails?.season_number }}</span>
+            </li>
+            <li *ngIf="seasonDetails?.episodes?.length">
+                <span class="detail-label">Episodes:</span>
+                <span class="detail-value">{{ seasonDetails?.episodes?.length }}</span>
+            </li>
+            <li *ngIf="seasonDetails?.vote_average">
+                <span class="detail-label">Average Rating:</span>
+                <span class="detail-value">{{ seasonDetails?.vote_average | number: "1.1-1" }}</span>
+            </li>
+        </ul>
+    </div>
+</ng-container>
+
+<ng-template #loadingTemplate>
+    <div class="skeleton-media-details">
+        <div class="skeleton-media-content">
+            <div class="skeleton-media-list">
+                <div *ngFor="let i of skeletonArray" class="skeleton-media-item">
+                    <div class="skeleton-media-label"></div>
+                    <div class="skeleton-media-value"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

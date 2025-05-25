@@ -1,7 +1,7 @@
 @import "../../../../styles.scss";
 
 .featured-banner {
-    height: calc(68vh - $desktop-header-height);
+    height: calc(75vh - $desktop-header-height);
     background-image: var(--background-image-780);
     background-size: cover;
     background-position: center 10%;
@@ -57,6 +57,7 @@
         }
 
         .featured-meta {
+            margin-block-start: $spacing-xs;
             color: $text-secondary;
             font-size: $font-size-sm;
 
@@ -80,11 +81,12 @@
                 line-height: 1.6;
                 color: $text-primary;
                 margin: 0;
+                @include text-clamp(3);
             }
         }
 
         .featured-actions {
-            margin-block-start: $spacing-lg;
+            margin-block-start: 40px;
             display: flex;
             gap: $spacing-md;
         }
@@ -92,7 +94,7 @@
 }
 
 .featured-banner-skeleton {
-    height: calc(68dvh - $desktop-header-height);
+    height: calc(75dvh - $desktop-header-height);
     background-color: $background-color;
     position: relative;
 
@@ -119,7 +121,7 @@
             width: 40%;
             @include skeleton-loading;
             border-radius: $border-radius-md;
-            margin-bottom: $spacing-sm;
+            margin-bottom: $spacing-sm * 1.5;
         }
 
         .skeleton-meta {
@@ -151,7 +153,7 @@
         }
 
         .skeleton-actions {
-            margin-block-start: $spacing-lg;
+            margin-block-start: 40px;
             display: flex;
             gap: $spacing-md;
         }
@@ -160,7 +162,7 @@
 
 @media (max-width: map-get($breakpoints, "md")) {
     .featured-banner {
-        height: calc(65vh - $mobile-nav-height - $desktop-header-height);
+        height: calc(85vh - $mobile-nav-height - $desktop-header-height);
 
         .overlay {
             align-items: flex-end;
@@ -181,7 +183,7 @@
     }
 
     .featured-banner-skeleton {
-        height: calc(65vh - $mobile-nav-height - $desktop-header-height);
+        height: calc(85vh - $mobile-nav-height - $desktop-header-height);
 
         .overlay {
             align-items: flex-end;
@@ -225,13 +227,20 @@
             }
 
             .featured-meta {
+                margin-block-start: 0;
                 font-size: $font-size-xs;
             }
 
             .overview {
+                margin-block-start: $spacing-sm * 1.5;
+
                 p {
                     font-size: $font-size-xs;
                 }
+            }
+
+            .featured-actions {
+                margin-block-start: 20px;
             }
         }
     }
@@ -247,6 +256,7 @@
 
             .skeleton-title {
                 height: 20px;
+                margin-block-end: $spacing-sm;
             }
 
             .featured-meta {
@@ -257,6 +267,10 @@
                 .skeleton-overview-line {
                     height: $font-size-xs;
                 }
+            }
+
+            .skeleton-actions {
+                margin-block-start: 20px;
             }
         }
     }

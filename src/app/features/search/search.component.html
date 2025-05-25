@@ -5,70 +5,81 @@
             <app-tabs [isLoading]="isLoading" [tabs]="searchTabs" (tabChange)="changeSearchOption($event)"> </app-tabs>
         </header>
 
-        <div class="list-container">
-            <ng-container *ngIf="searchQuery">
-                <ng-container [ngSwitch]="option">
-                    <ng-container *ngSwitchCase="searchOption.Movie">
+        <ng-container [ngSwitch]="option">
+            <ng-container *ngSwitchCase="searchOption.Movie">
+                <div class="list-container">
+                    <app-media-list-item
+                        *ngFor="let item of searchMovies; trackBy: trackByItemId"
+                        [media]="item"
+                        [type]="mediaType.Movie"
+                    ></app-media-list-item>
+                    <ng-container *ngIf="isLoading && searchMovies.length === 0">
                         <app-media-list-item
-                            *ngFor="let item of searchMovies; trackBy: trackByItemId"
-                            [media]="item"
+                            *ngFor="let item of skeletonArray; trackBy: trackByIndex"
+                            [isLoading]="true"
                             [type]="mediaType.Movie"
                         ></app-media-list-item>
-                        <ng-container *ngIf="isLoading && searchMovies.length === 0">
-                            <app-media-list-item
-                                *ngFor="let item of skeletonArray; trackBy: trackByIndex"
-                                [isLoading]="true"
-                                [type]="mediaType.Movie"
-                            ></app-media-list-item>
-                        </ng-container>
-                        <p *ngIf="!isLoading && searchMovies.length === 0" class="no-results" appFadeIn>
-                            No movies found for "{{ searchQuery }}"
-                        </p>
                     </ng-container>
+                </div>
 
-                    <ng-container *ngSwitchCase="searchOption.Tv">
+                <div class="no-results-container">
+                    <p *ngIf="!isLoading && searchMovies.length === 0" class="no-results" appFadeIn>
+                        No movies found for "{{ searchQuery }}"
+                    </p>
+                </div>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="searchOption.Tv">
+                <div class="list-container">
+                    <app-media-list-item
+                        *ngFor="let item of searchTvShows; trackBy: trackByItemId"
+                        [media]="item"
+                        [type]="mediaType.TvShow"
+                    ></app-media-list-item>
+                    <ng-container *ngIf="isLoading && searchTvShows.length === 0">
                         <app-media-list-item
-                            *ngFor="let item of searchTvShows; trackBy: trackByItemId"
-                            [media]="item"
+                            *ngFor="let item of skeletonArray; trackBy: trackByIndex"
+                            [isLoading]="true"
                             [type]="mediaType.TvShow"
                         ></app-media-list-item>
-                        <ng-container *ngIf="isLoading && searchTvShows.length === 0">
-                            <app-media-list-item
-                                *ngFor="let item of skeletonArray; trackBy: trackByIndex"
-                                [isLoading]="true"
-                                [type]="mediaType.TvShow"
-                            ></app-media-list-item>
-                        </ng-container>
-                        <p *ngIf="!isLoading && searchTvShows.length === 0" class="no-results" appFadeIn>
-                            No TV shows found for "{{ searchQuery }}"
-                        </p>
                     </ng-container>
+                </div>
 
-                    <ng-container *ngSwitchCase="searchOption.Person">
-                        <app-person-list-item
-                            *ngFor="let person of searchPeople; trackBy: trackByItemId"
-                            [person]="person"
-                            [isLoading]="false"
-                        ></app-person-list-item>
-                        <ng-container *ngIf="isLoading && searchPeople.length === 0">
-                            <app-person-list-item
-                                *ngFor="let item of skeletonArray; trackBy: trackByIndex"
-                                [isLoading]="true"
-                            >
-                            </app-person-list-item>
-                        </ng-container>
-                        <p *ngIf="!isLoading && searchPeople.length === 0" class="no-results" appFadeIn>
-                            No people found for "{{ searchQuery }}"
-                        </p>
-                    </ng-container>
-                </ng-container>
-
-                <app-infinite-scroll-loader
-                    *ngIf="currentPage < totalPages"
-                    [disabled]="isLoading"
-                    (scrolled)="loadMore()"
-                ></app-infinite-scroll-loader>
+                <div class="no-results-container">
+                    <p *ngIf="!isLoading && searchTvShows.length === 0" class="no-results" appFadeIn>
+                        No TV shows found for "{{ searchQuery }}"
+                    </p>
+                </div>
             </ng-container>
-        </div>
+
+            <ng-container *ngSwitchCase="searchOption.Person">
+                <div class="list-container">
+                    <app-person-list-item
+                        *ngFor="let person of searchPeople; trackBy: trackByItemId"
+                        [person]="person"
+                        [isLoading]="false"
+                    ></app-person-list-item>
+                    <ng-container *ngIf="isLoading && searchPeople.length === 0">
+                        <app-person-list-item
+                            *ngFor="let item of skeletonArray; trackBy: trackByIndex"
+                            [isLoading]="true"
+                        >
+                        </app-person-list-item>
+                    </ng-container>
+                </div>
+
+                <div class="no-results-container">
+                    <p *ngIf="!isLoading && searchPeople.length === 0" class="no-results" appFadeIn>
+                        No people found for "{{ searchQuery }}"
+                    </p>
+                </div>
+            </ng-container>
+        </ng-container>
+
+        <app-infinite-scroll-loader
+            *ngIf="currentPage < totalPages"
+            [disabled]="isLoading"
+            (scrolled)="loadMore()"
+        ></app-infinite-scroll-loader>
     </section>
 </div>

@@ -15,15 +15,47 @@
             </li>
             <li *ngIf="episodeDetails?.runtime">
                 <span class="detail-label">Runtime:</span>
-                <span class="detail-value">{{ episodeDetails?.runtime }} minutes</span>
+                <span class="detail-value">{{ episodeDetails?.runtime ?? 0 | time }}</span>
+            </li>
+            <li>
+                <span class="detail-label">My Rating:</span>
+                <div class="detail-value">
+                    <div class="rating-stars">
+                        <button
+                            *ngFor="let star of stars"
+                            class="star-button"
+                            [class.active]="userRating && star * 2 <= userRating"
+                            [title]="'Rate ' + star + '/5'"
+                            (click)="rateEpisode(star * 2)"
+                        >
+                            <i class="fas fa-star"></i>
+                        </button>
+                    </div>
+                </div>
             </li>
             <li *ngIf="episodeDetails?.vote_average">
                 <span class="detail-label">Rating:</span>
-                <span class="detail-value">{{ episodeDetails?.vote_average | number: "1.1-1" }}/10</span>
-            </li>
-            <li *ngIf="episodeDetails?.vote_count">
-                <span class="detail-label">Vote Count:</span>
-                <span class="detail-value">{{ episodeDetails?.vote_count }}</span>
+                <div class="detail-value">
+                    <div class="rating-badge">
+                        <span
+                            *ngIf="episodeDetails?.vote_average; else noRating"
+                            class="rating-value"
+                            [class.rating-low]="episodeDetails.vote_average < 5"
+                            [class.rating-medium]="episodeDetails.vote_average >= 5 && episodeDetails.vote_average < 7"
+                            [class.rating-high]="episodeDetails.vote_average >= 7 && episodeDetails.vote_average < 8.5"
+                            [class.rating-top]="episodeDetails.vote_average >= 8.5"
+                        >
+                            {{ episodeDetails.vote_average / 2 | number: "1.1-1" }}
+                        </span>
+                        <ng-template #noRating>
+                            <span class="rating-value">-</span>
+                        </ng-template>
+                        <span class="rating-total">/5</span>
+                        <span *ngIf="episodeDetails?.vote_count" class="vote-count">
+                            ({{ episodeDetails.vote_count | formatNumberWithK }} votes)
+                        </span>
+                    </div>
+                </div>
             </li>
             <li *ngIf="episodeDetails?.production_code">
                 <span class="detail-label">Production Code:</span>

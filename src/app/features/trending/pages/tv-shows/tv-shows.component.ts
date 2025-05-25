@@ -80,6 +80,7 @@ export class TrendingTvShowsComponent extends BaseMediaListItemComponent<TvShowI
     changeTimeOption(timeOption: TimeOption): void {
         this.timeOption = timeOption;
         this.currentPage = DEFAULT.page;
+        this.totalPages = DEFAULT.totalPages;
         this.items = [];
         this.getItems();
     }

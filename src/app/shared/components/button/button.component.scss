@@ -26,6 +26,7 @@
     border: 1px solid transparent;
     background: none;
     width: 100%;
+    min-width: 50px;
 
     &:hover {
         transform: translateY(-2px);
@@ -35,7 +36,7 @@
         font-size: $font-size-sm;
     }
 
-    &.button-primary {
+    &.primary-button {
         background: rgba($primary-color, 0.8);
         color: $text-primary;
 
@@ -44,7 +45,7 @@
         }
     }
 
-    &.button-secondary {
+    &.secondary-button {
         background: transparent;
         color: $text-primary;
         border: none;
@@ -55,6 +56,18 @@
 
         &.active {
             color: $primary-color;
+        }
+    }
+
+    &.outline-button {
+        background: transparent;
+        color: $text-primary;
+        border: 1px solid $text-primary;
+        backdrop-filter: blur(10px);
+
+        &:hover {
+            background: rgba($text-primary, 0.1);
+            color: $text-primary;
         }
     }
 
@@ -95,6 +108,10 @@
         @include skeleton-loading;
         min-width: 120px;
         height: 40px;
+
+        @media (max-width: map-get($breakpoints, "sm")) {
+            // min-width: 90px;
+        }
 
         &.no-padding {
             height: 17px;

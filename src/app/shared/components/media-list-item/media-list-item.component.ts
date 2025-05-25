@@ -9,11 +9,12 @@ import { MediaType } from '../../enumerations/media-type.enum';
 import { PosterSize } from '../../enumerations/poster-size.enum';
 import { MovieItem } from '../../models/movie.model';
 import { TvShowItem } from '../../models/tv-show.model';
+import { RatingBadgeComponent } from '../rating-badge/rating-badge.component';
 
 @Component({
     selector: 'app-media-list-item',
     standalone: true,
-    imports: [CommonModule, RouterLink, PosterPathDirective, FadeInDirective],
+    imports: [CommonModule, RouterLink, PosterPathDirective, RatingBadgeComponent, FadeInDirective],
     templateUrl: './media-list-item.component.html',
     styleUrl: './media-list-item.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,16 +40,5 @@ export class MediaListItemComponent {
 
     get genres(): Array<{ name: string }> {
         return this.media.genres || [];
-    }
-
-    get rating(): number {
-        return this.media.vote_average;
-    }
-
-    get ratingClass(): string {
-        if (this.rating >= 8) return 'rating-top';
-        if (this.rating >= 7) return 'rating-high';
-        if (this.rating >= 5) return 'rating-medium';
-        return 'rating-low';
     }
 }

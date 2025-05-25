@@ -4,10 +4,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { map, switchMap, tap } from 'rxjs/operators';
 
+import { ButtonComponent } from '../../../../../../shared/components/button/button.component';
+import { ButtonType } from '../../../../../../shared/components/button/enumerations/button-type.enum';
+import { ButtonLink } from '../../../../../../shared/components/button/models/button.model';
 import { CastGridComponent } from '../../../../../../shared/components/cast-grid/cast-grid.component';
 import { EpisodeGridComponent } from '../../../../../../shared/components/episode-grid/episode-grid.component';
 import { ImageGridComponent } from '../../../../../../shared/components/image-grid/image-grid.component';
 import { MediaHeroComponent } from '../../../../../../shared/components/media-hero/media-hero.component';
+import { SeasonDetailsComponent } from '../../../../../../shared/components/season-details/season-details.component';
 import { SectionHeaderComponent } from '../../../../../../shared/components/section-header/section-header.component';
 import { VideoGridComponent } from '../../../../../../shared/components/video-grid/video-grid.component';
 import { FadeInDirective } from '../../../../../../shared/directives/fade-in.directive';
@@ -17,23 +21,25 @@ import { TvShowFacade } from '../../../../../../shared/facades/tv-show.facade';
 import { TvShowDetails, TvShowEpisode, TvShowSeasonDetails } from '../../../../../../shared/models/tv-show.model';
 
 @Component({
-    selector: 'app-season-details',
+    selector: 'app-season-details-page',
     standalone: true,
     imports: [
         CommonModule,
         RouterModule,
         SectionHeaderComponent,
-        EpisodeGridComponent,
-        MediaHeroComponent,
         CastGridComponent,
+        FadeInDirective,
+        MediaHeroComponent,
         ImageGridComponent,
         VideoGridComponent,
-        FadeInDirective,
+        EpisodeGridComponent,
+        SeasonDetailsComponent,
+        ButtonComponent,
     ],
     templateUrl: './season-details.component.html',
-    styleUrls: ['./season-details.component.scss'],
+    styleUrl: './season-details.component.scss',
 })
-export class SeasonDetailsComponent implements OnInit {
+export class SeasonDetailsPageComponent implements OnInit {
     mediaType = MediaType;
     tvShowId!: number;
     seasonNumber!: number;
@@ -41,8 +47,8 @@ export class SeasonDetailsComponent implements OnInit {
     seasonDetails!: TvShowSeasonDetails;
     episodes: Array<TvShowEpisode> = [];
     isLoading = true;
-
     readonly aspectRatio = AspectRatio;
+    readonly buttonType = ButtonType;
 
     constructor(
         private route: ActivatedRoute,
@@ -52,6 +58,24 @@ export class SeasonDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadDetails();
+    }
+
+    get mediaLinks(): Array<ButtonLink> {
+        return [
+            { path: 'https://www.imdb.com/title/' + this.seasonDetails?.external_ids?.imdb_id, isExternal: true },
+            { path: 'https://www.facebook.com/' + this.seasonDetails?.external_ids?.facebook_id, isExternal: true },
+            { path: 'https://www.instagram.com/' + this.seasonDetails?.external_ids?.instagram_id, isExternal: true },
+            { path: 'https://www.twitter.com/' + this.seasonDetails?.external_ids?.twitter_id, isExternal: true },
+        ];
+    }
+
+    get isExternalIdAvailable(): boolean {
+        return (
+            !!this.seasonDetails?.external_ids?.imdb_id ||
+            !!this.seasonDetails?.external_ids?.facebook_id ||
+            !!this.seasonDetails?.external_ids?.instagram_id ||
+            !!this.seasonDetails?.external_ids?.twitter_id
+        );
     }
 
     private loadDetails(): void {
@@ -78,7 +102,7 @@ export class SeasonDetailsComponent implements OnInit {
             )
             .subscribe((details) => {
                 this.seasonDetails = details;
-                this.episodes = details.episodes;
+                this.episodes = details.episodes ?? [];
                 this.isLoading = false;
             });
     }

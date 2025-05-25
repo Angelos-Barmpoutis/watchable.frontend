@@ -52,6 +52,13 @@
                     ></app-video-grid>
                 </section>
 
+                <section *ngIf="movieDetails?.credits?.crew?.length || isLoading">
+                    <header>
+                        <app-section-header title="Top Crew" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-cast-grid [cast]="movieDetails?.credits?.crew ?? []" [isLoading]="isLoading"></app-cast-grid>
+                </section>
+
                 <section *ngIf="movieDetails?.similar?.results?.length || isLoading">
                     <header>
                         <app-section-header title="Similar Movies" [isLoading]="isLoading"></app-section-header>

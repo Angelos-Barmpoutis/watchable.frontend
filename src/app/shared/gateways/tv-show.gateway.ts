@@ -37,7 +37,7 @@ export class TvShowGateway {
 
     public getTvShowSeasonDetails(tvShowId: number, seasonNumber: number): Observable<TvShowSeasonDetails> {
         const url = this.urlService.createUrlForTMDB(['tv', tvShowId.toString(), 'season', seasonNumber.toString()], {
-            append_to_response: 'credits,videos,images',
+            append_to_response: 'credits,videos,images,external_ids',
         });
         return this.tvShowDriver.getTvShowSeasonDetails(url);
     }
@@ -50,7 +50,7 @@ export class TvShowGateway {
         const url = this.urlService.createUrlForTMDB(
             ['tv', tvShowId.toString(), 'season', seasonNumber.toString(), 'episode', episodeNumber.toString()],
             {
-                append_to_response: 'credits,videos,images',
+                append_to_response: 'credits,videos,images,external_ids',
             },
         );
         return this.tvShowDriver.getTvShowEpisodeDetails(url);

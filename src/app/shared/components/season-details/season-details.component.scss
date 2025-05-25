@@ -26,13 +26,13 @@
         .detail-label {
             color: $text-secondary;
             font-weight: $font-weight-medium;
-            width: 116px;
+            width: 124px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
 
             @media (max-width: map-get($breakpoints, "sm")) {
-                width: 96px;
+                width: 110px;
             }
         }
 
@@ -75,12 +75,12 @@
     .skeleton-media-label {
         @include skeleton-loading;
         height: $font-size-sm;
-        width: 116px;
-        border-radius: $spacing-xs !important;
+        width: 124px;
+        border-radius: $border-radius-sm;
 
         @media (max-width: map-get($breakpoints, "sm")) {
+            width: 110px;
             height: $font-size-xs;
-            width: 96px;
         }
     }
 
@@ -88,7 +88,7 @@
         @include skeleton-loading;
         flex: 1;
         height: $font-size-sm;
-        border-radius: $spacing-xs !important;
+        border-radius: $border-radius-sm;
 
         @media (max-width: map-get($breakpoints, "sm")) {
             height: $font-size-xs;

@@ -2,32 +2,30 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { DEFAULT } from '../../constants/defaults.constant';
-import { FadeInDirective } from '../../directives/fade-in.directive';
-
-export type SnackbarType = 'success' | 'error' | 'info' | 'warning';
+import { SnackbarType } from './enumerations/snacbar-type.enum';
 
 @Component({
     selector: 'app-snackbar',
     standalone: true,
-    imports: [CommonModule, FadeInDirective],
+    imports: [CommonModule],
     templateUrl: './snackbar.component.html',
     styleUrls: ['./snackbar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SnackbarComponent {
     @Input() message = '';
-    @Input() type: SnackbarType = DEFAULT.snackbarType;
+    @Input() type: SnackbarType = SnackbarType.Success;
     @Input() duration = DEFAULT.snackbarDuration;
     @Input() show = false;
     @Output() dismiss = new EventEmitter<void>();
 
     get icon(): string {
         switch (this.type) {
-            case 'success':
+            case SnackbarType.Success:
                 return 'fas fa-check-circle';
-            case 'error':
+            case SnackbarType.Error:
                 return 'fas fa-times-circle';
-            case 'warning':
+            case SnackbarType.Warning:
                 return 'fas fa-exclamation-circle';
             default:
                 return 'fas fa-info-circle';

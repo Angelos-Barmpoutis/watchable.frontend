@@ -4,8 +4,9 @@
         appFadeIn
         class="button"
         [type]="type"
-        [class.button-primary]="variant === ButtonType.Primary"
-        [class.button-secondary]="variant === ButtonType.Secondary"
+        [class.primary-button]="variant === ButtonType.Primary"
+        [class.secondary-button]="variant === ButtonType.Secondary"
+        [class.outline-button]="variant === ButtonType.Outline"
         [class.imdb-button]="variant === ButtonType.Imdb"
         [class.facebook-button]="variant === ButtonType.Facebook"
         [class.instagram-button]="variant === ButtonType.Instagram"
@@ -24,8 +25,9 @@
             *ngIf="link?.isExternal; else internalLink"
             appFadeIn
             class="button"
-            [class.button-primary]="variant === ButtonType.Primary"
-            [class.button-secondary]="variant === ButtonType.Secondary"
+            [class.primary-button]="variant === ButtonType.Primary"
+            [class.secondary-button]="variant === ButtonType.Secondary"
+            [class.outline-button]="variant === ButtonType.Outline"
             [class.imdb-button]="variant === ButtonType.Imdb"
             [class.facebook-button]="variant === ButtonType.Facebook"
             [class.instagram-button]="variant === ButtonType.Instagram"
@@ -45,8 +47,9 @@
         <a
             appFadeIn
             class="button"
-            [class.button-primary]="variant === ButtonType.Primary"
-            [class.button-secondary]="variant === ButtonType.Secondary"
+            [class.primary-button]="variant === ButtonType.Primary"
+            [class.secondary-button]="variant === ButtonType.Secondary"
+            [class.outline-button]="variant === ButtonType.Outline"
             [class.no-border]="!hasBorder"
             [class.no-padding]="!hasPadding"
             [class.disabled]="disabled"

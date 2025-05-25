@@ -1,27 +1,67 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    DestroyRef,
+    Input,
+    OnChanges,
+    SimpleChanges,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
+import { forkJoin, map, of, switchMap, tap } from 'rxjs';
 
 import { MediaType } from '../../enumerations/media-type.enum';
+import { AccountFacade } from '../../facades/account.facade';
+import { MovieFacade } from '../../facades/movie.facade';
+import { TvShowFacade } from '../../facades/tv-show.facade';
 import { MovieDetails } from '../../models/movie.model';
 import { TvShowDetails } from '../../models/tv-show.model';
+import { FormatNumberWithKPipe } from '../../pipes/format-number.pipe';
+import { TimePipe } from '../../pipes/time.pipe';
+import { AuthService } from '../../services/auth.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 type MediaDetails = MovieDetails | TvShowDetails;
 
 @Component({
     selector: 'app-media-details',
     standalone: true,
-    imports: [CommonModule, RouterModule],
+    imports: [CommonModule, RouterModule, FormatNumberWithKPipe, TimePipe],
     templateUrl: './media-details.component.html',
     styleUrls: ['./media-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MediaDetailsComponent {
+export class MediaDetailsComponent implements OnChanges {
     @Input() mediaDetails!: MediaDetails;
     @Input() type: MediaType = MediaType.Movie;
-    @Input() isLoading = false;
+    @Input() isLoading = true;
+    userRating?: number;
 
     readonly mediaType = MediaType;
+
+    constructor(
+        private readonly movieFacade: MovieFacade,
+        private readonly tvShowFacade: TvShowFacade,
+        private readonly accountFacade: AccountFacade,
+        private readonly authService: AuthService,
+        private readonly snackbarService: SnackbarService,
+        private readonly destroyRef: DestroyRef,
+        private readonly cdr: ChangeDetectorRef,
+    ) {}
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['mediaDetails'] && this.mediaDetails) {
+            this.getUserRating();
+        }
+    }
+
+    get stars(): Array<number> {
+        return Array(5)
+            .fill(0)
+            .map((_, index) => index + 1);
+    }
 
     get isMovie(): boolean {
         return this.type === MediaType.Movie;
@@ -43,5 +83,135 @@ export class MediaDetailsComponent {
         return Array(10)
             .fill(0)
             .map((_, index) => index);
+    }
+
+    private getUserRating(): void {
+        this.authService.userInfo$
+            .pipe(
+                tap(() => {
+                    this.isLoading = true;
+                    this.cdr.detectChanges();
+                }),
+                takeUntilDestroyed(this.destroyRef),
+                switchMap((userInfo) => {
+                    switch (this.type) {
+                        case MediaType.Movie:
+                            // First get the first page to know total pages
+                            return this.accountFacade.getRatedMovies(userInfo?.id ?? 0, 1).pipe(
+                                switchMap((firstPage) => {
+                                    if (!firstPage || firstPage.total_pages <= 1) {
+                                        return of(firstPage);
+                                    }
+
+                                    // Create an array of observables for all pages
+                                    const pageRequests = Array.from({ length: firstPage.total_pages - 1 }, (_, i) =>
+                                        this.accountFacade.getRatedMovies(userInfo?.id ?? 0, i + 2),
+                                    );
+
+                                    // Combine all pages
+                                    return forkJoin([of(firstPage), ...pageRequests]).pipe(
+                                        map((pages) => ({
+                                            ...firstPage,
+                                            results: pages.flatMap((page) => page.results),
+                                        })),
+                                    );
+                                }),
+                            );
+                        case MediaType.TvShow:
+                            return this.accountFacade.getRatedTVShows(userInfo?.id ?? 0, 1).pipe(
+                                switchMap((firstPage) => {
+                                    if (!firstPage || firstPage.total_pages <= 1) {
+                                        return of(firstPage);
+                                    }
+
+                                    // Create an array of observables for all pages
+                                    const pageRequests = Array.from({ length: firstPage.total_pages - 1 }, (_, i) =>
+                                        this.accountFacade.getRatedTVShows(userInfo?.id ?? 0, i + 2),
+                                    );
+
+                                    // Combine all pages
+                                    return forkJoin([of(firstPage), ...pageRequests]).pipe(
+                                        map((pages) => ({
+                                            ...firstPage,
+                                            results: pages.flatMap((page) => page.results),
+                                        })),
+                                    );
+                                }),
+                            );
+                        default:
+                            return of(null);
+                    }
+                }),
+                takeUntilDestroyed(this.destroyRef),
+            )
+            .subscribe({
+                next: (rated) => {
+                    if (rated) {
+                        const ratedItem = rated.results.find(
+                            (item: { id: number }) => item.id === this.mediaDetails?.id,
+                        );
+
+                        this.userRating = ratedItem?.rating;
+                        this.isLoading = false;
+                        this.cdr.detectChanges();
+                    }
+                },
+                error: () => {
+                    this.snackbarService.error('Failed to check rating status');
+                },
+            });
+    }
+
+    rateMedia(rating: number): void {
+        if (!this.authService.isAuthenticated()) {
+            this.snackbarService.warning('Please sign in to rate items');
+            return;
+        }
+
+        const previousRating = this.userRating;
+        this.userRating = rating;
+        this.cdr.detectChanges();
+
+        const request = { value: rating };
+
+        if (this.type === MediaType.Movie) {
+            this.movieFacade
+                .addMovieRating(this.mediaDetails.id, request)
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe({
+                    next: (response) => {
+                        if (response.status_code !== 1 && response.status_code !== 13 && response.status_code !== 12) {
+                            this.userRating = previousRating;
+                            this.cdr.detectChanges();
+                            this.snackbarService.error('Failed to update rating');
+                        } else {
+                            this.snackbarService.success('Rating updated');
+                        }
+                    },
+                    error: () => {
+                        this.userRating = previousRating;
+                        this.cdr.detectChanges();
+                        this.snackbarService.error('Failed to update rating');
+                    },
+                });
+        } else {
+            this.tvShowFacade
+                .addTvShowRating(this.mediaDetails.id, request)
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe({
+                    next: (response) => {
+                        if (response.status_code !== 1 && response.status_code !== 13 && response.status_code !== 12) {
+                            this.userRating = previousRating;
+                            this.cdr.detectChanges();
+                            this.snackbarService.error('Failed to update rating');
+                        }
+                    },
+                    error: () => {
+                        this.userRating = previousRating;
+                        this.cdr.detectChanges();
+                        this.snackbarService.error('Failed to update rating');
+                    },
+                });
+        }
     }
 }

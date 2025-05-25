@@ -34,7 +34,7 @@ export const routes: Routes = [
         path: 'tv-show/:id/seasons/:seasonNumber',
         loadComponent: () =>
             import('./pages/tv-show/seasons/season-details/season-details.component').then(
-                (c) => c.SeasonDetailsComponent,
+                (c) => c.SeasonDetailsPageComponent,
             ),
     },
     {

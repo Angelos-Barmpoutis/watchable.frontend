@@ -1,6 +1,47 @@
 <ng-container *ngIf="!isLoading; else loadingTemplate">
     <div appFadeIn>
         <ul class="details-list">
+            <li>
+                <span class="detail-label">My Rating:</span>
+                <div class="detail-value">
+                    <div class="rating-stars">
+                        <button
+                            *ngFor="let star of stars"
+                            class="star-button"
+                            [class.active]="userRating && star * 2 <= userRating"
+                            [title]="'Rate ' + star + '/5'"
+                            (click)="rateMedia(star * 2)"
+                        >
+                            <i class="fas fa-star"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <span class="detail-label">TMDB Rating:</span>
+                <div class="detail-value">
+                    <div class="rating-badge">
+                        <span
+                            *ngIf="mediaDetails?.vote_average; else noRating"
+                            class="rating-value"
+                            [class.rating-low]="mediaDetails.vote_average < 5"
+                            [class.rating-medium]="mediaDetails.vote_average >= 5 && mediaDetails.vote_average < 7"
+                            [class.rating-high]="mediaDetails.vote_average >= 7 && mediaDetails.vote_average < 8.5"
+                            [class.rating-top]="mediaDetails.vote_average >= 8.5"
+                        >
+                            {{ mediaDetails.vote_average / 2 | number: "1.1-1" }}
+                        </span>
+                        <ng-template #noRating>
+                            <span class="rating-value">-</span>
+                        </ng-template>
+                        <span class="rating-total">/5</span>
+                        <span *ngIf="mediaDetails?.vote_count" class="vote-count">
+                            ({{ mediaDetails.vote_count | formatNumberWithK }} votes)
+                        </span>
+                    </div>
+                </div>
+            </li>
+
             <!-- Movie Details -->
             <ng-container *ngIf="isMovie">
                 <li *ngIf="movieDetails?.status">
@@ -13,7 +54,7 @@
                 </li>
                 <li *ngIf="movieDetails?.runtime">
                     <span class="detail-label">Runtime:</span>
-                    <span class="detail-value">{{ movieDetails?.runtime }} minutes</span>
+                    <span class="detail-value">{{ movieDetails?.runtime ?? 0 | time }}</span>
                 </li>
                 <li *ngIf="movieDetails?.budget">
                     <span class="detail-label">Budget:</span>

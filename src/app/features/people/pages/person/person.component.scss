@@ -60,7 +60,7 @@
     }
 
     @media (max-width: map-get($breakpoints, "md")) {
-        height: calc(50vh - $mobile-nav-height - $desktop-header-height);
+        height: calc(60vh - $mobile-nav-height - $desktop-header-height);
         gap: $spacing-lg;
 
         .profile-image {
@@ -151,7 +151,7 @@
     }
 
     @media (max-width: map-get($breakpoints, "md")) {
-        height: calc(50vh - $mobile-nav-height - $desktop-header-height);
+        height: calc(60vh - $mobile-nav-height - $desktop-header-height);
         padding-top: $spacing-lg;
         gap: $spacing-lg;
 
