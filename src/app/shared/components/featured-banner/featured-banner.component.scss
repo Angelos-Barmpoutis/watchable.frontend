@@ -97,7 +97,7 @@
     height: calc(75dvh - $desktop-header-height);
     background-color: $background-color;
     position: relative;
-    transition: height 0.3s ease-in-out;
+    transition: height 0.3s linear;
 
     .overlay {
         width: 100%;

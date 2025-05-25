@@ -257,7 +257,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    transition: height 0.3s ease-in-out;
+    transition: height 0.3s linear;
 
     .skeleton-media-content {
         display: flex;
