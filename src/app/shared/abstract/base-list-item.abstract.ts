@@ -8,7 +8,7 @@ export abstract class BaseListItemComponent<T> {
     itemsPerPage = DEFAULT.itemsPerPage;
     currentPage = DEFAULT.page;
     totalPages = DEFAULT.totalPages;
-    isLoading = true;
+    isLoading = false;
 
     protected get skeletonArray(): Array<number> {
         return Array(this.itemsPerPage)
@@ -21,10 +21,12 @@ export abstract class BaseListItemComponent<T> {
     }
 
     protected loadMore(): void {
-        if (this.currentPage < this.totalPages && !this.isLoading) {
-            this.currentPage++;
-            this.getItems();
+        if (this.currentPage >= this.totalPages) {
+            return;
         }
+
+        this.currentPage++;
+        this.getItems();
     }
 
     protected abstract trackByItemId(index: number, item: T): number;

@@ -56,8 +56,4 @@
     </section>
 </div>
 
-<app-infinite-scroll-loader
-    *ngIf="!allGenresLoaded"
-    [disabled]="isLoadingMoreGenres"
-    (scrolled)="loadMore()"
-></app-infinite-scroll-loader>
+<app-infinite-scroll-loader *ngIf="!allGenresLoaded" (scrolled)="loadMore()"></app-infinite-scroll-loader>
