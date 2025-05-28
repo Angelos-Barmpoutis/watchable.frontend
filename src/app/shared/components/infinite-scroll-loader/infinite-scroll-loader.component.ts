@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
-import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
 
 @Component({
@@ -15,44 +14,41 @@ export class InfiniteScrollLoaderComponent implements OnInit, OnDestroy {
     @Input() disabled: boolean = false;
     @Output() scrolled = new EventEmitter<void>();
 
-    private lastScrollTop = 0;
-    private scrollThreshold = DEFAULT.infiniteScrollThreshold;
-    private scrollTimeout: ReturnType<typeof setTimeout> | null = null;
+    private observer: IntersectionObserver | null = null;
+
+    constructor(private element: ElementRef) {}
 
     ngOnInit(): void {
-        this.checkScroll();
+        this.initObserver();
     }
 
     ngOnDestroy(): void {
-        if (this.scrollTimeout) {
-            clearTimeout(this.scrollTimeout);
-        }
+        this.destroyObserver();
     }
 
-    @HostListener('window:scroll', ['$event'])
-    onScroll(): void {
-        if (this.disabled) return;
+    private initObserver(): void {
+        if (typeof IntersectionObserver === 'undefined') return;
 
-        if (this.scrollTimeout) {
-            clearTimeout(this.scrollTimeout);
-        }
+        const options = {
+            root: null,
+            rootMargin: '400px',
+            threshold: 0.1,
+        };
 
-        this.scrollTimeout = setTimeout(() => {
-            this.checkScroll();
-        }, 100);
+        this.observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            if (entry.isIntersecting && !this.disabled) {
+                this.scrolled.emit();
+            }
+        }, options);
+
+        this.observer.observe(this.element.nativeElement);
     }
 
-    private checkScroll(): void {
-        if (this.disabled) return;
-
-        const scrollPosition = window.innerHeight + window.scrollY;
-        const documentHeight = document.documentElement.scrollHeight;
-        const distanceFromBottom = documentHeight - scrollPosition;
-
-        if (distanceFromBottom < this.scrollThreshold && window.scrollY > this.lastScrollTop) {
-            this.scrolled.emit();
+    private destroyObserver(): void {
+        if (this.observer) {
+            this.observer.disconnect();
+            this.observer = null;
         }
-
-        this.lastScrollTop = window.scrollY;
     }
 }
