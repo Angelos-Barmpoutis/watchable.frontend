@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
     isAppReady$ = new BehaviorSubject<boolean>(false);
     isAuthLoading$ = new BehaviorSubject<boolean>(false);
     private isAuthInProgress = false;
+    private isRedirecting = false;
 
     constructor(
         public searchService: SearchService,
@@ -59,6 +60,7 @@ export class AppComponent implements OnInit {
         console.log('Current auth state:', {
             isAuthInProgress: this.isAuthInProgress,
             isLoading: this.isAuthLoading$.value,
+            isRedirecting: this.isRedirecting,
             url: window.location.href,
             sessionStorage: {
                 auth_in_progress: sessionStorage.getItem('auth_in_progress'),
@@ -70,6 +72,7 @@ export class AppComponent implements OnInit {
             console.log('Cleaning up auth state after popstate');
             this.isAuthLoading$.next(false);
             this.isAuthInProgress = false;
+            this.isRedirecting = false;
             sessionStorage.removeItem('auth_in_progress');
             sessionStorage.removeItem('auth_state');
             this.snackbarService.error('Authentication was cancelled');
@@ -83,6 +86,7 @@ export class AppComponent implements OnInit {
         console.log('Current auth state:', {
             isAuthInProgress: this.isAuthInProgress,
             isLoading: this.isAuthLoading$.value,
+            isRedirecting: this.isRedirecting,
             url: window.location.href,
             sessionStorage: {
                 auth_in_progress: sessionStorage.getItem('auth_in_progress'),
@@ -90,12 +94,15 @@ export class AppComponent implements OnInit {
             },
         });
 
-        if (this.isAuthInProgress || sessionStorage.getItem('auth_in_progress') === 'true') {
-            console.log('Cleaning up auth state before unload');
+        // Only clean up if we're not redirecting to TMDB
+        if (!this.isRedirecting && (this.isAuthInProgress || sessionStorage.getItem('auth_in_progress') === 'true')) {
+            console.log('Cleaning up auth state before unload (not redirecting)');
             this.isAuthLoading$.next(false);
             this.isAuthInProgress = false;
             sessionStorage.removeItem('auth_in_progress');
             sessionStorage.removeItem('auth_state');
+        } else if (this.isRedirecting) {
+            console.log('Preserving auth state during redirect');
         }
     }
 
@@ -116,6 +123,7 @@ export class AppComponent implements OnInit {
                     console.log('Current auth state:', {
                         isAuthInProgress: this.isAuthInProgress,
                         isLoading: this.isAuthLoading$.value,
+                        isRedirecting: this.isRedirecting,
                         isAuthenticated: this.authService.isAuthenticated(),
                         sessionStorage: {
                             auth_in_progress: sessionStorage.getItem('auth_in_progress'),
@@ -150,6 +158,7 @@ export class AppComponent implements OnInit {
                             }
                             console.log('No window opener, creating session');
                             this.isAuthInProgress = true;
+                            this.isRedirecting = false;
                             sessionStorage.setItem('auth_in_progress', 'true');
                             this.isAuthLoading$.next(true);
                             return this.authFacade.createSession(requestToken);
@@ -158,6 +167,7 @@ export class AppComponent implements OnInit {
                         if (denied === 'true') {
                             console.log('Auth denied');
                             this.isAuthInProgress = false;
+                            this.isRedirecting = false;
                             sessionStorage.removeItem('auth_in_progress');
                             sessionStorage.removeItem('auth_state');
                             this.isAuthLoading$.next(false);
@@ -180,6 +190,7 @@ export class AppComponent implements OnInit {
                     }
                     console.log('Cleaning up auth state after response');
                     this.isAuthInProgress = false;
+                    this.isRedirecting = false;
                     sessionStorage.removeItem('auth_in_progress');
                     sessionStorage.removeItem('auth_state');
                     this.isAuthLoading$.next(false);
@@ -188,6 +199,7 @@ export class AppComponent implements OnInit {
                     console.error('Auth error:', error);
                     console.log('Cleaning up auth state after error');
                     this.isAuthInProgress = false;
+                    this.isRedirecting = false;
                     sessionStorage.removeItem('auth_in_progress');
                     sessionStorage.removeItem('auth_state');
                     this.isAuthLoading$.next(false);

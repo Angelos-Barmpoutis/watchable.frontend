@@ -49,16 +49,16 @@ export class AuthService {
             console.log('AuthService: Restoring auth state:', authState);
             const state = JSON.parse(authState);
             this.isLoadingSubject.next(state.isLoading);
-            if (state.isLoading) {
-                console.log('AuthService: Auth was in progress, cleaning up');
+            if (state.isLoading && !state.isRedirecting) {
+                console.log('AuthService: Auth was in progress (not redirecting), cleaning up');
                 this.isLoadingSubject.next(false);
                 sessionStorage.removeItem(this.AUTH_STATE_KEY);
             }
         }
     }
 
-    private saveAuthState(isLoading: boolean): void {
-        const state = { isLoading };
+    private saveAuthState(isLoading: boolean, isRedirecting: boolean = false): void {
+        const state = { isLoading, isRedirecting };
         console.log('AuthService: Saving auth state:', state);
         sessionStorage.setItem(this.AUTH_STATE_KEY, JSON.stringify(state));
     }
@@ -158,7 +158,7 @@ export class AuthService {
                             console.log('AuthService: Storing auth state in sessionStorage');
                             sessionStorage.setItem('auth_redirect_path', currentPath);
                             sessionStorage.setItem('auth_in_progress', 'true');
-                            this.saveAuthState(true);
+                            this.saveAuthState(true, true);
                             console.log('AuthService: Redirecting to:', authUrl);
                             window.location.href = authUrl;
                         } else {
