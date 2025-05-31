@@ -60,12 +60,18 @@ export class AppComponent implements OnInit {
             isAuthInProgress: this.isAuthInProgress,
             isLoading: this.isAuthLoading$.value,
             url: window.location.href,
+            sessionStorage: {
+                auth_in_progress: sessionStorage.getItem('auth_in_progress'),
+                auth_state: sessionStorage.getItem('auth_state'),
+            },
         });
 
-        if (this.isAuthInProgress) {
+        if (this.isAuthInProgress || sessionStorage.getItem('auth_in_progress') === 'true') {
             console.log('Cleaning up auth state after popstate');
             this.isAuthLoading$.next(false);
             this.isAuthInProgress = false;
+            sessionStorage.removeItem('auth_in_progress');
+            sessionStorage.removeItem('auth_state');
             this.snackbarService.error('Authentication was cancelled');
             this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
         }
@@ -78,12 +84,18 @@ export class AppComponent implements OnInit {
             isAuthInProgress: this.isAuthInProgress,
             isLoading: this.isAuthLoading$.value,
             url: window.location.href,
+            sessionStorage: {
+                auth_in_progress: sessionStorage.getItem('auth_in_progress'),
+                auth_state: sessionStorage.getItem('auth_state'),
+            },
         });
 
-        if (this.isAuthInProgress) {
+        if (this.isAuthInProgress || sessionStorage.getItem('auth_in_progress') === 'true') {
             console.log('Cleaning up auth state before unload');
             this.isAuthLoading$.next(false);
             this.isAuthInProgress = false;
+            sessionStorage.removeItem('auth_in_progress');
+            sessionStorage.removeItem('auth_state');
         }
     }
 
@@ -105,6 +117,10 @@ export class AppComponent implements OnInit {
                         isAuthInProgress: this.isAuthInProgress,
                         isLoading: this.isAuthLoading$.value,
                         isAuthenticated: this.authService.isAuthenticated(),
+                        sessionStorage: {
+                            auth_in_progress: sessionStorage.getItem('auth_in_progress'),
+                            auth_state: sessionStorage.getItem('auth_state'),
+                        },
                     });
 
                     const requestToken = params.request_token;
@@ -134,6 +150,7 @@ export class AppComponent implements OnInit {
                             }
                             console.log('No window opener, creating session');
                             this.isAuthInProgress = true;
+                            sessionStorage.setItem('auth_in_progress', 'true');
                             this.isAuthLoading$.next(true);
                             return this.authFacade.createSession(requestToken);
                         }
@@ -141,6 +158,8 @@ export class AppComponent implements OnInit {
                         if (denied === 'true') {
                             console.log('Auth denied');
                             this.isAuthInProgress = false;
+                            sessionStorage.removeItem('auth_in_progress');
+                            sessionStorage.removeItem('auth_state');
                             this.isAuthLoading$.next(false);
                             this.snackbarService.error('Authentication was denied. Please try again.');
                             this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
@@ -161,12 +180,16 @@ export class AppComponent implements OnInit {
                     }
                     console.log('Cleaning up auth state after response');
                     this.isAuthInProgress = false;
+                    sessionStorage.removeItem('auth_in_progress');
+                    sessionStorage.removeItem('auth_state');
                     this.isAuthLoading$.next(false);
                 },
                 error: (error) => {
                     console.error('Auth error:', error);
                     console.log('Cleaning up auth state after error');
                     this.isAuthInProgress = false;
+                    sessionStorage.removeItem('auth_in_progress');
+                    sessionStorage.removeItem('auth_state');
                     this.isAuthLoading$.next(false);
                 },
             });

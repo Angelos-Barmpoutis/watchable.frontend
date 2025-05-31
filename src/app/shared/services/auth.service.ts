@@ -18,6 +18,7 @@ import { SnackbarService } from './snackbar.service';
 export class AuthService {
     private readonly SESSION_KEY = 'tmdb_session_id';
     private readonly USER_INFO_KEY = 'tmdb_user_info';
+    private readonly AUTH_STATE_KEY = 'auth_state';
     private readonly isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
     private readonly isLoadingSubject = new BehaviorSubject<boolean>(false);
     private readonly userInfoSubject = new BehaviorSubject<Account | null>(null);
@@ -39,6 +40,27 @@ export class AuthService {
         this.isAuthenticatedSubject.next(!!sessionId);
         this.userInfoSubject.next(userInfo);
         this.listenForAuthSuccess();
+        this.restoreAuthState();
+    }
+
+    private restoreAuthState(): void {
+        const authState = sessionStorage.getItem(this.AUTH_STATE_KEY);
+        if (authState) {
+            console.log('AuthService: Restoring auth state:', authState);
+            const state = JSON.parse(authState);
+            this.isLoadingSubject.next(state.isLoading);
+            if (state.isLoading) {
+                console.log('AuthService: Auth was in progress, cleaning up');
+                this.isLoadingSubject.next(false);
+                sessionStorage.removeItem(this.AUTH_STATE_KEY);
+            }
+        }
+    }
+
+    private saveAuthState(isLoading: boolean): void {
+        const state = { isLoading };
+        console.log('AuthService: Saving auth state:', state);
+        sessionStorage.setItem(this.AUTH_STATE_KEY, JSON.stringify(state));
     }
 
     handleAuthSuccess(response: CreateSessionResponse): void {
@@ -48,6 +70,7 @@ export class AuthService {
             this.localStorageService.setItem(this.SESSION_KEY, response.session_id);
             this.isAuthenticatedSubject.next(true);
             sessionStorage.removeItem('auth_in_progress');
+            this.saveAuthState(false);
 
             console.log('AuthService: Fetching user info');
             this.getUserInfo()
@@ -71,6 +94,7 @@ export class AuthService {
             this.snackbarService.error('Failed to create session. Please try again.');
             this.isLoadingSubject.next(false);
             sessionStorage.removeItem('auth_in_progress');
+            this.saveAuthState(false);
         }
     }
 
@@ -115,6 +139,8 @@ export class AuthService {
         });
 
         this.isLoadingSubject.next(true);
+        this.saveAuthState(true);
+
         this.authFacade
             .createRequestToken()
             .pipe(takeUntilDestroyed(this.destroyRef))
@@ -132,6 +158,7 @@ export class AuthService {
                             console.log('AuthService: Storing auth state in sessionStorage');
                             sessionStorage.setItem('auth_redirect_path', currentPath);
                             sessionStorage.setItem('auth_in_progress', 'true');
+                            this.saveAuthState(true);
                             console.log('AuthService: Redirecting to:', authUrl);
                             window.location.href = authUrl;
                         } else {
@@ -158,18 +185,21 @@ export class AuthService {
                             } else {
                                 console.log('AuthService: Failed to open popup');
                                 this.isLoadingSubject.next(false);
+                                this.saveAuthState(false);
                                 this.snackbarService.error('Failed to open authentication window. Please try again.');
                             }
                         }
                     } else {
                         console.log('AuthService: Failed to create request token');
                         this.isLoadingSubject.next(false);
+                        this.saveAuthState(false);
                         this.snackbarService.error('Failed to create request token. Please try again.');
                     }
                 },
                 error: (error) => {
                     console.error('AuthService: Sign in error:', error);
                     this.isLoadingSubject.next(false);
+                    this.saveAuthState(false);
                     this.snackbarService.error('Failed to start authentication process. Please try again.');
                 },
             });
