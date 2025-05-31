@@ -59,6 +59,34 @@ export class AppComponent implements OnInit {
             this.isAuthInProgress = true;
             this.isAuthLoading$.next(true);
         }
+
+        // Add visibility change listener
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                console.log('AppComponent: Tab became visible, checking state');
+                this.checkAndRestoreState();
+            }
+        });
+    }
+
+    private checkAndRestoreState(): void {
+        console.log('AppComponent: Checking and restoring state');
+        const isRedirecting = sessionStorage.getItem('auth_redirect') === 'true';
+        const stateStr = sessionStorage.getItem('auth_state');
+
+        console.log('AppComponent: Current state check:', {
+            isRedirecting,
+            stateStr,
+            url: window.location.href,
+            isAuthInProgress: this.isAuthInProgress,
+            isLoading: this.isAuthLoading$.value,
+        });
+
+        if (isRedirecting) {
+            console.log('AppComponent: Restoring redirect state');
+            this.isAuthInProgress = true;
+            this.isAuthLoading$.next(true);
+        }
     }
 
     @HostListener('window:popstate', ['$event'])

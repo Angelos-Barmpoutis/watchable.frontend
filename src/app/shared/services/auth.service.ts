@@ -49,6 +49,30 @@ export class AuthService {
         this.userInfoSubject.next(userInfo);
         this.listenForAuthSuccess();
         this.restoreAuthState();
+
+        // Add visibility change listener to handle tab/window focus
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                console.log('AuthService: Tab became visible, checking state');
+                this.checkAndRestoreState();
+            }
+        });
+    }
+
+    private checkAndRestoreState(): void {
+        console.log('AuthService: Checking and restoring state');
+        const isRedirecting = sessionStorage.getItem(this.AUTH_REDIRECT_KEY) === 'true';
+        const stateStr = sessionStorage.getItem(this.AUTH_STATE_KEY);
+
+        console.log('AuthService: Current state check:', {
+            isRedirecting,
+            stateStr,
+            url: window.location.href,
+        });
+
+        if (isRedirecting || stateStr) {
+            this.restoreAuthState();
+        }
     }
 
     private restoreAuthState(): void {
@@ -75,6 +99,7 @@ export class AuthService {
                     this.isRedirectingSubject.next(true);
                     this.isLoadingSubject.next(true);
                     sessionStorage.setItem(this.AUTH_IN_PROGRESS_KEY, 'true');
+                    sessionStorage.setItem(this.AUTH_REDIRECT_KEY, 'true');
                 } else {
                     this.isLoadingSubject.next(state.isLoading);
                     this.isRedirectingSubject.next(state.isRedirecting);
