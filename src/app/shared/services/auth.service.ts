@@ -19,12 +19,20 @@ export class AuthService {
     private readonly SESSION_KEY = 'tmdb_session_id';
     private readonly USER_INFO_KEY = 'tmdb_user_info';
     private readonly AUTH_STATE_KEY = 'auth_state';
+    private readonly AUTH_IN_PROGRESS_KEY = 'auth_in_progress';
+    private readonly AUTH_REDIRECT_KEY = 'auth_redirect';
+    private readonly AUTH_REDIRECT_URL_KEY = 'auth_redirect_url';
+    private readonly AUTH_REDIRECT_TIMESTAMP_KEY = 'auth_redirect_timestamp';
+    private readonly AUTH_REDIRECT_TIMEOUT = 5 * 60 * 1000; // 5 minutes
+
     private readonly isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
     private readonly isLoadingSubject = new BehaviorSubject<boolean>(false);
+    public readonly isRedirectingSubject = new BehaviorSubject<boolean>(false);
     private readonly userInfoSubject = new BehaviorSubject<Account | null>(null);
 
     readonly isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
     readonly isLoading$ = this.isLoadingSubject.asObservable();
+    readonly isRedirecting$ = this.isRedirectingSubject.asObservable();
     readonly userInfo$ = this.userInfoSubject.asObservable();
 
     constructor(
@@ -44,23 +52,27 @@ export class AuthService {
     }
 
     private restoreAuthState(): void {
-        const authState = sessionStorage.getItem(this.AUTH_STATE_KEY);
-        if (authState) {
-            console.log('AuthService: Restoring auth state:', authState);
-            const state = JSON.parse(authState);
-            this.isLoadingSubject.next(state.isLoading);
-            if (state.isLoading && !state.isRedirecting) {
-                console.log('AuthService: Auth was in progress (not redirecting), cleaning up');
-                this.isLoadingSubject.next(false);
-                sessionStorage.removeItem(this.AUTH_STATE_KEY);
+        const stateStr = sessionStorage.getItem(this.AUTH_STATE_KEY);
+        if (stateStr) {
+            try {
+                const state = JSON.parse(stateStr);
+                this.isLoadingSubject.next(state.isLoading);
+                this.isRedirectingSubject.next(state.isRedirecting);
+            } catch (error) {
+                console.error('Error restoring auth state:', error);
+                this.cleanupAuthState();
             }
         }
     }
 
     private saveAuthState(isLoading: boolean, isRedirecting: boolean = false): void {
-        const state = { isLoading, isRedirecting };
-        console.log('AuthService: Saving auth state:', state);
+        const state = {
+            isLoading,
+            isRedirecting,
+            timestamp: Date.now(),
+        };
         sessionStorage.setItem(this.AUTH_STATE_KEY, JSON.stringify(state));
+        this.isRedirectingSubject.next(isRedirecting);
     }
 
     handleAuthSuccess(response: CreateSessionResponse): void {
@@ -134,6 +146,7 @@ export class AuthService {
         console.log('Current state:', {
             isAuthenticated: this.isAuthenticated(),
             isLoading: this.isLoadingSubject.value,
+            isRedirecting: this.isRedirectingSubject.value,
             sessionId: this.getSessionId(),
             url: window.location.href,
         });
@@ -265,5 +278,16 @@ export class AuthService {
 
     isAuthenticated(): boolean {
         return this.isAuthenticatedSubject.value;
+    }
+
+    private cleanupAuthState(): void {
+        console.log('AuthService: Cleaning up auth state');
+        this.isLoadingSubject.next(false);
+        this.isRedirectingSubject.next(false);
+        sessionStorage.removeItem(this.AUTH_STATE_KEY);
+        sessionStorage.removeItem(this.AUTH_IN_PROGRESS_KEY);
+        sessionStorage.removeItem(this.AUTH_REDIRECT_KEY);
+        sessionStorage.removeItem(this.AUTH_REDIRECT_URL_KEY);
+        sessionStorage.removeItem(this.AUTH_REDIRECT_TIMESTAMP_KEY);
     }
 }
