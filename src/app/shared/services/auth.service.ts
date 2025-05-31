@@ -110,6 +110,8 @@ export class AuthService {
                         const authUrl = `${environment.TMDBAuthUrl}${response.request_token}?redirect_to=${environment.origin}${currentPath}`;
 
                         if (this.isMobileDevice()) {
+                            // Store the current state before redirecting
+                            sessionStorage.setItem('auth_redirect_path', currentPath);
                             window.location.href = authUrl;
                         } else {
                             const popup = window.open(authUrl, 'TMDB Authentication', 'width=800,height=600');
@@ -192,7 +194,9 @@ export class AuthService {
     }
 
     private isMobileDevice(): boolean {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const userAgent = navigator.userAgent;
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+        return isMobile;
     }
 
     getSessionId(): string | null {

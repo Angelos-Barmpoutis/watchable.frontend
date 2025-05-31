@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostListener, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { BehaviorSubject, EMPTY, forkJoin, switchMap, take } from 'rxjs';
@@ -39,6 +39,7 @@ import { SnackbarService } from './shared/services/snackbar.service';
 export class AppComponent implements OnInit {
     isAppReady$ = new BehaviorSubject<boolean>(false);
     isAuthLoading$ = new BehaviorSubject<boolean>(false);
+    private isAuthInProgress = false;
 
     constructor(
         public searchService: SearchService,
@@ -51,6 +52,15 @@ export class AppComponent implements OnInit {
         private destroyRef: DestroyRef,
         public snackbarService: SnackbarService,
     ) {}
+
+    @HostListener('window:popstate', ['$event'])
+    onPopState(): void {
+        if (this.isAuthInProgress) {
+            this.isAuthLoading$.next(false);
+            this.isAuthInProgress = false;
+            this.snackbarService.error('Authentication was cancelled');
+        }
+    }
 
     ngOnInit(): void {
         this.initializeApp();
@@ -83,11 +93,14 @@ export class AppComponent implements OnInit {
                                 window.close();
                                 return EMPTY;
                             }
+                            this.isAuthInProgress = true;
                             this.isAuthLoading$.next(true);
                             return this.authFacade.createSession(requestToken);
                         }
 
                         if (denied === 'true') {
+                            this.isAuthInProgress = false;
+                            this.isAuthLoading$.next(false);
                             this.snackbarService.error('Authentication was denied. Please try again.');
                             window.close();
                             return EMPTY;
@@ -96,12 +109,19 @@ export class AppComponent implements OnInit {
                     return EMPTY;
                 }),
             )
-            .subscribe((response) => {
-                if (response?.success) {
-                    this.authService.handleAuthSuccess(response);
-                    this.router.navigate([this.router.url.split('?')[0]]);
-                }
-                this.isAuthLoading$.next(false);
+            .subscribe({
+                next: (response) => {
+                    if (response?.success) {
+                        this.authService.handleAuthSuccess(response);
+                        this.router.navigate([this.router.url.split('?')[0]]);
+                    }
+                    this.isAuthInProgress = false;
+                    this.isAuthLoading$.next(false);
+                },
+                error: () => {
+                    this.isAuthInProgress = false;
+                    this.isAuthLoading$.next(false);
+                },
             });
     }
 
