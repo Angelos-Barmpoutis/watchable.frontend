@@ -115,6 +115,18 @@ export class AppComponent implements OnInit {
 
     private handleAuthCallback(): void {
         console.log('Starting auth callback handler');
+        console.log('Initial state:', {
+            isAuthInProgress: this.isAuthInProgress,
+            isLoading: this.isAuthLoading$.value,
+            isRedirecting: this.authService.isRedirectingSubject.value,
+            isAuthenticated: this.authService.isAuthenticated(),
+            sessionStorage: {
+                auth_in_progress: sessionStorage.getItem('auth_in_progress'),
+                auth_state: sessionStorage.getItem('auth_state'),
+                auth_redirect: sessionStorage.getItem('auth_redirect'),
+            },
+        });
+
         this.route.queryParams
             .pipe(
                 takeUntilDestroyed(this.destroyRef),
@@ -129,6 +141,7 @@ export class AppComponent implements OnInit {
                         sessionStorage: {
                             auth_in_progress: sessionStorage.getItem('auth_in_progress'),
                             auth_state: sessionStorage.getItem('auth_state'),
+                            auth_redirect: sessionStorage.getItem('auth_redirect'),
                         },
                     });
 
@@ -161,6 +174,16 @@ export class AppComponent implements OnInit {
                             this.isAuthInProgress = true;
                             sessionStorage.setItem('auth_in_progress', 'true');
                             this.isAuthLoading$.next(true);
+                            console.log('State before creating session:', {
+                                isAuthInProgress: this.isAuthInProgress,
+                                isLoading: this.isAuthLoading$.value,
+                                isRedirecting: this.authService.isRedirectingSubject.value,
+                                sessionStorage: {
+                                    auth_in_progress: sessionStorage.getItem('auth_in_progress'),
+                                    auth_state: sessionStorage.getItem('auth_state'),
+                                    auth_redirect: sessionStorage.getItem('auth_redirect'),
+                                },
+                            });
                             return this.authFacade.createSession(requestToken);
                         }
 
@@ -169,6 +192,7 @@ export class AppComponent implements OnInit {
                             this.isAuthInProgress = false;
                             sessionStorage.removeItem('auth_in_progress');
                             sessionStorage.removeItem('auth_state');
+                            sessionStorage.removeItem('auth_redirect');
                             this.isAuthLoading$.next(false);
                             this.snackbarService.error('Authentication was denied. Please try again.');
                             this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
@@ -191,6 +215,7 @@ export class AppComponent implements OnInit {
                     this.isAuthInProgress = false;
                     sessionStorage.removeItem('auth_in_progress');
                     sessionStorage.removeItem('auth_state');
+                    sessionStorage.removeItem('auth_redirect');
                     this.isAuthLoading$.next(false);
                 },
                 error: (error) => {
@@ -199,6 +224,7 @@ export class AppComponent implements OnInit {
                     this.isAuthInProgress = false;
                     sessionStorage.removeItem('auth_in_progress');
                     sessionStorage.removeItem('auth_state');
+                    sessionStorage.removeItem('auth_redirect');
                     this.isAuthLoading$.next(false);
                 },
             });

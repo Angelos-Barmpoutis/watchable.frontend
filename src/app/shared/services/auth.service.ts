@@ -52,16 +52,36 @@ export class AuthService {
     }
 
     private restoreAuthState(): void {
+        console.log('AuthService: Restoring auth state');
         const stateStr = sessionStorage.getItem(this.AUTH_STATE_KEY);
+        console.log('AuthService: Retrieved state from storage:', stateStr);
+
         if (stateStr) {
             try {
                 const state = JSON.parse(stateStr);
+                console.log('AuthService: Parsed state:', state);
+
+                // Check if the state is too old
+                const stateAge = Date.now() - (state.timestamp || 0);
+                if (stateAge > this.AUTH_REDIRECT_TIMEOUT) {
+                    console.log('AuthService: State is too old, cleaning up');
+                    this.cleanupAuthState();
+                    return;
+                }
+
                 this.isLoadingSubject.next(state.isLoading);
                 this.isRedirectingSubject.next(state.isRedirecting);
+                console.log('AuthService: Restored state:', {
+                    isLoading: state.isLoading,
+                    isRedirecting: state.isRedirecting,
+                    age: stateAge,
+                });
             } catch (error) {
-                console.error('Error restoring auth state:', error);
+                console.error('AuthService: Error restoring auth state:', error);
                 this.cleanupAuthState();
             }
+        } else {
+            console.log('AuthService: No state found in storage');
         }
     }
 
@@ -149,6 +169,11 @@ export class AuthService {
             isRedirecting: this.isRedirectingSubject.value,
             sessionId: this.getSessionId(),
             url: window.location.href,
+            sessionStorage: {
+                auth_state: sessionStorage.getItem(this.AUTH_STATE_KEY),
+                auth_in_progress: sessionStorage.getItem(this.AUTH_IN_PROGRESS_KEY),
+                auth_redirect: sessionStorage.getItem(this.AUTH_REDIRECT_KEY),
+            },
         });
 
         this.isLoadingSubject.next(true);
@@ -172,6 +197,16 @@ export class AuthService {
                             sessionStorage.setItem('auth_redirect_path', currentPath);
                             sessionStorage.setItem('auth_in_progress', 'true');
                             this.saveAuthState(true, true);
+                            console.log('AuthService: Final state before redirect:', {
+                                isAuthenticated: this.isAuthenticated(),
+                                isLoading: this.isLoadingSubject.value,
+                                isRedirecting: this.isRedirectingSubject.value,
+                                sessionStorage: {
+                                    auth_state: sessionStorage.getItem(this.AUTH_STATE_KEY),
+                                    auth_in_progress: sessionStorage.getItem(this.AUTH_IN_PROGRESS_KEY),
+                                    auth_redirect: sessionStorage.getItem(this.AUTH_REDIRECT_KEY),
+                                },
+                            });
                             console.log('AuthService: Redirecting to:', authUrl);
                             window.location.href = authUrl;
                         } else {
