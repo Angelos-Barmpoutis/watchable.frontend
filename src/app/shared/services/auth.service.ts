@@ -42,27 +42,32 @@ export class AuthService {
     }
 
     handleAuthSuccess(response: CreateSessionResponse): void {
+        console.log('AuthService: Handling auth success:', response);
         if (response.success) {
+            console.log('AuthService: Storing session ID');
             this.localStorageService.setItem(this.SESSION_KEY, response.session_id);
             this.isAuthenticatedSubject.next(true);
             sessionStorage.removeItem('auth_in_progress');
 
-            // Get full user info and store it
+            console.log('AuthService: Fetching user info');
             this.getUserInfo()
                 .pipe(
                     takeUntilDestroyed(this.destroyRef),
-                    catchError(() => {
+                    catchError((error) => {
+                        console.error('AuthService: Error fetching user info:', error);
                         this.snackbarService.success('Signed in');
                         return of(null);
                     }),
                 )
                 .subscribe((userInfo) => {
                     if (userInfo) {
+                        console.log('AuthService: User info received:', userInfo);
                         this.storeUserInfo(userInfo);
                         this.snackbarService.success(`Signed in as ${userInfo.username}`);
                     }
                 });
         } else {
+            console.log('AuthService: Failed to create session');
             this.snackbarService.error('Failed to create session. Please try again.');
             this.isLoadingSubject.next(false);
             sessionStorage.removeItem('auth_in_progress');
@@ -101,30 +106,47 @@ export class AuthService {
     }
 
     signIn(): void {
+        console.log('AuthService: Starting sign in process');
+        console.log('Current state:', {
+            isAuthenticated: this.isAuthenticated(),
+            isLoading: this.isLoadingSubject.value,
+            sessionId: this.getSessionId(),
+            url: window.location.href,
+        });
+
         this.isLoadingSubject.next(true);
         this.authFacade
             .createRequestToken()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
                 next: (response) => {
+                    console.log('AuthService: Request token response:', response);
                     if (response?.success) {
                         const currentPath = window.location.pathname;
                         const authUrl = `${environment.TMDBAuthUrl}${response.request_token}?redirect_to=${environment.origin}${currentPath}`;
+                        console.log('AuthService: Constructed auth URL:', authUrl);
+                        console.log('AuthService: Is mobile device:', this.isMobileDevice());
 
                         if (this.isMobileDevice()) {
-                            // Store the current state before redirecting
+                            console.log('AuthService: Using mobile flow');
+                            console.log('AuthService: Storing auth state in sessionStorage');
                             sessionStorage.setItem('auth_redirect_path', currentPath);
                             sessionStorage.setItem('auth_in_progress', 'true');
+                            console.log('AuthService: Redirecting to:', authUrl);
                             window.location.href = authUrl;
                         } else {
+                            console.log('AuthService: Using desktop flow');
                             const popup = window.open(authUrl, 'TMDB Authentication', 'width=800,height=600');
 
                             if (popup) {
+                                console.log('AuthService: Popup opened successfully');
                                 const checkPopup = setInterval(() => {
                                     if (popup.closed) {
+                                        console.log('AuthService: Popup closed');
                                         clearInterval(checkPopup);
                                         setTimeout(() => {
                                             if (!this.getSessionId()) {
+                                                console.log('AuthService: No session found after popup closed');
                                                 this.snackbarService.error(
                                                     'Authentication was denied. Please try again.',
                                                 );
@@ -134,16 +156,19 @@ export class AuthService {
                                     }
                                 }, 500);
                             } else {
+                                console.log('AuthService: Failed to open popup');
                                 this.isLoadingSubject.next(false);
                                 this.snackbarService.error('Failed to open authentication window. Please try again.');
                             }
                         }
                     } else {
+                        console.log('AuthService: Failed to create request token');
                         this.isLoadingSubject.next(false);
                         this.snackbarService.error('Failed to create request token. Please try again.');
                     }
                 },
-                error: () => {
+                error: (error) => {
+                    console.error('AuthService: Sign in error:', error);
                     this.isLoadingSubject.next(false);
                     this.snackbarService.error('Failed to start authentication process. Please try again.');
                 },
@@ -198,7 +223,9 @@ export class AuthService {
 
     private isMobileDevice(): boolean {
         const userAgent = navigator.userAgent;
+        console.log('AuthService: User agent:', userAgent);
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+        console.log('AuthService: Is mobile device:', isMobile);
         return isMobile;
     }
 

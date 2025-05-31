@@ -55,7 +55,15 @@ export class AppComponent implements OnInit {
 
     @HostListener('window:popstate', ['$event'])
     onPopState(): void {
+        console.log('PopState event triggered');
+        console.log('Current auth state:', {
+            isAuthInProgress: this.isAuthInProgress,
+            isLoading: this.isAuthLoading$.value,
+            url: window.location.href,
+        });
+
         if (this.isAuthInProgress) {
+            console.log('Cleaning up auth state after popstate');
             this.isAuthLoading$.next(false);
             this.isAuthInProgress = false;
             this.snackbarService.error('Authentication was cancelled');
@@ -65,33 +73,55 @@ export class AppComponent implements OnInit {
 
     @HostListener('window:beforeunload', ['$event'])
     onBeforeUnload(): void {
+        console.log('BeforeUnload event triggered');
+        console.log('Current auth state:', {
+            isAuthInProgress: this.isAuthInProgress,
+            isLoading: this.isAuthLoading$.value,
+            url: window.location.href,
+        });
+
         if (this.isAuthInProgress) {
+            console.log('Cleaning up auth state before unload');
             this.isAuthLoading$.next(false);
             this.isAuthInProgress = false;
         }
     }
 
     ngOnInit(): void {
+        console.log('AppComponent initialized');
         this.initializeApp();
         this.handleAuthCallback();
     }
 
     private handleAuthCallback(): void {
+        console.log('Starting auth callback handler');
         this.route.queryParams
             .pipe(
                 takeUntilDestroyed(this.destroyRef),
                 switchMap((params: { request_token?: string; approved?: string; denied?: string }) => {
+                    console.log('Auth callback params:', params);
+                    console.log('Current URL:', window.location.href);
+                    console.log('Current auth state:', {
+                        isAuthInProgress: this.isAuthInProgress,
+                        isLoading: this.isAuthLoading$.value,
+                        isAuthenticated: this.authService.isAuthenticated(),
+                    });
+
                     const requestToken = params.request_token;
                     const approved = params.approved;
                     const denied = params.denied;
 
                     if (this.authService.isAuthenticated()) {
+                        console.log('User already authenticated, skipping auth flow');
                         return EMPTY;
                     }
 
                     if (requestToken != null) {
+                        console.log('Request token found:', requestToken);
                         if (approved === 'true') {
+                            console.log('Auth approved');
                             if (window.opener) {
+                                console.log('Window opener exists, sending message');
                                 (window.opener as Window).postMessage(
                                     {
                                         type: 'AUTH_SUCCESS',
@@ -102,12 +132,14 @@ export class AppComponent implements OnInit {
                                 window.close();
                                 return EMPTY;
                             }
+                            console.log('No window opener, creating session');
                             this.isAuthInProgress = true;
                             this.isAuthLoading$.next(true);
                             return this.authFacade.createSession(requestToken);
                         }
 
                         if (denied === 'true') {
+                            console.log('Auth denied');
                             this.isAuthInProgress = false;
                             this.isAuthLoading$.next(false);
                             this.snackbarService.error('Authentication was denied. Please try again.');
@@ -115,19 +147,25 @@ export class AppComponent implements OnInit {
                             return EMPTY;
                         }
                     }
+                    console.log('No auth params found');
                     return EMPTY;
                 }),
             )
             .subscribe({
                 next: (response) => {
+                    console.log('Auth response received:', response);
                     if (response?.success) {
+                        console.log('Auth successful, handling success');
                         this.authService.handleAuthSuccess(response);
                         this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
                     }
+                    console.log('Cleaning up auth state after response');
                     this.isAuthInProgress = false;
                     this.isAuthLoading$.next(false);
                 },
-                error: () => {
+                error: (error) => {
+                    console.error('Auth error:', error);
+                    console.log('Cleaning up auth state after error');
                     this.isAuthInProgress = false;
                     this.isAuthLoading$.next(false);
                 },
