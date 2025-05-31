@@ -59,6 +59,15 @@ export class AppComponent implements OnInit {
             this.isAuthLoading$.next(false);
             this.isAuthInProgress = false;
             this.snackbarService.error('Authentication was cancelled');
+            this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
+        }
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeUnload(): void {
+        if (this.isAuthInProgress) {
+            this.isAuthLoading$.next(false);
+            this.isAuthInProgress = false;
         }
     }
 
@@ -102,7 +111,7 @@ export class AppComponent implements OnInit {
                             this.isAuthInProgress = false;
                             this.isAuthLoading$.next(false);
                             this.snackbarService.error('Authentication was denied. Please try again.');
-                            window.close();
+                            this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
                             return EMPTY;
                         }
                     }
@@ -113,7 +122,7 @@ export class AppComponent implements OnInit {
                 next: (response) => {
                     if (response?.success) {
                         this.authService.handleAuthSuccess(response);
-                        this.router.navigate([this.router.url.split('?')[0]]);
+                        this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
                     }
                     this.isAuthInProgress = false;
                     this.isAuthLoading$.next(false);

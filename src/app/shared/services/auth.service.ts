@@ -45,6 +45,7 @@ export class AuthService {
         if (response.success) {
             this.localStorageService.setItem(this.SESSION_KEY, response.session_id);
             this.isAuthenticatedSubject.next(true);
+            sessionStorage.removeItem('auth_in_progress');
 
             // Get full user info and store it
             this.getUserInfo()
@@ -64,6 +65,7 @@ export class AuthService {
         } else {
             this.snackbarService.error('Failed to create session. Please try again.');
             this.isLoadingSubject.next(false);
+            sessionStorage.removeItem('auth_in_progress');
         }
     }
 
@@ -112,6 +114,7 @@ export class AuthService {
                         if (this.isMobileDevice()) {
                             // Store the current state before redirecting
                             sessionStorage.setItem('auth_redirect_path', currentPath);
+                            sessionStorage.setItem('auth_in_progress', 'true');
                             window.location.href = authUrl;
                         } else {
                             const popup = window.open(authUrl, 'TMDB Authentication', 'width=800,height=600');
