@@ -51,7 +51,15 @@ export class AppComponent implements OnInit {
         public authService: AuthService,
         private destroyRef: DestroyRef,
         public snackbarService: SnackbarService,
-    ) {}
+    ) {
+        // Check for redirect state on component initialization
+        const isRedirecting = sessionStorage.getItem('auth_redirect') === 'true';
+        if (isRedirecting) {
+            console.log('AppComponent: Detected redirect state on initialization');
+            this.isAuthInProgress = true;
+            this.isAuthLoading$.next(true);
+        }
+    }
 
     @HostListener('window:popstate', ['$event'])
     onPopState(): void {
@@ -64,17 +72,25 @@ export class AppComponent implements OnInit {
             sessionStorage: {
                 auth_in_progress: sessionStorage.getItem('auth_in_progress'),
                 auth_state: sessionStorage.getItem('auth_state'),
+                auth_redirect: sessionStorage.getItem('auth_redirect'),
             },
         });
 
-        if (this.isAuthInProgress || sessionStorage.getItem('auth_in_progress') === 'true') {
+        // Only clean up if we're not in a redirect flow
+        if (
+            !this.authService.isRedirectingSubject.value &&
+            (this.isAuthInProgress || sessionStorage.getItem('auth_in_progress') === 'true')
+        ) {
             console.log('Cleaning up auth state after popstate');
             this.isAuthLoading$.next(false);
             this.isAuthInProgress = false;
             sessionStorage.removeItem('auth_in_progress');
             sessionStorage.removeItem('auth_state');
+            sessionStorage.removeItem('auth_redirect');
             this.snackbarService.error('Authentication was cancelled');
             this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
+        } else if (this.authService.isRedirectingSubject.value) {
+            console.log('Preserving auth state during popstate (redirect in progress)');
         }
     }
 
@@ -89,6 +105,7 @@ export class AppComponent implements OnInit {
             sessionStorage: {
                 auth_in_progress: sessionStorage.getItem('auth_in_progress'),
                 auth_state: sessionStorage.getItem('auth_state'),
+                auth_redirect: sessionStorage.getItem('auth_redirect'),
             },
         });
 
@@ -102,6 +119,7 @@ export class AppComponent implements OnInit {
             this.isAuthInProgress = false;
             sessionStorage.removeItem('auth_in_progress');
             sessionStorage.removeItem('auth_state');
+            sessionStorage.removeItem('auth_redirect');
         } else if (this.authService.isRedirectingSubject.value) {
             console.log('Preserving auth state during redirect');
         }
@@ -126,6 +144,14 @@ export class AppComponent implements OnInit {
                 auth_redirect: sessionStorage.getItem('auth_redirect'),
             },
         });
+
+        // Check if we're returning from a redirect
+        const isRedirecting = sessionStorage.getItem('auth_redirect') === 'true';
+        if (isRedirecting) {
+            console.log('Detected return from redirect');
+            this.isAuthInProgress = true;
+            this.isAuthLoading$.next(true);
+        }
 
         this.route.queryParams
             .pipe(
