@@ -164,7 +164,7 @@
 @media (max-width: map-get($breakpoints, "sm")) {
     .media-list-item {
         .media-main {
-            grid-template-columns: 88px 1fr;
+            grid-template-columns: 96px 1fr;
 
             .info {
                 padding: calc($spacing-sm * 1.5);
@@ -186,10 +186,10 @@
     }
 
     .media-list-item-loading {
-        height: 132.8px;
+        height: 144px;
 
         .media-main {
-            grid-template-columns: 88px 1fr;
+            grid-template-columns: 96px 1fr;
 
             .info-skeleton {
                 padding: calc($spacing-sm * 1.5);
