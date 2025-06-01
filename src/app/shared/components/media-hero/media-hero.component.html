@@ -59,6 +59,7 @@
                             </app-button>
                             <app-button
                                 [variant]="ButtonType.Secondary"
+                                [hasPadding]="false"
                                 [type]="'button'"
                                 [icon]="isInWatchlist ? 'fas fa-bookmark' : 'far fa-bookmark'"
                                 [text]="isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'"
@@ -107,6 +108,7 @@
                         ></app-button>
                         <app-button
                             [variant]="ButtonType.Secondary"
+                            [hasPadding]="false"
                             [type]="'button'"
                             [icon]="isInWatchlist ? 'fas fa-bookmark' : 'far fa-bookmark'"
                             [text]="isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'"
