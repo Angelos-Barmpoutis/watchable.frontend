@@ -118,8 +118,13 @@ export class AppComponent implements OnInit {
 
                     // Check if auth was cancelled (back button) - more reliable with authWasHandled flag
                     if (wasRedirecting && !this.authService.wasAuthHandled()) {
-                        this.cleanupAuthState();
-                        this.snackbarService.error('Authentication was cancelled');
+                        // Delay the check to allow auth processing time
+                        setTimeout(() => {
+                            if (!this.authService.wasAuthHandled()) {
+                                this.cleanupAuthState();
+                                this.snackbarService.error('Authentication was cancelled');
+                            }
+                        }, 2000);
                         return EMPTY;
                     }
 
