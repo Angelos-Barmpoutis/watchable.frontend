@@ -23,9 +23,9 @@ export class DialogComponent implements OnInit, OnDestroy {
     @ViewChild('contentContainer', { read: ViewContainerRef, static: true })
     contentContainer!: ViewContainerRef;
 
-    contentComponent!: Type<any>;
-    data: any;
-    private contentComponentRef: ComponentRef<any> | null = null;
+    contentComponent!: Type<unknown>;
+    data: Record<string, unknown> = {};
+    private contentComponentRef: ComponentRef<unknown> | null = null;
 
     constructor(
         private dialogService: DialogService,
@@ -39,7 +39,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         });
 
         if (this.data) {
-            Object.assign(this.contentComponentRef.instance, this.data);
+            Object.assign(this.contentComponentRef.instance as Record<string, unknown>, this.data);
         }
     }
 

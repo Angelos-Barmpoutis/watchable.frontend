@@ -79,7 +79,7 @@ export class PersonComponent implements OnInit {
         this.tvCast = (this.personDetails?.tv_credits?.cast as unknown as Array<TvCreditsCastPerson>) || [];
 
         const externalIds = Object.fromEntries(
-            Object.entries(this.personDetails?.external_ids || {}).filter(([key, value]) => value !== null),
+            Object.entries(this.personDetails?.external_ids || {}).filter(([value]) => value !== null),
         ) as unknown as ExternalIds;
         this.externalIds = Object.keys(externalIds).length > 0 ? externalIds : undefined;
 

@@ -41,10 +41,10 @@ import { TvShowDetails, TvShowEpisode, TvShowSeasonDetails } from '../../../../.
 })
 export class SeasonDetailsPageComponent implements OnInit {
     mediaType = MediaType;
-    tvShowId!: number;
-    seasonNumber!: number;
-    tvShowDetails!: TvShowDetails;
-    seasonDetails!: TvShowSeasonDetails;
+    tvShowId: number | undefined;
+    seasonNumber: number | undefined;
+    tvShowDetails: TvShowDetails | undefined;
+    seasonDetails: TvShowSeasonDetails | undefined;
     episodes: Array<TvShowEpisode> = [];
     isLoading = true;
     readonly aspectRatio = AspectRatio;

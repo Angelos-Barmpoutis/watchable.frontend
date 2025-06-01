@@ -60,15 +60,18 @@
                         (click)="toggleProfileDropdown($event)"
                     >
                         <ng-container *ngIf="isLoggedIn && userInfo; else defaultAvatar">
-                            <img
-                                *ngIf="userInfo?.avatar_path"
-                                class="avatar-image"
-                                [src]="'https://image.tmdb.org/t/p/w92' + (userInfo?.avatar_path || '')"
-                                [alt]="userInfo?.name || userInfo?.username || ''"
-                            />
-                            <div *ngIf="!userInfo?.avatar_path" class="avatar-initials">
-                                {{ userInfo?.name || userInfo?.username || "" | avatarLetter }}
-                            </div>
+                            <ng-container *ngIf="userInfo?.avatar_path">
+                                <img
+                                    class="avatar-image"
+                                    [src]="'https://image.tmdb.org/t/p/w92' + (userInfo.avatar_path || '')"
+                                    [alt]="userInfo.name || userInfo.username || ''"
+                                />
+                            </ng-container>
+                            <ng-container *ngIf="!userInfo?.avatar_path">
+                                <span class="avatar-initials">{{
+                                    userInfo.name || userInfo.username || "" | avatarLetter
+                                }}</span>
+                            </ng-container>
                         </ng-container>
                         <ng-template #defaultAvatar>
                             <i class="fa-regular fa-user"></i>

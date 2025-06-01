@@ -5,11 +5,11 @@
                 <img
                     *ngIf="personDetails?.profile_path"
                     [src]="'https://image.tmdb.org/t/p/w500' + personDetails.profile_path"
-                    [alt]="personDetails?.name"
+                    [alt]="personDetails.name"
                 />
             </div>
             <div class="hero-info">
-                <h1>{{ personDetails?.name }}</h1>
+                <h1>{{ personDetails.name }}</h1>
                 <div class="meta">
                     <span *ngIf="personDetails?.known_for_department">{{ personDetails.known_for_department }}</span>
                     <span *ngIf="gender">{{ gender }}</span>
@@ -39,7 +39,7 @@
                     <app-section-header title="Biography" [isLoading]="isLoading"></app-section-header>
                 </header>
                 <p *ngIf="!isLoading; else loadingBiographyTemplate" appFadeIn class="overview">
-                    {{ personDetails?.biography }}
+                    {{ personDetails.biography }}
                 </p>
                 <ng-template #loadingBiographyTemplate>
                     <div class="skeleton-overview">

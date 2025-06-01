@@ -14,10 +14,7 @@
                 <span class="review-date">{{ review.created_at | date: "mediumDate" }}</span>
             </div>
             <div *ngIf="review.author_details.rating" class="reviewer-rating">
-                <app-rating-badge
-                    [rating]="review?.author_details?.rating ?? 0"
-                    [isLoading]="isLoading"
-                ></app-rating-badge>
+                <app-rating-badge [rating]="review.author_details.rating" [isLoading]="isLoading"></app-rating-badge>
             </div>
         </div>
         <div class="review-content">
@@ -40,7 +37,7 @@
                 <div class="skeleton-reviewer-name"></div>
                 <div class="skeleton-review-date"></div>
             </div>
-            <app-rating-badge [rating]="review?.author_details?.rating ?? 0" [isLoading]="true"></app-rating-badge>
+            <app-rating-badge [rating]="review.author_details.rating" [isLoading]="true"></app-rating-badge>
         </div>
         <div class="skeleton-review-content">
             <div class="skeleton-review-text"></div>

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { environment } from '../../../environments/environment';
 import { AccountFacade } from '../facades/account.facade';
 import { AuthFacade } from '../facades/auth.facade';
 import { createAuthPopup, getAuthUrl, handleMobileAuthRedirect, isMobileDevice } from '../helpers/auth.helper';
@@ -207,7 +206,7 @@ export class AuthService {
                         this.snackbarService.error('Failed to create request token');
                     }
                 },
-                error: (error) => {
+                error: (error: unknown) => {
                     console.error('Sign in error:', error);
                     this.updateAuthenticationLoadingState(false);
                     this.snackbarService.error('Failed to start authentication process');

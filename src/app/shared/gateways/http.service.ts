@@ -8,16 +8,16 @@ import { Observable } from 'rxjs';
 export class HttpService {
     constructor(private http: HttpClient) {}
 
-    get<T>(url: string, params?: Record<string, any>): Observable<T> {
+    get<T>(url: string, params?: Record<string, string | number | boolean>): Observable<T> {
         const httpParams = new HttpParams({ fromObject: params || {} });
         return this.http.get<T>(url, { params: httpParams });
     }
 
-    post<T>(url: string, body: any): Observable<T> {
+    post<T>(url: string, body: Record<string, string | number | boolean>): Observable<T> {
         return this.http.post<T>(url, body);
     }
 
-    put<T>(url: string, body: any): Observable<T> {
+    put<T>(url: string, body: Record<string, string | number | boolean>): Observable<T> {
         return this.http.put<T>(url, body);
     }
 

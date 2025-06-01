@@ -8,6 +8,8 @@ import { DEFAULT } from '../constants/defaults.constant';
 import { MediaType } from '../enumerations/media-type.enum';
 import { filterMediaItems } from '../helpers/filter-items.helper';
 import { Genre } from '../models/genre.model';
+import { Movie } from '../models/movie.model';
+import { TvShow } from '../models/tv-show.model';
 import { LocalStorageService } from '../services/local-storage.service';
 
 export interface GenreLoadedItems<T> {
@@ -48,7 +50,7 @@ export abstract class AbstractGenreLoaderComponent<T> implements OnInit {
     protected abstract getItemsByGenreIds(
         currentGenreIndex: number,
         genresPerBatch: number,
-    ): Observable<Record<string, any>>;
+    ): Observable<Record<string, { results: Array<unknown> }>>;
 
     loadMore(): void {
         if (this.currentGenreIndex >= this.genres.length) {
@@ -67,7 +69,7 @@ export abstract class AbstractGenreLoaderComponent<T> implements OnInit {
             .subscribe((results) => {
                 Object.entries(results).forEach(([key, value]) => {
                     const [type, genreName] = key.split('_');
-                    const items = filterMediaItems(value.results) as Array<T>;
+                    const items = filterMediaItems(value.results as Array<Movie | TvShow>) as Array<T>;
 
                     if (items.length > 0) {
                         const genreId = this.genres.find((g) => g.name === genreName)?.id;

@@ -21,8 +21,8 @@ import { TvShowDetails, TvShowSeason } from '../../../../../shared/models/tv-sho
 })
 export class SeasonsComponent implements OnInit {
     mediaType = MediaType;
-    tvShowId!: number;
-    tvShowDetails!: TvShowDetails;
+    tvShowId: number | undefined;
+    tvShowDetails: TvShowDetails | undefined;
     seasons: Array<TvShowSeason> = [];
     isLoading = true;
     itemsPerPage = DEFAULT.itemsPerPage / 2;

@@ -2,22 +2,19 @@
     <a
         appFadeIn
         class="episode"
-        [routerLink]="['/tv-shows', 'tv-show', tvShowId, 'seasons', seasonNumber, 'episode', episode?.episode_number]"
-        [title]="episode?.name"
+        [routerLink]="['/tv-shows', 'tv-show', tvShowId, 'seasons', seasonNumber, 'episode', episode.episode_number]"
+        [title]="episode.name"
     >
-        <div class="episode-poster">
-            <img
-                *ngIf="episode?.still_path; else altBackdropPath"
-                appBackdropPath
-                [backdropPath]="episode?.still_path ?? ''"
-                [size]="backdropSize"
-            />
+        <div class="episode-backdrop">
+            <ng-container *ngIf="episode.still_path; else altBackdropPath">
+                <img appBackdropPath [size]="backdropSize" [backdropPath]="episode.still_path" />
+            </ng-container>
         </div>
-        <h3 class="title">{{ episode?.name }}</h3>
+        <h3 class="title">{{ episode.name }}</h3>
         <div class="meta">
-            <span class="episode-number">Episode {{ episode?.episode_number }}</span>
-            <span *ngIf="episode?.air_date" class="air-date">
-                {{ episode?.air_date | date: "MMM d, y" }}
+            <span class="episode-number">Episode {{ episode.episode_number }}</span>
+            <span class="air-date">
+                {{ episode.air_date | date: "MMM d, y" }}
             </span>
         </div>
     </a>

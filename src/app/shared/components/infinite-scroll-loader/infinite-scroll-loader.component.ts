@@ -42,7 +42,7 @@ export class InfiniteScrollLoaderComponent implements OnInit, OnDestroy {
             }
         }, options);
 
-        this.observer.observe(this.element.nativeElement);
+        this.observer.observe(this.element.nativeElement as HTMLElement);
     }
 
     private destroyObserver(): void {

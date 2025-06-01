@@ -29,7 +29,7 @@
                     <header>
                         <app-section-header title="Top Cast" [isLoading]="isLoading"></app-section-header>
                     </header>
-                    <app-cast-grid [cast]="movieDetails?.credits?.cast ?? []" [isLoading]="isLoading"></app-cast-grid>
+                    <app-cast-grid [cast]="movieDetails?.credits?.cast || []" [isLoading]="isLoading"></app-cast-grid>
                 </section>
 
                 <section *ngIf="movieDetails?.images?.backdrops?.length || isLoading">
@@ -37,7 +37,7 @@
                         <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
                     </header>
                     <app-image-grid
-                        [images]="movieDetails?.images?.backdrops ?? []"
+                        [images]="movieDetails?.images?.backdrops || []"
                         [isLoading]="isLoading"
                     ></app-image-grid>
                 </section>
@@ -47,7 +47,7 @@
                         <app-section-header title="Videos" [isLoading]="isLoading"></app-section-header>
                     </header>
                     <app-video-grid
-                        [videos]="movieDetails?.videos?.results ?? []"
+                        [videos]="movieDetails?.videos?.results || []"
                         [isLoading]="isLoading"
                     ></app-video-grid>
                 </section>
@@ -56,7 +56,7 @@
                     <header>
                         <app-section-header title="Top Crew" [isLoading]="isLoading"></app-section-header>
                     </header>
-                    <app-cast-grid [cast]="movieDetails?.credits?.crew ?? []" [isLoading]="isLoading"></app-cast-grid>
+                    <app-cast-grid [cast]="movieDetails?.credits?.crew || []" [isLoading]="isLoading"></app-cast-grid>
                 </section>
 
                 <section *ngIf="movieDetails?.similar?.results?.length || isLoading">
@@ -65,7 +65,7 @@
                     </header>
                     <app-carousel-media
                         [type]="mediaType.Movie"
-                        [items]="movieDetails?.similar?.results ?? []"
+                        [items]="movieDetails?.similar?.results || []"
                         [isLoading]="isLoading"
                     >
                     </app-carousel-media>
@@ -77,7 +77,7 @@
                     </header>
                     <app-carousel-media
                         [type]="mediaType.Movie"
-                        [items]="movieDetails?.recommendations?.results ?? []"
+                        [items]="movieDetails?.recommendations?.results || []"
                         [isLoading]="isLoading"
                     >
                     </app-carousel-media>
@@ -145,6 +145,6 @@
         <header>
             <app-section-header title="Reviews" [isLoading]="isLoading"></app-section-header>
         </header>
-        <app-review-grid [reviews]="movieDetails?.reviews?.results ?? []" [isLoading]="isLoading"></app-review-grid>
+        <app-review-grid [reviews]="movieDetails?.reviews?.results || []" [isLoading]="isLoading"></app-review-grid>
     </section>
 </div>

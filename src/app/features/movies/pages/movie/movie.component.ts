@@ -44,7 +44,7 @@ import { Movie, MovieDetails } from '../../../../shared/models/movie.model';
 export class MovieComponent implements OnInit {
     readonly mediaType = MediaType;
     movieId!: number;
-    movieDetails!: MovieDetails;
+    movieDetails: MovieDetails | undefined;
     isLoading = true;
 
     readonly ButtonType = ButtonType;

@@ -6,10 +6,11 @@ import {
     DestroyRef,
     Input,
     OnChanges,
+    OnInit,
     SimpleChanges,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { forkJoin, map, of, switchMap, tap } from 'rxjs';
+import { asyncScheduler, BehaviorSubject, combineLatest, forkJoin, map, of, switchMap, tap } from 'rxjs';
 
 import { FadeInDirective } from '../../directives/fade-in.directive';
 import { AccountFacade } from '../../facades/account.facade';
@@ -28,11 +29,13 @@ import { SnackbarService } from '../../services/snackbar.service';
     styleUrl: './episode-details.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EpisodeDetailsComponent implements OnChanges {
-    @Input() episodeDetails!: TvShowEpisodeDetails;
+export class EpisodeDetailsComponent implements OnChanges, OnInit {
+    @Input() episodeDetails: TvShowEpisodeDetails | undefined;
     @Input() isLoading = true;
-    @Input() tvShowId!: number;
+    @Input() tvShowId: number | undefined;
     userRating?: number;
+
+    private episodeDetailsSubject = new BehaviorSubject<TvShowEpisodeDetails | undefined>(undefined);
 
     constructor(
         private readonly tvShowFacade: TvShowFacade,
@@ -43,9 +46,19 @@ export class EpisodeDetailsComponent implements OnChanges {
         private readonly cdr: ChangeDetectorRef,
     ) {}
 
+    ngOnInit(): void {
+        combineLatest([this.authService.isAuthenticated$, this.episodeDetailsSubject.asObservable()])
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(([episodeDetails]) => {
+                if (episodeDetails) {
+                    this.getUserRating();
+                }
+            });
+    }
+
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['episodeDetails'] && this.episodeDetails) {
-            this.getUserRating();
+        if (changes['episodeDetails']) {
+            this.episodeDetailsSubject.next(this.episodeDetails);
         }
     }
 
@@ -62,6 +75,14 @@ export class EpisodeDetailsComponent implements OnChanges {
     }
 
     private getUserRating(): void {
+        if (!this.authService.isAuthenticated()) {
+            this.userRating = undefined;
+            asyncScheduler.schedule(() => {
+                this.cdr.detectChanges();
+            });
+            return;
+        }
+
         this.authService.userInfo$
             .pipe(
                 tap(() => {
@@ -126,9 +147,9 @@ export class EpisodeDetailsComponent implements OnChanges {
 
         this.tvShowFacade
             .addTvShowEpisodeRating(
-                this.tvShowId,
-                this.episodeDetails.season_number,
-                this.episodeDetails.episode_number,
+                this.tvShowId ?? 0,
+                this.episodeDetails?.season_number ?? 0,
+                this.episodeDetails?.episode_number ?? 0,
                 request,
             )
             .pipe(takeUntilDestroyed(this.destroyRef))

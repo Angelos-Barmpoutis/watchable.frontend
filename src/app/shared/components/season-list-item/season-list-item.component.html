@@ -2,30 +2,25 @@
     <a
         appFadeIn
         class="season-list-item"
-        [routerLink]="['/tv-shows', 'tv-show', tvShowId, 'seasons', season?.season_number]"
-        [title]="season?.name"
+        [routerLink]="['/tv-shows', 'tv-show', tvShowId, 'seasons', season.season_number]"
+        [title]="season.name"
     >
         <div class="season-main">
             <div class="poster-wrapper">
-                <img
-                    *ngIf="season?.poster_path"
-                    appPosterPath
-                    [posterPath]="season?.poster_path ?? ''"
-                    [size]="posterSize"
-                />
-                <img *ngIf="!season?.poster_path" [src]="posterFallback" />
+                <img *ngIf="season.poster_path" appPosterPath [posterPath]="season.poster_path" [size]="posterSize" />
+                <img *ngIf="!season.poster_path" [src]="posterFallback" />
             </div>
             <div class="info">
                 <div class="info-header">
                     <div class="title-container">
-                        <h3 class="title">{{ season?.name }}</h3>
+                        <h3 class="title">{{ season.name }}</h3>
                         <div class="meta">
-                            <span class="episodes">{{ season?.episode_count }} Episodes</span>
-                            <span class="air-date">{{ season?.air_date | date: "MMM d, yyyy" }}</span>
+                            <span class="episodes">{{ season.episode_count }} Episodes</span>
+                            <span class="air-date">{{ season.air_date | date: "MMM d, yyyy" }}</span>
                         </div>
                     </div>
                 </div>
-                <p *ngIf="season?.overview" class="overview">{{ season?.overview }}</p>
+                <p *ngIf="season.overview" class="overview">{{ season.overview }}</p>
             </div>
         </div>
     </a>

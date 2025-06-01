@@ -24,19 +24,23 @@
                         <span
                             *ngIf="mediaDetails?.vote_average; else noRating"
                             class="rating-value"
-                            [class.rating-low]="mediaDetails.vote_average < 5"
-                            [class.rating-medium]="mediaDetails.vote_average >= 5 && mediaDetails.vote_average < 7"
-                            [class.rating-high]="mediaDetails.vote_average >= 7 && mediaDetails.vote_average < 8.5"
-                            [class.rating-top]="mediaDetails.vote_average >= 8.5"
+                            [class.rating-low]="(mediaDetails?.vote_average || 0) < 5"
+                            [class.rating-medium]="
+                                (mediaDetails?.vote_average || 0) >= 5 && (mediaDetails?.vote_average || 0) < 7
+                            "
+                            [class.rating-high]="
+                                (mediaDetails?.vote_average || 0) >= 7 && (mediaDetails?.vote_average || 0) < 8.5
+                            "
+                            [class.rating-top]="(mediaDetails?.vote_average || 0) >= 8.5"
                         >
-                            {{ mediaDetails.vote_average / 2 | number: "1.1-1" }}
+                            {{ (mediaDetails?.vote_average || 0) / 2 | number: "1.1-1" }}
                         </span>
                         <ng-template #noRating>
                             <span class="rating-value">-</span>
                         </ng-template>
                         <span class="rating-total">/5</span>
                         <span *ngIf="mediaDetails?.vote_count" class="vote-count">
-                            ({{ mediaDetails.vote_count | formatNumberWithK }} votes)
+                            ({{ mediaDetails?.vote_count || 0 | formatNumberWithK }} votes)
                         </span>
                     </div>
                 </div>
@@ -86,7 +90,7 @@
                 </li>
                 <li *ngIf="tvShowDetails?.episode_run_time?.length">
                     <span class="detail-label">Episode Runtime:</span>
-                    <span class="detail-value">{{ tvShowDetails?.episode_run_time?.[0] }} minutes</span>
+                    <span class="detail-value">{{ tvShowDetails?.episode_run_time?.[0] ?? 0 | time }}</span>
                 </li>
                 <li *ngIf="tvShowDetails?.number_of_seasons">
                     <span class="detail-label">Seasons:</span>
@@ -149,9 +153,8 @@
             <li *ngIf="mediaDetails?.homepage">
                 <span class="detail-label">Website:</span>
                 <span class="detail-value">
-                    <a class="detail-link" target="_blank" [href]="mediaDetails.homepage">
-                        {{ mediaDetails.homepage }}
-                        <!-- <i class="fas fa-external-link-alt"></i> -->
+                    <a class="detail-link" target="_blank" [href]="mediaDetails?.homepage">
+                        {{ mediaDetails?.homepage }}
                     </a>
                 </span>
             </li>

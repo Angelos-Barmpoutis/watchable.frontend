@@ -38,7 +38,7 @@
                 <header>
                     <app-section-header title="Guest Stars" [isLoading]="isLoading"></app-section-header>
                 </header>
-                <app-cast-grid [cast]="episodeDetails?.guest_stars ?? []" [isLoading]="isLoading"></app-cast-grid>
+                <app-cast-grid [cast]="episodeDetails?.guest_stars || []" [isLoading]="isLoading"></app-cast-grid>
             </section>
 
             <section *ngIf="episodeDetails?.images?.stills?.length || isLoading">
@@ -46,7 +46,7 @@
                     <app-section-header title="Images" [isLoading]="isLoading"></app-section-header>
                 </header>
                 <app-image-grid
-                    [images]="episodeDetails?.images?.stills ?? []"
+                    [images]="episodeDetails?.images?.stills || []"
                     [isLoading]="isLoading"
                     [imagesCount]="4"
                     [aspectRatio]="aspectRatio['16/9']"
@@ -58,7 +58,7 @@
                     <app-section-header title="Videos" [isLoading]="isLoading"></app-section-header>
                 </header>
                 <app-video-grid
-                    [videos]="episodeDetails?.videos?.results ?? []"
+                    [videos]="episodeDetails?.videos?.results || []"
                     [isLoading]="isLoading"
                     [videosCount]="4"
                 ></app-video-grid>
@@ -77,7 +77,7 @@
                 <app-episode-details
                     [episodeDetails]="episodeDetails"
                     [isLoading]="isLoading"
-                    [tvShowId]="tvShowDetails?.id ?? 0"
+                    [tvShowId]="tvShowDetails?.id || 0"
                 ></app-episode-details>
             </section>
 

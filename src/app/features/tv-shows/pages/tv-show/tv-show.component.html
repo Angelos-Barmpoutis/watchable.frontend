@@ -28,7 +28,7 @@
                 <header>
                     <app-section-header title="Top Cast" [isLoading]="isLoading"></app-section-header>
                 </header>
-                <app-cast-grid [cast]="tvShowDetails?.credits?.cast ?? []" [isLoading]="isLoading"></app-cast-grid>
+                <app-cast-grid [cast]="tvShowDetails?.credits?.cast || []" [isLoading]="isLoading"></app-cast-grid>
             </section>
 
             <section *ngIf="tvShowDetails?.seasons?.length || isLoading">
@@ -36,13 +36,13 @@
                     <app-section-header
                         [title]="'Seasons'"
                         [isLoading]="isLoading"
-                        [redirectUrl]="['/tv-shows', 'tv-show', tvShowDetails?.id?.toString() ?? '', 'seasons']"
+                        [redirectUrl]="['/tv-shows', 'tv-show', (tvShowDetails?.id || 0).toString(), 'seasons']"
                     >
                     </app-section-header>
                 </header>
                 <app-carousel-season
-                    [items]="tvShowDetails?.seasons ?? []"
-                    [tvShowId]="tvShowDetails?.id ?? 0"
+                    [items]="tvShowDetails?.seasons || []"
+                    [tvShowId]="tvShowDetails?.id || 0"
                     [isLoading]="isLoading"
                 >
                 </app-carousel-season>
@@ -53,7 +53,7 @@
                     <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
                 </header>
                 <app-image-grid
-                    [images]="tvShowDetails?.images?.backdrops ?? []"
+                    [images]="tvShowDetails?.images?.backdrops || []"
                     [isLoading]="isLoading"
                 ></app-image-grid>
             </section>
@@ -63,7 +63,7 @@
                     <app-section-header title="Videos" [isLoading]="isLoading"></app-section-header>
                 </header>
                 <app-video-grid
-                    [videos]="tvShowDetails?.videos?.results ?? []"
+                    [videos]="tvShowDetails?.videos?.results || []"
                     [isLoading]="isLoading"
                 ></app-video-grid>
             </section>
@@ -72,7 +72,7 @@
                 <header>
                     <app-section-header title="Top Crew" [isLoading]="isLoading"></app-section-header>
                 </header>
-                <app-cast-grid [cast]="tvShowDetails?.credits?.crew ?? []" [isLoading]="isLoading"></app-cast-grid>
+                <app-cast-grid [cast]="tvShowDetails?.credits?.crew || []" [isLoading]="isLoading"></app-cast-grid>
             </section>
 
             <section *ngIf="tvShowDetails?.similar?.results?.length || isLoading">
@@ -81,7 +81,7 @@
                 </header>
                 <app-carousel-media
                     [type]="mediaType.TvShow"
-                    [items]="tvShowDetails?.similar?.results ?? []"
+                    [items]="tvShowDetails?.similar?.results || []"
                     [isLoading]="isLoading"
                 >
                 </app-carousel-media>
@@ -93,7 +93,7 @@
                 </header>
                 <app-carousel-media
                     [type]="mediaType.TvShow"
-                    [items]="tvShowDetails?.recommendations?.results ?? []"
+                    [items]="tvShowDetails?.recommendations?.results || []"
                     [isLoading]="isLoading"
                 >
                 </app-carousel-media>
@@ -160,6 +160,6 @@
         <header>
             <app-section-header title="Reviews" [isLoading]="isLoading"></app-section-header>
         </header>
-        <app-review-grid [reviews]="tvShowDetails?.reviews?.results ?? []" [isLoading]="isLoading"></app-review-grid>
+        <app-review-grid [reviews]="tvShowDetails?.reviews?.results || []" [isLoading]="isLoading"></app-review-grid>
     </section>
 </div>

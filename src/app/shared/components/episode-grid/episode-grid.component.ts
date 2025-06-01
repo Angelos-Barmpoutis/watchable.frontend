@@ -37,7 +37,7 @@ export class EpisodeGridComponent {
     }
 
     get skeletonArray(): Array<number> {
-        return Array(this.episodesCount).fill(0);
+        return Array(this.episodesCount).fill(0) as Array<number>;
     }
 
     trackByItemId(index: number, item: TvShowEpisode): number {

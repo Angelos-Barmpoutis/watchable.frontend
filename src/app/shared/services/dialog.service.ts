@@ -35,7 +35,7 @@ export class DialogService {
         const dialogRef = this.overlayRef.attach(dialogPortal);
 
         dialogRef.instance.contentComponent = component;
-        dialogRef.instance.data = data;
+        dialogRef.instance.data = (data as Record<string, unknown>) || {};
     }
 
     /**

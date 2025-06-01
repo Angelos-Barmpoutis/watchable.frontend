@@ -13,7 +13,7 @@ import { TvShowSeasonDetails } from '../../models/tv-show.model';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SeasonDetailsComponent {
-    @Input() seasonDetails!: TvShowSeasonDetails;
+    @Input() seasonDetails: TvShowSeasonDetails | undefined;
     @Input() isLoading = false;
 
     get skeletonArray(): Array<number> {

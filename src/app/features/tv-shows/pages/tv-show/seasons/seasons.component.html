@@ -1,7 +1,7 @@
 <div class="wrapper">
     <section>
         <header>
-            <app-section-header [title]="tvShowDetails?.name + ' - Seasons'" [isLoading]="isLoading">
+            <app-section-header [title]="(tvShowDetails?.name || 'TV Show') + ' - Seasons'" [isLoading]="isLoading">
             </app-section-header>
         </header>
         <div class="list-container">
@@ -9,7 +9,7 @@
                 <app-season-list-item
                     *ngFor="let season of seasons; trackBy: trackByItemId"
                     [season]="season"
-                    [tvShowId]="tvShowId"
+                    [tvShowId]="tvShowId || 0"
                     [isLoading]="false"
                 >
                 </app-season-list-item>

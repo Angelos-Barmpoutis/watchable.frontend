@@ -6,10 +6,11 @@ import {
     DestroyRef,
     Input,
     OnChanges,
+    OnInit,
     SimpleChanges,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { forkJoin, map, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, forkJoin, map, of, switchMap, tap } from 'rxjs';
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { BackgroundPathDirective } from '../../directives/background-path.directive';
@@ -48,7 +49,7 @@ type MediaDetails = MovieDetails | TvShowDetails;
     styleUrl: './media-hero.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MediaHeroComponent implements OnChanges {
+export class MediaHeroComponent implements OnChanges, OnInit {
     @Input() mediaDetails: MediaDetails | null | undefined = null;
     @Input() type: MediaType = MediaType.Movie;
     @Input() isLoading: boolean = false;
@@ -65,6 +66,8 @@ export class MediaHeroComponent implements OnChanges {
     trailerVideo: Video | null = null;
     isInWatchlist = false;
 
+    private mediaDetailsSubject = new BehaviorSubject<MediaDetails | null | undefined>(null);
+
     constructor(
         private accountFacade: AccountFacade,
         private authService: AuthService,
@@ -73,14 +76,25 @@ export class MediaHeroComponent implements OnChanges {
         private destroyRef: DestroyRef,
     ) {}
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes['mediaDetails'] && this.mediaDetails) {
-            this.trailerVideo = getTrailerVideo(this.mediaDetails.videos?.results);
+    ngOnInit(): void {
+        combineLatest([this.authService.isAuthenticated$, this.mediaDetailsSubject.asObservable()])
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(([isAuthenticated, mediaDetails]) => {
+                if (isAuthenticated && mediaDetails) {
+                    this.getWatchlist();
+                } else {
+                    this.isInWatchlist = false;
+                    this.cdr.detectChanges();
+                }
+            });
+    }
 
-            if (this.authService.isAuthenticated()) {
-                this.getWatchlist();
-            } else {
-                this.isInWatchlist = false;
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['mediaDetails']) {
+            this.mediaDetailsSubject.next(this.mediaDetails);
+
+            if (this.mediaDetails) {
+                this.trailerVideo = getTrailerVideo(this.mediaDetails.videos?.results);
                 this.cdr.detectChanges();
             }
         }

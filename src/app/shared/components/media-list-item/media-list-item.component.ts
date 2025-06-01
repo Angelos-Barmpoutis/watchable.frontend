@@ -20,7 +20,7 @@ import { RatingBadgeComponent } from '../rating-badge/rating-badge.component';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MediaListItemComponent {
-    @Input() media!: MovieItem | TvShowItem;
+    @Input() media: MovieItem | TvShowItem | undefined;
     @Input() isLoading = false;
     @Input() type: MediaType = MediaType.Movie;
 
@@ -29,16 +29,18 @@ export class MediaListItemComponent {
     mediaType = MediaType;
 
     get title(): string {
+        if (!this.media) return '';
         return this.type === MediaType.Movie ? (this.media as MovieItem).title : (this.media as TvShowItem).name;
     }
 
     get releaseDate(): string {
+        if (!this.media) return '';
         return this.type === MediaType.Movie
             ? (this.media as MovieItem).release_date
             : (this.media as TvShowItem).first_air_date;
     }
 
     get genres(): Array<{ name: string }> {
-        return this.media.genres || [];
+        return this.media?.genres || [];
     }
 }

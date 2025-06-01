@@ -6,11 +6,12 @@ import {
     DestroyRef,
     Input,
     OnChanges,
+    OnInit,
     SimpleChanges,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
-import { forkJoin, map, of, switchMap, tap } from 'rxjs';
+import { asyncScheduler, BehaviorSubject, combineLatest, forkJoin, map, of, switchMap, tap } from 'rxjs';
 
 import { MediaType } from '../../enumerations/media-type.enum';
 import { AccountFacade } from '../../facades/account.facade';
@@ -33,13 +34,15 @@ type MediaDetails = MovieDetails | TvShowDetails;
     styleUrls: ['./media-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MediaDetailsComponent implements OnChanges {
-    @Input() mediaDetails!: MediaDetails;
+export class MediaDetailsComponent implements OnChanges, OnInit {
+    @Input() mediaDetails!: MediaDetails | undefined;
     @Input() type: MediaType = MediaType.Movie;
     @Input() isLoading = true;
     userRating?: number;
 
     readonly mediaType = MediaType;
+
+    private mediaDetailsSubject = new BehaviorSubject<MediaDetails | undefined>(undefined);
 
     constructor(
         private readonly movieFacade: MovieFacade,
@@ -51,9 +54,19 @@ export class MediaDetailsComponent implements OnChanges {
         private readonly cdr: ChangeDetectorRef,
     ) {}
 
+    ngOnInit(): void {
+        combineLatest([this.authService.isAuthenticated$, this.mediaDetailsSubject.asObservable()])
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(([mediaDetails]) => {
+                if (mediaDetails) {
+                    this.getUserRating();
+                }
+            });
+    }
+
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['mediaDetails'] && this.mediaDetails) {
-            this.getUserRating();
+        if (changes['mediaDetails']) {
+            this.mediaDetailsSubject.next(this.mediaDetails);
         }
     }
 
@@ -85,7 +98,20 @@ export class MediaDetailsComponent implements OnChanges {
             .map((_, index) => index);
     }
 
+    get isUserAuthenticated(): boolean {
+        return this.authService.isAuthenticated();
+    }
+
     private getUserRating(): void {
+        if (!this.authService.isAuthenticated()) {
+            this.userRating = undefined;
+
+            asyncScheduler.schedule(() => {
+                this.cdr.detectChanges();
+            });
+            return;
+        }
+
         this.authService.userInfo$
             .pipe(
                 tap(() => {
@@ -176,7 +202,7 @@ export class MediaDetailsComponent implements OnChanges {
 
         if (this.type === MediaType.Movie) {
             this.movieFacade
-                .addMovieRating(this.mediaDetails.id, request)
+                .addMovieRating(this.mediaDetails?.id ?? 0, request)
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe({
                     next: (response) => {
@@ -196,7 +222,7 @@ export class MediaDetailsComponent implements OnChanges {
                 });
         } else {
             this.tvShowFacade
-                .addTvShowRating(this.mediaDetails.id, request)
+                .addTvShowRating(this.mediaDetails?.id ?? 0, request)
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe({
                     next: (response) => {

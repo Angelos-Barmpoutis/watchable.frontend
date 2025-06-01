@@ -2,7 +2,7 @@
     <div appFadeIn>
         <ul class="details-list">
             <li *ngIf="seasonDetails?.name">
-                <span class="detail-label">Title:</span>
+                <span class="detail-label">Name:</span>
                 <span class="detail-value">{{ seasonDetails?.name }}</span>
             </li>
             <li *ngIf="seasonDetails?.air_date">
@@ -18,7 +18,7 @@
                 <span class="detail-value">{{ seasonDetails?.episodes?.length }}</span>
             </li>
             <li *ngIf="seasonDetails?.vote_average">
-                <span class="detail-label">Average Rating:</span>
+                <span class="detail-label">Vote Average:</span>
                 <span class="detail-value">{{ seasonDetails?.vote_average | number: "1.1-1" }}</span>
             </li>
         </ul>

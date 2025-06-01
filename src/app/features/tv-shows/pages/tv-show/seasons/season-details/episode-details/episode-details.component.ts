@@ -39,11 +39,11 @@ import { TvShowDetails, TvShowEpisodeDetails } from '../../../../../../../shared
 })
 export class EpisodeDetailsPageComponent implements OnInit {
     mediaType = MediaType;
-    tvShowId!: number;
-    seasonNumber!: number;
-    episodeNumber!: number;
-    tvShowDetails!: TvShowDetails;
-    episodeDetails!: TvShowEpisodeDetails;
+    tvShowId: number | undefined;
+    seasonNumber: number | undefined;
+    episodeNumber: number | undefined;
+    tvShowDetails: TvShowDetails | undefined;
+    episodeDetails: TvShowEpisodeDetails | undefined;
     isLoading = true;
     transformedCrew: Array<MediaCreditsCastPerson> = [];
     cast: Array<MediaCreditsCastPerson> = [];

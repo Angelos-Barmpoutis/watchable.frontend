@@ -40,19 +40,23 @@
                         <span
                             *ngIf="episodeDetails?.vote_average; else noRating"
                             class="rating-value"
-                            [class.rating-low]="episodeDetails.vote_average < 5"
-                            [class.rating-medium]="episodeDetails.vote_average >= 5 && episodeDetails.vote_average < 7"
-                            [class.rating-high]="episodeDetails.vote_average >= 7 && episodeDetails.vote_average < 8.5"
-                            [class.rating-top]="episodeDetails.vote_average >= 8.5"
+                            [class.rating-low]="(episodeDetails?.vote_average || 0) < 5"
+                            [class.rating-medium]="
+                                (episodeDetails?.vote_average || 0) >= 5 && (episodeDetails?.vote_average || 0) < 7
+                            "
+                            [class.rating-high]="
+                                (episodeDetails?.vote_average || 0) >= 7 && (episodeDetails?.vote_average || 0) < 8.5
+                            "
+                            [class.rating-top]="(episodeDetails?.vote_average || 0) >= 8.5"
                         >
-                            {{ episodeDetails.vote_average / 2 | number: "1.1-1" }}
+                            {{ (episodeDetails?.vote_average || 0) / 2 | number: "1.1-1" }}
                         </span>
                         <ng-template #noRating>
                             <span class="rating-value">-</span>
                         </ng-template>
                         <span class="rating-total">/5</span>
                         <span *ngIf="episodeDetails?.vote_count" class="vote-count">
-                            ({{ episodeDetails.vote_count | formatNumberWithK }} votes)
+                            ({{ episodeDetails?.vote_count || 0 | formatNumberWithK }} votes)
                         </span>
                     </div>
                 </div>
