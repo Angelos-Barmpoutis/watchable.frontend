@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+/**
+ * Search service for managing global search state and navigation
+ * Handles search query persistence and URL synchronization
+ */
 @Injectable({
     providedIn: 'root',
 })
@@ -27,6 +31,10 @@ export class SearchService {
         });
     }
 
+    /**
+     * Initializes search query from current URL if on search page
+     * @private
+     */
     private initializeFromUrl(): void {
         const currentUrl = this.router.url;
         if (currentUrl.includes('/search')) {
@@ -34,15 +42,28 @@ export class SearchService {
         }
     }
 
+    /**
+     * Extracts and updates search query from URL parameters
+     * @param url - The URL to parse for search query
+     * @private
+     */
     private updateQueryFromUrl(url: string): void {
         const query = new URLSearchParams(url.split('?')[1]).get('q') || '';
         this.searchQuery$.next(query);
     }
 
+    /**
+     * Gets the current search query as an observable
+     * @returns Observable stream of search query strings
+     */
     getSearchQuery(): Observable<string> {
         return this.searchQuery$.asObservable();
     }
 
+    /**
+     * Updates the search query and navigates to search page or previous page
+     * @param query - The new search query string
+     */
     updateSearchQuery(query: string): void {
         this.searchQuery$.next(query);
 

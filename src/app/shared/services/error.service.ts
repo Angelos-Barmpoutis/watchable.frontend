@@ -3,10 +3,17 @@ import { Injectable } from '@angular/core';
 
 import { SnackbarService } from './snackbar.service';
 
+/**
+ * Error response interface for server error messages
+ */
 interface ErrorResponse {
     message?: string;
 }
 
+/**
+ * Error handling service for HTTP and application errors
+ * Processes different error types and displays user-friendly messages
+ */
 @Injectable({
     providedIn: 'root',
 })
@@ -15,6 +22,7 @@ export class ErrorService {
 
     /**
      * Handle HTTP errors and display appropriate messages
+     * @param error - The HTTP error response to process
      */
     handleError(error: HttpErrorResponse): void {
         let errorMessage = 'An unexpected error occurred';
@@ -50,13 +58,15 @@ export class ErrorService {
 
     /**
      * Handle general application errors
+     * @param error - The application error to process
      */
     handleApplicationError(error: Error): void {
         this.snackbarService.error(error.message || 'An unexpected error occurred');
     }
 
     /**
-     * Handle validation errors
+     * Handle validation errors from form submissions
+     * @param errors - Object containing validation error messages by field
      */
     handleValidationError(errors: Record<string, Array<string>>): void {
         const errorMessage = Object.values(errors).flat().join(', ');
@@ -64,7 +74,7 @@ export class ErrorService {
     }
 
     /**
-     * Handle network errors
+     * Handle network connectivity errors
      */
     handleNetworkError(): void {
         this.snackbarService.error('Network error. Please check your internet connection.');

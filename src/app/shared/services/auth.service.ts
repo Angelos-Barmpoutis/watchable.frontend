@@ -13,6 +13,10 @@ import { CreateSessionResponse } from '../models/auth.model';
 import { LocalStorageService } from './local-storage.service';
 import { SnackbarService } from './snackbar.service';
 
+/**
+ * Authentication service for TMDB user authentication
+ * Manages user session state, authentication flow, and user information
+ */
 @Injectable({
     providedIn: 'root',
 })
@@ -24,8 +28,13 @@ export class AuthService {
     private readonly isLoadingSubject = new BehaviorSubject<boolean>(false);
     private readonly userInfoSubject = new BehaviorSubject<Account | null>(null);
 
+    /** Observable stream of authentication status changes */
     readonly isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+
+    /** Observable stream of authentication loading state */
     readonly isLoading$ = this.isLoadingSubject.asObservable();
+
+    /** Observable stream of user information changes */
     readonly userInfo$ = this.userInfoSubject.asObservable();
 
     constructor(
@@ -42,6 +51,10 @@ export class AuthService {
         this.userInfoSubject.next(userInfo);
     }
 
+    /**
+     * Stores user information after successful authentication
+     * @private
+     */
     private storeUser(): void {
         this.getUserInfo()
             .pipe(takeUntilDestroyed(this.destroyRef))
@@ -56,6 +69,12 @@ export class AuthService {
             });
     }
 
+    /**
+     * Creates a TMDB session using the request token
+     * @param requestToken - The authorized request token from TMDB
+     * @returns Observable of session creation response
+     * @private
+     */
     private createSession(requestToken: string): Observable<CreateSessionResponse> {
         return this.authFacade.createSession(requestToken).pipe(
             tap((response) => {
@@ -66,6 +85,10 @@ export class AuthService {
         );
     }
 
+    /**
+     * Clears all authentication data from storage and resets state
+     * @private
+     */
     private clearAuthData(): void {
         this.localStorageService.removeItem(this.SESSION_KEY);
         this.localStorageService.removeItem(this.USER_INFO_KEY);
@@ -73,10 +96,19 @@ export class AuthService {
         this.userInfoSubject.next(null);
     }
 
+    /**
+     * Retrieves cached user information from storage
+     * @returns User account information or null if not found
+     * @private
+     */
     private getUserInfoFromStorage(): Account | null {
         return this.localStorageService.getItem<Account>(this.USER_INFO_KEY);
     }
 
+    /**
+     * Handles successful session creation and updates user state
+     * @param createSessionResponse - The successful session creation response
+     */
     handleSessionSuccess(createSessionResponse: CreateSessionResponse): void {
         this.localStorageService.setItem(this.SESSION_KEY, createSessionResponse.session_id);
         this.storeUser();
@@ -84,6 +116,10 @@ export class AuthService {
         this.updateAuthenticationLoadingState(false);
     }
 
+    /**
+     * Handles successful authentication status from popup window
+     * @param requestToken - The authorized request token from TMDB
+     */
     handleAuthSuccessStatus(requestToken: string): void {
         this.updateAuthenticationLoadingState(true);
 
@@ -100,11 +136,18 @@ export class AuthService {
             .add(() => this.updateAuthenticationLoadingState(false));
     }
 
+    /**
+     * Handles authentication denial from popup window
+     */
     handleAuthDeniedStatus(): void {
         this.updateAuthenticationLoadingState(false);
         this.snackbarService.error('Authentication was denied');
     }
 
+    /**
+     * Retrieves current user account information from TMDB API
+     * @returns Observable of user account information or null if failed
+     */
     getUserInfo(): Observable<Account | null> {
         return this.accountFacade.getAccountInfo().pipe(
             catchError(() => {
@@ -114,6 +157,9 @@ export class AuthService {
         );
     }
 
+    /**
+     * Initiates the authentication flow for both mobile and desktop
+     */
     signIn(): void {
         this.isLoadingSubject.next(true);
 
@@ -169,6 +215,9 @@ export class AuthService {
             });
     }
 
+    /**
+     * Signs out the current user and clears all authentication data
+     */
     signOut(): void {
         const sessionId = this.getSessionId();
         if (sessionId) {
@@ -195,14 +244,26 @@ export class AuthService {
         }
     }
 
+    /**
+     * Gets the current session ID from storage
+     * @returns The TMDB session ID or null if not authenticated
+     */
     getSessionId(): string | null {
         return this.localStorageService.getItem<string>(this.SESSION_KEY);
     }
 
+    /**
+     * Checks if the user is currently authenticated
+     * @returns True if user is authenticated, false otherwise
+     */
     isAuthenticated(): boolean {
         return this.isAuthenticatedSubject.value;
     }
 
+    /**
+     * Updates the authentication loading state
+     * @param isLoading - Whether authentication is currently loading
+     */
     updateAuthenticationLoadingState(isLoading: boolean): void {
         this.isLoadingSubject.next(isLoading);
     }
