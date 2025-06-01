@@ -71,7 +71,11 @@ export class AppComponent implements OnInit {
         this.initializeGenres();
         this.handleTMDBAuthRedirect();
         this.listenAuthWindowMessages();
-        this.checkForInterruptedAuth();
+
+        // Only check for interrupted auth after a short delay to let handleTMDBAuthRedirect process first
+        setTimeout(() => {
+            this.checkForInterruptedAuth();
+        }, 1000);
     }
 
     private handleTMDBAuthRedirect(): void {
@@ -166,10 +170,28 @@ export class AppComponent implements OnInit {
             window.clearTimeout(this.authStateCheckTimeout);
         }
 
+        // Don't check if we have auth query params (we're currently handling auth)
+        const currentUrl = window.location.href;
+        if (
+            currentUrl.includes('request_token=') ||
+            currentUrl.includes('approved=') ||
+            currentUrl.includes('denied=')
+        ) {
+            return;
+        }
+
         // Check if auth was in progress but never completed
         const wasInProgress = sessionStorage.getItem('auth_in_progress') === 'true';
         const authTimestamp = sessionStorage.getItem('auth_timestamp');
         const authHandled = this.authService.wasAuthHandled();
+
+        // If user is already authenticated, clean up any stale auth state
+        if (this.authService.isAuthenticated()) {
+            if (wasInProgress) {
+                this.cleanupAuthState();
+            }
+            return;
+        }
 
         if (wasInProgress && !authHandled && authTimestamp) {
             const timeElapsed = Date.now() - parseInt(authTimestamp);
@@ -181,7 +203,12 @@ export class AppComponent implements OnInit {
             } else {
                 // Set a timeout to check again later
                 this.authStateCheckTimeout = window.setTimeout(() => {
-                    if (!this.authService.wasAuthHandled()) {
+                    // Double-check conditions before showing interrupted message
+                    const stillInProgress = sessionStorage.getItem('auth_in_progress') === 'true';
+                    const stillNotHandled = !this.authService.wasAuthHandled();
+                    const notAuthenticated = !this.authService.isAuthenticated();
+
+                    if (stillInProgress && stillNotHandled && notAuthenticated) {
                         this.handleInterruptedAuth();
                     }
                 }, 10000); // Check again in 10 seconds
@@ -211,8 +238,10 @@ export class AppComponent implements OnInit {
         sessionStorage.removeItem('auth_redirect_timestamp');
         sessionStorage.removeItem('auth_timestamp');
 
-        // Reset auth handled flag
-        this.authService.setAuthHandled(false);
+        // Only reset auth handled flag if user is not authenticated
+        if (!this.authService.isAuthenticated()) {
+            this.authService.setAuthHandled(false);
+        }
     }
 
     private listenAuthWindowMessages(): void {
