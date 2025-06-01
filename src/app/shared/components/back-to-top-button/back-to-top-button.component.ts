@@ -5,8 +5,8 @@ import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
 
 @Component({
-    selector: 'app-back-to-top-button',
     standalone: true,
+    selector: 'app-back-to-top-button',
     imports: [CommonModule, FadeInDirective],
     templateUrl: './back-to-top-button.component.html',
     styleUrls: ['./back-to-top-button.component.scss'],

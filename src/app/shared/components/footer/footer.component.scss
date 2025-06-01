@@ -1,4 +1,10 @@
-@import "../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
 
 footer {
     padding: $spacing-xl 0;
@@ -70,7 +76,7 @@ footer {
     }
 }
 
-@media (max-width: map-get($breakpoints, "sm")) {
+@media (max-width: map.get($breakpoints, "sm")) {
     footer {
         padding: $spacing-md 0;
 

@@ -10,13 +10,13 @@ import { Backdrop } from '../../models/media.model';
 import { ImageGalleryComponent } from '../image-gallery/image-gallery.component';
 
 @Component({
-    selector: 'app-image-grid',
     standalone: true,
+    selector: 'app-image-grid',
     imports: [CommonModule, BackdropPathDirective, FadeInDirective, ImageGalleryComponent],
     templateUrl: './image-grid.component.html',
     styleUrls: ['./image-grid.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImageGridComponent {
     @Input() images: Array<Backdrop> = [];

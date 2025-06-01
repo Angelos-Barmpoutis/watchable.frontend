@@ -23,8 +23,8 @@ import { filterMediaItems } from '../../../../shared/helpers/filter-items.helper
 import { Movie, MovieDetails } from '../../../../shared/models/movie.model';
 
 @Component({
-    selector: 'app-movie',
     standalone: true,
+    selector: 'app-movie',
     imports: [
         CommonModule,
         CarouselMediaComponent,
@@ -39,7 +39,7 @@ import { Movie, MovieDetails } from '../../../../shared/models/movie.model';
         FadeInDirective,
     ],
     templateUrl: './movie.component.html',
-    styleUrls: ['./movie.component.scss'],
+    styleUrls: ['./movie.component.scss']
 })
 export class MovieComponent implements OnInit {
     readonly mediaType = MediaType;

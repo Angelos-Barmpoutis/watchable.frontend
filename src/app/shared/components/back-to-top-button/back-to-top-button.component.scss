@@ -1,4 +1,10 @@
-@import "../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
 
 .back-to-top {
     position: fixed;
@@ -16,7 +22,7 @@
     align-items: center;
     justify-content: center;
     transition: all $transition-normal;
-    z-index: map-get($z-layers, "header");
+    z-index: map.get($z-layers, "header");
     box-shadow: 0 -2px 17px rgba(31, 31, 31, 0.329);
 
     &:hover {
@@ -28,7 +34,7 @@
         font-size: $font-size-lg;
     }
 
-    @media (max-width: map-get($breakpoints, "sm")) {
+    @media (max-width: map.get($breakpoints, "sm")) {
         right: $spacing-md;
         bottom: $mobile-nav-height + $spacing-md;
 

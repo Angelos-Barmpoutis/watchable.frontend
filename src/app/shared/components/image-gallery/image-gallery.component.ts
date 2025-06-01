@@ -9,13 +9,13 @@ import { BackdropSize } from '../../enumerations/backdrop-size.enum';
 import { Backdrop } from '../../models/media.model';
 
 @Component({
-    selector: 'app-image-gallery',
     standalone: true,
+    selector: 'app-image-gallery',
     imports: [CommonModule, BackdropPathDirective, FadeInDirective],
     templateUrl: './image-gallery.component.html',
     styleUrls: ['./image-gallery.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ImageGalleryComponent extends BaseGalleryComponent {
     @Input() images: Array<Backdrop> = [];

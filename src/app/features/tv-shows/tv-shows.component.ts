@@ -16,8 +16,8 @@ import { PaginatedTvShows, TvShow } from '../../shared/models/tv-show.model';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-tv-shows',
     standalone: true,
+    selector: 'app-tv-shows',
     templateUrl: './tv-shows.component.html',
     styleUrl: './tv-shows.component.scss',
     imports: [
@@ -26,7 +26,7 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
         CarouselMediaComponent,
         InfiniteScrollLoaderComponent,
         FeaturedBannerComponent,
-    ],
+    ]
 })
 export class TvShowsComponent extends AbstractGenreLoaderComponent<TvShow> {
     readonly mediaType = MediaType;

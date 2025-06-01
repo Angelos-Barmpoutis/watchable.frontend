@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {} from '@angular/common/http';
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject,OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { BehaviorSubject, EMPTY, forkJoin, switchMap, take } from 'rxjs';
@@ -38,6 +38,7 @@ import { SnackbarService } from './shared/services/snackbar.service';
 })
 export class AppComponent implements OnInit {
     isAppReady$ = new BehaviorSubject<boolean>(false);
+    private destroyRef = inject(DestroyRef);
 
     constructor(
         public searchService: SearchService,
@@ -47,7 +48,6 @@ export class AppComponent implements OnInit {
         private router: Router,
         private authFacade: AuthFacade,
         public authService: AuthService,
-        private destroyRef: DestroyRef,
         public snackbarService: SnackbarService,
     ) {}
 

@@ -5,12 +5,12 @@ import { FadeInDirective } from '../../directives/fade-in.directive';
 import { TvShowSeasonDetails } from '../../models/tv-show.model';
 
 @Component({
-    selector: 'app-season-details',
     standalone: true,
+    selector: 'app-season-details',
     imports: [CommonModule, FadeInDirective],
     templateUrl: './season-details.component.html',
     styleUrl: './season-details.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SeasonDetailsComponent {
     @Input() seasonDetails: TvShowSeasonDetails | undefined;

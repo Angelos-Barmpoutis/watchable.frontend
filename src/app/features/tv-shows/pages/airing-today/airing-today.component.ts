@@ -15,8 +15,8 @@ import { TvShow, TvShowItem } from '../../../../shared/models/tv-show.model';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-airing-today-tv-shows',
     standalone: true,
+    selector: 'app-airing-today-tv-shows',
     providers: [],
     templateUrl: './airing-today.component.html',
     styleUrl: './airing-today.component.scss',
@@ -26,7 +26,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
         SectionHeaderComponent,
         InfiniteScrollLoaderComponent,
         MediaListItemComponent,
-    ],
+    ]
 })
 export class AiringTodayTvShowsComponent extends BaseMediaListItemComponent<TvShowItem> {
     override items: Array<TvShowItem> = [];

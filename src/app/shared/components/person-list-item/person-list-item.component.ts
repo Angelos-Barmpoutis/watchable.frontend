@@ -9,12 +9,12 @@ import { ProfileSize } from '../../enumerations/profile-size.enum';
 import { Person } from '../../models/people.model';
 
 @Component({
-    selector: 'app-person-list-item',
     standalone: true,
+    selector: 'app-person-list-item',
     imports: [CommonModule, RouterModule, FadeInDirective, ProfilePathDirective],
     templateUrl: './person-list-item.component.html',
     styleUrls: ['./person-list-item.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PersonListItemComponent {
     @Input() person!: Person;

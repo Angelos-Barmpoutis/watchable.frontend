@@ -1,4 +1,10 @@
-@import "../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
 
 .images-grid {
     display: grid;
@@ -13,7 +19,7 @@
         grid-template-columns: repeat(auto-fill, minmax(164px, 1fr));
     }
 
-    @media (max-width: map-get($breakpoints, "sm")) {
+    @media (max-width: map.get($breakpoints, "sm")) {
         grid-template-columns: 1fr;
 
         &:has(.aspect-ratio-3-4) {
@@ -96,7 +102,7 @@
         grid-template-columns: repeat(auto-fill, minmax(164px, 1fr));
     }
 
-    @media (max-width: map-get($breakpoints, "sm")) {
+    @media (max-width: map.get($breakpoints, "sm")) {
         grid-template-columns: 1fr;
 
         &:has(.aspect-ratio-3-4) {

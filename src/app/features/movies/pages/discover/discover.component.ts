@@ -15,11 +15,11 @@ import { MovieItem } from '../../../../shared/models/movie.model';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-discover-movies',
     standalone: true,
+    selector: 'app-discover-movies',
     templateUrl: './discover.component.html',
     styleUrl: './discover.component.scss',
-    imports: [CommonModule, SectionHeaderComponent, MediaListItemComponent, InfiniteScrollLoaderComponent],
+    imports: [CommonModule, SectionHeaderComponent, MediaListItemComponent, InfiniteScrollLoaderComponent]
 })
 export class DiscoverMoviesComponent extends BaseDiscoverComponent<MovieItem> {
     protected override genreStorageKey = 'movieGenres';

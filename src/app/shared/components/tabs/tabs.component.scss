@@ -1,5 +1,11 @@
 // tabs.component.scss
-@import "../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
 
 :host {
     flex-shrink: 0;
@@ -27,7 +33,7 @@
     }
 }
 
-@media (max-width: map-get($breakpoints, "sm")) {
+@media (max-width: map.get($breakpoints, "sm")) {
     :host {
         width: 100%;
     }

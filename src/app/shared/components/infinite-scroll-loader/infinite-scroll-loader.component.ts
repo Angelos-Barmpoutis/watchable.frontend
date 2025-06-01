@@ -4,11 +4,11 @@ import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output }
 import { FadeInDirective } from '../../directives/fade-in.directive';
 
 @Component({
-    selector: 'app-infinite-scroll-loader',
     standalone: true,
+    selector: 'app-infinite-scroll-loader',
     imports: [CommonModule, FadeInDirective],
     templateUrl: './infinite-scroll-loader.component.html',
-    styleUrl: './infinite-scroll-loader.component.scss',
+    styleUrl: './infinite-scroll-loader.component.scss'
 })
 export class InfiniteScrollLoaderComponent implements OnInit, OnDestroy {
     @Input() disabled: boolean = false;

@@ -21,8 +21,8 @@ import { MediaCreditsCastPerson } from '../../../../../../../shared/models/media
 import { TvShowDetails, TvShowEpisodeDetails } from '../../../../../../../shared/models/tv-show.model';
 
 @Component({
-    selector: 'app-episode-details-page',
     standalone: true,
+    selector: 'app-episode-details-page',
     imports: [
         CommonModule,
         SectionHeaderComponent,
@@ -35,7 +35,7 @@ import { TvShowDetails, TvShowEpisodeDetails } from '../../../../../../../shared
         ButtonComponent,
     ],
     templateUrl: './episode-details.component.html',
-    styleUrl: './episode-details.component.scss',
+    styleUrl: './episode-details.component.scss'
 })
 export class EpisodeDetailsPageComponent implements OnInit {
     mediaType = MediaType;

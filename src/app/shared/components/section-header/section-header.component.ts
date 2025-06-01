@@ -9,12 +9,12 @@ import { ButtonType } from '../button/enumerations/button-type.enum';
 import { ButtonLink } from '../button/models/button.model';
 
 @Component({
+    standalone: true,
     selector: 'app-section-header',
     templateUrl: './section-header.component.html',
     styleUrls: ['./section-header.component.scss'],
-    standalone: true,
     imports: [CommonModule, RouterModule, FadeInDirective, ButtonComponent],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SectionHeaderComponent {
     @Input() title: string = '';

@@ -1,4 +1,10 @@
-@import "../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
 
 .bottom-nav {
     display: none;
@@ -8,7 +14,7 @@
     width: 100%;
     background-color: rgba($background-color, 0.6);
     backdrop-filter: blur(17px);
-    z-index: map-get($z-layers, "header");
+    z-index: map.get($z-layers, "header");
     border-top: 1px solid rgba($text-secondary, 0.2);
 
     &__container {
@@ -36,7 +42,7 @@
         position: relative;
         min-width: 0;
 
-        @media (max-width: map-get($breakpoints, "sm")) {
+        @media (max-width: map.get($breakpoints, "sm")) {
             padding-block: calc($spacing-sm * 1.5);
         }
 
@@ -64,7 +70,7 @@
     }
 }
 
-@media (max-width: map-get($breakpoints, "sm")) {
+@media (max-width: map.get($breakpoints, "sm")) {
     .bottom-nav {
         display: block;
 

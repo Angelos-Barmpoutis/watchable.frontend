@@ -1,11 +1,15 @@
+@use "sass:color";
+@use "sass:map";
+@use "app/shared/styles/variables" as *;
+@use "app/shared/styles/colors" as *;
+@use "app/shared/styles/typography" as *;
+@use "app/shared/styles/spacing" as *;
+@use "app/shared/styles/components" as *;
+@use "app/shared/styles/utilities" as *;
+@use "app/shared/styles/animations" as *;
+
 @import "@fortawesome/fontawesome-free/css/all.min.css";
-@import "app/shared/styles/variables";
-@import "app/shared/styles/colors";
-@import "app/shared/styles/typography";
-@import "app/shared/styles/spacing";
-@import "app/shared/styles/components";
-@import "app/shared/styles/utilities";
-@import "app/shared/styles/animations";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 // Reset default styles
 * {
@@ -100,7 +104,7 @@ section {
         }
     }
 
-    @media (max-width: map-get($breakpoints, "sm")) {
+    @media (max-width: map.get($breakpoints, "sm")) {
         margin-bottom: $spacing-xl;
 
         header {
@@ -136,7 +140,7 @@ section {
     border-radius: $border-radius-full;
 
     &:hover {
-        background: darken($border-color, 10%);
+        background: color.scale($border-color, $lightness: -10%);
     }
 }
 

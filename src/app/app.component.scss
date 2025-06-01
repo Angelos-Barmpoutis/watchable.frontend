@@ -1,4 +1,8 @@
-@import "../styles.scss";
+@use "sass:map";
+@use "shared/styles/variables" as *;
+@use "shared/styles/colors" as *;
+@use "shared/styles/typography" as *;
+@use "shared/styles/spacing" as *;
 
 .app {
     display: flex;
@@ -20,7 +24,7 @@
     }
 }
 
-@media (max-width: map-get($breakpoints, "sm")) {
+@media (max-width: map.get($breakpoints, "sm")) {
     .app {
         padding-bottom: calc($mobile-nav-height + min(env(safe-area-inset-bottom), 16px));
     }

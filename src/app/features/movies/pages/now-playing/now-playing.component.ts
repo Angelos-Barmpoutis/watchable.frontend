@@ -15,8 +15,8 @@ import { Movie, MovieItem } from '../../../../shared/models/movie.model';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-now-playing-movies',
     standalone: true,
+    selector: 'app-now-playing-movies',
     providers: [],
     templateUrl: './now-playing.component.html',
     styleUrl: './now-playing.component.scss',
@@ -26,7 +26,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
         SectionHeaderComponent,
         MediaListItemComponent,
         InfiniteScrollLoaderComponent,
-    ],
+    ]
 })
 export class NowPlayingMoviesComponent extends BaseMediaListItemComponent<MovieItem> {
     override items: Array<MovieItem> = [];

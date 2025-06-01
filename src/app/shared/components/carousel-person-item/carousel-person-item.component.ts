@@ -9,12 +9,12 @@ import { ProfileSize } from '../../enumerations/profile-size.enum';
 import { Person } from '../../models/people.model';
 
 @Component({
-    selector: 'app-carousel-person-item',
     standalone: true,
+    selector: 'app-carousel-person-item',
     imports: [CommonModule, RouterLink, FadeInDirective, ProfilePathDirective],
     templateUrl: './carousel-person-item.component.html',
     styleUrls: ['./carousel-person-item.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselPersonItemComponent {
     @Input() item!: Person;

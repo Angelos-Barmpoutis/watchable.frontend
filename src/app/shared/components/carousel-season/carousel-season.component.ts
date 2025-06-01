@@ -8,13 +8,13 @@ import { TvShowSeason } from '../../models/tv-show.model';
 import { CarouselSeasonItemComponent } from '../carousel-season-item/carousel-season-item.component';
 
 @Component({
-    selector: 'app-carousel-season',
     standalone: true,
+    selector: 'app-carousel-season',
     imports: [CommonModule, CarouselSeasonItemComponent, FadeInDirective],
     templateUrl: './carousel-season.component.html',
     styleUrls: ['./carousel-season.component.scss'],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselSeasonComponent extends BaseCarouselComponent<TvShowSeason> {
     @Input() tvShowId!: number;

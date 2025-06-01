@@ -14,8 +14,8 @@ import { TrendingFacade } from '../../../../shared/facades/trending.facade';
 import { Person } from '../../../../shared/models/people.model';
 
 @Component({
-    selector: 'app-trending-people',
     standalone: true,
+    selector: 'app-trending-people',
     providers: [],
     templateUrl: './people.component.html',
     styleUrl: './people.component.scss',
@@ -26,7 +26,7 @@ import { Person } from '../../../../shared/models/people.model';
         PersonListItemComponent,
         InfiniteScrollLoaderComponent,
         TabsComponent,
-    ],
+    ]
 })
 export class TrendingPeopleComponent extends BaseListItemComponent<Person> implements OnInit {
     override items: Array<Person> = [];

@@ -34,8 +34,8 @@ import { VideoGalleryComponent } from '../video-gallery/video-gallery.component'
 type MediaDetails = MovieDetails | TvShowDetails;
 
 @Component({
-    selector: 'app-media-hero',
     standalone: true,
+    selector: 'app-media-hero',
     imports: [
         CommonModule,
         FadeInDirective,
@@ -47,7 +47,7 @@ type MediaDetails = MovieDetails | TvShowDetails;
     ],
     templateUrl: './media-hero.component.html',
     styleUrl: './media-hero.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MediaHeroComponent implements OnChanges, OnInit {
     @Input() mediaDetails: MediaDetails | null | undefined = null;

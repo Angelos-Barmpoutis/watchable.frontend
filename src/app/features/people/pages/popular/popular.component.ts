@@ -11,8 +11,8 @@ import { PeopleFacade } from '../../../../shared/facades/people.facade';
 import { Person } from '../../../../shared/models/people.model';
 
 @Component({
-    selector: 'app-popular-people',
     standalone: true,
+    selector: 'app-popular-people',
     providers: [],
     templateUrl: './popular.component.html',
     styleUrl: './popular.component.scss',
@@ -22,7 +22,7 @@ import { Person } from '../../../../shared/models/people.model';
         SectionHeaderComponent,
         PersonListItemComponent,
         InfiniteScrollLoaderComponent,
-    ],
+    ]
 })
 export class PeoplePopularComponent extends BaseListItemComponent<Person> implements OnInit {
     override items: Array<Person> = [];

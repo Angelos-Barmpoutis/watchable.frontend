@@ -13,11 +13,11 @@ import { TvShowFacade } from '../../../../../shared/facades/tv-show.facade';
 import { TvShowDetails, TvShowSeason } from '../../../../../shared/models/tv-show.model';
 
 @Component({
-    selector: 'app-seasons',
     standalone: true,
+    selector: 'app-seasons',
     imports: [CommonModule, RouterModule, SectionHeaderComponent, SeasonListItemComponent],
     templateUrl: './seasons.component.html',
-    styleUrls: ['./seasons.component.scss'],
+    styleUrls: ['./seasons.component.scss']
 })
 export class SeasonsComponent implements OnInit {
     mediaType = MediaType;

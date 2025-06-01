@@ -8,13 +8,13 @@ import { getYoutubeVideoUrl } from '../../helpers/youtube-video-url.helper';
 import { Video } from '../../models/media.model';
 
 @Component({
-    selector: 'app-video-gallery',
     standalone: true,
+    selector: 'app-video-gallery',
     imports: [CommonModule, FadeInDirective],
     templateUrl: './video-gallery.component.html',
     styleUrls: ['./video-gallery.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class VideoGalleryComponent extends BaseGalleryComponent {
     @Input() videos: Array<Video> = [];

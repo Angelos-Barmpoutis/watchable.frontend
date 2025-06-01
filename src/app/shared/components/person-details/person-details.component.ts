@@ -4,12 +4,12 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { PersonDetails } from '../../models/people.model';
 
 @Component({
-    selector: 'app-person-details',
     standalone: true,
+    selector: 'app-person-details',
     imports: [CommonModule],
     templateUrl: './person-details.component.html',
     styleUrl: './person-details.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PersonDetailsComponent {
     @Input() personDetails!: PersonDetails;

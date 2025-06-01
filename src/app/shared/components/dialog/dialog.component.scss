@@ -1,4 +1,10 @@
-@import "../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
 
 .dialog-container {
     background: white;
@@ -14,7 +20,7 @@
     max-width: 90vw;
     max-height: 90vh;
 
-    @media (max-width: map-get($breakpoints, "sm")) {
+    @media (max-width: map.get($breakpoints, "sm")) {
         max-width: unset;
         max-height: unset;
         width: 100vw;

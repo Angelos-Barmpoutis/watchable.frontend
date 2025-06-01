@@ -9,12 +9,12 @@ import { MediaType } from '../../enumerations/media-type.enum';
 import { TvShowEpisode } from '../../models/tv-show.model';
 
 @Component({
-    selector: 'app-episode-grid-item',
     standalone: true,
+    selector: 'app-episode-grid-item',
     imports: [CommonModule, RouterLink, BackdropPathDirective, FadeInDirective],
     templateUrl: './episode-grid-item.component.html',
     styleUrls: ['./episode-grid-item.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EpisodeGridItemComponent {
     @Input() public episode!: TvShowEpisode;

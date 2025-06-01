@@ -11,12 +11,12 @@ import { ButtonType } from '../button/enumerations/button-type.enum';
 import { MediaListItemComponent } from '../media-list-item/media-list-item.component';
 
 @Component({
-    selector: 'app-media-grid',
     standalone: true,
+    selector: 'app-media-grid',
     imports: [CommonModule, MediaListItemComponent, ButtonComponent, FadeInDirective],
     templateUrl: './media-grid.component.html',
     styleUrl: './media-grid.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MediaGridComponent {
     @Input() items: Array<MovieItem | TvShowItem> = [];

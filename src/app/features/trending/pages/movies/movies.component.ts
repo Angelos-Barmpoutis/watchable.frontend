@@ -18,8 +18,8 @@ import { Movie, MovieItem } from '../../../../shared/models/movie.model';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-trending-movies',
     standalone: true,
+    selector: 'app-trending-movies',
     templateUrl: './movies.component.html',
     styleUrl: './movies.component.scss',
     imports: [
@@ -29,7 +29,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
         MediaListItemComponent,
         TabsComponent,
         InfiniteScrollLoaderComponent,
-    ],
+    ]
 })
 export class TrendingMoviesComponent extends BaseMediaListItemComponent<MovieItem> {
     override items: Array<MovieItem> = [];

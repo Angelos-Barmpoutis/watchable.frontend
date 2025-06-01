@@ -16,8 +16,8 @@ import { Movie, PaginatedMovies } from '../../shared/models/movie.model';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-movies',
     standalone: true,
+    selector: 'app-movies',
     templateUrl: './movies.component.html',
     styleUrl: './movies.component.scss',
     imports: [
@@ -26,7 +26,7 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
         CarouselMediaComponent,
         InfiniteScrollLoaderComponent,
         FeaturedBannerComponent,
-    ],
+    ]
 })
 export class MoviesComponent extends AbstractGenreLoaderComponent<Movie> {
     readonly mediaType = MediaType;

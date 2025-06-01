@@ -1,3 +1,9 @@
+@use "sass:map";
+@use "./spacing" as *;
+@use "./variables" as *;
+@use "./colors" as *;
+@use "./typography" as *;
+
 .input {
     width: 100%;
     padding: calc($spacing-sm * 1.5) $spacing-md;
@@ -8,7 +14,7 @@
     border: none;
     overflow: hidden;
 
-    @media (max-width: map-get($breakpoints, "sm")) {
+    @media (max-width: map.get($breakpoints, "sm")) {
         padding: calc($spacing-sm * 1.5);
     }
 

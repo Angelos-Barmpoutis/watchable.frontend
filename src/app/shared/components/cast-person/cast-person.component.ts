@@ -9,12 +9,12 @@ import { ProfileSize } from '../../enumerations/profile-size.enum';
 import { MediaCreditsCastPerson, MediaCreditsCrewPerson } from '../../models/media.model';
 
 @Component({
-    selector: 'app-cast-person',
     standalone: true,
+    selector: 'app-cast-person',
     imports: [CommonModule, ProfilePathDirective, RouterLink, FadeInDirective],
     templateUrl: './cast-person.component.html',
     styleUrl: './cast-person.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CastPersonComponent {
     @Input() person!: MediaCreditsCastPerson | MediaCreditsCrewPerson;

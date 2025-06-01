@@ -27,12 +27,12 @@ import { SnackbarService } from '../../services/snackbar.service';
 type MediaDetails = MovieDetails | TvShowDetails;
 
 @Component({
-    selector: 'app-media-details',
     standalone: true,
+    selector: 'app-media-details',
     imports: [CommonModule, RouterModule, FormatNumberWithKPipe, TimePipe],
     templateUrl: './media-details.component.html',
     styleUrls: ['./media-details.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MediaDetailsComponent implements OnChanges, OnInit {
     @Input() mediaDetails!: MediaDetails | undefined;

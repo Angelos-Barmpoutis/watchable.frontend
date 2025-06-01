@@ -5,8 +5,8 @@ import { DEFAULT } from '../../constants/defaults.constant';
 import { SnackbarType } from './enumerations/snacbar-type.enum';
 
 @Component({
-    selector: 'app-snackbar',
     standalone: true,
+    selector: 'app-snackbar',
     imports: [CommonModule],
     templateUrl: './snackbar.component.html',
     styleUrls: ['./snackbar.component.scss'],

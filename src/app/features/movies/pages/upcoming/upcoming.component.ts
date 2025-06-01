@@ -15,8 +15,8 @@ import { Movie, MovieItem } from '../../../../shared/models/movie.model';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-upcoming-movies',
     standalone: true,
+    selector: 'app-upcoming-movies',
     providers: [],
     templateUrl: './upcoming.component.html',
     styleUrl: './upcoming.component.scss',
@@ -26,7 +26,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
         SectionHeaderComponent,
         MediaListItemComponent,
         InfiniteScrollLoaderComponent,
-    ],
+    ]
 })
 export class UpcomingMoviesComponent extends BaseMediaListItemComponent<MovieItem> {
     override items: Array<MovieItem> = [];

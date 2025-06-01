@@ -15,8 +15,8 @@ import { Movie, MovieItem } from '../../../../shared/models/movie.model';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-popular-movies',
     standalone: true,
+    selector: 'app-popular-movies',
     providers: [],
     templateUrl: './popular.component.html',
     styleUrl: './popular.component.scss',
@@ -26,7 +26,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
         SectionHeaderComponent,
         MediaListItemComponent,
         InfiniteScrollLoaderComponent,
-    ],
+    ]
 })
 export class PopularMoviesComponent extends BaseMediaListItemComponent<MovieItem> {
     override items: Array<MovieItem> = [];

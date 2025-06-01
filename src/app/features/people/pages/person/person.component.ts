@@ -30,8 +30,8 @@ import { PersonDetails } from '../../../../shared/models/people.model';
 import { TvShowItem } from '../../../../shared/models/tv-show.model';
 
 @Component({
-    selector: 'app-person',
     standalone: true,
+    selector: 'app-person',
     imports: [
         CommonModule,
         SectionHeaderComponent,
@@ -42,7 +42,7 @@ import { TvShowItem } from '../../../../shared/models/tv-show.model';
         FadeInDirective,
     ],
     templateUrl: './person.component.html',
-    styleUrl: './person.component.scss',
+    styleUrl: './person.component.scss'
 })
 export class PersonComponent implements OnInit {
     personId!: number;

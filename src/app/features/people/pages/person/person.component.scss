@@ -1,4 +1,10 @@
-@import "../../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../../../shared/styles/variables" as *;
+@use "../../../../shared/styles/colors" as *;
+@use "../../../../shared/styles/typography" as *;
+@use "../../../../shared/styles/spacing" as *;
+@use "../../../../shared/styles/animations" as *;
 
 .person-hero {
     height: auto;
@@ -59,7 +65,7 @@
         }
     }
 
-    @media (max-width: map-get($breakpoints, "md")) {
+    @media (max-width: map.get($breakpoints, "md")) {
         height: auto;
         gap: $spacing-lg;
 
@@ -79,7 +85,7 @@
         }
     }
 
-    @media (max-width: map-get($breakpoints, "sm")) {
+    @media (max-width: map.get($breakpoints, "sm")) {
         padding-top: $spacing-md;
         flex-direction: row;
         align-items: flex-end;
@@ -150,7 +156,7 @@
         }
     }
 
-    @media (max-width: map-get($breakpoints, "md")) {
+    @media (max-width: map.get($breakpoints, "md")) {
         height: auto;
         padding-top: $spacing-lg;
         gap: $spacing-lg;
@@ -184,7 +190,7 @@
         }
     }
 
-    @media (max-width: map-get($breakpoints, "sm")) {
+    @media (max-width: map.get($breakpoints, "sm")) {
         padding-top: $spacing-md;
         flex-direction: row;
         align-items: flex-end;

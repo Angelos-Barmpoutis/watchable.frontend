@@ -1,3 +1,7 @@
+@use "sass:color";
+@use "./colors" as *;
+@use "./variables" as *;
+
 @keyframes slideDown {
     from {
         transform: translateY(-5%);
@@ -52,7 +56,12 @@
 }
 
 @mixin skeleton-loading {
-    background: linear-gradient(90deg, $surface-color 8%, lighten($surface-color, 10%) 18%, $surface-color 33%);
+    background: linear-gradient(
+        90deg,
+        $surface-color 8%,
+        color.scale($surface-color, $lightness: 10%) 18%,
+        $surface-color 33%
+    );
     background-size: 1000px 100%;
     animation: shimmer 1.5s infinite linear;
     border-radius: $border-radius-lg;

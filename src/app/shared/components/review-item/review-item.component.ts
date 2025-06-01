@@ -7,12 +7,12 @@ import { AvatarUrlPipe } from '../../pipes/avatar-url.pipe';
 import { RatingBadgeComponent } from '../rating-badge/rating-badge.component';
 
 @Component({
-    selector: 'app-review-item',
     standalone: true,
+    selector: 'app-review-item',
     imports: [CommonModule, FadeInDirective, AvatarUrlPipe, RatingBadgeComponent],
     templateUrl: './review-item.component.html',
     styleUrls: ['./review-item.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReviewItemComponent {
     @Input({ required: true }) review!: Review;

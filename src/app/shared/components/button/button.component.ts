@@ -7,12 +7,12 @@ import { ButtonType } from './enumerations/button-type.enum';
 import { ButtonLink } from './models/button.model';
 
 @Component({
+    standalone: true,
     selector: 'app-button',
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss'],
-    standalone: true,
     imports: [CommonModule, RouterModule, FadeInDirective],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonComponent {
     @Input() type: HTMLButtonElement['type'] = 'button';

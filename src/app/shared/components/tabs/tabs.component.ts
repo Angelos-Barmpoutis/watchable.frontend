@@ -13,12 +13,12 @@ export interface TabItem<T> {
 }
 
 @Component({
-    selector: 'app-tabs',
     standalone: true,
+    selector: 'app-tabs',
     imports: [CommonModule, FadeInDirective, ButtonComponent],
     templateUrl: './tabs.component.html',
     styleUrl: './tabs.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabsComponent<T = unknown> {
     @Input() isLoading = false;

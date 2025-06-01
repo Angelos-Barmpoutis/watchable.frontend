@@ -9,12 +9,12 @@ import { ButtonType } from '../button/enumerations/button-type.enum';
 import { CastPersonComponent } from '../cast-person/cast-person.component';
 
 @Component({
-    selector: 'app-cast-grid',
     standalone: true,
+    selector: 'app-cast-grid',
     imports: [CommonModule, FadeInDirective, CastPersonComponent, ButtonComponent],
     templateUrl: './cast-grid.component.html',
     styleUrls: ['./cast-grid.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CastGridComponent {
     @Input() cast: Array<MediaCreditsCastPerson | MediaCreditsCrewPerson> = [];

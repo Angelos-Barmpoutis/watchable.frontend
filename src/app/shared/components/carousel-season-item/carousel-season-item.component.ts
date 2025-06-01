@@ -10,12 +10,12 @@ import { PosterSize } from '../../enumerations/poster-size.enum';
 import { TvShowSeason } from '../../models/tv-show.model';
 
 @Component({
-    selector: 'app-carousel-season-item',
     standalone: true,
+    selector: 'app-carousel-season-item',
     imports: [CommonModule, RouterLink, FadeInDirective, PosterPathDirective],
     templateUrl: './carousel-season-item.component.html',
     styleUrls: ['./carousel-season-item.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselSeasonItemComponent {
     @Input() public season!: TvShowSeason;

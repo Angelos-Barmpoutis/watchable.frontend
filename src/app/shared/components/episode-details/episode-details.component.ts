@@ -22,12 +22,12 @@ import { AuthService } from '../../services/auth.service';
 import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
-    selector: 'app-episode-details',
     standalone: true,
+    selector: 'app-episode-details',
     imports: [CommonModule, FadeInDirective, TimePipe, FormatNumberWithKPipe],
     templateUrl: './episode-details.component.html',
     styleUrl: './episode-details.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EpisodeDetailsComponent implements OnChanges, OnInit {
     @Input() episodeDetails: TvShowEpisodeDetails | undefined;

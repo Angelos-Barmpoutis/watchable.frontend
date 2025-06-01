@@ -13,6 +13,7 @@ import {
 import { DialogService } from '../../services/dialog.service';
 
 @Component({
+    standalone: true,
     selector: 'app-dialog',
     standalone: true,
     imports: [CommonModule],

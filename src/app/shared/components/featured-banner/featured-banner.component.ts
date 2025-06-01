@@ -16,12 +16,12 @@ import { ButtonType } from '../button/enumerations/button-type.enum';
 import { ButtonLink } from '../button/models/button.model';
 
 @Component({
-    selector: 'app-featured-banner',
     standalone: true,
+    selector: 'app-featured-banner',
     imports: [CommonModule, FadeInDirective, ButtonComponent, BackgroundPathDirective],
     templateUrl: './featured-banner.component.html',
     styleUrl: './featured-banner.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FeaturedBannerComponent implements OnChanges {
     @Input() featuredItem!: Movie | TvShow;

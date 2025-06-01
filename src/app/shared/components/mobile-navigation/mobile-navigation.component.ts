@@ -6,8 +6,8 @@ import { NAVIGATION_LINKS, NavigationLink } from '../../config/navigation.config
 import { FadeInDirective } from '../../directives/fade-in.directive';
 
 @Component({
-    selector: 'app-mobile-navigation',
     standalone: true,
+    selector: 'app-mobile-navigation',
     imports: [CommonModule, RouterLink, RouterLinkActive, FadeInDirective],
     templateUrl: './mobile-navigation.component.html',
     styleUrl: './mobile-navigation.component.scss',

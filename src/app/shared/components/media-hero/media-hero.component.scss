@@ -1,4 +1,10 @@
-@import "../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
 
 .media-hero {
     height: calc(75vh - $desktop-header-height);
@@ -43,7 +49,7 @@
                 right: 0;
                 width: 40px;
                 height: 50px;
-                background: linear-gradient(135deg, $accent-color, darken($accent-color, 30%));
+                background: linear-gradient(135deg, $accent-color, color.adjust($accent-color, $lightness: -30%));
                 clip-path: polygon(100% 0, 100% 100%, 50% 75%, 0 100%, 0 0);
                 display: flex;
                 align-items: center;
@@ -135,7 +141,7 @@
         }
     }
 
-    @media (max-width: map-get($breakpoints, "md")) {
+    @media (max-width: map.get($breakpoints, "md")) {
         height: calc(100svh - $mobile-nav-height - $mobile-header-height);
 
         .overlay {
@@ -179,7 +185,7 @@
         }
     }
 
-    @media (max-width: map-get($breakpoints, "sm")) {
+    @media (max-width: map.get($breakpoints, "sm")) {
         .media-content {
             gap: $spacing-sm * 1.5;
 
@@ -207,7 +213,11 @@
                     font-size: $font-size-xs;
                     display: flex;
                     align-items: center;
-                    background: linear-gradient(135deg, rgba($accent-color, 0.8), darken($accent-color, 30%));
+                    background: linear-gradient(
+                        135deg,
+                        rgba($accent-color, 0.8),
+                        color.adjust($accent-color, $lightness: -30%)
+                    );
                     backdrop-filter: blur(10px);
                     color: $text-primary;
                     border-radius: $border-radius-full;
@@ -323,7 +333,7 @@
         }
     }
 
-    @media (max-width: map-get($breakpoints, "md")) {
+    @media (max-width: map.get($breakpoints, "md")) {
         height: calc(100svh - $mobile-nav-height - $mobile-header-height);
         align-items: flex-end;
 
@@ -355,7 +365,7 @@
         }
     }
 
-    @media (max-width: map-get($breakpoints, "sm")) {
+    @media (max-width: map.get($breakpoints, "sm")) {
         .skeleton-media-content {
             gap: $spacing-sm * 1.5;
 

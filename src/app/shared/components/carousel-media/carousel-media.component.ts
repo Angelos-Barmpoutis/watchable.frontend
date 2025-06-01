@@ -9,13 +9,13 @@ import { TvShow } from '../../models/tv-show.model';
 import { CarouselMediaItemComponent } from '../carousel-media-item/carousel-media-item.component';
 
 @Component({
-    selector: 'app-carousel-media',
     standalone: true,
+    selector: 'app-carousel-media',
     imports: [CommonModule, CarouselMediaItemComponent, FadeInDirective],
     templateUrl: './carousel-media.component.html',
     styleUrl: './carousel-media.component.scss',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselMediaComponent extends BaseCarouselComponent<Movie | TvShow> {
     @Input() type: MediaType = MediaType.Movie;

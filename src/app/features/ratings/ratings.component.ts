@@ -27,8 +27,8 @@ import { AuthService } from '../../shared/services/auth.service';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-ratings',
     standalone: true,
+    selector: 'app-ratings',
     imports: [
         CommonModule,
         MediaListItemComponent,
@@ -39,7 +39,7 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
         EpisodeGridItemComponent,
     ],
     templateUrl: './ratings.component.html',
-    styleUrl: './ratings.component.scss',
+    styleUrl: './ratings.component.scss'
 })
 export class RatingsComponent extends BaseMediaListItemComponent<MovieItem | TvShowItem> implements OnInit {
     override items: Array<MovieItem | TvShowItem> = [];

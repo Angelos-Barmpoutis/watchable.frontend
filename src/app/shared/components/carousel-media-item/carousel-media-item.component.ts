@@ -11,12 +11,12 @@ import { Movie } from '../../models/movie.model';
 import { TvShow } from '../../models/tv-show.model';
 
 @Component({
-    selector: 'app-carousel-media-item',
     standalone: true,
+    selector: 'app-carousel-media-item',
     imports: [CommonModule, RouterLink, PosterPathDirective, FadeInDirective],
     templateUrl: './carousel-media-item.component.html',
     styleUrl: './carousel-media-item.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselMediaItemComponent {
     @Input() item!: Movie | TvShow;

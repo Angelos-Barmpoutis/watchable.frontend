@@ -1,4 +1,10 @@
-@import "../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
 
 .details-list {
     list-style: none;
@@ -19,7 +25,7 @@
             border-bottom: none;
         }
 
-        @media (max-width: map-get($breakpoints, "sm")) {
+        @media (max-width: map.get($breakpoints, "sm")) {
             font-size: $font-size-xs;
         }
 
@@ -31,7 +37,7 @@
             display: flex;
             align-items: center;
 
-            @media (max-width: map-get($breakpoints, "sm")) {
+            @media (max-width: map.get($breakpoints, "sm")) {
                 width: 96px;
             }
         }
@@ -78,7 +84,7 @@
         width: 116px;
         border-radius: $spacing-xs !important;
 
-        @media (max-width: map-get($breakpoints, "sm")) {
+        @media (max-width: map.get($breakpoints, "sm")) {
             height: $font-size-xs;
             width: 96px;
         }
@@ -90,7 +96,7 @@
         height: $font-size-sm;
         border-radius: $spacing-xs !important;
 
-        @media (max-width: map-get($breakpoints, "sm")) {
+        @media (max-width: map.get($breakpoints, "sm")) {
             height: $font-size-xs;
         }
     }

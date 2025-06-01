@@ -25,8 +25,8 @@ import { filterMediaItems } from '../../../../shared/helpers/filter-items.helper
 import { TvShow, TvShowDetails } from '../../../../shared/models/tv-show.model';
 
 @Component({
-    selector: 'app-tv-show',
     standalone: true,
+    selector: 'app-tv-show',
     imports: [
         CommonModule,
         SectionHeaderComponent,
@@ -42,7 +42,7 @@ import { TvShow, TvShowDetails } from '../../../../shared/models/tv-show.model';
         FadeInDirective,
     ],
     templateUrl: './tv-show.component.html',
-    styleUrls: ['./tv-show.component.scss'],
+    styleUrls: ['./tv-show.component.scss']
 })
 export class TvShowComponent implements OnInit {
     tvShowDetails: TvShowDetails | undefined;

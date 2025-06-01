@@ -1,4 +1,10 @@
-@import "../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
 
 .featured-banner {
     height: calc(75vh - $desktop-header-height);
@@ -33,7 +39,11 @@
             display: flex;
             align-items: center;
             gap: $spacing-sm;
-            background: linear-gradient(135deg, rgba($accent-color, 0.8), darken($accent-color, 30%));
+            background: linear-gradient(
+                135deg,
+                rgba($accent-color, 0.8),
+                color.adjust($accent-color, $lightness: -30%)
+            );
             backdrop-filter: blur(10px);
             color: $text-primary;
             padding: calc($spacing-xs / 2) calc($spacing-sm * 1.5);
@@ -160,7 +170,7 @@
     }
 }
 
-@media (max-width: map-get($breakpoints, "md")) {
+@media (max-width: map.get($breakpoints, "md")) {
     .featured-banner {
         height: calc(100svh - $mobile-nav-height - $mobile-header-height - $spacing-md);
 
@@ -213,7 +223,7 @@
     }
 }
 
-@media (max-width: map-get($breakpoints, "sm")) {
+@media (max-width: map.get($breakpoints, "sm")) {
     .featured-banner {
         .featured-details {
             margin-bottom: $spacing-md;

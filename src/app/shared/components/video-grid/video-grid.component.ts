@@ -7,8 +7,8 @@ import { Video } from '../../models/media.model';
 import { VideoGalleryComponent } from '../video-gallery/video-gallery.component';
 
 @Component({
-    selector: 'app-video-grid',
     standalone: true,
+    selector: 'app-video-grid',
     imports: [CommonModule, FadeInDirective, VideoGalleryComponent],
     templateUrl: './video-grid.component.html',
     styleUrls: ['./video-grid.component.scss'],

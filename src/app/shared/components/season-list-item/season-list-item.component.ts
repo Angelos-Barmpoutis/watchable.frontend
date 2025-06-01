@@ -10,11 +10,11 @@ import { PosterSize } from '../../enumerations/poster-size.enum';
 import { TvShowSeason } from '../../models/tv-show.model';
 
 @Component({
-    selector: 'app-season-list-item',
     standalone: true,
+    selector: 'app-season-list-item',
     imports: [CommonModule, RouterLink, FadeInDirective, PosterPathDirective],
     templateUrl: './season-list-item.component.html',
-    styleUrls: ['./season-list-item.component.scss'],
+    styleUrls: ['./season-list-item.component.scss']
 })
 export class SeasonListItemComponent {
     @Input() season!: TvShowSeason;

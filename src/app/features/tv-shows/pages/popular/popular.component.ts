@@ -15,8 +15,8 @@ import { TvShow, TvShowItem } from '../../../../shared/models/tv-show.model';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-popular-tv-shows',
     standalone: true,
+    selector: 'app-popular-tv-shows',
     providers: [],
     templateUrl: './popular.component.html',
     styleUrl: './popular.component.scss',
@@ -26,7 +26,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
         SectionHeaderComponent,
         InfiniteScrollLoaderComponent,
         MediaListItemComponent,
-    ],
+    ]
 })
 export class PopularTvShowsComponent extends BaseMediaListItemComponent<TvShowItem> {
     override items: Array<TvShowItem> = [];

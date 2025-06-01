@@ -1,4 +1,10 @@
-@import "../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
 
 .cast-person {
     display: flex;
@@ -27,7 +33,7 @@
             object-fit: cover;
         }
 
-        @media (max-width: map-get($breakpoints, "sm")) {
+        @media (max-width: map.get($breakpoints, "sm")) {
             width: 88px;
             height: 88px;
         }
@@ -54,7 +60,7 @@
             @include text-clamp(1);
         }
 
-        @media (max-width: map-get($breakpoints, "sm")) {
+        @media (max-width: map.get($breakpoints, "sm")) {
             padding: calc($spacing-sm * 1.5);
         }
     }
@@ -73,7 +79,7 @@
         border-radius: $border-radius-lg;
         @include skeleton-loading;
 
-        @media (max-width: map-get($breakpoints, "sm")) {
+        @media (max-width: map.get($breakpoints, "sm")) {
             width: 88px;
             height: 88px;
         }

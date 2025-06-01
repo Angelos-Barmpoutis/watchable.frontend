@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, ElementRef, HostListener, inject, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -15,8 +15,8 @@ import { ButtonComponent } from '../button/button.component';
 import { ButtonType } from '../button/enumerations/button-type.enum';
 
 @Component({
-    selector: 'app-header',
     standalone: true,
+    selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     imports: [
@@ -47,10 +47,11 @@ export class HeaderComponent implements OnInit {
     userInfo: Account | null = null;
     searchForm!: FormGroup;
 
+    private fb = inject(FormBuilder);
+    private destroyRef = inject(DestroyRef);
+
     constructor(
         private searchService: SearchService,
-        private fb: FormBuilder,
-        private destroyRef: DestroyRef,
         private authService: AuthService,
     ) {}
 

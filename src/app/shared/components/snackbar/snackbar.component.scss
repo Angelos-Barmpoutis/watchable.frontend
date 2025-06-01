@@ -1,4 +1,10 @@
-@import "../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
 
 .snackbar {
     position: fixed;
@@ -14,7 +20,7 @@
     z-index: 1001;
     animation: slideIn 0.2s ease-out;
 
-    @media (max-width: map-get($breakpoints, "md")) {
+    @media (max-width: map.get($breakpoints, "md")) {
         width: calc(100vw - $spacing-lg * 2);
         padding: $spacing-sm * 1.5;
     }

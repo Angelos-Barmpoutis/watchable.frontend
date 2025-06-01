@@ -12,12 +12,12 @@ import { TvShowItem } from '../../models/tv-show.model';
 import { RatingBadgeComponent } from '../rating-badge/rating-badge.component';
 
 @Component({
-    selector: 'app-media-list-item',
     standalone: true,
+    selector: 'app-media-list-item',
     imports: [CommonModule, RouterLink, PosterPathDirective, RatingBadgeComponent, FadeInDirective],
     templateUrl: './media-list-item.component.html',
     styleUrl: './media-list-item.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MediaListItemComponent {
     @Input() media: MovieItem | TvShowItem | undefined;

@@ -21,8 +21,8 @@ import { TvShowFacade } from '../../../../../../shared/facades/tv-show.facade';
 import { TvShowDetails, TvShowEpisode, TvShowSeasonDetails } from '../../../../../../shared/models/tv-show.model';
 
 @Component({
-    selector: 'app-season-details-page',
     standalone: true,
+    selector: 'app-season-details-page',
     imports: [
         CommonModule,
         RouterModule,
@@ -37,7 +37,7 @@ import { TvShowDetails, TvShowEpisode, TvShowSeasonDetails } from '../../../../.
         ButtonComponent,
     ],
     templateUrl: './season-details.component.html',
-    styleUrl: './season-details.component.scss',
+    styleUrl: './season-details.component.scss'
 })
 export class SeasonDetailsPageComponent implements OnInit {
     mediaType = MediaType;

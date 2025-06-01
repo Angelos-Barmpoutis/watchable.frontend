@@ -15,11 +15,11 @@ import { TvShowItem } from '../../../../shared/models/tv-show.model';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-discover-tv-shows',
     standalone: true,
+    selector: 'app-discover-tv-shows',
     templateUrl: './discover.component.html',
     styleUrl: './discover.component.scss',
-    imports: [CommonModule, SectionHeaderComponent, InfiniteScrollLoaderComponent, MediaListItemComponent],
+    imports: [CommonModule, SectionHeaderComponent, InfiniteScrollLoaderComponent, MediaListItemComponent]
 })
 export class DiscoverTvShowsComponent extends BaseDiscoverComponent<TvShowItem> {
     protected override genreStorageKey = 'tvShowGenres';

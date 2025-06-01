@@ -8,11 +8,11 @@ import { ButtonType } from '../button/enumerations/button-type.enum';
 import { EpisodeGridItemComponent } from '../episode-grid-item/episode-grid-item.component';
 
 @Component({
-    selector: 'app-episode-grid',
     standalone: true,
+    selector: 'app-episode-grid',
     imports: [CommonModule, RouterModule, EpisodeGridItemComponent, ButtonComponent],
     templateUrl: './episode-grid.component.html',
-    styleUrls: ['./episode-grid.component.scss'],
+    styleUrls: ['./episode-grid.component.scss']
 })
 export class EpisodeGridComponent {
     @Input() episodes: Array<TvShowEpisode> = [];

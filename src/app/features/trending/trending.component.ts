@@ -19,8 +19,8 @@ import { TvShow } from '../../shared/models/tv-show.model';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-trending',
     standalone: true,
+    selector: 'app-trending',
     templateUrl: './trending.component.html',
     styleUrl: './trending.component.scss',
     imports: [
@@ -31,7 +31,7 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
         CarouselPersonComponent,
         InfiniteScrollLoaderComponent,
         FeaturedBannerComponent,
-    ],
+    ]
 })
 export class TrendingComponent implements OnInit {
     readonly mediaType = MediaType;

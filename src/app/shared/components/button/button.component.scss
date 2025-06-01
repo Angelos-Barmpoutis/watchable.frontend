@@ -1,14 +1,16 @@
-@import "../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
 
 :host {
     flex-shrink: 0;
 }
 
 .button {
-    @media (max-width: map-get($breakpoints, "sm")) {
-        padding: calc($spacing-sm * 1.5);
-    }
-
     justify-content: center;
     display: flex;
     align-items: center;
@@ -27,6 +29,10 @@
     background: none;
     width: 100%;
     min-width: 50px;
+
+    @media (max-width: map.get($breakpoints, "sm")) {
+        padding: calc($spacing-sm * 1.5);
+    }
 
     &:hover {
         transform: translateY(-2px);
@@ -109,7 +115,7 @@
         min-width: 120px;
         height: 40px;
 
-        @media (max-width: map-get($breakpoints, "sm")) {
+        @media (max-width: map.get($breakpoints, "sm")) {
             // min-width: 90px;
         }
 

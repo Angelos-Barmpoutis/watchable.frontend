@@ -7,13 +7,13 @@ import { Person } from '../../models/people.model';
 import { CarouselPersonItemComponent } from '../carousel-person-item/carousel-person-item.component';
 
 @Component({
-    selector: 'app-carousel-person',
     standalone: true,
+    selector: 'app-carousel-person',
     imports: [CommonModule, CarouselPersonItemComponent, FadeInDirective],
     templateUrl: './carousel-person.component.html',
     styleUrl: './carousel-person.component.scss',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselPersonComponent extends BaseCarouselComponent<Person> {
     constructor() {

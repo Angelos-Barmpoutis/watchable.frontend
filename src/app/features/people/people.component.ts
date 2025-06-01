@@ -9,12 +9,12 @@ import { filterPersonItems } from '../../shared/helpers/filter-items.helper';
 import { Person } from '../../shared/models/people.model';
 
 @Component({
-    selector: 'app-people',
     standalone: true,
+    selector: 'app-people',
     providers: [],
     templateUrl: './people.component.html',
     styleUrl: './people.component.scss',
-    imports: [CommonModule, SectionHeaderComponent, CarouselPersonComponent],
+    imports: [CommonModule, SectionHeaderComponent, CarouselPersonComponent]
 })
 export class PeopleComponent implements OnInit {
     people: Array<Person> = [];

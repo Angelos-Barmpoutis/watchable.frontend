@@ -15,8 +15,8 @@ import { Movie, MovieItem } from '../../../../shared/models/movie.model';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-top-rated-movies',
     standalone: true,
+    selector: 'app-top-rated-movies',
     providers: [],
     templateUrl: './top-rated.component.html',
     styleUrl: './top-rated.component.scss',
@@ -26,7 +26,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
         SectionHeaderComponent,
         MediaListItemComponent,
         InfiniteScrollLoaderComponent,
-    ],
+    ]
 })
 export class TopRatedMoviesComponent extends BaseMediaListItemComponent<MovieItem> {
     override items: Array<MovieItem> = [];

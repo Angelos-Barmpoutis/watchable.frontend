@@ -1,4 +1,10 @@
-@import "../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../shared/styles/variables" as *;
+@use "../../shared/styles/colors" as *;
+@use "../../shared/styles/typography" as *;
+@use "../../shared/styles/spacing" as *;
+@use "../../shared/styles/animations" as *;
 
 .search-container {
     display: flex;
@@ -34,7 +40,7 @@
         }
     }
 
-    @media (max-width: map-get($breakpoints, "sm")) {
+    @media (max-width: map.get($breakpoints, "sm")) {
         flex-direction: column;
         align-items: flex-start;
 

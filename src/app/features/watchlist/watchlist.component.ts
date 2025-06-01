@@ -19,8 +19,8 @@ import { AuthService } from '../../shared/services/auth.service';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 
 @Component({
-    selector: 'app-watchlist',
     standalone: true,
+    selector: 'app-watchlist',
     imports: [
         CommonModule,
         MediaListItemComponent,
@@ -30,7 +30,7 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
         FadeInDirective,
     ],
     templateUrl: './watchlist.component.html',
-    styleUrl: './watchlist.component.scss',
+    styleUrl: './watchlist.component.scss'
 })
 export class WatchlistComponent extends BaseMediaListItemComponent<MovieItem | TvShowItem> implements OnInit {
     override items: Array<MovieItem | TvShowItem> = [];

@@ -9,12 +9,12 @@ import { ButtonType } from '../button/enumerations/button-type.enum';
 import { ReviewItemComponent } from '../review-item/review-item.component';
 
 @Component({
-    selector: 'app-review-grid',
     standalone: true,
+    selector: 'app-review-grid',
     imports: [CommonModule, FadeInDirective, ReviewItemComponent, ButtonComponent],
     templateUrl: './review-grid.component.html',
     styleUrls: ['./review-grid.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReviewGridComponent {
     @Input() reviews: Array<Review> = [];

@@ -1,4 +1,10 @@
-@import "../../../../styles.scss";
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
 
 header {
     padding: $spacing-md 0;
@@ -8,10 +14,10 @@ header {
     width: 100%;
     background-color: rgba($background-color, 0.6);
     backdrop-filter: blur(17px);
-    z-index: map-get($z-layers, "header");
+    z-index: map.get($z-layers, "header");
     border-bottom: 1px solid rgba($text-secondary, 0.2);
 
-    @media (max-width: map-get($breakpoints, "sm")) {
+    @media (max-width: map.get($breakpoints, "sm")) {
         padding: calc($spacing-sm * 1.5) 0;
     }
 
@@ -29,7 +35,7 @@ header {
             .header-logo {
                 font-size: $font-size-xl;
                 font-weight: $font-weight-bold;
-                background: map-get($gradients, "primary");
+                background: map.get($gradients, "primary");
                 -webkit-background-clip: text;
                 background-clip: text;
                 color: transparent;
@@ -124,7 +130,7 @@ header {
             .profile-dropdown {
                 position: relative;
 
-                @media (max-width: map-get($breakpoints, "sm")) {
+                @media (max-width: map.get($breakpoints, "sm")) {
                     position: static;
                 }
 
@@ -187,10 +193,10 @@ header {
                     border: 1px solid rgba($text-secondary, 0.2);
                     border-radius: $border-radius-lg;
                     padding: $spacing-sm;
-                    z-index: map-get($z-layers, "header");
+                    z-index: map.get($z-layers, "header");
                     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 
-                    @media (max-width: map-get($breakpoints, "sm")) {
+                    @media (max-width: map.get($breakpoints, "sm")) {
                         width: 252px;
                         padding: $spacing-xs;
                     }
@@ -248,7 +254,7 @@ header {
                                     font-size: $font-size-xs;
                                     color: $text-secondary;
 
-                                    @media (max-width: map-get($breakpoints, "sm")) {
+                                    @media (max-width: map.get($breakpoints, "sm")) {
                                         font-size: $font-size-xs;
                                     }
 
@@ -341,7 +347,7 @@ header {
     }
 }
 
-@media (max-width: map-get($breakpoints, "md")) {
+@media (max-width: map.get($breakpoints, "md")) {
     header {
         nav {
             gap: $spacing-md;
@@ -405,7 +411,7 @@ header {
     }
 }
 
-@media (max-width: map-get($breakpoints, "sm")) {
+@media (max-width: map.get($breakpoints, "sm")) {
     header {
         nav {
             .nav-start {
