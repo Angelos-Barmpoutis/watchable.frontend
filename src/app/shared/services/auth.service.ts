@@ -7,6 +7,7 @@ import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AccountFacade } from '../facades/account.facade';
 import { AuthFacade } from '../facades/auth.facade';
+import { createAuthPopup, getAuthUrl, handleMobileAuthRedirect, isMobileDevice } from '../helpers/auth.helper';
 import { Account } from '../models/account.model';
 import { CreateSessionResponse } from '../models/auth.model';
 import { LocalStorageService } from './local-storage.service';
@@ -65,23 +66,6 @@ export class AuthService {
         );
     }
 
-    private getAuthUrl(requestToken: string): string {
-        const currentPath = window.location.pathname;
-        return `${environment.TMDBAuthUrl}${requestToken}?redirect_to=${environment.origin}${currentPath}`;
-    }
-
-    private handleMobileAuth(authUrl: string): void {
-        // Add a safety timeout to prevent stuck loading states
-        setTimeout(() => {
-            if (this.isLoadingSubject.value && !this.isAuthenticated()) {
-                this.updateAuthenticationLoadingState(false);
-            }
-        }, 30000); // 30 second timeout
-
-        // Use window.location.replace instead of href to prevent back button issues
-        window.location.replace(authUrl);
-    }
-
     private clearAuthData(): void {
         this.localStorageService.removeItem(this.SESSION_KEY);
         this.localStorageService.removeItem(this.USER_INFO_KEY);
@@ -91,68 +75,6 @@ export class AuthService {
 
     private getUserInfoFromStorage(): Account | null {
         return this.localStorageService.getItem<Account>(this.USER_INFO_KEY);
-    }
-
-    private isMobileDevice(): boolean {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
-
-    signIn(): void {
-        this.isLoadingSubject.next(true);
-
-        this.authFacade
-            .createRequestToken()
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe({
-                next: (requestTokenResponse) => {
-                    if (requestTokenResponse?.success) {
-                        const authUrl = this.getAuthUrl(requestTokenResponse.request_token);
-
-                        if (this.isMobileDevice()) {
-                            this.handleMobileAuth(authUrl);
-                        } else {
-                            // Desktop flow with popup
-                            const popupWindow = window.open(authUrl, 'TMDB Authentication', 'width=800,height=600');
-
-                            if (popupWindow) {
-                                // Add timeout for desktop popup as well
-                                const popupTimeout = setTimeout(() => {
-                                    if (!popupWindow.closed && this.isLoadingSubject.value) {
-                                        popupWindow.close();
-                                        this.updateAuthenticationLoadingState(false);
-                                        this.snackbarService.error('Authentication timeout. Please try again.');
-                                    }
-                                }, 300000); // 5 minute timeout for desktop
-
-                                const checkPopup = setInterval(() => {
-                                    if (popupWindow.closed) {
-                                        clearInterval(checkPopup);
-                                        clearTimeout(popupTimeout);
-                                        // Simple check: if still loading and not authenticated, user cancelled
-                                        setTimeout(() => {
-                                            if (this.isLoadingSubject.value && !this.getSessionId()) {
-                                                this.snackbarService.error('Authentication was cancelled');
-                                                this.updateAuthenticationLoadingState(false);
-                                            }
-                                        }, 500);
-                                    }
-                                }, 500);
-                            } else {
-                                this.updateAuthenticationLoadingState(false);
-                                this.snackbarService.error('Failed to open authentication window');
-                            }
-                        }
-                    } else {
-                        this.updateAuthenticationLoadingState(false);
-                        this.snackbarService.error('Failed to create request token');
-                    }
-                },
-                error: (error) => {
-                    console.error('Sign in error:', error);
-                    this.updateAuthenticationLoadingState(false);
-                    this.snackbarService.error('Failed to start authentication process');
-                },
-            });
     }
 
     handleSessionSuccess(createSessionResponse: CreateSessionResponse): void {
@@ -190,6 +112,61 @@ export class AuthService {
                 return of(null);
             }),
         );
+    }
+
+    signIn(): void {
+        this.isLoadingSubject.next(true);
+
+        this.authFacade
+            .createRequestToken()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe({
+                next: (requestTokenResponse) => {
+                    if (requestTokenResponse?.success) {
+                        const authUrl = getAuthUrl(requestTokenResponse.request_token);
+
+                        if (isMobileDevice()) {
+                            handleMobileAuthRedirect(authUrl, () => {
+                                if (this.isLoadingSubject.value && !this.isAuthenticated()) {
+                                    this.updateAuthenticationLoadingState(false);
+                                }
+                            });
+                        } else {
+                            // Desktop flow with popup using helper
+                            const popupWindow = createAuthPopup(
+                                authUrl,
+                                () => {
+                                    // On popup close
+                                    setTimeout(() => {
+                                        if (this.isLoadingSubject.value && !this.getSessionId()) {
+                                            this.snackbarService.error('Authentication was cancelled');
+                                            this.updateAuthenticationLoadingState(false);
+                                        }
+                                    }, 500);
+                                },
+                                () => {
+                                    // On timeout
+                                    this.updateAuthenticationLoadingState(false);
+                                    this.snackbarService.error('Authentication timeout. Please try again.');
+                                },
+                            );
+
+                            if (!popupWindow) {
+                                this.updateAuthenticationLoadingState(false);
+                                this.snackbarService.error('Failed to open authentication window');
+                            }
+                        }
+                    } else {
+                        this.updateAuthenticationLoadingState(false);
+                        this.snackbarService.error('Failed to create request token');
+                    }
+                },
+                error: (error) => {
+                    console.error('Sign in error:', error);
+                    this.updateAuthenticationLoadingState(false);
+                    this.snackbarService.error('Failed to start authentication process');
+                },
+            });
     }
 
     signOut(): void {

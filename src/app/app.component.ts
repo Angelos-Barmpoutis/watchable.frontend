@@ -130,15 +130,17 @@ export class AppComponent implements OnInit {
 
     private listenAuthWindowMessages(): void {
         window.addEventListener('message', (event) => {
-            if (event.origin !== environment.origin) {
+            if (event.origin !== environment.origin || !event.data) {
                 return;
             }
 
-            if (event.data.type === 'AUTH_SUCCESS') {
-                this.authService.handleAuthSuccessStatus(event.data.requestToken);
+            const data = event.data as { type?: string; requestToken?: string };
+
+            if (data.type === 'AUTH_SUCCESS' && data.requestToken) {
+                this.authService.handleAuthSuccessStatus(data.requestToken);
             }
 
-            if (event.data.type === 'AUTH_DENIED') {
+            if (data.type === 'AUTH_DENIED') {
                 this.authService.handleAuthDeniedStatus();
             }
         });
