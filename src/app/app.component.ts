@@ -5,6 +5,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { BehaviorSubject, EMPTY, forkJoin, switchMap, take } from 'rxjs';
 
+import { environment } from '../environments/environment';
 import { BackToTopButtonComponent } from './shared/components/back-to-top-button/back-to-top-button.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
@@ -54,6 +55,7 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         this.initializeGenres();
         this.handleTMDBAuthRedirect();
+        this.listenAuthWindowMessages();
     }
 
     private handleTMDBAuthRedirect(): void {
@@ -77,21 +79,35 @@ export class AppComponent implements OnInit {
                     // Handle successful auth
                     if (requestToken && approved === 'true') {
                         if (window.opener) {
-                            this.authService.handleAuthSuccessStatus(requestToken);
+                            // Desktop popup: send message to parent window
+                            (window.opener as Window).postMessage(
+                                {
+                                    type: 'AUTH_SUCCESS',
+                                    requestToken: requestToken,
+                                },
+                                environment.origin,
+                            );
                             window.close();
                             return EMPTY;
                         }
-
+                        // Mobile redirect: create session directly
                         return this.authFacade.createSession(requestToken);
                     }
 
                     // Handle denied auth
                     if (requestToken && denied === 'true') {
                         if (window.opener) {
-                            this.authService.handleAuthDeniedStatus();
+                            // Desktop popup: send message to parent window
+                            (window.opener as Window).postMessage(
+                                {
+                                    type: 'AUTH_DENIED',
+                                },
+                                environment.origin,
+                            );
                             window.close();
                             return EMPTY;
                         }
+                        // Mobile redirect: handle denial
                         this.cleanupAuthState();
                         this.snackbarService.error('Authentication was denied');
                         this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
@@ -126,6 +142,9 @@ export class AppComponent implements OnInit {
                 error: () => {
                     this.cleanupAuthState();
                 },
+                complete: () => {
+                    this.authService.updateAuthenticationLoadingState(false);
+                },
             });
     }
 
@@ -137,6 +156,22 @@ export class AppComponent implements OnInit {
         sessionStorage.removeItem('auth_redirect_path');
         sessionStorage.removeItem('auth_redirect_url');
         sessionStorage.removeItem('auth_redirect_timestamp');
+    }
+
+    private listenAuthWindowMessages(): void {
+        window.addEventListener('message', (event) => {
+            if (event.origin !== environment.origin) {
+                return;
+            }
+
+            if (event.data.type === 'AUTH_SUCCESS') {
+                this.authService.handleAuthSuccessStatus(event.data.requestToken);
+            }
+
+            if (event.data.type === 'AUTH_DENIED') {
+                this.authService.handleAuthDeniedStatus();
+            }
+        });
     }
 
     private initializeGenres(): void {

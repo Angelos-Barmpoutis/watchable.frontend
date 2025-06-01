@@ -22,6 +22,7 @@ export class AuthService {
     private readonly isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
     private readonly isLoadingSubject = new BehaviorSubject<boolean>(false);
     private readonly userInfoSubject = new BehaviorSubject<Account | null>(null);
+    private authWasHandled = false;
 
     readonly isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
     readonly isLoading$ = this.isLoadingSubject.asObservable();
@@ -50,7 +51,7 @@ export class AuthService {
                     this.userInfoSubject.next(userInfo);
                     this.snackbarService.success(`Signed in as ${userInfo.username}`);
                 } else {
-                    this.snackbarService.error('Failed to get user information. Please try again.');
+                    this.snackbarService.error('Failed to get user information');
                 }
             });
     }
@@ -92,6 +93,7 @@ export class AuthService {
 
     signIn(): void {
         this.isLoadingSubject.next(true);
+        this.authWasHandled = false;
 
         this.authFacade
             .createRequestToken()
@@ -112,29 +114,27 @@ export class AuthService {
                                     if (popupWindow.closed) {
                                         clearInterval(checkPopup);
                                         setTimeout(() => {
-                                            if (!this.getSessionId()) {
-                                                this.snackbarService.error(
-                                                    'Authentication was cancelled. Please try again.',
-                                                );
+                                            if (!this.authWasHandled && !this.getSessionId()) {
+                                                this.snackbarService.error('Authentication was cancelled');
                                             }
-                                            this.isLoadingSubject.next(false);
+                                            this.updateAuthenticationLoadingState(false);
                                         }, 500);
                                     }
                                 }, 500);
                             } else {
-                                this.isLoadingSubject.next(false);
-                                this.snackbarService.error('Failed to open authentication window. Please try again.');
+                                this.updateAuthenticationLoadingState(false);
+                                this.snackbarService.error('Failed to open authentication window');
                             }
                         }
                     } else {
-                        this.isLoadingSubject.next(false);
-                        this.snackbarService.error('Failed to create request token. Please try again.');
+                        this.updateAuthenticationLoadingState(false);
+                        this.snackbarService.error('Failed to create request token');
                     }
                 },
                 error: (error) => {
                     console.error('Sign in error:', error);
-                    this.isLoadingSubject.next(false);
-                    this.snackbarService.error('Failed to start authentication process. Please try again.');
+                    this.updateAuthenticationLoadingState(false);
+                    this.snackbarService.error('Failed to start authentication process');
                 },
             });
     }
@@ -143,31 +143,36 @@ export class AuthService {
         this.localStorageService.setItem(this.SESSION_KEY, createSessionResponse.session_id);
         this.storeUser();
         this.isAuthenticatedSubject.next(true);
-        this.isLoadingSubject.next(false);
+        this.updateAuthenticationLoadingState(false);
     }
 
     handleAuthSuccessStatus(requestToken: string): void {
+        this.authWasHandled = true;
+        this.updateAuthenticationLoadingState(true);
+
         this.createSession(requestToken)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((createSessionResponse) => {
                 if (createSessionResponse.success) {
                     this.handleSessionSuccess(createSessionResponse);
                 } else {
-                    this.snackbarService.error('Failed to create session. Please try again.');
-                    this.isLoadingSubject.next(false);
+                    this.updateAuthenticationLoadingState(false);
+                    this.snackbarService.error('Failed to create session');
                 }
-            });
+            })
+            .add(() => this.updateAuthenticationLoadingState(false));
     }
 
     handleAuthDeniedStatus(): void {
-        this.snackbarService.error('Authentication was denied. Please try again.');
-        this.isLoadingSubject.next(false);
+        this.authWasHandled = true;
+        this.updateAuthenticationLoadingState(false);
+        this.snackbarService.error('Authentication was denied');
     }
 
     getUserInfo(): Observable<Account | null> {
         return this.accountFacade.getAccountInfo().pipe(
             catchError(() => {
-                this.snackbarService.error('Failed to get user information. Please try again.');
+                this.snackbarService.error('Failed to get user information');
                 return of(null);
             }),
         );
@@ -176,20 +181,25 @@ export class AuthService {
     signOut(): void {
         const sessionId = this.getSessionId();
         if (sessionId) {
+            this.updateAuthenticationLoadingState(true);
+
             this.authFacade
                 .deleteSession(sessionId)
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((response) => {
                     if (response.success) {
                         this.clearAuthData();
+                        this.updateAuthenticationLoadingState(false);
                         this.snackbarService.success('Signed out');
                         this.router.navigate(['/']);
                     } else {
-                        this.snackbarService.error('Failed to sign out. Please try again.');
+                        this.updateAuthenticationLoadingState(false);
+                        this.snackbarService.error('Failed to sign out');
                     }
                 });
         } else {
             this.clearAuthData();
+            this.updateAuthenticationLoadingState(false);
             this.snackbarService.success('Signed out');
         }
     }
@@ -200,5 +210,9 @@ export class AuthService {
 
     isAuthenticated(): boolean {
         return this.isAuthenticatedSubject.value;
+    }
+
+    updateAuthenticationLoadingState(isLoading: boolean): void {
+        this.isLoadingSubject.next(isLoading);
     }
 }
