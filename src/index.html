@@ -2,18 +2,112 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Watchable</title>
+
+        <!-- Primary Meta Tags -->
+        <title>Watchable - Discover Movies & TV Shows</title>
+        <meta name="title" content="Watchable - Discover Movies & TV Shows" />
+        <meta
+            name="description"
+            content="Discover trending movies and TV shows, create your personal watchlist, rate content, and explore detailed information about your favorite films and series. Powered by The Movie Database."
+        />
+        <meta
+            name="keywords"
+            content="movies, tv shows, watchlist, ratings, trending, cinema, entertainment, film discovery, television, TMDB"
+        />
+        <meta name="author" content="Watchable" />
+        <meta name="robots" content="index, follow" />
+
+        <!-- Viewport and Mobile Optimization -->
         <base href="/" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="format-detection" content="telephone=no" />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://watchable-frontend.netlify.app/" />
+        <meta property="og:title" content="Watchable - Discover Movies & TV Shows" />
+        <meta
+            property="og:description"
+            content="Discover trending movies and TV shows, create your personal watchlist, rate content, and explore detailed information about your favorite films and series."
+        />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:site_name" content="Watchable" />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary" />
+        <meta property="twitter:url" content="https://watchable-frontend.netlify.app/" />
+        <meta property="twitter:title" content="Watchable - Discover Movies & TV Shows" />
+        <meta
+            property="twitter:description"
+            content="Discover trending movies and TV shows, create your personal watchlist, rate content, and explore detailed information about your favorite films and series."
+        />
+
+        <!-- PWA Meta Tags -->
+        <meta name="application-name" content="Watchable" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Watchable" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="msapplication-TileColor" content="#000000" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="theme-color" content="#000000" />
+
+        <!-- DNS Prefetch for Performance -->
+        <link rel="dns-prefetch" href="//api.themoviedb.org" />
+        <link rel="dns-prefetch" href="//image.tmdb.org" />
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+
+        <!-- Favicon and Icons -->
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+
+        <!-- Font Preloading -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
             href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;700&display=swap"
             rel="stylesheet"
         />
+
+        <!-- Structured Data for SEO -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                "name": "Watchable",
+                "description": "Discover trending movies and TV shows, create your personal watchlist, rate content, and explore detailed information about your favorite films and series.",
+                "url": "https://watchable-frontend.netlify.app",
+                "applicationCategory": "Entertainment",
+                "operatingSystem": "Web Browser",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                },
+                "featureList": [
+                    "Movie Discovery",
+                    "TV Show Discovery",
+                    "Personal Watchlist",
+                    "Content Rating",
+                    "Trending Content",
+                    "Search Functionality"
+                ]
+            }
+        </script>
     </head>
     <body>
         <app-root></app-root>
+
+        <!-- No JavaScript fallback -->
+        <noscript>
+            <div style="text-align: center; padding: 2rem; font-family: Arial, sans-serif">
+                <h1>JavaScript Required</h1>
+                <p>
+                    This application requires JavaScript to function properly. Please enable JavaScript in your browser
+                    settings and reload the page.
+                </p>
+            </div>
+        </noscript>
     </body>
 </html>
