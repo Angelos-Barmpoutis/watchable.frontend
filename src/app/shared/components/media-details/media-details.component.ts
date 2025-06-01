@@ -32,7 +32,7 @@ type MediaDetails = MovieDetails | TvShowDetails;
     imports: [CommonModule, RouterModule, FormatNumberWithKPipe, TimePipe],
     templateUrl: './media-details.component.html',
     styleUrls: ['./media-details.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MediaDetailsComponent implements OnChanges, OnInit {
     @Input() mediaDetails!: MediaDetails | undefined;

@@ -35,22 +35,22 @@
         </app-carousel-media>
     </section>
 
-    <section *ngFor="let genre of loadedGenres">
-        <header>
-            <app-section-header
-                [title]="genre.genreName + ' TV Shows'"
-                [redirectUrl]="['discover', genre.genreName]"
-                [isLoading]="isMainContentLoading"
-            >
-            </app-section-header>
-        </header>
-        <app-carousel-media [type]="genre.type" [items]="genre.items" [isLoading]="isMainContentLoading">
-        </app-carousel-media>
-    </section>
+    @for (genre of loadedGenres; track genre.genreName) {
+        <section>
+            <header>
+                <app-section-header
+                    [title]="genre.genreName + ' TV Shows'"
+                    [redirectUrl]="['discover', genre.genreName]"
+                    [isLoading]="isMainContentLoading"
+                >
+                </app-section-header>
+            </header>
+            <app-carousel-media [type]="genre.type" [items]="genre.items" [isLoading]="isMainContentLoading">
+            </app-carousel-media>
+        </section>
+    }
 </div>
 
-<app-infinite-scroll-loader
-    *ngIf="!allGenresLoaded"
-    [disabled]="isLoadingMoreGenres"
-    (scrolled)="loadMore()"
-></app-infinite-scroll-loader>
+@if (!allGenresLoaded) {
+    <app-infinite-scroll-loader [disabled]="isLoadingMoreGenres" (scrolled)="loadMore()"></app-infinite-scroll-loader>
+}

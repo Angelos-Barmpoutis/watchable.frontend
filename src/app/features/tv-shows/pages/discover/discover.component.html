@@ -5,15 +5,16 @@
         </header>
 
         <div class="list-container">
-            <ng-container *ngIf="items.length; else loadingState">
-                <app-media-list-item
-                    *ngFor="let tvShow of items; trackBy: trackByItemId"
-                    [media]="tvShow"
-                    [type]="mediaType.TvShow"
-                    [isLoading]="false"
-                >
-                </app-media-list-item>
-            </ng-container>
+            @if (items.length) {
+                @for (tvShow of items; track trackByItemId($index, tvShow)) {
+                    <app-media-list-item [media]="tvShow" [type]="mediaType.TvShow" [isLoading]="false">
+                    </app-media-list-item>
+                }
+            } @else {
+                @for (item of skeletonArray; track $index) {
+                    <app-media-list-item [isLoading]="true"> </app-media-list-item>
+                }
+            }
         </div>
 
         <app-infinite-scroll-loader
@@ -22,8 +23,3 @@
         ></app-infinite-scroll-loader>
     </section>
 </div>
-
-<ng-template #loadingState>
-    <app-media-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
-    </app-media-list-item>
-</ng-template>

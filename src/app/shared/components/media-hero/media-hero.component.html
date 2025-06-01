@@ -1,45 +1,54 @@
-<ng-container *ngIf="!isLoading; else loadingTemplate">
+@if (!isLoading) {
     <div appFadeIn class="media-hero" appBackgroundPath [backgroundPath]="mediaDetails?.backdrop_path ?? ''">
         <div class="overlay">
             <div class="wrapper">
                 <div class="media-content">
                     <div class="media-poster">
-                        <div *ngIf="isInWatchlist" class="bookmark-ribbon">
-                            <i class="fas fa-bookmark"></i>
-                        </div>
-                        <img
-                            *ngIf="mediaDetails?.poster_path"
-                            appPosterPath
-                            [posterPath]="mediaDetails?.poster_path ?? ''"
-                            [size]="posterSize.w342"
-                        />
-                        <img *ngIf="!mediaDetails?.poster_path" [src]="default.largePosterFallback" />
+                        @if (isInWatchlist) {
+                            <div class="bookmark-ribbon">
+                                <i class="fas fa-bookmark"></i>
+                            </div>
+                        }
+                        @if (mediaDetails?.poster_path) {
+                            <img
+                                appPosterPath
+                                [posterPath]="mediaDetails?.poster_path ?? ''"
+                                [size]="posterSize.w342"
+                            />
+                        } @else {
+                            <img [src]="default.largePosterFallback" />
+                        }
                     </div>
                     <div class="media-info">
-                        <div *ngIf="isInWatchlist" class="watchlist-badge">
-                            <i class="fas fa-bookmark"></i>
-                            <span>In Watchlist</span>
-                        </div>
+                        @if (isInWatchlist) {
+                            <div class="watchlist-badge">
+                                <i class="fas fa-bookmark"></i>
+                                <span>In Watchlist</span>
+                            </div>
+                        }
                         <h1 class="media-title">
                             {{ title }}
-                            <span *ngIf="subtitle" class="media-subtitle">({{ subtitle }})</span>
+                            @if (subtitle) {
+                                <span class="media-subtitle">({{ subtitle }})</span>
+                            }
                         </h1>
                         <div class="media-meta">
-                            <div *ngIf="releaseDate" class="media-year">
-                                {{ releaseDate | date: "yyyy" }}
-                                <span
-                                    *ngIf="
+                            @if (releaseDate) {
+                                <div class="media-year">
+                                    {{ releaseDate | date: "yyyy" }}
+                                    @if (
                                         type === mediaType.TvShow &&
-                                        (endDate | date: 'yyyy') !== (releaseDate | date: 'yyyy')
-                                    "
-                                    class="media-year"
-                                >
-                                    - {{ endDate | date: "yyyy" }}
+                                        (endDate | date: "yyyy") !== (releaseDate | date: "yyyy")
+                                    ) {
+                                        <span class="media-year"> - {{ endDate | date: "yyyy" }} </span>
+                                    }
+                                </div>
+                            }
+                            @if (runtime) {
+                                <span class="runtime">
+                                    {{ runtime | time }}
                                 </span>
-                            </div>
-                            <span *ngIf="runtime" class="runtime">
-                                {{ runtime | time }}
-                            </span>
+                            }
                         </div>
 
                         <div class="overview">
@@ -47,16 +56,17 @@
                         </div>
 
                         <div class="action-buttons">
-                            <app-button
-                                *ngIf="trailerVideo"
-                                [variant]="ButtonType.Primary"
-                                [type]="'button'"
-                                [icon]="'fas fa-play'"
-                                [text]="'Watch Trailer'"
-                                [title]="'Watch Trailer'"
-                                (click)="toggleTrailer()"
-                            >
-                            </app-button>
+                            @if (trailerVideo) {
+                                <app-button
+                                    [variant]="ButtonType.Primary"
+                                    [type]="'button'"
+                                    [icon]="'fas fa-play'"
+                                    [text]="'Watch Trailer'"
+                                    [title]="'Watch Trailer'"
+                                    (click)="toggleTrailer()"
+                                >
+                                </app-button>
+                            }
                             <app-button
                                 [variant]="ButtonType.Secondary"
                                 [hasPadding]="false"
@@ -80,9 +90,7 @@
         [showPreviewStrip]="false"
         (closeViewer)="toggleTrailer()"
     ></app-video-gallery>
-</ng-container>
-
-<ng-template #loadingTemplate>
+} @else {
     <div class="wrapper">
         <div class="skeleton-media-hero">
             <div class="skeleton-media-content">
@@ -121,4 +129,4 @@
             </div>
         </div>
     </div>
-</ng-template>
+}

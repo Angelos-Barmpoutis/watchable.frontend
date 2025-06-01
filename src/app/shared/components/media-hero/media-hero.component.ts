@@ -47,7 +47,7 @@ type MediaDetails = MovieDetails | TvShowDetails;
     ],
     templateUrl: './media-hero.component.html',
     styleUrl: './media-hero.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MediaHeroComponent implements OnChanges, OnInit {
     @Input() mediaDetails: MediaDetails | null | undefined = null;

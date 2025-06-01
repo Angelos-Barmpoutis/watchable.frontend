@@ -1,73 +1,75 @@
-<div *ngIf="showViewer" appFadeIn class="image-viewer">
-    <div class="viewer-content">
-        <button title="Close" aria-label="Close" class="close-button" (click)="emitCloseViewer()">
-            <i class="fas fa-times"></i>
-        </button>
+@if (showViewer) {
+    <div appFadeIn class="image-viewer">
+        <div class="viewer-content">
+            <button title="Close" aria-label="Close" class="close-button" (click)="emitCloseViewer()">
+                <i class="fas fa-times"></i>
+            </button>
 
-        <div class="viewer-strip-container">
-            <swiper-container
-                #viewerStrip
-                class="viewer-strip"
-                [spaceBetween]="16"
-                [slidesPerView]="1"
-                [initialSlide]="selectedIndex"
-                [grabCursor]="true"
-                [speed]="default.carouselAnimationDuration"
-                [allowTouchMove]="true"
-                (swiperslidechange)="onViewerSlideChange($event)"
-            >
-                <swiper-slide *ngFor="let image of images">
-                    <div
-                        class="image-container"
-                        [ngClass]="{
-                            'aspect-ratio-16-9': aspectRatio === aspectRatioEnum['16/9'],
-                            'aspect-ratio-3-4': aspectRatio === aspectRatioEnum['3/4'],
-                            'aspect-ratio-2-3': aspectRatio === aspectRatioEnum['2/3']
-                        }"
-                    >
-                        <img
-                            appBackdropPath
-                            alt="Viewer image"
-                            [backdropPath]="image.file_path"
-                            [size]="backdropSize.w1280"
-                        />
-                    </div>
-                </swiper-slide>
-            </swiper-container>
-        </div>
-
-        <ng-container *ngIf="showPreviewStrip">
-            <swiper-container
-                #previewStrip
-                class="preview-strip"
-                [spaceBetween]="8"
-                [slidesPerView]="'auto'"
-                [initialSlide]="selectedIndex"
-                [speed]="default.carouselAnimationDuration"
-                [allowTouchMove]="true"
-            >
-                <swiper-slide
-                    *ngFor="let image of images; let i = index"
-                    [class.active]="i === selectedIndex"
-                    (click)="selectItem(i)"
+            <div class="viewer-strip-container">
+                <swiper-container
+                    #viewerStrip
+                    class="viewer-strip"
+                    [spaceBetween]="16"
+                    [slidesPerView]="1"
+                    [initialSlide]="selectedIndex"
+                    [grabCursor]="true"
+                    [speed]="default.carouselAnimationDuration"
+                    [allowTouchMove]="true"
+                    (swiperslidechange)="onViewerSlideChange($event)"
                 >
-                    <div
-                        class="preview-container"
-                        [ngClass]="{
-                            'aspect-ratio-16-9': aspectRatio === aspectRatioEnum['16/9'],
-                            'aspect-ratio-3-4': aspectRatio === aspectRatioEnum['3/4'],
-                            'aspect-ratio-2-3': aspectRatio === aspectRatioEnum['2/3']
-                        }"
-                    >
-                        <img
-                            appBackdropPath
-                            alt="Thumbnail"
-                            [backdropPath]="image.file_path"
-                            [size]="backdropSize.w1280"
-                        />
-                    </div>
-                </swiper-slide>
-            </swiper-container>
-        </ng-container>
+                    @for (image of images; track image.file_path) {
+                        <swiper-slide>
+                            <div
+                                class="image-container"
+                                [ngClass]="{
+                                    'aspect-ratio-16-9': aspectRatio === aspectRatioEnum['16/9'],
+                                    'aspect-ratio-3-4': aspectRatio === aspectRatioEnum['3/4'],
+                                    'aspect-ratio-2-3': aspectRatio === aspectRatioEnum['2/3']
+                                }"
+                            >
+                                <img
+                                    appBackdropPath
+                                    alt="Viewer image"
+                                    [backdropPath]="image.file_path"
+                                    [size]="backdropSize.w1280"
+                                />
+                            </div>
+                        </swiper-slide>
+                    }
+                </swiper-container>
+            </div>
+
+            @if (showPreviewStrip) {
+                <swiper-container
+                    #previewStrip
+                    class="preview-strip"
+                    [spaceBetween]="8"
+                    [slidesPerView]="'auto'"
+                    [initialSlide]="selectedIndex"
+                    [speed]="default.carouselAnimationDuration"
+                    [allowTouchMove]="true"
+                >
+                    @for (image of images; track image.file_path; let i = $index) {
+                        <swiper-slide [class.active]="i === selectedIndex" (click)="selectItem(i)">
+                            <div
+                                class="preview-container"
+                                [ngClass]="{
+                                    'aspect-ratio-16-9': aspectRatio === aspectRatioEnum['16/9'],
+                                    'aspect-ratio-3-4': aspectRatio === aspectRatioEnum['3/4'],
+                                    'aspect-ratio-2-3': aspectRatio === aspectRatioEnum['2/3']
+                                }"
+                            >
+                                <img
+                                    appBackdropPath
+                                    alt="Thumbnail"
+                                    [backdropPath]="image.file_path"
+                                    [size]="backdropSize.w1280"
+                                />
+                            </div>
+                        </swiper-slide>
+                    }
+                </swiper-container>
+            }
+        </div>
     </div>
-</div>
+}

@@ -37,7 +37,7 @@ import { TvShowDetails, TvShowEpisode, TvShowSeasonDetails } from '../../../../.
         ButtonComponent,
     ],
     templateUrl: './season-details.component.html',
-    styleUrl: './season-details.component.scss'
+    styleUrl: './season-details.component.scss',
 })
 export class SeasonDetailsPageComponent implements OnInit {
     mediaType = MediaType;

@@ -1,6 +1,8 @@
 <div appFadeIn [class.loading-overlay]="overlay">
     <div class="loading-container">
         <div class="loading-spinner"></div>
-        <div *ngIf="message" class="loading-text">{{ message }}</div>
+        @if (message) {
+            <div class="loading-text">{{ message }}</div>
+        }
     </div>
 </div>

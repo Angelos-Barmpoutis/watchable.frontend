@@ -2,38 +2,38 @@
     <div class="title-container">
         <h2 class="title">
             <div class="title-link">
-                <ng-container *ngIf="!isLoading; else loading">
+                @if (!isLoading) {
                     <span>{{ title }}</span>
-                    <app-button
-                        *ngIf="redirectUrl"
-                        [variant]="buttonType.Secondary"
-                        [type]="'button'"
-                        [link]="link"
-                        [text]="'View More'"
-                        [isIconLeft]="false"
-                        [icon]="'fas fa-chevron-right'"
-                        [hasPadding]="false"
-                    ></app-button>
-                </ng-container>
+                    @if (redirectUrl) {
+                        <app-button
+                            [variant]="buttonType.Secondary"
+                            [type]="'button'"
+                            [link]="link"
+                            [text]="'View More'"
+                            [isIconLeft]="false"
+                            [icon]="'fas fa-chevron-right'"
+                            [hasPadding]="false"
+                        ></app-button>
+                    }
+                } @else {
+                    <div appFadeIn class="loading-skeleton">
+                        <div class="skeleton-title-container">
+                            <div class="skeleton-title"></div>
+                        </div>
+                        @if (redirectUrl) {
+                            <app-button
+                                [variant]="buttonType.Secondary"
+                                [type]="'button'"
+                                [link]="link"
+                                [text]="'View More'"
+                                [isIconLeft]="false"
+                                [isLoading]="true"
+                                [hasPadding]="false"
+                            ></app-button>
+                        }
+                    </div>
+                }
             </div>
         </h2>
     </div>
 </div>
-
-<ng-template #loading>
-    <div appFadeIn class="loading-skeleton">
-        <div class="skeleton-title-container">
-            <div class="skeleton-title"></div>
-        </div>
-        <app-button
-            *ngIf="redirectUrl"
-            [variant]="buttonType.Secondary"
-            [type]="'button'"
-            [link]="link"
-            [text]="'View More'"
-            [isIconLeft]="false"
-            [isLoading]="true"
-            [hasPadding]="false"
-        ></app-button>
-    </div>
-</ng-template>

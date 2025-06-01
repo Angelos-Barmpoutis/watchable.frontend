@@ -5,14 +5,15 @@
             <app-tabs [isLoading]="isLoading" [tabs]="timeTabs" (tabChange)="changeTimeOption($event)"> </app-tabs>
         </header>
         <div class="list-container">
-            <ng-container *ngIf="items.length; else loadingState">
-                <app-person-list-item
-                    *ngFor="let person of items; trackBy: trackByItemId"
-                    [person]="person"
-                    [isLoading]="false"
-                >
-                </app-person-list-item>
-            </ng-container>
+            @if (items.length) {
+                @for (person of items; track trackByItemId($index, person)) {
+                    <app-person-list-item [person]="person" [isLoading]="false"> </app-person-list-item>
+                }
+            } @else {
+                @for (item of skeletonArray; track $index) {
+                    <app-person-list-item [isLoading]="true"> </app-person-list-item>
+                }
+            }
         </div>
         <app-infinite-scroll-loader
             [disabled]="isLoading || currentPage >= totalPages"
@@ -20,10 +21,3 @@
         ></app-infinite-scroll-loader>
     </section>
 </div>
-
-<ng-template #loadingState>
-    <div class="list-container">
-        <app-person-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
-        </app-person-list-item>
-    </div>
-</ng-template>

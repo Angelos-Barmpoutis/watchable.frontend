@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isLoading; else skeletonTemplate">
+@if (!isLoading) {
     <a
         appFadeIn
         class="media"
@@ -11,19 +11,15 @@
         ]"
     >
         <div class="media-poster">
-            <ng-container *ngIf="item.poster_path; else altPosterPath">
+            @if (item.poster_path) {
                 <img appPosterPath [size]="posterSize" [posterPath]="item.poster_path" />
-            </ng-container>
+            } @else {
+                <img [src]="posterFallback" />
+            }
         </div>
     </a>
-</ng-container>
-
-<ng-template #skeletonTemplate>
+} @else {
     <div appFadeIn class="skeleton-media">
         <div class="skeleton-poster"></div>
     </div>
-</ng-template>
-
-<ng-template #altPosterPath>
-    <img [src]="posterFallback" />
-</ng-template>
+}

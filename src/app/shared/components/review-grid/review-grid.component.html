@@ -1,29 +1,29 @@
-<ng-container *ngIf="!isLoading; else loadingTemplate">
+@if (!isLoading) {
     <div appFadeIn class="reviews-grid">
-        <app-review-item
-            *ngFor="let review of reviews | slice: 0 : (showAll ? reviews.length : default.reviewsCount)"
-            [review]="review"
-            [isLoading]="isLoading"
-        ></app-review-item>
+        @for (review of reviews | slice: 0 : (showAll ? reviews.length : default.reviewsCount); track review.id) {
+            <app-review-item [review]="review" [isLoading]="isLoading"></app-review-item>
+        }
     </div>
 
-    <div *ngIf="hasMoreReviews" class="view-all-container">
-        <app-button
-            [variant]="ButtonType.Secondary"
-            [type]="'button'"
-            [isLoading]="isLoading"
-            [icon]="showAll ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"
-            [isIconLeft]="false"
-            [text]="showAll ? 'Show Less' : 'View All'"
-            [hasPadding]="false"
-            (click)="toggleShowAll()"
-        >
-        </app-button>
-    </div>
-</ng-container>
-
-<ng-template #loadingTemplate>
+    @if (hasMoreReviews) {
+        <div class="view-all-container">
+            <app-button
+                [variant]="ButtonType.Secondary"
+                [type]="'button'"
+                [isLoading]="isLoading"
+                [icon]="showAll ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"
+                [isIconLeft]="false"
+                [text]="showAll ? 'Show Less' : 'View All'"
+                [hasPadding]="false"
+                (click)="toggleShowAll()"
+            >
+            </app-button>
+        </div>
+    }
+} @else {
     <div appFadeIn class="reviews-grid">
-        <app-review-item *ngFor="let i of skeletonArray" [review]="defaultReview" [isLoading]="true"></app-review-item>
+        @for (i of skeletonArray; track $index) {
+            <app-review-item [review]="defaultReview" [isLoading]="true"></app-review-item>
+        }
     </div>
-</ng-template>
+}

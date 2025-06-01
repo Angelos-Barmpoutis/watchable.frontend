@@ -42,7 +42,7 @@ import { TvShow, TvShowDetails } from '../../../../shared/models/tv-show.model';
         FadeInDirective,
     ],
     templateUrl: './tv-show.component.html',
-    styleUrls: ['./tv-show.component.scss']
+    styleUrls: ['./tv-show.component.scss'],
 })
 export class TvShowComponent implements OnInit {
     tvShowDetails: TvShowDetails | undefined;

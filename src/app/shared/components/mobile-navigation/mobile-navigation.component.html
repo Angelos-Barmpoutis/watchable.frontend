@@ -13,12 +13,14 @@
                 </a>
             </li>
 
-            <li *ngFor="let link of navigationLinks; trackBy: trackByLink">
-                <a routerLinkActive="active" class="bottom-nav__item" [routerLink]="link.path">
-                    <i [class]="link.icon"></i>
-                    <span>{{ link.title }}</span>
-                </a>
-            </li>
+            @for (link of navigationLinks; track link.path) {
+                <li>
+                    <a routerLinkActive="active" class="bottom-nav__item" [routerLink]="link.path">
+                        <i [class]="link.icon"></i>
+                        <span>{{ link.title }}</span>
+                    </a>
+                </li>
+            }
         </ul>
     </div>
 </nav>

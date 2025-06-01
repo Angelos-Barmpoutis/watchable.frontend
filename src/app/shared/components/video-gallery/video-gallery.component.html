@@ -1,75 +1,80 @@
-<div *ngIf="showViewer" appFadeIn class="video-viewer">
-    <div class="viewer-content">
-        <button title="Close" aria-label="Close" class="close-button" (click)="emitCloseViewer()">
-            <i class="fas fa-times"></i>
-        </button>
+@if (showViewer) {
+    <div appFadeIn class="video-viewer">
+        <div class="viewer-content">
+            <button title="Close" aria-label="Close" class="close-button" (click)="emitCloseViewer()">
+                <i class="fas fa-times"></i>
+            </button>
 
-        <div class="viewer-strip-container">
-            <swiper-container
-                #viewerStrip
-                class="viewer-strip"
-                [spaceBetween]="16"
-                [slidesPerView]="1"
-                [initialSlide]="selectedIndex"
-                [speed]="default.carouselAnimationDuration"
-                [touchRatio]="1"
-                [touchAngle]="45"
-                [touchStartPreventDefault]="false"
-                [touchMoveStopPropagation]="true"
-                [allowTouchMove]="true"
-                [grabCursor]="true"
-                [effect]="'fade'"
-                (swiperslidechange)="onViewerSlideChange($event)"
-            >
-                <swiper-slide *ngFor="let video of videos">
-                    <div class="video-container">
-                        <div *ngIf="!videoUrl" class="video-loading">
-                            <i class="fas fa-spinner fa-spin"></i>
-                        </div>
-                        <iframe
-                            *ngIf="videoUrl"
-                            frameborder="0"
-                            playsinline
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
-                            [src]="videoUrl"
-                        ></iframe>
-                    </div>
-                </swiper-slide>
-            </swiper-container>
-        </div>
-
-        <ng-container *ngIf="showPreviewStrip">
-            <swiper-container
-                #previewStrip
-                class="preview-strip"
-                [spaceBetween]="8"
-                [slidesPerView]="'auto'"
-                [initialSlide]="selectedIndex"
-                [speed]="default.carouselAnimationDuration"
-                [touchRatio]="1"
-                [touchAngle]="45"
-                [touchStartPreventDefault]="false"
-                [touchMoveStopPropagation]="true"
-                [allowTouchMove]="true"
-            >
-                <swiper-slide
-                    *ngFor="let video of videos; let i = index"
-                    [class.active]="i === selectedIndex"
-                    (click)="selectItem(i)"
+            <div class="viewer-strip-container">
+                <swiper-container
+                    #viewerStrip
+                    class="viewer-strip"
+                    [spaceBetween]="16"
+                    [slidesPerView]="1"
+                    [initialSlide]="selectedIndex"
+                    [speed]="default.carouselAnimationDuration"
+                    [touchRatio]="1"
+                    [touchAngle]="45"
+                    [touchStartPreventDefault]="false"
+                    [touchMoveStopPropagation]="true"
+                    [allowTouchMove]="true"
+                    [grabCursor]="true"
+                    [effect]="'fade'"
+                    (swiperslidechange)="onViewerSlideChange($event)"
                 >
-                    <div class="video-thumbnail">
-                        <img
-                            class="thumbnail-image"
-                            [src]="'https://img.youtube.com/vi/' + video.key + '/maxresdefault.jpg'"
-                            [alt]="video.name"
-                        />
-                        <div class="play-button">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                </swiper-slide>
-            </swiper-container>
-        </ng-container>
+                    @for (video of videos; track video.id) {
+                        <swiper-slide>
+                            <div class="video-container">
+                                @if (!videoUrl) {
+                                    <div class="video-loading">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                    </div>
+                                }
+                                @if (videoUrl) {
+                                    <iframe
+                                        frameborder="0"
+                                        playsinline
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen
+                                        [src]="videoUrl"
+                                    ></iframe>
+                                }
+                            </div>
+                        </swiper-slide>
+                    }
+                </swiper-container>
+            </div>
+
+            @if (showPreviewStrip) {
+                <swiper-container
+                    #previewStrip
+                    class="preview-strip"
+                    [spaceBetween]="8"
+                    [slidesPerView]="'auto'"
+                    [initialSlide]="selectedIndex"
+                    [speed]="default.carouselAnimationDuration"
+                    [touchRatio]="1"
+                    [touchAngle]="45"
+                    [touchStartPreventDefault]="false"
+                    [touchMoveStopPropagation]="true"
+                    [allowTouchMove]="true"
+                >
+                    @for (video of videos; track video.id) {
+                        <swiper-slide [class.active]="$index === selectedIndex" (click)="selectItem($index)">
+                            <div class="video-thumbnail">
+                                <img
+                                    class="thumbnail-image"
+                                    [src]="'https://img.youtube.com/vi/' + video.key + '/maxresdefault.jpg'"
+                                    [alt]="video.name"
+                                />
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                        </swiper-slide>
+                    }
+                </swiper-container>
+            }
+        </div>
     </div>
-</div>
+}

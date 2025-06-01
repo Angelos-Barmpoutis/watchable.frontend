@@ -26,7 +26,7 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
         CarouselMediaComponent,
         InfiniteScrollLoaderComponent,
         FeaturedBannerComponent,
-    ]
+    ],
 })
 export class TvShowsComponent extends AbstractGenreLoaderComponent<TvShow> {
     readonly mediaType = MediaType;

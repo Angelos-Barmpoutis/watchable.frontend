@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isLoading; else skeletonTemplate">
+@if (!isLoading) {
     <div appFadeIn class="featured-banner" appBackgroundPath [backgroundPath]="backgroundPath">
         <div class="overlay">
             <div class="wrapper">
@@ -9,12 +9,16 @@
                     </div>
                     <h1 class="featured-title">{{ featuredTitle }}</h1>
                     <div class="featured-meta">
-                        <span *ngIf="featuredDate" class="movie-year">
-                            {{ featuredDate | date: "yyyy" }}
-                        </span>
-                        <span *ngIf="genresList.length" class="genres">
-                            {{ genresList }}
-                        </span>
+                        @if (featuredDate) {
+                            <span class="movie-year">
+                                {{ featuredDate | date: "yyyy" }}
+                            </span>
+                        }
+                        @if (genresList.length) {
+                            <span class="genres">
+                                {{ genresList }}
+                            </span>
+                        }
                     </div>
 
                     <div class="overview">
@@ -36,9 +40,7 @@
             </div>
         </div>
     </div>
-</ng-container>
-
-<ng-template #skeletonTemplate>
+} @else {
     <div appFadeIn class="featured-banner-skeleton">
         <div class="overlay">
             <div class="wrapper">
@@ -48,7 +50,6 @@
                     <div class="skeleton-meta">
                         <div class="skeleton-meta-item"></div>
                         <div class="skeleton-meta-item"></div>
-                        <div class="skeleton-meta-item"></div>
                     </div>
                     <div class="skeleton-overview">
                         <div class="skeleton-line"></div>
@@ -56,10 +57,10 @@
                         <div class="skeleton-line"></div>
                     </div>
                     <div class="skeleton-actions">
-                        <app-button [variant]="buttonType.Primary" [isLoading]="true"></app-button>
+                        <app-button [isLoading]="true"></app-button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</ng-template>
+}

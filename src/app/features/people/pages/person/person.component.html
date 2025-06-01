@@ -1,138 +1,163 @@
-<section *ngIf="personDetails || isLoading" appFadeIn>
-    <div class="wrapper">
-        <div *ngIf="!isLoading; else loadingHeroTemplate" class="person-hero">
-            <div class="profile-image">
-                <img
-                    *ngIf="personDetails?.profile_path"
-                    [src]="'https://image.tmdb.org/t/p/w500' + personDetails.profile_path"
-                    [alt]="personDetails.name"
-                />
-            </div>
-            <div class="hero-info">
-                <h1>{{ personDetails.name }}</h1>
-                <div class="meta">
-                    <span *ngIf="personDetails?.known_for_department">{{ personDetails.known_for_department }}</span>
-                    <span *ngIf="gender">{{ gender }}</span>
-                </div>
-            </div>
-        </div>
-        <ng-template #loadingHeroTemplate>
-            <div class="person-hero-skeleton">
-                <div class="profile-image-skeleton"></div>
-                <div class="hero-info-skeleton">
-                    <div class="hero-info-skeleton-title"></div>
-                    <div class="hero-info-skeleton-meta">
-                        <div class="hero-info-skeleton-meta-item"></div>
-                        <div class="hero-info-skeleton-meta-item"></div>
+@if (personDetails || isLoading) {
+    <section appFadeIn>
+        <div class="wrapper">
+            @if (!isLoading) {
+                <div class="person-hero">
+                    <div class="profile-image">
+                        @if (personDetails.profile_path) {
+                            <img
+                                [src]="'https://image.tmdb.org/t/p/w500' + personDetails.profile_path"
+                                [alt]="personDetails.name"
+                            />
+                        }
+                    </div>
+                    <div class="hero-info">
+                        <h1>{{ personDetails.name }}</h1>
+                        <div class="meta">
+                            @if (personDetails.known_for_department) {
+                                <span>{{ personDetails.known_for_department }}</span>
+                            }
+                            @if (gender) {
+                                <span>{{ gender }}</span>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-        </ng-template>
-    </div>
-</section>
+            } @else {
+                <div class="person-hero-skeleton">
+                    <div class="profile-image-skeleton"></div>
+                    <div class="hero-info-skeleton">
+                        <div class="hero-info-skeleton-title"></div>
+                        <div class="hero-info-skeleton-meta">
+                            <div class="hero-info-skeleton-meta-item"></div>
+                            <div class="hero-info-skeleton-meta-item"></div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+}
 
 <div class="wrapper">
     <div class="person-details-grid">
         <div>
-            <section *ngIf="personDetails?.biography || isLoading" appFadeIn>
-                <header>
-                    <app-section-header title="Biography" [isLoading]="isLoading"></app-section-header>
-                </header>
-                <p *ngIf="!isLoading; else loadingBiographyTemplate" appFadeIn class="overview">
-                    {{ personDetails.biography }}
-                </p>
-                <ng-template #loadingBiographyTemplate>
-                    <div class="skeleton-overview">
-                        <div class="skeleton-overview-line"></div>
-                        <div class="skeleton-overview-line"></div>
-                        <div class="skeleton-overview-line"></div>
-                        <div class="skeleton-overview-line"></div>
-                    </div>
-                </ng-template>
-            </section>
+            @if (personDetails.biography || isLoading) {
+                <section appFadeIn>
+                    <header>
+                        <app-section-header title="Biography" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    @if (!isLoading) {
+                        <p appFadeIn class="overview">
+                            {{ personDetails.biography }}
+                        </p>
+                    } @else {
+                        <div class="skeleton-overview">
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                        </div>
+                    }
+                </section>
+            }
 
-            <section *ngIf="images?.length || isLoading">
-                <header>
-                    <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
-                </header>
-                <app-image-grid
-                    [aspectRatio]="aspectRatio['3/4']"
-                    [images]="images"
-                    [isLoading]="isLoading"
-                    [imagesCount]="8"
-                ></app-image-grid>
-            </section>
+            @if (images.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-image-grid
+                        [aspectRatio]="aspectRatio['3/4']"
+                        [images]="images"
+                        [isLoading]="isLoading"
+                        [imagesCount]="8"
+                    ></app-image-grid>
+                </section>
+            }
 
-            <section *ngIf="movieCastItems?.length || isLoading">
-                <header>
-                    <app-section-header title="Movie Credits" [isLoading]="isLoading"></app-section-header>
-                </header>
-                <app-media-grid
-                    [items]="movieCastItems"
-                    [type]="mediaType.Movie"
-                    [isLoading]="isLoading"
-                    [initialCount]="default.castCount"
-                ></app-media-grid>
-            </section>
+            @if (movieCastItems.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Movie Credits" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-media-grid
+                        [items]="movieCastItems"
+                        [type]="mediaType.Movie"
+                        [isLoading]="isLoading"
+                        [initialCount]="default.castCount"
+                    ></app-media-grid>
+                </section>
+            }
 
-            <section *ngIf="tvCastItems?.length || isLoading">
-                <header>
-                    <app-section-header title="TV Show Credits" [isLoading]="isLoading"></app-section-header>
-                </header>
-                <app-media-grid
-                    [items]="tvCastItems"
-                    [type]="mediaType.TvShow"
-                    [isLoading]="isLoading"
-                    [initialCount]="default.castCount"
-                ></app-media-grid>
-            </section>
+            @if (tvCastItems.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="TV Show Credits" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-media-grid
+                        [items]="tvCastItems"
+                        [type]="mediaType.TvShow"
+                        [isLoading]="isLoading"
+                        [initialCount]="default.castCount"
+                    ></app-media-grid>
+                </section>
+            }
         </div>
 
         <aside>
-            <section *ngIf="personDetails || isLoading">
-                <app-person-details [personDetails]="personDetails" [isLoading]="isLoading"></app-person-details>
-            </section>
+            @if (personDetails || isLoading) {
+                <section>
+                    <app-person-details [personDetails]="personDetails" [isLoading]="isLoading"></app-person-details>
+                </section>
+            }
 
-            <section *ngIf="externalIds || isLoading">
-                <div class="social-links">
-                    <app-button
-                        *ngIf="externalIds?.imdb_id"
-                        [variant]="buttonType.Imdb"
-                        [type]="'button'"
-                        [icon]="'fab fa-imdb'"
-                        [link]="mediaLinks[0]"
-                        [isLoading]="isLoading"
-                        [text]="'IMDb'"
-                    ></app-button>
-                    <app-button
-                        *ngIf="externalIds?.facebook_id"
-                        [variant]="buttonType.Facebook"
-                        [type]="'button'"
-                        [icon]="'fab fa-facebook'"
-                        [link]="mediaLinks[1]"
-                        [isLoading]="isLoading"
-                        [text]="'Facebook'"
-                    ></app-button>
-                    <app-button
-                        *ngIf="externalIds?.instagram_id"
-                        [variant]="buttonType.Instagram"
-                        [type]="'button'"
-                        [icon]="'fab fa-instagram'"
-                        [link]="mediaLinks[2]"
-                        [isLoading]="isLoading"
-                        [text]="'Instagram'"
-                    ></app-button>
-                    <app-button
-                        *ngIf="externalIds?.twitter_id"
-                        [variant]="buttonType.Twitter"
-                        [type]="'button'"
-                        [icon]="'fab fa-twitter'"
-                        [link]="mediaLinks[3]"
-                        [isLoading]="isLoading"
-                        [text]="'Twitter'"
-                    ></app-button>
-                </div>
-            </section>
+            @if (externalIds || isLoading) {
+                <section>
+                    <div class="social-links">
+                        @if (externalIds?.imdb_id) {
+                            <app-button
+                                [variant]="buttonType.Imdb"
+                                [type]="'button'"
+                                [icon]="'fab fa-imdb'"
+                                [link]="mediaLinks[0]"
+                                [isLoading]="isLoading"
+                                [text]="'IMDb'"
+                            ></app-button>
+                        }
+                        @if (externalIds?.facebook_id) {
+                            <app-button
+                                [variant]="buttonType.Facebook"
+                                [type]="'button'"
+                                [icon]="'fab fa-facebook'"
+                                [link]="mediaLinks[1]"
+                                [isLoading]="isLoading"
+                                [text]="'Facebook'"
+                            ></app-button>
+                        }
+                        @if (externalIds?.instagram_id) {
+                            <app-button
+                                [variant]="buttonType.Instagram"
+                                [type]="'button'"
+                                [icon]="'fab fa-instagram'"
+                                [link]="mediaLinks[2]"
+                                [isLoading]="isLoading"
+                                [text]="'Instagram'"
+                            ></app-button>
+                        }
+                        @if (externalIds?.twitter_id) {
+                            <app-button
+                                [variant]="buttonType.Twitter"
+                                [type]="'button'"
+                                [icon]="'fab fa-twitter'"
+                                [link]="mediaLinks[3]"
+                                [isLoading]="isLoading"
+                                [text]="'Twitter'"
+                            ></app-button>
+                        }
+                    </div>
+                </section>
+            }
         </aside>
     </div>
 </div>

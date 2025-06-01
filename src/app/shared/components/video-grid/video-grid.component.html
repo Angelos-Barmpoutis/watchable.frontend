@@ -1,28 +1,24 @@
-<ng-container *ngIf="!isLoading; else loadingTemplate">
+@if (!isLoading) {
     <div appFadeIn class="videos-grid">
-        <div
-            *ngFor="let video of videos | slice: 0 : videosCount; let i = index"
-            class="video-item"
-            (click)="openViewer(i, $event)"
-        >
-            <div class="video-thumbnail">
-                <img
-                    class="thumbnail-image"
-                    [src]="'https://img.youtube.com/vi/' + video.key + '/maxresdefault.jpg'"
-                    [alt]="video.name"
-                />
-                <div class="play-button">
-                    <i class="fas fa-play"></i>
+        @for (video of videos | slice: 0 : videosCount; track video.id; let i = $index) {
+            <div class="video-item" (click)="openViewer(i, $event)">
+                <div class="video-thumbnail">
+                    <img
+                        class="thumbnail-image"
+                        [src]="'https://img.youtube.com/vi/' + video.key + '/maxresdefault.jpg'"
+                        [alt]="video.name"
+                    />
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
                 </div>
+                @if (i === videosCount - 1 && videos.length > videosCount) {
+                    <div class="more-videos" (click)="openViewer(i, $event)">
+                        <span class="counter">+{{ videos.length - videosCount }} more</span>
+                    </div>
+                }
             </div>
-            <div
-                *ngIf="i === videosCount - 1 && videos.length > videosCount"
-                class="more-videos"
-                (click)="openViewer(i, $event)"
-            >
-                <span class="counter">+{{ videos.length - videosCount }} more</span>
-            </div>
-        </div>
+        }
     </div>
 
     <app-video-gallery
@@ -30,12 +26,12 @@
         [selectedIndex]="selectedIndex"
         (closeViewer)="closeViewer()"
     ></app-video-gallery>
-</ng-container>
-
-<ng-template #loadingTemplate>
+} @else {
     <div appFadeIn class="skeleton-grid">
-        <div *ngFor="let i of skeletonArray" class="skeleton-video-item">
-            <div class="skeleton-video"></div>
-        </div>
+        @for (i of skeletonArray; track $index) {
+            <div class="skeleton-video-item">
+                <div class="skeleton-video"></div>
+            </div>
+        }
     </div>
-</ng-template>
+}

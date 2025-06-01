@@ -5,30 +5,24 @@
             <app-tabs [isLoading]="isLoading" [tabs]="tabs" (tabChange)="changeMediaType($event)"> </app-tabs>
         </header>
         <div class="list-container">
-            <app-media-list-item
-                *ngFor="let item of items; trackBy: trackByItemId"
-                [media]="item"
-                [type]="selectedMediaType"
-            >
-            </app-media-list-item>
-            <ng-container *ngIf="isLoading && items.length === 0">
-                <app-media-list-item
-                    *ngFor="let item of skeletonArray; trackBy: trackByIndex"
-                    [type]="selectedMediaType"
-                    [isLoading]="true"
-                >
-                </app-media-list-item>
-            </ng-container>
+            @for (item of items; track trackByItemId($index, item)) {
+                <app-media-list-item [media]="item" [type]="selectedMediaType"> </app-media-list-item>
+            }
+            @if (isLoading && items.length === 0) {
+                @for (item of skeletonArray; track $index) {
+                    <app-media-list-item [type]="selectedMediaType" [isLoading]="true"> </app-media-list-item>
+                }
+            }
         </div>
         <div class="no-results-container">
-            <p *ngIf="!isLoading && items.length === 0" class="no-results" appFadeIn>
-                No {{ selectedMediaType === this.MediaType ? "movies" : "TV shows" }} found in your watchlist
-            </p>
+            @if (!isLoading && items.length === 0) {
+                <p class="no-results" appFadeIn>
+                    No {{ selectedMediaType === this.MediaType ? "movies" : "TV shows" }} found in your watchlist
+                </p>
+            }
         </div>
-        <app-infinite-scroll-loader
-            *ngIf="currentPage < totalPages"
-            [disabled]="isLoading"
-            (scrolled)="loadMore()"
-        ></app-infinite-scroll-loader>
+        @if (currentPage < totalPages) {
+            <app-infinite-scroll-loader [disabled]="isLoading" (scrolled)="loadMore()"></app-infinite-scroll-loader>
+        }
     </section>
 </div>

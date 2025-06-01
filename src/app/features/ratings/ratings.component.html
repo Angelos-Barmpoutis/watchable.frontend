@@ -5,68 +5,72 @@
             <app-tabs [isLoading]="isLoading" [tabs]="tabs" (tabChange)="changeTab($event)"> </app-tabs>
         </header>
 
-        <div *ngIf="selectedTab === this.tabs[0].value || selectedTab === this.tabs[1].value" class="list-container">
-            <app-media-list-item
-                *ngFor="let item of items; trackBy: trackByItemId"
-                [media]="item"
-                [type]="selectedTab === this.tabs[0].value ? MediaType.Movie : MediaType.TvShow"
-            >
-            </app-media-list-item>
-            <ng-container *ngIf="isLoading && items.length === 0">
-                <app-media-list-item
-                    *ngFor="let item of skeletonArray; trackBy: trackByIndex"
-                    [type]="selectedTab === this.tabs[0].value ? MediaType.Movie : MediaType.TvShow"
-                    [isLoading]="true"
-                >
-                </app-media-list-item>
-            </ng-container>
-        </div>
-
-        <div *ngIf="selectedTab === this.TV_EPISODE_KEY" class="episodes-container">
-            <div class="episode-grid">
-                <ng-container *ngIf="episodes?.length">
-                    <app-episode-grid-item
-                        *ngFor="let episode of episodes; trackBy: trackByEpisodeId"
-                        [episode]="episode"
-                        [tvShowId]="episode.show_id"
-                        [seasonNumber]="episode.season_number"
-                        [isLoading]="isLoading"
+        @if (selectedTab === this.tabs[0].value || selectedTab === this.tabs[1].value) {
+            <div class="list-container">
+                @for (item of items; track trackByItemId($index, item)) {
+                    <app-media-list-item
+                        [media]="item"
+                        [type]="selectedTab === this.tabs[0].value ? MediaType.Movie : MediaType.TvShow"
                     >
-                    </app-episode-grid-item>
-                </ng-container>
-                <ng-container *ngIf="isLoading && episodes.length === 0">
-                    <app-episode-grid-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
-                    </app-episode-grid-item>
-                </ng-container>
+                    </app-media-list-item>
+                }
+                @if (isLoading && items.length === 0) {
+                    @for (item of skeletonArray; track $index) {
+                        <app-media-list-item
+                            [type]="selectedTab === this.tabs[0].value ? MediaType.Movie : MediaType.TvShow"
+                            [isLoading]="true"
+                        >
+                        </app-media-list-item>
+                    }
+                }
             </div>
-        </div>
+        }
+
+        @if (selectedTab === this.TV_EPISODE_KEY) {
+            <div class="episodes-container">
+                <div class="episode-grid">
+                    @if (episodes.length) {
+                        @for (episode of episodes; track trackByEpisodeId($index, episode)) {
+                            <app-episode-grid-item
+                                [episode]="episode"
+                                [tvShowId]="episode.show_id"
+                                [seasonNumber]="episode.season_number"
+                                [isLoading]="isLoading"
+                            >
+                            </app-episode-grid-item>
+                        }
+                    }
+                    @if (isLoading && episodes.length === 0) {
+                        @for (item of skeletonArray; track $index) {
+                            <app-episode-grid-item [isLoading]="true"> </app-episode-grid-item>
+                        }
+                    }
+                </div>
+            </div>
+        }
 
         <div class="no-results-container">
-            <p
-                *ngIf="
-                    !isLoading &&
-                    ((selectedTab === this.TV_EPISODE_KEY && episodes.length === 0) ||
-                        (selectedTab !== this.TV_EPISODE_KEY && items.length === 0))
-                "
-                class="no-results"
-                appFadeIn
-            >
-                No
-                {{
-                    selectedTab === this.tabs[0].value
-                        ? "movies"
-                        : selectedTab === this.tabs[1].value
-                          ? "TV shows"
-                          : "TV episodes"
-                }}
-                found in your ratings
-            </p>
+            @if (
+                !isLoading &&
+                ((selectedTab === this.TV_EPISODE_KEY && episodes.length === 0) ||
+                    (selectedTab !== this.TV_EPISODE_KEY && items.length === 0))
+            ) {
+                <p class="no-results" appFadeIn>
+                    No
+                    {{
+                        selectedTab === this.tabs[0].value
+                            ? "movies"
+                            : selectedTab === this.tabs[1].value
+                              ? "TV shows"
+                              : "TV episodes"
+                    }}
+                    found in your ratings
+                </p>
+            }
         </div>
 
-        <app-infinite-scroll-loader
-            *ngIf="currentPage < totalPages"
-            [disabled]="isLoading"
-            (scrolled)="loadMore()"
-        ></app-infinite-scroll-loader>
+        @if (currentPage < totalPages) {
+            <app-infinite-scroll-loader [disabled]="isLoading" (scrolled)="loadMore()"></app-infinite-scroll-loader>
+        }
     </section>
 </div>

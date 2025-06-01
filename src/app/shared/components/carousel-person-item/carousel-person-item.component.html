@@ -1,21 +1,17 @@
-<ng-container *ngIf="!isLoading; else skeletonTemplate">
+@if (!isLoading) {
     <a appFadeIn class="person" [title]="item.name" [routerLink]="['/', 'people', 'person', item.id]">
         <div class="person-profile">
-            <ng-container *ngIf="item.profile_path; else altProfilePath">
+            @if (item.profile_path) {
                 <img appProfilePath [size]="profileSize" [profilePath]="item.profile_path" />
-            </ng-container>
+            } @else {
+                <img [src]="profileFallback" />
+            }
         </div>
         <span class="person-name">{{ item.name }}</span>
     </a>
-</ng-container>
-
-<ng-template #skeletonTemplate>
+} @else {
     <div appFadeIn class="skeleton-person">
         <div class="skeleton-profile"></div>
         <div class="skeleton-name"></div>
     </div>
-</ng-template>
-
-<ng-template #altProfilePath>
-    <img [src]="profileFallback" />
-</ng-template>
+}

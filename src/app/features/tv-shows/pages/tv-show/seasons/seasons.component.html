@@ -5,20 +5,16 @@
             </app-section-header>
         </header>
         <div class="list-container">
-            <ng-container *ngIf="!isLoading; else loadingState">
-                <app-season-list-item
-                    *ngFor="let season of seasons; trackBy: trackByItemId"
-                    [season]="season"
-                    [tvShowId]="tvShowId || 0"
-                    [isLoading]="false"
-                >
-                </app-season-list-item>
-            </ng-container>
+            @if (!isLoading) {
+                @for (season of seasons; track trackByItemId($index, season)) {
+                    <app-season-list-item [season]="season" [tvShowId]="tvShowId || 0" [isLoading]="false">
+                    </app-season-list-item>
+                }
+            } @else {
+                @for (item of skeletonArray; track $index) {
+                    <app-season-list-item [isLoading]="true"> </app-season-list-item>
+                }
+            }
         </div>
     </section>
 </div>
-
-<ng-template #loadingState>
-    <app-season-list-item *ngFor="let item of skeletonArray; trackBy: trackByIndex" [isLoading]="true">
-    </app-season-list-item>
-</ng-template>

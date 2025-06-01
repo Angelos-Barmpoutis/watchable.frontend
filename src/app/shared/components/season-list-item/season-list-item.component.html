@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isLoading; else skeletonTemplate">
+@if (!isLoading) {
     <a
         appFadeIn
         class="season-list-item"
@@ -7,8 +7,11 @@
     >
         <div class="season-main">
             <div class="poster-wrapper">
-                <img *ngIf="season.poster_path" appPosterPath [posterPath]="season.poster_path" [size]="posterSize" />
-                <img *ngIf="!season.poster_path" [src]="posterFallback" />
+                @if (season.poster_path) {
+                    <img appPosterPath [posterPath]="season.poster_path" [size]="posterSize" />
+                } @else {
+                    <img [src]="posterFallback" />
+                }
             </div>
             <div class="info">
                 <div class="info-header">
@@ -20,13 +23,13 @@
                         </div>
                     </div>
                 </div>
-                <p *ngIf="season.overview" class="overview">{{ season.overview }}</p>
+                @if (season.overview) {
+                    <p class="overview">{{ season.overview }}</p>
+                }
             </div>
         </div>
     </a>
-</ng-container>
-
-<ng-template #skeletonTemplate>
+} @else {
     <div appFadeIn class="season-list-item-loading">
         <div class="season-main">
             <div class="poster-wrapper">
@@ -50,4 +53,4 @@
             </div>
         </div>
     </div>
-</ng-template>
+}

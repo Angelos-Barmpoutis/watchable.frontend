@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isLoading; else skeletonTemplate">
+@if (!isLoading) {
     <a
         appFadeIn
         class="season"
@@ -6,23 +6,19 @@
         [routerLink]="['/tv-shows', 'tv-show', tvShowId, 'seasons', season.season_number]"
     >
         <div class="season-poster">
-            <ng-container *ngIf="season.poster_path; else altPosterPath">
+            @if (season.poster_path) {
                 <img appPosterPath [size]="posterSize" [posterPath]="season.poster_path" />
-            </ng-container>
+            } @else {
+                <img [src]="posterFallback" />
+            }
         </div>
         <span class="season-name">{{ season.name }}</span>
         <span class="season-episodes">{{ season.episode_count }} Episodes</span>
     </a>
-</ng-container>
-
-<ng-template #skeletonTemplate>
+} @else {
     <div appFadeIn class="skeleton-season">
         <div class="skeleton-poster"></div>
         <div class="skeleton-name"></div>
         <div class="skeleton-episodes"></div>
     </div>
-</ng-template>
-
-<ng-template #altPosterPath>
-    <img [src]="posterFallback" />
-</ng-template>
+}

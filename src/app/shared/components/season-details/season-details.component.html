@@ -1,39 +1,49 @@
-<ng-container *ngIf="!isLoading; else loadingTemplate">
+@if (!isLoading) {
     <div appFadeIn>
         <ul class="details-list">
-            <li *ngIf="seasonDetails?.name">
-                <span class="detail-label">Name:</span>
-                <span class="detail-value">{{ seasonDetails?.name }}</span>
-            </li>
-            <li *ngIf="seasonDetails?.air_date">
-                <span class="detail-label">Air Date:</span>
-                <span class="detail-value">{{ seasonDetails?.air_date | date: "longDate" }}</span>
-            </li>
-            <li *ngIf="seasonDetails?.season_number">
-                <span class="detail-label">Season Number:</span>
-                <span class="detail-value">{{ seasonDetails?.season_number }}</span>
-            </li>
-            <li *ngIf="seasonDetails?.episodes?.length">
-                <span class="detail-label">Episodes:</span>
-                <span class="detail-value">{{ seasonDetails?.episodes?.length }}</span>
-            </li>
-            <li *ngIf="seasonDetails?.vote_average">
-                <span class="detail-label">Vote Average:</span>
-                <span class="detail-value">{{ seasonDetails?.vote_average | number: "1.1-1" }}</span>
-            </li>
+            @if (seasonDetails?.name) {
+                <li>
+                    <span class="detail-label">Name:</span>
+                    <span class="detail-value">{{ seasonDetails?.name }}</span>
+                </li>
+            }
+            @if (seasonDetails?.air_date) {
+                <li>
+                    <span class="detail-label">Air Date:</span>
+                    <span class="detail-value">{{ seasonDetails?.air_date | date: "longDate" }}</span>
+                </li>
+            }
+            @if (seasonDetails?.season_number) {
+                <li>
+                    <span class="detail-label">Season Number:</span>
+                    <span class="detail-value">{{ seasonDetails?.season_number }}</span>
+                </li>
+            }
+            @if (seasonDetails?.episodes?.length) {
+                <li>
+                    <span class="detail-label">Episodes:</span>
+                    <span class="detail-value">{{ seasonDetails?.episodes?.length }}</span>
+                </li>
+            }
+            @if (seasonDetails?.vote_average) {
+                <li>
+                    <span class="detail-label">Vote Average:</span>
+                    <span class="detail-value">{{ seasonDetails?.vote_average | number: "1.1-1" }}</span>
+                </li>
+            }
         </ul>
     </div>
-</ng-container>
-
-<ng-template #loadingTemplate>
+} @else {
     <div class="skeleton-media-details">
         <div class="skeleton-media-content">
             <div class="skeleton-media-list">
-                <div *ngFor="let i of skeletonArray" class="skeleton-media-item">
-                    <div class="skeleton-media-label"></div>
-                    <div class="skeleton-media-value"></div>
-                </div>
+                @for (i of skeletonArray; track $index) {
+                    <div class="skeleton-media-item">
+                        <div class="skeleton-media-label"></div>
+                        <div class="skeleton-media-value"></div>
+                    </div>
+                }
             </div>
         </div>
     </div>
-</ng-template>
+}

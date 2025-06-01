@@ -1,21 +1,25 @@
-<ng-container *ngIf="!isLoading; else loadingTemplate">
+@if (!isLoading) {
     <div class="review-card" appFadeIn>
         <div class="review-header">
             <div class="avatar">
-                <img
-                    *ngIf="review.author_details.avatar_path"
-                    alt="Reviewer avatar"
-                    [src]="review.author_details.avatar_path | avatarUrl"
-                />
-                <i *ngIf="!review.author_details.avatar_path" class="fas fa-user"></i>
+                @if (review.author_details.avatar_path) {
+                    <img alt="Reviewer avatar" [src]="review.author_details.avatar_path | avatarUrl" />
+                } @else {
+                    <i class="fas fa-user"></i>
+                }
             </div>
             <div class="reviewer-info">
                 <span class="reviewer-name">{{ review.author }}</span>
                 <span class="review-date">{{ review.created_at | date: "mediumDate" }}</span>
             </div>
-            <div *ngIf="review.author_details.rating" class="reviewer-rating">
-                <app-rating-badge [rating]="review.author_details.rating" [isLoading]="isLoading"></app-rating-badge>
-            </div>
+            @if (review.author_details.rating) {
+                <div class="reviewer-rating">
+                    <app-rating-badge
+                        [rating]="review.author_details.rating"
+                        [isLoading]="isLoading"
+                    ></app-rating-badge>
+                </div>
+            }
         </div>
         <div class="review-content">
             <p>
@@ -27,9 +31,7 @@
             </a>
         </div>
     </div>
-</ng-container>
-
-<ng-template #loadingTemplate>
+} @else {
     <div class="review-card" appFadeIn>
         <div class="review-header">
             <div class="skeleton-avatar"></div>
@@ -48,4 +50,4 @@
             <div class="skeleton-review-text"></div>
         </div>
     </div>
-</ng-template>
+}

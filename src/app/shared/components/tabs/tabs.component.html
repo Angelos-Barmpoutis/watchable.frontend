@@ -1,6 +1,6 @@
 <div appFadeIn class="tabs-container">
     <div class="tab-group" role="tablist">
-        <ng-container *ngFor="let tab of tabs">
+        @for (tab of tabs; track tab.id) {
             <app-button
                 class="tab button"
                 role="tab"
@@ -15,6 +15,6 @@
                 (click)="selectTab(tab.value)"
             >
             </app-button>
-        </ng-container>
+        }
     </div>
 </div>

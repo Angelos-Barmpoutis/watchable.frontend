@@ -1,5 +1,5 @@
 <div appFadeIn class="carousel">
-    <ng-container *ngIf="!isLoading; else skeletonTemplate">
+    @if (!isLoading) {
         <div class="carousel-wrapper">
             <button
                 title="Previous"
@@ -16,21 +16,23 @@
             </button>
 
             <swiper-container #swiperEl init="false">
-                <swiper-slide *ngFor="let item of items; trackBy: trackByItemId">
-                    <app-carousel-season-item [season]="item" [tvShowId]="tvShowId" [isLoading]="false">
-                    </app-carousel-season-item>
-                </swiper-slide>
+                @for (item of items; track item.id) {
+                    <swiper-slide>
+                        <app-carousel-season-item [season]="item" [tvShowId]="tvShowId" [isLoading]="false">
+                        </app-carousel-season-item>
+                    </swiper-slide>
+                }
             </swiper-container>
         </div>
-    </ng-container>
-</div>
-
-<ng-template #skeletonTemplate>
-    <div class="skeleton-carousel">
-        <div class="skeleton-wrapper">
-            <div *ngFor="let item of skeletonArray; trackBy: trackByIndex" class="skeleton-slide">
-                <app-carousel-season-item [isLoading]="true"></app-carousel-season-item>
+    } @else {
+        <div class="skeleton-carousel">
+            <div class="skeleton-wrapper">
+                @for (item of skeletonArray; track $index) {
+                    <div class="skeleton-slide">
+                        <app-carousel-season-item [isLoading]="true"></app-carousel-season-item>
+                    </div>
+                }
             </div>
         </div>
-    </div>
-</ng-template>
+    }
+</div>

@@ -114,7 +114,7 @@
                     &:not(:first-child)::before {
                         content: "•";
                         margin-right: $spacing-xs;
-                        margin-left: $spacing-xs;
+                        margin-left: calc($spacing-xs * 2);
                         opacity: 0.5;
                     }
                 }

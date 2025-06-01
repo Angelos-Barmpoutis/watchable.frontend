@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isLoading; else skeletonTemplate">
+@if (!isLoading) {
     <a
         appFadeIn
         class="media-list-item"
@@ -12,27 +12,34 @@
     >
         <div class="media-main">
             <div class="poster-wrapper">
-                <img
-                    *ngIf="media?.poster_path"
-                    appPosterPath
-                    [posterPath]="media?.poster_path || ''"
-                    [size]="posterSize"
-                />
-                <img *ngIf="!media?.poster_path" [src]="posterFallback" />
+                @if (media?.poster_path) {
+                    <img appPosterPath [posterPath]="media?.poster_path || ''" [size]="posterSize" />
+                } @else {
+                    <img [src]="posterFallback" />
+                }
             </div>
             <div class="info">
                 <div class="info-header">
                     <div class="title-container">
                         <h3 class="title">{{ title }}</h3>
                         <div class="meta">
-                            <span *ngIf="releaseDate" class="year">
-                                {{ releaseDate | date: "yyyy" }}
-                            </span>
-                            <span *ngIf="genres?.length" class="genres">
-                                <span *ngFor="let genre of genres | slice: 0 : 2; let last = last">
-                                    {{ genre.name }}{{ !last ? ", " : "" }}
+                            @if (releaseDate) {
+                                <span class="year">
+                                    {{ releaseDate | date: "yyyy" }}
                                 </span>
-                            </span>
+                            }
+                            @if (genres && genres.length) {
+                                <span class="genres">
+                                    @for (genre of genres | slice: 0 : 2; track $index) {
+                                        <span
+                                            >{{ genre.name }}
+                                            @if (!$last) {
+                                                ,
+                                            }
+                                        </span>
+                                    }
+                                </span>
+                            }
                         </div>
                     </div>
                     <div class="rating-container">
@@ -44,13 +51,13 @@
                         </div>
                     </div>
                 </div>
-                <p *ngIf="media?.overview" class="overview">{{ media?.overview }}</p>
+                @if (media?.overview) {
+                    <p class="overview">{{ media?.overview }}</p>
+                }
             </div>
         </div>
     </a>
-</ng-container>
-
-<ng-template #skeletonTemplate>
+} @else {
     <div appFadeIn class="media-list-item-loading">
         <div class="media-main">
             <div class="poster-skeleton"></div>
@@ -70,4 +77,4 @@
             </div>
         </div>
     </div>
-</ng-template>
+}

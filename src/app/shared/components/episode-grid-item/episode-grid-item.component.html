@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isLoading; else skeletonTemplate">
+@if (!isLoading) {
     <a
         appFadeIn
         class="episode"
@@ -6,9 +6,11 @@
         [title]="episode.name"
     >
         <div class="episode-backdrop">
-            <ng-container *ngIf="episode.still_path; else altBackdropPath">
+            @if (episode.still_path) {
                 <img appBackdropPath [size]="backdropSize" [backdropPath]="episode.still_path" />
-            </ng-container>
+            } @else {
+                <img [src]="backdropFallback" />
+            }
         </div>
         <h3 class="title">{{ episode.name }}</h3>
         <div class="meta">
@@ -18,19 +20,13 @@
             </span>
         </div>
     </a>
-</ng-container>
-
-<ng-template #skeletonTemplate>
+} @else {
     <div appFadeIn class="skeleton-episode">
         <div class="skeleton-poster"></div>
         <div class="skeleton-title"></div>
         <div class="skeleton-meta">
-            <div class="skeleton-meta-item"></div>
-            <div class="skeleton-meta-item"></div>
+            <div class="skeleton-episode-number"></div>
+            <div class="skeleton-air-date"></div>
         </div>
     </div>
-</ng-template>
-
-<ng-template #altBackdropPath>
-    <img [src]="backdropFallback" />
-</ng-template>
+}
