@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, DestroyRef, HostListener, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { BehaviorSubject, EMPTY, forkJoin, switchMap, take } from 'rxjs';
@@ -38,8 +38,6 @@ import { SnackbarService } from './shared/services/snackbar.service';
 })
 export class AppComponent implements OnInit {
     isAppReady$ = new BehaviorSubject<boolean>(false);
-    isAuthLoading$ = new BehaviorSubject<boolean>(false);
-    private isAuthInProgress = false;
 
     constructor(
         public searchService: SearchService,
@@ -51,240 +49,97 @@ export class AppComponent implements OnInit {
         public authService: AuthService,
         private destroyRef: DestroyRef,
         public snackbarService: SnackbarService,
-    ) {
-        // Check for redirect state on component initialization
-        const isRedirecting = sessionStorage.getItem('auth_redirect') === 'true';
-        if (isRedirecting) {
-            console.log('AppComponent: Detected redirect state on initialization');
-            this.isAuthInProgress = true;
-            this.isAuthLoading$.next(true);
-        }
-
-        // Add visibility change listener
-        document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'visible') {
-                console.log('AppComponent: Tab became visible, checking state');
-                this.checkAndRestoreState();
-            }
-        });
-    }
-
-    private checkAndRestoreState(): void {
-        console.log('AppComponent: Checking and restoring state');
-        const isRedirecting = sessionStorage.getItem('auth_redirect') === 'true';
-        const stateStr = sessionStorage.getItem('auth_state');
-
-        console.log('AppComponent: Current state check:', {
-            isRedirecting,
-            stateStr,
-            url: window.location.href,
-            isAuthInProgress: this.isAuthInProgress,
-            isLoading: this.isAuthLoading$.value,
-        });
-
-        if (isRedirecting) {
-            console.log('AppComponent: Restoring redirect state');
-            this.isAuthInProgress = true;
-            this.isAuthLoading$.next(true);
-        }
-    }
-
-    @HostListener('window:popstate', ['$event'])
-    onPopState(): void {
-        console.log('PopState event triggered');
-        console.log('Current auth state:', {
-            isAuthInProgress: this.isAuthInProgress,
-            isLoading: this.isAuthLoading$.value,
-            isRedirecting: this.authService.isRedirectingSubject.value,
-            url: window.location.href,
-            sessionStorage: {
-                auth_in_progress: sessionStorage.getItem('auth_in_progress'),
-                auth_state: sessionStorage.getItem('auth_state'),
-                auth_redirect: sessionStorage.getItem('auth_redirect'),
-            },
-        });
-
-        // Only clean up if we're not in a redirect flow
-        if (
-            !this.authService.isRedirectingSubject.value &&
-            (this.isAuthInProgress || sessionStorage.getItem('auth_in_progress') === 'true')
-        ) {
-            console.log('Cleaning up auth state after popstate');
-            this.isAuthLoading$.next(false);
-            this.isAuthInProgress = false;
-            sessionStorage.removeItem('auth_in_progress');
-            sessionStorage.removeItem('auth_state');
-            sessionStorage.removeItem('auth_redirect');
-            this.snackbarService.error('Authentication was cancelled');
-            this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
-        } else if (this.authService.isRedirectingSubject.value) {
-            console.log('Preserving auth state during popstate (redirect in progress)');
-        }
-    }
-
-    @HostListener('window:beforeunload', ['$event'])
-    onBeforeUnload(): void {
-        console.log('BeforeUnload event triggered');
-        console.log('Current auth state:', {
-            isAuthInProgress: this.isAuthInProgress,
-            isLoading: this.isAuthLoading$.value,
-            isRedirecting: this.authService.isRedirectingSubject.value,
-            url: window.location.href,
-            sessionStorage: {
-                auth_in_progress: sessionStorage.getItem('auth_in_progress'),
-                auth_state: sessionStorage.getItem('auth_state'),
-                auth_redirect: sessionStorage.getItem('auth_redirect'),
-            },
-        });
-
-        // Only clean up if we're not redirecting to TMDB
-        if (
-            !this.authService.isRedirectingSubject.value &&
-            (this.isAuthInProgress || sessionStorage.getItem('auth_in_progress') === 'true')
-        ) {
-            console.log('Cleaning up auth state before unload (not redirecting)');
-            this.isAuthLoading$.next(false);
-            this.isAuthInProgress = false;
-            sessionStorage.removeItem('auth_in_progress');
-            sessionStorage.removeItem('auth_state');
-            sessionStorage.removeItem('auth_redirect');
-        } else if (this.authService.isRedirectingSubject.value) {
-            console.log('Preserving auth state during redirect');
-        }
-    }
+    ) {}
 
     ngOnInit(): void {
-        console.log('AppComponent initialized');
-        this.initializeApp();
-        this.handleAuthCallback();
+        this.initializeGenres();
+        this.handleTMDBAuthRedirect();
     }
 
-    private handleAuthCallback(): void {
-        console.log('Starting auth callback handler');
-        console.log('Initial state:', {
-            isAuthInProgress: this.isAuthInProgress,
-            isLoading: this.isAuthLoading$.value,
-            isRedirecting: this.authService.isRedirectingSubject.value,
-            isAuthenticated: this.authService.isAuthenticated(),
-            sessionStorage: {
-                auth_in_progress: sessionStorage.getItem('auth_in_progress'),
-                auth_state: sessionStorage.getItem('auth_state'),
-                auth_redirect: sessionStorage.getItem('auth_redirect'),
-            },
-        });
-
-        // Check if we're returning from a redirect
-        const isRedirecting = sessionStorage.getItem('auth_redirect') === 'true';
-        if (isRedirecting) {
-            console.log('Detected return from redirect');
-            this.isAuthInProgress = true;
-            this.isAuthLoading$.next(true);
-        }
-
+    private handleTMDBAuthRedirect(): void {
         this.route.queryParams
             .pipe(
                 takeUntilDestroyed(this.destroyRef),
                 switchMap((params: { request_token?: string; approved?: string; denied?: string }) => {
-                    console.log('Auth callback params:', params);
-                    console.log('Current URL:', window.location.href);
-                    console.log('Current auth state:', {
-                        isAuthInProgress: this.isAuthInProgress,
-                        isLoading: this.isAuthLoading$.value,
-                        isRedirecting: this.authService.isRedirectingSubject.value,
-                        isAuthenticated: this.authService.isAuthenticated(),
-                        sessionStorage: {
-                            auth_in_progress: sessionStorage.getItem('auth_in_progress'),
-                            auth_state: sessionStorage.getItem('auth_state'),
-                            auth_redirect: sessionStorage.getItem('auth_redirect'),
-                        },
-                    });
-
                     const requestToken = params.request_token;
                     const approved = params.approved;
                     const denied = params.denied;
+                    const wasRedirecting = sessionStorage.getItem('auth_redirect') === 'true';
 
+                    // If user is already authenticated, clean up any redirect state
                     if (this.authService.isAuthenticated()) {
-                        console.log('User already authenticated, skipping auth flow');
+                        if (wasRedirecting) {
+                            this.cleanupAuthState();
+                        }
                         return EMPTY;
                     }
 
-                    if (requestToken != null) {
-                        console.log('Request token found:', requestToken);
-                        if (approved === 'true') {
-                            console.log('Auth approved');
-                            if (window.opener) {
-                                console.log('Window opener exists, sending message');
-                                (window.opener as Window).postMessage(
-                                    {
-                                        type: 'AUTH_SUCCESS',
-                                        requestToken: requestToken,
-                                    },
-                                    window.location.origin,
-                                );
-                                window.close();
-                                return EMPTY;
-                            }
-                            console.log('No window opener, creating session');
-                            this.isAuthInProgress = true;
-                            sessionStorage.setItem('auth_in_progress', 'true');
-                            this.isAuthLoading$.next(true);
-                            console.log('State before creating session:', {
-                                isAuthInProgress: this.isAuthInProgress,
-                                isLoading: this.isAuthLoading$.value,
-                                isRedirecting: this.authService.isRedirectingSubject.value,
-                                sessionStorage: {
-                                    auth_in_progress: sessionStorage.getItem('auth_in_progress'),
-                                    auth_state: sessionStorage.getItem('auth_state'),
-                                    auth_redirect: sessionStorage.getItem('auth_redirect'),
-                                },
-                            });
-                            return this.authFacade.createSession(requestToken);
-                        }
-
-                        if (denied === 'true') {
-                            console.log('Auth denied');
-                            this.isAuthInProgress = false;
-                            sessionStorage.removeItem('auth_in_progress');
-                            sessionStorage.removeItem('auth_state');
-                            sessionStorage.removeItem('auth_redirect');
-                            this.isAuthLoading$.next(false);
-                            this.snackbarService.error('Authentication was denied. Please try again.');
-                            this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
+                    // Handle successful auth
+                    if (requestToken && approved === 'true') {
+                        if (window.opener) {
+                            this.authService.handleAuthSuccessStatus(requestToken);
+                            window.close();
                             return EMPTY;
                         }
+
+                        return this.authFacade.createSession(requestToken);
                     }
-                    console.log('No auth params found');
+
+                    // Handle denied auth
+                    if (requestToken && denied === 'true') {
+                        if (window.opener) {
+                            this.authService.handleAuthDeniedStatus();
+                            window.close();
+                            return EMPTY;
+                        }
+                        this.cleanupAuthState();
+                        this.snackbarService.error('Authentication was denied');
+                        this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
+                        return EMPTY;
+                    }
+
+                    // Only treat as cancelled if we were redirecting AND have no auth-related params at all
+                    // AND the URL doesn't look like it's still loading auth params
+                    if (
+                        wasRedirecting &&
+                        !requestToken &&
+                        !approved &&
+                        !denied &&
+                        !window.location.href.includes('request_token')
+                    ) {
+                        this.cleanupAuthState();
+                        this.snackbarService.error('Authentication was cancelled');
+                        return EMPTY;
+                    }
+
                     return EMPTY;
                 }),
             )
             .subscribe({
-                next: (response) => {
-                    console.log('Auth response received:', response);
-                    if (response?.success) {
-                        console.log('Auth successful, handling success');
-                        this.authService.handleAuthSuccess(response);
+                next: (createSessionResponse) => {
+                    if (createSessionResponse?.success) {
+                        this.authService.handleSessionSuccess(createSessionResponse);
                         this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
                     }
-                    console.log('Cleaning up auth state after response');
-                    this.isAuthInProgress = false;
-                    sessionStorage.removeItem('auth_in_progress');
-                    sessionStorage.removeItem('auth_state');
-                    sessionStorage.removeItem('auth_redirect');
-                    this.isAuthLoading$.next(false);
+                    this.cleanupAuthState();
                 },
-                error: (error) => {
-                    console.error('Auth error:', error);
-                    console.log('Cleaning up auth state after error');
-                    this.isAuthInProgress = false;
-                    sessionStorage.removeItem('auth_in_progress');
-                    sessionStorage.removeItem('auth_state');
-                    sessionStorage.removeItem('auth_redirect');
-                    this.isAuthLoading$.next(false);
+                error: () => {
+                    this.cleanupAuthState();
                 },
             });
     }
 
-    private initializeApp(): void {
+    private cleanupAuthState(): void {
+        // Clean up all auth-related sessionStorage
+        sessionStorage.removeItem('auth_in_progress');
+        sessionStorage.removeItem('auth_state');
+        sessionStorage.removeItem('auth_redirect');
+        sessionStorage.removeItem('auth_redirect_path');
+        sessionStorage.removeItem('auth_redirect_url');
+        sessionStorage.removeItem('auth_redirect_timestamp');
+    }
+
+    private initializeGenres(): void {
         const storedMovieGenres = this.localStorageService.getItem<Array<Genre>>('movieGenres') ?? [];
         const storedTvShowGenres = this.localStorageService.getItem<Array<Genre>>('tvShowGenres') ?? [];
 
