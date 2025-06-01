@@ -237,6 +237,7 @@ export class AppComponent implements OnInit {
         sessionStorage.removeItem('auth_redirect_url');
         sessionStorage.removeItem('auth_redirect_timestamp');
         sessionStorage.removeItem('auth_timestamp');
+        sessionStorage.removeItem('auth_was_handled');
 
         // Only reset auth handled flag if user is not authenticated
         if (!this.authService.isAuthenticated()) {

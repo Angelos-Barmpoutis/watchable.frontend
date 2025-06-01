@@ -93,6 +93,7 @@ export class AuthService {
         sessionStorage.removeItem('auth_in_progress');
         sessionStorage.removeItem('auth_timestamp');
         sessionStorage.removeItem('auth_redirect_url');
+        sessionStorage.removeItem('auth_was_handled');
         this.authWasHandled = false;
     }
 
@@ -231,9 +232,16 @@ export class AuthService {
 
     setAuthHandled(handled: boolean): void {
         this.authWasHandled = handled;
+        // Store in sessionStorage to persist across page reloads
+        if (handled) {
+            sessionStorage.setItem('auth_was_handled', 'true');
+        } else {
+            sessionStorage.removeItem('auth_was_handled');
+        }
     }
 
     wasAuthHandled(): boolean {
-        return this.authWasHandled;
+        // Check both instance variable and sessionStorage
+        return this.authWasHandled || sessionStorage.getItem('auth_was_handled') === 'true';
     }
 }
