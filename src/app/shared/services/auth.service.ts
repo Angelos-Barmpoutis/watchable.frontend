@@ -72,6 +72,7 @@ export class AuthService {
     }
 
     private handleMobileAuth(authUrl: string): void {
+        this.authWasHandled = false;
         sessionStorage.setItem('auth_redirect', 'true');
         window.location.href = authUrl;
     }
@@ -214,5 +215,13 @@ export class AuthService {
 
     updateAuthenticationLoadingState(isLoading: boolean): void {
         this.isLoadingSubject.next(isLoading);
+    }
+
+    setAuthHandled(handled: boolean): void {
+        this.authWasHandled = handled;
+    }
+
+    wasAuthHandled(): boolean {
+        return this.authWasHandled;
     }
 }

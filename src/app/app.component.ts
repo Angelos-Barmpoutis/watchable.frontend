@@ -91,6 +91,7 @@ export class AppComponent implements OnInit {
                             return EMPTY;
                         }
                         // Mobile redirect: create session directly
+                        this.authService.setAuthHandled(true);
                         return this.authFacade.createSession(requestToken);
                     }
 
@@ -108,21 +109,15 @@ export class AppComponent implements OnInit {
                             return EMPTY;
                         }
                         // Mobile redirect: handle denial
+                        this.authService.setAuthHandled(true);
                         this.cleanupAuthState();
                         this.snackbarService.error('Authentication was denied');
                         this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
                         return EMPTY;
                     }
 
-                    // Only treat as cancelled if we were redirecting AND have no auth-related params at all
-                    // AND the URL doesn't look like it's still loading auth params
-                    if (
-                        wasRedirecting &&
-                        !requestToken &&
-                        !approved &&
-                        !denied &&
-                        !window.location.href.includes('request_token')
-                    ) {
+                    // Check if auth was cancelled (back button) - more reliable with authWasHandled flag
+                    if (wasRedirecting && !this.authService.wasAuthHandled()) {
                         this.cleanupAuthState();
                         this.snackbarService.error('Authentication was cancelled');
                         return EMPTY;
@@ -137,13 +132,13 @@ export class AppComponent implements OnInit {
                         this.authService.handleSessionSuccess(createSessionResponse);
                         this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
                     }
+
+                    this.authService.updateAuthenticationLoadingState(false);
                     this.cleanupAuthState();
                 },
                 error: () => {
-                    this.cleanupAuthState();
-                },
-                complete: () => {
                     this.authService.updateAuthenticationLoadingState(false);
+                    this.cleanupAuthState();
                 },
             });
     }
