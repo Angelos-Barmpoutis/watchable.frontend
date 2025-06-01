@@ -73,8 +73,14 @@ export class AuthService {
 
     private handleMobileAuth(authUrl: string): void {
         this.authWasHandled = false;
-        sessionStorage.setItem('auth_redirect', 'true');
-        window.location.href = authUrl;
+
+        // Set comprehensive auth state
+        sessionStorage.setItem('auth_in_progress', 'true');
+        sessionStorage.setItem('auth_timestamp', Date.now().toString());
+        sessionStorage.setItem('auth_redirect_url', window.location.href);
+
+        // Use window.location.replace instead of href to prevent back button issues
+        window.location.replace(authUrl);
     }
 
     private clearAuthData(): void {
@@ -82,6 +88,12 @@ export class AuthService {
         this.localStorageService.removeItem(this.USER_INFO_KEY);
         this.isAuthenticatedSubject.next(false);
         this.userInfoSubject.next(null);
+
+        // Clear any auth session state
+        sessionStorage.removeItem('auth_in_progress');
+        sessionStorage.removeItem('auth_timestamp');
+        sessionStorage.removeItem('auth_redirect_url');
+        this.authWasHandled = false;
     }
 
     private getUserInfoFromStorage(): Account | null {

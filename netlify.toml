@@ -3,6 +3,7 @@
   from = "/*"
   to = "/index.html"
   status = 200
+  force = true
 
 # Security headers for better performance
 [[headers]]
@@ -17,3 +18,9 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Prevent caching of index.html to ensure auth redirects work properly
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
