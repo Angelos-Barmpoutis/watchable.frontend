@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, DestroyRef, HostListener, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { BehaviorSubject, EMPTY, forkJoin, switchMap, take } from 'rxjs';
@@ -39,7 +39,6 @@ import { SnackbarService } from './shared/services/snackbar.service';
 })
 export class AppComponent implements OnInit {
     isAppReady$ = new BehaviorSubject<boolean>(false);
-    private authStateCheckTimeout: number | null = null;
 
     constructor(
         public searchService: SearchService,
@@ -53,29 +52,10 @@ export class AppComponent implements OnInit {
         public snackbarService: SnackbarService,
     ) {}
 
-    @HostListener('window:beforeunload', ['$event'])
-    beforeUnloadHandler(event: any) {
-        // Clear any pending auth state when user navigates away
-        if (sessionStorage.getItem('auth_in_progress') === 'true') {
-            this.cleanupAuthState();
-        }
-    }
-
-    @HostListener('window:focus', ['$event'])
-    onWindowFocus(event: any) {
-        // Check auth state when window regains focus (important for mobile)
-        this.checkForInterruptedAuth();
-    }
-
     ngOnInit(): void {
         this.initializeGenres();
         this.handleTMDBAuthRedirect();
         this.listenAuthWindowMessages();
-
-        // Only check for interrupted auth after a short delay to let handleTMDBAuthRedirect process first
-        setTimeout(() => {
-            this.checkForInterruptedAuth();
-        }, 1000);
     }
 
     private handleTMDBAuthRedirect(): void {
@@ -86,16 +66,9 @@ export class AppComponent implements OnInit {
                     const requestToken = params.request_token;
                     const approved = params.approved;
                     const denied = params.denied;
-                    const wasRedirecting = sessionStorage.getItem('auth_in_progress') === 'true';
-
-                    // Mark that we've handled the auth response
-                    this.authService.setAuthHandled(true);
 
                     // If user is already authenticated, clean up any redirect state
                     if (this.authService.isAuthenticated()) {
-                        if (wasRedirecting) {
-                            this.cleanupAuthState();
-                        }
                         return EMPTY;
                     }
 
@@ -131,15 +104,9 @@ export class AppComponent implements OnInit {
                             return EMPTY;
                         }
                         // Mobile redirect: handle denial
-                        this.cleanupAuthState();
+                        this.authService.updateAuthenticationLoadingState(false);
                         this.snackbarService.error('Authentication was denied');
                         this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
-                        return EMPTY;
-                    }
-
-                    // If we have auth parameters but no token, something went wrong
-                    if (wasRedirecting && !requestToken && !approved && !denied) {
-                        this.handleInterruptedAuth();
                         return EMPTY;
                     }
 
@@ -152,97 +119,13 @@ export class AppComponent implements OnInit {
                         this.authService.handleSessionSuccess(createSessionResponse);
                         this.router.navigate([this.router.url.split('?')[0]], { replaceUrl: true });
                     }
-
                     this.authService.updateAuthenticationLoadingState(false);
-                    this.cleanupAuthState();
                 },
                 error: () => {
                     this.authService.updateAuthenticationLoadingState(false);
-                    this.cleanupAuthState();
                     this.snackbarService.error('Authentication failed. Please try again.');
                 },
             });
-    }
-
-    private checkForInterruptedAuth(): void {
-        // Clear any existing timeout
-        if (this.authStateCheckTimeout) {
-            window.clearTimeout(this.authStateCheckTimeout);
-        }
-
-        // Don't check if we have auth query params (we're currently handling auth)
-        const currentUrl = window.location.href;
-        if (
-            currentUrl.includes('request_token=') ||
-            currentUrl.includes('approved=') ||
-            currentUrl.includes('denied=')
-        ) {
-            return;
-        }
-
-        // Check if auth was in progress but never completed
-        const wasInProgress = sessionStorage.getItem('auth_in_progress') === 'true';
-        const authTimestamp = sessionStorage.getItem('auth_timestamp');
-        const authHandled = this.authService.wasAuthHandled();
-
-        // If user is already authenticated, clean up any stale auth state
-        if (this.authService.isAuthenticated()) {
-            if (wasInProgress) {
-                this.cleanupAuthState();
-            }
-            return;
-        }
-
-        if (wasInProgress && !authHandled && authTimestamp) {
-            const timeElapsed = Date.now() - parseInt(authTimestamp);
-            const maxAuthTime = 5 * 60 * 1000; // 5 minutes
-
-            if (timeElapsed > maxAuthTime) {
-                // Auth has been pending too long, consider it interrupted
-                this.handleInterruptedAuth();
-            } else {
-                // Set a timeout to check again later
-                this.authStateCheckTimeout = window.setTimeout(() => {
-                    // Double-check conditions before showing interrupted message
-                    const stillInProgress = sessionStorage.getItem('auth_in_progress') === 'true';
-                    const stillNotHandled = !this.authService.wasAuthHandled();
-                    const notAuthenticated = !this.authService.isAuthenticated();
-
-                    if (stillInProgress && stillNotHandled && notAuthenticated) {
-                        this.handleInterruptedAuth();
-                    }
-                }, 10000); // Check again in 10 seconds
-            }
-        }
-    }
-
-    private handleInterruptedAuth(): void {
-        this.cleanupAuthState();
-        this.authService.updateAuthenticationLoadingState(false);
-        this.snackbarService.error('Authentication was interrupted. Please try again.');
-    }
-
-    private cleanupAuthState(): void {
-        // Clear timeout if exists
-        if (this.authStateCheckTimeout) {
-            window.clearTimeout(this.authStateCheckTimeout);
-            this.authStateCheckTimeout = null;
-        }
-
-        // Clean up all auth-related sessionStorage
-        sessionStorage.removeItem('auth_in_progress');
-        sessionStorage.removeItem('auth_state');
-        sessionStorage.removeItem('auth_redirect');
-        sessionStorage.removeItem('auth_redirect_path');
-        sessionStorage.removeItem('auth_redirect_url');
-        sessionStorage.removeItem('auth_redirect_timestamp');
-        sessionStorage.removeItem('auth_timestamp');
-        sessionStorage.removeItem('auth_was_handled');
-
-        // Only reset auth handled flag if user is not authenticated
-        if (!this.authService.isAuthenticated()) {
-            this.authService.setAuthHandled(false);
-        }
     }
 
     private listenAuthWindowMessages(): void {

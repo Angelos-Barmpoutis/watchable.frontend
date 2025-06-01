@@ -22,7 +22,6 @@ export class AuthService {
     private readonly isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
     private readonly isLoadingSubject = new BehaviorSubject<boolean>(false);
     private readonly userInfoSubject = new BehaviorSubject<Account | null>(null);
-    private authWasHandled = false;
 
     readonly isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
     readonly isLoading$ = this.isLoadingSubject.asObservable();
@@ -72,12 +71,12 @@ export class AuthService {
     }
 
     private handleMobileAuth(authUrl: string): void {
-        this.authWasHandled = false;
-
-        // Set comprehensive auth state
-        sessionStorage.setItem('auth_in_progress', 'true');
-        sessionStorage.setItem('auth_timestamp', Date.now().toString());
-        sessionStorage.setItem('auth_redirect_url', window.location.href);
+        // Add a safety timeout to prevent stuck loading states
+        setTimeout(() => {
+            if (this.isLoadingSubject.value && !this.isAuthenticated()) {
+                this.updateAuthenticationLoadingState(false);
+            }
+        }, 30000); // 30 second timeout
 
         // Use window.location.replace instead of href to prevent back button issues
         window.location.replace(authUrl);
@@ -88,13 +87,6 @@ export class AuthService {
         this.localStorageService.removeItem(this.USER_INFO_KEY);
         this.isAuthenticatedSubject.next(false);
         this.userInfoSubject.next(null);
-
-        // Clear any auth session state
-        sessionStorage.removeItem('auth_in_progress');
-        sessionStorage.removeItem('auth_timestamp');
-        sessionStorage.removeItem('auth_redirect_url');
-        sessionStorage.removeItem('auth_was_handled');
-        this.authWasHandled = false;
     }
 
     private getUserInfoFromStorage(): Account | null {
@@ -107,7 +99,6 @@ export class AuthService {
 
     signIn(): void {
         this.isLoadingSubject.next(true);
-        this.authWasHandled = false;
 
         this.authFacade
             .createRequestToken()
@@ -124,14 +115,25 @@ export class AuthService {
                             const popupWindow = window.open(authUrl, 'TMDB Authentication', 'width=800,height=600');
 
                             if (popupWindow) {
+                                // Add timeout for desktop popup as well
+                                const popupTimeout = setTimeout(() => {
+                                    if (!popupWindow.closed && this.isLoadingSubject.value) {
+                                        popupWindow.close();
+                                        this.updateAuthenticationLoadingState(false);
+                                        this.snackbarService.error('Authentication timeout. Please try again.');
+                                    }
+                                }, 300000); // 5 minute timeout for desktop
+
                                 const checkPopup = setInterval(() => {
                                     if (popupWindow.closed) {
                                         clearInterval(checkPopup);
+                                        clearTimeout(popupTimeout);
+                                        // Simple check: if still loading and not authenticated, user cancelled
                                         setTimeout(() => {
-                                            if (!this.authWasHandled && !this.getSessionId()) {
+                                            if (this.isLoadingSubject.value && !this.getSessionId()) {
                                                 this.snackbarService.error('Authentication was cancelled');
+                                                this.updateAuthenticationLoadingState(false);
                                             }
-                                            this.updateAuthenticationLoadingState(false);
                                         }, 500);
                                     }
                                 }, 500);
@@ -161,7 +163,6 @@ export class AuthService {
     }
 
     handleAuthSuccessStatus(requestToken: string): void {
-        this.authWasHandled = true;
         this.updateAuthenticationLoadingState(true);
 
         this.createSession(requestToken)
@@ -178,7 +179,6 @@ export class AuthService {
     }
 
     handleAuthDeniedStatus(): void {
-        this.authWasHandled = true;
         this.updateAuthenticationLoadingState(false);
         this.snackbarService.error('Authentication was denied');
     }
@@ -228,20 +228,5 @@ export class AuthService {
 
     updateAuthenticationLoadingState(isLoading: boolean): void {
         this.isLoadingSubject.next(isLoading);
-    }
-
-    setAuthHandled(handled: boolean): void {
-        this.authWasHandled = handled;
-        // Store in sessionStorage to persist across page reloads
-        if (handled) {
-            sessionStorage.setItem('auth_was_handled', 'true');
-        } else {
-            sessionStorage.removeItem('auth_was_handled');
-        }
-    }
-
-    wasAuthHandled(): boolean {
-        // Check both instance variable and sessionStorage
-        return this.authWasHandled || sessionStorage.getItem('auth_was_handled') === 'true';
     }
 }
