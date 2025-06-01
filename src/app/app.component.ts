@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
@@ -25,7 +25,6 @@ import { SnackbarService } from './shared/services/snackbar.service';
     standalone: true,
     imports: [
         RouterOutlet,
-        HttpClientModule,
         CommonModule,
         HeaderComponent,
         MobileNavigationComponent,
