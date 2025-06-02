@@ -19,7 +19,7 @@ export const DEFAULT = {
     reviewsCount: 4,
     infiniteScrollThreshold: 400,
     scrollThreshold: 700,
-    carouselAnimationDuration: 500,
+    carouselAnimationDuration: 300,
     snackbarDuration: 3500,
     searchOption: SearchOption.Movie,
     timeOption: TimeOption.Day,

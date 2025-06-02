@@ -9,9 +9,14 @@ export const SWIPER_CONFIG: SwiperOptions = {
     freeMode: {
         sticky: true,
         enabled: true,
+        momentumBounce: false,
+        momentumRatio: 0.6,
     },
     navigation: {
         nextEl: '.nav-next',
         prevEl: '.nav-prev',
     },
+    watchSlidesProgress: true,
+    touchRatio: 1,
+    touchAngle: 45,
 };
