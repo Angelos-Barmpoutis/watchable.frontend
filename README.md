@@ -2,13 +2,13 @@
 
 A modern, responsive web application for discovering movies and TV shows, built with Angular 19. Watchable allows users to explore trending content, maintain personal watchlists, rate movies and shows, and discover new entertainment powered by The Movie Database (TMDB) API.
 
-**🌟 Showcase Project**: This application demonstrates modern web development practices, advanced architectural patterns, and professional-grade implementation of a full-featured entertainment discovery platform.
+This application demonstrates modern web development practices, advanced architectural patterns, and professional-grade implementation of a full-featured entertainment discovery platform.
 
-## 🚀 Live Demo
+## Live Demo
 
 **Production**: [https://watchable-frontend.netlify.app](https://watchable-frontend.netlify.app)
 
-## 💼 Project Showcase
+## Project Showcase
 
 ### Professional Skills Demonstrated
 
@@ -32,9 +32,9 @@ This project showcases expertise in:
 -   Enterprise-level error handling and user feedback systems
 -   Scalable codebase architecture for future expansion
 
-## ✨ Features
+## Features
 
-### 🎬 Content Discovery
+### Content Discovery
 
 -   **Trending Content**: Browse trending movies, TV shows, and people with daily/weekly filtering
 -   **Advanced Search**: Multi-search functionality across movies, TV shows, and people
@@ -42,14 +42,14 @@ This project showcases expertise in:
 -   **Genre Filtering**: Explore content by specific genres
 -   **Multiple Categories**: Popular, top-rated, now playing, and upcoming content
 
-### 👤 User Features
+### User Features
 
 -   **TMDB Authentication**: Secure login using The Movie Database credentials
 -   **Personal Watchlist**: Add and manage movies and TV shows to watch later
 -   **Rating System**: Rate movies, TV shows, and individual episodes
 -   **Cross-Platform**: Responsive design optimized for desktop and mobile devices
 
-### 🎨 User Experience
+### User Experience
 
 -   **Modern UI**: Clean, beautiful interface with smooth animations
 -   **Infinite Scroll**: Seamless content loading for better performance
@@ -88,7 +88,7 @@ This project showcases expertise in:
 -   **Reactive Programming** - RxJS observables throughout
 -   **Standalone Components** - Modern Angular architecture
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 src/
@@ -116,7 +116,7 @@ src/
 └── assets/                    # Static assets
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -156,7 +156,7 @@ src/
 5. **Open your browser**
    Navigate to `http://localhost:4200`
 
-## 📦 Available Scripts
+## Available Scripts
 
 | Command          | Description               |
 | ---------------- | ------------------------- |
@@ -167,7 +167,7 @@ src/
 | `npm run lint`   | Run ESLint                |
 | `npm run format` | Format code with Prettier |
 
-## 🚀 Deployment
+## Deployment
 
 ### Netlify (Recommended)
 
@@ -186,7 +186,7 @@ The application is configured for Netlify deployment with:
     ```
 2. Deploy the `dist/watchable.frontend/` directory to your hosting provider
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -211,7 +211,7 @@ This application integrates with The Movie Database (TMDB) API:
 -   **Media Assets**: Posters, backdrops, and video content
 -   **User Features**: Watchlists, ratings, and account management
 
-## 📱 Browser Support
+## Browser Support
 
 -   **Chrome** (latest)
 -   **Firefox** (latest)
@@ -219,7 +219,7 @@ This application integrates with The Movie Database (TMDB) API:
 -   **Edge** (latest)
 -   **Mobile browsers** (iOS Safari, Chrome Mobile)
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -234,7 +234,7 @@ This application integrates with The Movie Database (TMDB) API:
 -   Follow the established architecture patterns
 -   Ensure responsive design compatibility
 
-## 📊 Technical Highlights
+## Technical Highlights
 
 ### Architecture & Code Quality
 
@@ -259,7 +259,7 @@ This application integrates with The Movie Database (TMDB) API:
 -   **Accessibility**: WCAG 2.1 AA compliance for inclusive design
 -   **Internationalization**: Multi-language support for global audience
 
-## 🌟 Open Source Contribution
+## Open Source Contribution
 
 This project is open for contributions! Whether you're:
 
@@ -272,13 +272,13 @@ This project is open for contributions! Whether you're:
 
 We welcome contributions of all kinds:
 
--   🐛 Bug fixes and improvements
--   ✨ New features and enhancements
--   📚 Documentation improvements
--   🎨 UI/UX enhancements
--   ⚡ Performance optimizations
+-   Bug fixes and improvements
+-   New features and enhancements
+-   Documentation improvements
+-   UI/UX enhancements
+-   Performance optimizations
 
-## 📚 References & Documentation
+## References & Documentation
 
 ### Technical References
 
@@ -292,14 +292,14 @@ We welcome contributions of all kinds:
 -   Fain, Y., & Moiseev, A. (2021). _Angular Development with TypeScript_. Manning Publications.
 -   Martin, R. C. (2017). _Clean Architecture: A Craftsman's Guide to Software Structure and Design_. Prentice Hall.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 -   **The Movie Database (TMDB)** - For providing the comprehensive movie and TV show data API
 -   **Angular Team** - For the excellent framework and tooling
 -   **Open Source Community** - For the amazing libraries and tools that make this project possible
 -   **Contributors** - Thank you to everyone who helps improve this project
 
-## 📞 Support & Contact
+## Support & Contact
 
 If you encounter any issues or have questions:
 
@@ -307,7 +307,3 @@ If you encounter any issues or have questions:
 2. Create a new issue with detailed information
 3. For general questions, use the [Discussions](https://github.com/Angelos-Barmpoutis/watchable.frontend/discussions) section
 4. For professional inquiries, feel free to reach out through GitHub
-
----
-
-**Built with ❤️ using Angular and The Movie Database API | Open Source Showcase Project**
