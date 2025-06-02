@@ -15,6 +15,10 @@
                     [grabCursor]="true"
                     [speed]="default.carouselAnimationDuration"
                     [allowTouchMove]="true"
+                    [preloadImages]="false"
+                    [updateOnWindowResize]="true"
+                    [watchSlidesProgress]="true"
+                    [resistance]="false"
                     (swiperslidechange)="onViewerSlideChange($event)"
                 >
                     @for (image of images; track image.file_path) {
@@ -28,6 +32,7 @@
                                 }"
                             >
                                 <img
+                                    loading="lazy"
                                     appBackdropPath
                                     alt="Viewer image"
                                     [backdropPath]="image.file_path"
@@ -48,6 +53,10 @@
                     [initialSlide]="selectedIndex"
                     [speed]="default.carouselAnimationDuration"
                     [allowTouchMove]="true"
+                    [preloadImages]="false"
+                    [updateOnWindowResize]="true"
+                    [watchSlidesProgress]="true"
+                    [resistance]="false"
                 >
                     @for (image of images; track image.file_path; let i = $index) {
                         <swiper-slide [class.active]="i === selectedIndex" (click)="selectItem(i)">
@@ -60,6 +69,7 @@
                                 }"
                             >
                                 <img
+                                    loading="lazy"
                                     appBackdropPath
                                     alt="Thumbnail"
                                     [backdropPath]="image.file_path"

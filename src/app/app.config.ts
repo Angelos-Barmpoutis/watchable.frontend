@@ -5,7 +5,6 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import {
     PreloadAllModules,
     provideRouter,
-    TitleStrategy,
     withInMemoryScrolling,
     withPreloading,
     withViewTransitions,
@@ -14,7 +13,6 @@ import { register } from 'swiper/element';
 
 import { routes } from './app.routes';
 import { InterceptorService } from './shared/services/interceptor.service';
-import { WindowTitleService } from './shared/services/window-title.service';
 
 register();
 
@@ -30,7 +28,6 @@ export const appConfig: ApplicationConfig = {
                 anchorScrolling: 'enabled',
             }),
         ),
-        { provide: TitleStrategy, useClass: WindowTitleService },
         provideHttpClient(withInterceptorsFromDi()),
         { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
         Overlay,
