@@ -1,0 +1,56 @@
+@if (!isLoading) {
+    <a
+        appFadeIn
+        class="season-list-item"
+        [routerLink]="['/tv-shows', 'tv-show', tvShowId, 'seasons', season.season_number]"
+        [title]="season.name"
+    >
+        <div class="season-main">
+            <div class="poster-wrapper">
+                @if (season.poster_path) {
+                    <img appPosterPath [posterPath]="season.poster_path" [size]="posterSize" />
+                } @else {
+                    <img [src]="posterFallback" />
+                }
+            </div>
+            <div class="info">
+                <div class="info-header">
+                    <div class="title-container">
+                        <h3 class="title">{{ season.name }}</h3>
+                        <div class="meta">
+                            <span class="episodes">{{ season.episode_count }} Episodes</span>
+                            <span class="air-date">{{ season.air_date | date: "MMM d, yyyy" }}</span>
+                        </div>
+                    </div>
+                </div>
+                @if (season.overview) {
+                    <p class="overview">{{ season.overview }}</p>
+                }
+            </div>
+        </div>
+    </a>
+} @else {
+    <div appFadeIn class="season-list-item-loading">
+        <div class="season-main">
+            <div class="poster-wrapper">
+                <div class="poster-skeleton"></div>
+            </div>
+            <div class="info-skeleton">
+                <div class="header-skeleton">
+                    <div class="title-container-skeleton">
+                        <div class="title-skeleton"></div>
+                        <div class="meta-skeleton">
+                            <div class="meta-skeleton-item"></div>
+                            <div class="meta-skeleton-item"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="overview-skeleton">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

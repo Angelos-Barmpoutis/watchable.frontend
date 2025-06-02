@@ -1,0 +1,159 @@
+<app-media-hero
+    [mediaDetails]="tvShowDetails"
+    [type]="mediaType.TvShow"
+    [isLoading]="isLoading"
+    [seasonNumber]="seasonNumber"
+></app-media-hero>
+
+<div class="wrapper">
+    <div class="media-details-grid">
+        <div class="media-details-grid-content">
+            @if (seasonDetails?.overview) {
+                <section>
+                    <header>
+                        <app-section-header title="Season Overview" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    @if (!isLoading) {
+                        <p class="overview" appFadeIn>
+                            {{ seasonDetails?.overview }}
+                        </p>
+                    } @else {
+                        <div class="skeleton-overview">
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                        </div>
+                    }
+                </section>
+            }
+
+            @if (episodes.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Episodes" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-episode-grid
+                        [episodes]="episodes"
+                        [tvShowId]="tvShowId || 0"
+                        [seasonNumber]="seasonNumber || 0"
+                        [isLoading]="isLoading"
+                        [episodesCount]="8"
+                    ></app-episode-grid>
+                </section>
+            }
+
+            @if (seasonDetails?.credits?.cast?.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Top Cast" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-cast-grid
+                        [cast]="seasonDetails?.credits?.cast || []"
+                        [isLoading]="isLoading"
+                        [castCount]="8"
+                    ></app-cast-grid>
+                </section>
+            }
+
+            @if (seasonDetails?.images?.posters?.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-image-grid
+                        [images]="seasonDetails?.images?.posters || []"
+                        [isLoading]="isLoading"
+                        [imagesCount]="6"
+                        [aspectRatio]="aspectRatio['2/3']"
+                    ></app-image-grid>
+                </section>
+            }
+
+            @if (seasonDetails?.videos?.results?.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Videos" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-video-grid
+                        [videos]="seasonDetails?.videos?.results || []"
+                        [isLoading]="isLoading"
+                        [videosCount]="4"
+                    ></app-video-grid>
+                </section>
+            }
+
+            @if (seasonDetails?.credits?.crew?.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Top Crew" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-cast-grid
+                        [cast]="seasonDetails?.credits?.crew || []"
+                        [isLoading]="isLoading"
+                        [castCount]="8"
+                    ></app-cast-grid>
+                </section>
+            }
+        </div>
+
+        <aside>
+            @if (seasonDetails || isLoading) {
+                <section>
+                    <app-season-details [seasonDetails]="seasonDetails" [isLoading]="isLoading"></app-season-details>
+                </section>
+            }
+
+            @if (isExternalIdAvailable || isLoading) {
+                <section>
+                    <div class="social-links">
+                        @if (seasonDetails?.external_ids?.imdb_id || isLoading) {
+                            <app-button
+                                [variant]="buttonType.Imdb"
+                                [type]="'button'"
+                                [icon]="'fab fa-imdb'"
+                                [link]="mediaLinks[0]"
+                                [isLoading]="isLoading"
+                                [text]="'IMDb'"
+                            >
+                            </app-button>
+                        }
+                        @if (seasonDetails?.external_ids?.facebook_id || isLoading) {
+                            <app-button
+                                [variant]="buttonType.Facebook"
+                                [type]="'button'"
+                                [icon]="'fab fa-facebook'"
+                                [link]="mediaLinks[1]"
+                                [isLoading]="isLoading"
+                                [text]="'Facebook'"
+                            >
+                            </app-button>
+                        }
+                        @if (seasonDetails?.external_ids?.instagram_id || isLoading) {
+                            <app-button
+                                [variant]="buttonType.Instagram"
+                                [type]="'button'"
+                                [icon]="'fab fa-instagram'"
+                                [link]="mediaLinks[2]"
+                                [isLoading]="isLoading"
+                                [text]="'Instagram'"
+                            >
+                            </app-button>
+                        }
+                        @if (seasonDetails?.external_ids?.twitter_id || isLoading) {
+                            <app-button
+                                [variant]="buttonType.Twitter"
+                                [type]="'button'"
+                                [icon]="'fab fa-twitter'"
+                                [link]="mediaLinks[3]"
+                                [isLoading]="isLoading"
+                                [text]="'Twitter'"
+                            >
+                            </app-button>
+                        }
+                    </div>
+                </section>
+            }
+        </aside>
+    </div>
+</div>

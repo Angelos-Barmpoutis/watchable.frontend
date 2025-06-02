@@ -1,0 +1,77 @@
+@if (!isLoading) {
+    @if (!link) {
+        <button
+            appFadeIn
+            class="button"
+            [type]="type"
+            [class.primary-button]="variant === ButtonType.Primary"
+            [class.secondary-button]="variant === ButtonType.Secondary"
+            [class.outline-button]="variant === ButtonType.Outline"
+            [class.imdb-button]="variant === ButtonType.Imdb"
+            [class.facebook-button]="variant === ButtonType.Facebook"
+            [class.instagram-button]="variant === ButtonType.Instagram"
+            [class.twitter-button]="variant === ButtonType.Twitter"
+            [class.no-border]="!hasBorder"
+            [class.no-padding]="!hasPadding"
+            [class.disabled]="disabled"
+        >
+            @if (icon && isIconLeft) {
+                <i [class]="icon"></i>
+            }
+            {{ text }}
+            @if (icon && !isIconLeft) {
+                <i [class]="icon"></i>
+            }
+        </button>
+    } @else {
+        @if (link.isExternal) {
+            <a
+                appFadeIn
+                class="button"
+                [class.primary-button]="variant === ButtonType.Primary"
+                [class.secondary-button]="variant === ButtonType.Secondary"
+                [class.outline-button]="variant === ButtonType.Outline"
+                [class.imdb-button]="variant === ButtonType.Imdb"
+                [class.facebook-button]="variant === ButtonType.Facebook"
+                [class.instagram-button]="variant === ButtonType.Instagram"
+                [class.twitter-button]="variant === ButtonType.Twitter"
+                [class.no-border]="!hasBorder"
+                [class.no-padding]="!hasPadding"
+                [class.disabled]="disabled"
+                [target]="link.isExternal ? '_blank' : '_self'"
+                [href]="link.isExternal ? link.path : null"
+            >
+                @if (icon && isIconLeft) {
+                    <i [class]="icon"></i>
+                }
+                {{ text }}
+                @if (icon && !isIconLeft) {
+                    <i [class]="icon"></i>
+                }
+            </a>
+        } @else {
+            <a
+                appFadeIn
+                class="button"
+                [class.primary-button]="variant === ButtonType.Primary"
+                [class.secondary-button]="variant === ButtonType.Secondary"
+                [class.outline-button]="variant === ButtonType.Outline"
+                [class.no-border]="!hasBorder"
+                [class.no-padding]="!hasPadding"
+                [class.disabled]="disabled"
+                [routerLink]="link.path"
+                [routerLinkActive]="routerLinkActive"
+            >
+                @if (icon && isIconLeft) {
+                    <i [class]="icon"></i>
+                }
+                {{ text }}
+                @if (icon && !isIconLeft) {
+                    <i [class]="icon"></i>
+                }
+            </a>
+        }
+    }
+} @else {
+    <div appFadeIn class="button loading-skeleton" [class.no-padding]="!hasPadding"></div>
+}

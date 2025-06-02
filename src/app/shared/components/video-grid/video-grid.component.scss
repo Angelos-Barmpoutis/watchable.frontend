@@ -1,0 +1,116 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: $spacing-md;
+
+    @media (max-width: map.get($breakpoints, "sm")) {
+        grid-template-columns: 1fr;
+    }
+
+    .video-item {
+        position: relative;
+        border-radius: $border-radius-lg;
+        overflow: hidden;
+        cursor: pointer;
+        aspect-ratio: 16/9;
+
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 100%;
+
+            .thumbnail-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform $transition-normal;
+            }
+
+            .play-button {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 48px;
+                height: 48px;
+                background-color: rgb(40, 44, 53);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all $transition-normal;
+
+                i {
+                    color: $text-primary;
+                    font-size: $font-size-lg;
+                }
+            }
+
+            &:hover {
+                .thumbnail-image {
+                    transform: scale(1.02);
+                }
+
+                .play-button {
+                    background-color: $surface-color;
+                    transform: translate(-50%, -50%) scale(1.1);
+                }
+            }
+        }
+
+        .more-videos {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba($background-color, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color $transition-normal;
+
+            &:hover {
+                background: rgba($background-color, 0.8);
+            }
+
+            .counter {
+                font-size: $font-size-md;
+                font-weight: $font-weight-semibold;
+                color: $text-primary;
+            }
+        }
+    }
+}
+
+.skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: $spacing-md !important;
+    margin: $spacing-md 0;
+
+    @media (max-width: map.get($breakpoints, "sm")) {
+        grid-template-columns: 1fr;
+    }
+
+    .skeleton-video-item {
+        aspect-ratio: 16/9;
+        border-radius: $border-radius-lg;
+        overflow: hidden;
+
+        .skeleton-video {
+            width: 100%;
+            height: 100%;
+            @include skeleton-loading;
+        }
+    }
+}

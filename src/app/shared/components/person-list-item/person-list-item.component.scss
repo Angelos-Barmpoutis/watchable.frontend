@@ -1,0 +1,208 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+.person-list-item {
+    text-decoration: none;
+    transition: all $transition-normal;
+    display: block;
+
+    .person-main {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: $spacing-sm;
+        cursor: pointer;
+
+        .person-avatar {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            transition: filter $transition-normal;
+            border-radius: $spacing-sm;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+                transition: transform $transition-normal;
+            }
+        }
+
+        .person-content {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+            padding: $spacing-md;
+            background-color: rgb(40, 44, 53);
+            border-radius: $border-radius-lg;
+
+            .person-header {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-xs;
+
+                .person-name {
+                    font-size: $font-size-sm;
+                    font-weight: $font-weight-semibold;
+                    color: $text-primary;
+                    margin: 0;
+                    @include text-clamp(1);
+                }
+
+                .person-department {
+                    color: $text-secondary;
+                    font-size: $font-size-xs;
+                }
+            }
+
+            .credits-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: $spacing-xs;
+                color: $text-primary;
+                font-size: $font-size-sm;
+                line-height: 1.5;
+                @include text-clamp(1);
+
+                .credit {
+                    position: relative;
+                    margin-right: $spacing-xs;
+
+                    &:not(:first-child)::before {
+                        content: "•";
+                        margin-inline: $spacing-xs;
+                        opacity: 0.5;
+                    }
+                }
+            }
+        }
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+
+        .person-avatar img {
+            transform: scale(1.05);
+        }
+    }
+}
+
+// Skeleton styles
+.person-list-item.skeleton {
+    .person-main {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: $spacing-sm;
+        height: 100%;
+
+        .skeleton-avatar {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 1/1;
+            border-radius: $spacing-sm;
+            @include skeleton-loading;
+        }
+
+        .skeleton-content {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+            padding: $spacing-md;
+            background-color: rgb(40, 44, 53);
+            border-radius: $border-radius-lg;
+
+            .skeleton-header {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-xs;
+
+                .skeleton-name {
+                    width: 70%;
+                    height: $font-size-sm;
+                    @include skeleton-loading;
+                }
+
+                .skeleton-department {
+                    width: 50%;
+                    height: $font-size-xs;
+                    @include skeleton-loading;
+                }
+            }
+
+            .skeleton-credits {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-xs;
+                margin-top: $spacing-md;
+
+                .line {
+                    width: 100%;
+                    height: $font-size-sm;
+                    @include skeleton-loading;
+
+                    &:nth-child(2) {
+                        width: 80%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: map.get($breakpoints, "sm")) {
+    .person-list-item {
+        .person-main {
+            grid-template-columns: 96px 1fr;
+
+            .person-content {
+                padding: calc($spacing-sm * 1.5);
+
+                .person-header {
+                    .person-name {
+                        font-size: $font-size-sm;
+                    }
+
+                    .person-department {
+                        font-size: $font-size-xs;
+                    }
+                }
+
+                .credits-list {
+                    font-size: $font-size-xs;
+                }
+            }
+        }
+    }
+
+    .person-list-item.skeleton {
+        .person-main {
+            grid-template-columns: 96px 1fr;
+
+            .skeleton-content {
+                padding: calc($spacing-sm * 1.5);
+
+                .skeleton-header {
+                    .skeleton-name {
+                        height: $font-size-sm;
+                    }
+
+                    .skeleton-department {
+                        height: $font-size-xs;
+                    }
+                }
+
+                .skeleton-credits {
+                    .line {
+                        height: $font-size-xs;
+                    }
+                }
+            }
+        }
+    }
+}

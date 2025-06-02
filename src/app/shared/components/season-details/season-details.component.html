@@ -1,0 +1,49 @@
+@if (!isLoading) {
+    <div appFadeIn>
+        <ul class="details-list">
+            @if (seasonDetails?.name) {
+                <li>
+                    <span class="detail-label">Name:</span>
+                    <span class="detail-value">{{ seasonDetails?.name }}</span>
+                </li>
+            }
+            @if (seasonDetails?.air_date) {
+                <li>
+                    <span class="detail-label">Air Date:</span>
+                    <span class="detail-value">{{ seasonDetails?.air_date | date: "longDate" }}</span>
+                </li>
+            }
+            @if (seasonDetails?.season_number) {
+                <li>
+                    <span class="detail-label">Season Number:</span>
+                    <span class="detail-value">{{ seasonDetails?.season_number }}</span>
+                </li>
+            }
+            @if (seasonDetails?.episodes?.length) {
+                <li>
+                    <span class="detail-label">Episodes:</span>
+                    <span class="detail-value">{{ seasonDetails?.episodes?.length }}</span>
+                </li>
+            }
+            @if (seasonDetails?.vote_average) {
+                <li>
+                    <span class="detail-label">Vote Average:</span>
+                    <span class="detail-value">{{ seasonDetails?.vote_average | number: "1.1-1" }}</span>
+                </li>
+            }
+        </ul>
+    </div>
+} @else {
+    <div class="skeleton-media-details">
+        <div class="skeleton-media-content">
+            <div class="skeleton-media-list">
+                @for (i of skeletonArray; track $index) {
+                    <div class="skeleton-media-item">
+                        <div class="skeleton-media-label"></div>
+                        <div class="skeleton-media-value"></div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

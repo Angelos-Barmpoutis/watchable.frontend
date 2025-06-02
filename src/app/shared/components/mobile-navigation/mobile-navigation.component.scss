@@ -1,0 +1,82 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+.bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba($background-color, 0.6);
+    backdrop-filter: blur(17px);
+    z-index: map.get($z-layers, "header");
+    border-top: 1px solid rgba($text-secondary, 0.2);
+
+    &__container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        padding: 0;
+
+        li {
+            flex: 1;
+        }
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        color: $text-primary;
+        padding-block: $spacing-md;
+        text-decoration: none;
+        transition: color $transition-normal;
+        position: relative;
+        min-width: 0;
+
+        @media (max-width: map.get($breakpoints, "sm")) {
+            padding-block: calc($spacing-sm * 1.5);
+        }
+
+        i {
+            font-size: $font-size-lg;
+            display: block;
+        }
+
+        span {
+            font-size: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        &.active {
+            color: $primary-color;
+        }
+
+        &:hover,
+        &:focus {
+            color: $primary-color;
+        }
+    }
+}
+
+@media (max-width: map.get($breakpoints, "sm")) {
+    .bottom-nav {
+        display: block;
+
+        // Only apply bottom padding if there's a bottom bar
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            padding-bottom: min(env(safe-area-inset-bottom), 16px);
+        }
+    }
+}

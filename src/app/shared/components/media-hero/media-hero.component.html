@@ -1,0 +1,132 @@
+@if (!isLoading) {
+    <div appFadeIn class="media-hero" appBackgroundPath [backgroundPath]="mediaDetails?.backdrop_path ?? ''">
+        <div class="overlay">
+            <div class="wrapper">
+                <div class="media-content">
+                    <div class="media-poster">
+                        @if (isInWatchlist) {
+                            <div class="bookmark-ribbon">
+                                <i class="fas fa-bookmark"></i>
+                            </div>
+                        }
+                        @if (mediaDetails?.poster_path) {
+                            <img
+                                appPosterPath
+                                [posterPath]="mediaDetails?.poster_path ?? ''"
+                                [size]="posterSize.w342"
+                            />
+                        } @else {
+                            <img [src]="default.largePosterFallback" />
+                        }
+                    </div>
+                    <div class="media-info">
+                        @if (isInWatchlist) {
+                            <div class="watchlist-badge">
+                                <i class="fas fa-bookmark"></i>
+                                <span>In Watchlist</span>
+                            </div>
+                        }
+                        <h1 class="media-title">
+                            {{ title }}
+                            @if (subtitle) {
+                                <span class="media-subtitle">({{ subtitle }})</span>
+                            }
+                        </h1>
+                        <div class="media-meta">
+                            @if (releaseDate) {
+                                <div class="media-year">
+                                    {{ releaseDate | date: "yyyy" }}
+                                    @if (
+                                        type === mediaType.TvShow &&
+                                        (endDate | date: "yyyy") !== (releaseDate | date: "yyyy")
+                                    ) {
+                                        <span class="media-year"> - {{ endDate | date: "yyyy" }} </span>
+                                    }
+                                </div>
+                            }
+                            @if (runtime) {
+                                <span class="runtime">
+                                    {{ runtime | time }}
+                                </span>
+                            }
+                        </div>
+
+                        <div class="overview">
+                            <p>{{ mediaDetails?.overview }}</p>
+                        </div>
+
+                        <div class="action-buttons">
+                            @if (trailerVideo) {
+                                <app-button
+                                    [variant]="ButtonType.Primary"
+                                    [type]="'button'"
+                                    [icon]="'fas fa-play'"
+                                    [text]="'Watch Trailer'"
+                                    [title]="'Watch Trailer'"
+                                    (click)="toggleTrailer()"
+                                >
+                                </app-button>
+                            }
+                            <app-button
+                                [variant]="ButtonType.Secondary"
+                                [hasPadding]="false"
+                                [type]="'button'"
+                                [icon]="isInWatchlist ? 'fas fa-bookmark' : 'far fa-bookmark'"
+                                [text]="isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'"
+                                [title]="isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'"
+                                (click)="toggleWatchlist()"
+                            >
+                            </app-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-video-gallery
+        [videos]="trailerVideo ? [trailerVideo] : []"
+        [selectedIndex]="showTrailer ? 0 : undefined"
+        [showPreviewStrip]="false"
+        (closeViewer)="toggleTrailer()"
+    ></app-video-gallery>
+} @else {
+    <div class="wrapper">
+        <div class="skeleton-media-hero">
+            <div class="skeleton-media-content">
+                <div class="skeleton-media-poster"></div>
+                <div class="skeleton-media-info">
+                    <div class="skeleton-media-title"></div>
+                    <div class="skeleton-media-meta">
+                        <div class="skeleton-media-meta-item"></div>
+                        <div class="skeleton-media-meta-item"></div>
+                    </div>
+                    <div class="skeleton-media-overview">
+                        <div class="skeleton-media-overview-line"></div>
+                        <div class="skeleton-media-overview-line"></div>
+                        <div class="skeleton-media-overview-line"></div>
+                    </div>
+                    <div class="skeleton-media-buttons">
+                        <app-button
+                            [variant]="ButtonType.Primary"
+                            [type]="'button'"
+                            [icon]="'fas fa-play'"
+                            [text]="'Watch Trailer'"
+                            [isLoading]="true"
+                        ></app-button>
+                        <app-button
+                            [variant]="ButtonType.Secondary"
+                            [hasPadding]="false"
+                            [type]="'button'"
+                            [icon]="isInWatchlist ? 'fas fa-bookmark' : 'far fa-bookmark'"
+                            [text]="isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'"
+                            [title]="isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'"
+                            [isLoading]="true"
+                        >
+                        </app-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

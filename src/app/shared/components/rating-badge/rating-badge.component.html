@@ -1,0 +1,16 @@
+@if (!isLoading) {
+    <div class="rating-badge">
+        <span
+            class="rating-value"
+            [class.rating-low]="rating !== 0 && rating < 5"
+            [class.rating-medium]="rating !== 0 && rating >= 5 && rating < 7"
+            [class.rating-high]="rating !== 0 && rating >= 7 && rating < 8.5"
+            [class.rating-top]="rating !== 0 && rating >= 8.5"
+        >
+            {{ rating > 0 ? (rating / 2 | number: "1.1-1") : "-" }}
+        </span>
+        <span class="rating-total">/5</span>
+    </div>
+} @else {
+    <div class="skeleton-rating-badge"></div>
+}

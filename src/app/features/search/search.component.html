@@ -1,0 +1,71 @@
+<div class="wrapper">
+    <section>
+        <header>
+            <app-section-header title="Search Results" [isLoading]="isLoading"> </app-section-header>
+            <app-tabs [isLoading]="isLoading" [tabs]="searchTabs" (tabChange)="changeSearchOption($event)"> </app-tabs>
+        </header>
+
+        @switch (option) {
+            @case (searchOption.Movie) {
+                <div class="list-container">
+                    @for (item of searchMovies; track item.id) {
+                        <app-media-list-item [media]="item" [type]="mediaType.Movie"></app-media-list-item>
+                    }
+                    @if (isLoading && searchMovies.length === 0) {
+                        @for (item of skeletonArray; track $index) {
+                            <app-media-list-item [isLoading]="true" [type]="mediaType.Movie"></app-media-list-item>
+                        }
+                    }
+                </div>
+
+                <div class="no-results-container">
+                    @if (!isLoading && searchMovies.length === 0) {
+                        <p class="no-results" appFadeIn>No movies found for "{{ searchQuery }}"</p>
+                    }
+                </div>
+            }
+
+            @case (searchOption.Tv) {
+                <div class="list-container">
+                    @for (item of searchTvShows; track item.id) {
+                        <app-media-list-item [media]="item" [type]="mediaType.TvShow"></app-media-list-item>
+                    }
+                    @if (isLoading && searchTvShows.length === 0) {
+                        @for (item of skeletonArray; track $index) {
+                            <app-media-list-item [isLoading]="true" [type]="mediaType.TvShow"></app-media-list-item>
+                        }
+                    }
+                </div>
+
+                <div class="no-results-container">
+                    @if (!isLoading && searchTvShows.length === 0) {
+                        <p class="no-results" appFadeIn>No TV shows found for "{{ searchQuery }}"</p>
+                    }
+                </div>
+            }
+
+            @case (searchOption.Person) {
+                <div class="list-container">
+                    @for (person of searchPeople; track person.id) {
+                        <app-person-list-item [person]="person" [isLoading]="false"></app-person-list-item>
+                    }
+                    @if (isLoading && searchPeople.length === 0) {
+                        @for (item of skeletonArray; track $index) {
+                            <app-person-list-item [isLoading]="true"> </app-person-list-item>
+                        }
+                    }
+                </div>
+
+                <div class="no-results-container">
+                    @if (!isLoading && searchPeople.length === 0) {
+                        <p class="no-results" appFadeIn>No people found for "{{ searchQuery }}"</p>
+                    }
+                </div>
+            }
+        }
+
+        @if (currentPage < totalPages) {
+            <app-infinite-scroll-loader [disabled]="isLoading" (scrolled)="loadMore()"></app-infinite-scroll-loader>
+        }
+    </section>
+</div>

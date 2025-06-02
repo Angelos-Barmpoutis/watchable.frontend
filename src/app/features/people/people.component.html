@@ -1,0 +1,14 @@
+<div class="wrapper">
+    <section>
+        <header>
+            <app-section-header
+                redirectUrl="popular"
+                title="Popular"
+                description="Trending stars and filmmakers captivating audiences worldwide"
+                [isLoading]="isLoading"
+            >
+            </app-section-header>
+        </header>
+        <app-carousel-person [items]="people" [isLoading]="isLoading"> </app-carousel-person>
+    </section>
+</div>

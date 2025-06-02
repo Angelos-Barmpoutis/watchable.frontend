@@ -1,0 +1,117 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+:host {
+    flex-grow: 1;
+}
+
+.section-header {
+    .title-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .title {
+        font-size: 22px;
+        font-weight: $font-weight-medium;
+        color: $text-primary;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin: 0;
+        width: 100%;
+
+        &:not(:has(.loading-skeleton)) {
+            &::before {
+                content: "";
+                display: block;
+                width: $spacing-xs;
+                height: $font-size-2xl;
+                background-color: rgba($primary-color, 0.8);
+                border-radius: $spacing-sm;
+            }
+        }
+
+        .title-link {
+            gap: $spacing-md;
+            display: flex;
+            align-items: center;
+            line-height: 1;
+            width: fit-content;
+            width: 100%;
+            justify-content: space-between;
+
+            .loading-skeleton {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: $spacing-md;
+
+                .skeleton-title-container {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+
+                    &::before {
+                        content: "";
+                        display: block;
+                        width: $spacing-xs;
+                        height: $font-size-2xl;
+                        @include skeleton-loading;
+                        border-radius: $spacing-sm;
+                    }
+
+                    .skeleton-title {
+                        height: 24px;
+                        width: 200px;
+                        @include skeleton-loading;
+                        border-radius: 4px;
+                    }
+                }
+            }
+
+            a {
+                flex-shrink: 0;
+
+                .view-more {
+                    font-size: $font-size-md;
+                    font-weight: $font-weight-medium;
+                    display: flex;
+                    align-items: baseline;
+                    gap: $spacing-xs;
+                    transition: all $transition-normal;
+                    color: rgba($primary-color, 0.8);
+                    text-decoration: none;
+                    cursor: pointer;
+
+                    .chevron-icon {
+                        color: inherit;
+                        font-size: $font-size-sm;
+                    }
+
+                    &:hover {
+                        color: rgba($primary-color, 1);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: map.get($breakpoints, "sm")) {
+    :host {
+        width: 100%;
+    }
+
+    .section-header {
+        .title {
+            font-size: 18px;
+        }
+    }
+}

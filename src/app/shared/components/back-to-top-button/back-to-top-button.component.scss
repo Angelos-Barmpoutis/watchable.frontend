@@ -1,0 +1,49 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+.back-to-top {
+    position: fixed;
+    bottom: $spacing-xl;
+    right: $spacing-lg;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba($primary-color, 0.8);
+    backdrop-filter: blur(17px);
+    border: none;
+    color: $text-primary;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $transition-normal;
+    z-index: map.get($z-layers, "header");
+    box-shadow: 0 -2px 17px rgba(31, 31, 31, 0.329);
+
+    &:hover {
+        background-color: rgba($primary-color, 1);
+        transform: translateY(-2px);
+    }
+
+    i {
+        font-size: $font-size-lg;
+    }
+
+    @media (max-width: map.get($breakpoints, "sm")) {
+        right: $spacing-md;
+        bottom: $mobile-nav-height + $spacing-md;
+
+        // Only apply bottom padding if there's a bottom bar
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            bottom: min(
+                $mobile-nav-height + $spacing-md + env(safe-area-inset-bottom),
+                $mobile-nav-height + $spacing-md + $spacing-md
+            );
+        }
+    }
+}

@@ -1,0 +1,142 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: $spacing-md;
+
+    &:has(.aspect-ratio-3-4) {
+        grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    }
+
+    &:has(.aspect-ratio-2-3) {
+        grid-template-columns: repeat(auto-fill, minmax(164px, 1fr));
+    }
+
+    @media (max-width: map.get($breakpoints, "sm")) {
+        grid-template-columns: 1fr;
+
+        &:has(.aspect-ratio-3-4) {
+            gap: $spacing-sm * 1.5;
+            grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+        }
+
+        &:has(.aspect-ratio-2-3) {
+            gap: $spacing-sm * 1.5;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        }
+    }
+
+    .image-item {
+        position: relative;
+        border-radius: $border-radius-lg;
+        overflow: hidden;
+        cursor: pointer;
+
+        &.aspect-ratio-16-9 {
+            aspect-ratio: 16/9;
+        }
+
+        &.aspect-ratio-3-4 {
+            aspect-ratio: 3/4;
+        }
+
+        &.aspect-ratio-2-3 {
+            aspect-ratio: 2/3;
+        }
+
+        .grid-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform $transition-normal;
+        }
+
+        &:hover .grid-image {
+            transform: scale(1.02);
+        }
+
+        .more-images {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba($background-color, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color $transition-normal;
+
+            &:hover {
+                background: rgba($background-color, 0.8);
+            }
+
+            .counter {
+                font-size: $font-size-md;
+                font-weight: $font-weight-semibold;
+                color: $text-primary;
+            }
+        }
+    }
+}
+
+.skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: $spacing-md;
+
+    &:has(.aspect-ratio-3-4) {
+        grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    }
+
+    &:has(.aspect-ratio-2-3) {
+        grid-template-columns: repeat(auto-fill, minmax(164px, 1fr));
+    }
+
+    @media (max-width: map.get($breakpoints, "sm")) {
+        grid-template-columns: 1fr;
+
+        &:has(.aspect-ratio-3-4) {
+            gap: $spacing-sm * 1.5;
+            grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+        }
+
+        &:has(.aspect-ratio-2-3) {
+            gap: $spacing-sm * 1.5;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        }
+    }
+
+    .skeleton-image-item {
+        border-radius: $border-radius-lg;
+        overflow: hidden;
+        aspect-ratio: 16/9;
+
+        &.aspect-ratio-16-9 {
+            aspect-ratio: 16/9;
+        }
+
+        &.aspect-ratio-3-4 {
+            aspect-ratio: 3/4;
+        }
+
+        &.aspect-ratio-2-3 {
+            aspect-ratio: 2/3;
+        }
+
+        .skeleton-image {
+            width: 100%;
+            height: 100%;
+            @include skeleton-loading;
+        }
+    }
+}

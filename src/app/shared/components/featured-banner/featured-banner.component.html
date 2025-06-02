@@ -1,0 +1,66 @@
+@if (!isLoading) {
+    <div appFadeIn class="featured-banner" appBackgroundPath [backgroundPath]="backgroundPath">
+        <div class="overlay">
+            <div class="wrapper">
+                <div class="featured-details">
+                    <div class="featured-badge">
+                        <i class="fas fa-star"></i>
+                        <span>{{ type === mediaType.Movie ? "Featured Movie" : "Featured TV Show" }}</span>
+                    </div>
+                    <h1 class="featured-title">{{ featuredTitle }}</h1>
+                    <div class="featured-meta">
+                        @if (featuredDate) {
+                            <span class="movie-year">
+                                {{ featuredDate | date: "yyyy" }}
+                            </span>
+                        }
+                        @if (genresList.length) {
+                            <span class="genres">
+                                {{ genresList }}
+                            </span>
+                        }
+                    </div>
+
+                    <div class="overview">
+                        <p>{{ featuredItem.overview }}</p>
+                    </div>
+
+                    <div class="featured-actions">
+                        <app-button
+                            [link]="link"
+                            [variant]="buttonType.Primary"
+                            [type]="'button'"
+                            [icon]="'fas fa-arrow-right'"
+                            [isIconLeft]="false"
+                            [text]="type === mediaType.Movie ? 'View Movie' : 'View TV Show'"
+                        >
+                        </app-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+} @else {
+    <div appFadeIn class="featured-banner-skeleton">
+        <div class="overlay">
+            <div class="wrapper">
+                <div class="featured-details">
+                    <div class="skeleton-badge"></div>
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-meta">
+                        <div class="skeleton-meta-item"></div>
+                        <div class="skeleton-meta-item"></div>
+                    </div>
+                    <div class="skeleton-overview">
+                        <div class="skeleton-line"></div>
+                        <div class="skeleton-line"></div>
+                        <div class="skeleton-line"></div>
+                    </div>
+                    <div class="skeleton-actions">
+                        <app-button [isLoading]="true"></app-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

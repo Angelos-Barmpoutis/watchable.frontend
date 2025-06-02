@@ -1,0 +1,80 @@
+@if (!isLoading) {
+    <a
+        appFadeIn
+        class="media-list-item"
+        [title]="title"
+        [routerLink]="[
+            '/',
+            type === mediaType.Movie ? 'movies' : 'tv-shows',
+            type === mediaType.Movie ? 'movie' : 'tv-show',
+            media?.id
+        ]"
+    >
+        <div class="media-main">
+            <div class="poster-wrapper">
+                @if (media?.poster_path) {
+                    <img appPosterPath [posterPath]="media?.poster_path || ''" [size]="posterSize" />
+                } @else {
+                    <img [src]="posterFallback" />
+                }
+            </div>
+            <div class="info">
+                <div class="info-header">
+                    <div class="title-container">
+                        <h3 class="title">{{ title }}</h3>
+                        <div class="meta">
+                            @if (releaseDate) {
+                                <span class="year">
+                                    {{ releaseDate | date: "yyyy" }}
+                                </span>
+                            }
+                            @if (genres && genres.length) {
+                                <span class="genres">
+                                    @for (genre of genres | slice: 0 : 2; track $index) {
+                                        <span
+                                            >{{ genre.name }}
+                                            @if (!$last) {
+                                                ,
+                                            }
+                                        </span>
+                                    }
+                                </span>
+                            }
+                        </div>
+                    </div>
+                    <div class="rating-container">
+                        <div class="rating">
+                            <app-rating-badge
+                                [rating]="media?.vote_average || 0"
+                                [isLoading]="isLoading"
+                            ></app-rating-badge>
+                        </div>
+                    </div>
+                </div>
+                @if (media?.overview) {
+                    <p class="overview">{{ media?.overview }}</p>
+                }
+            </div>
+        </div>
+    </a>
+} @else {
+    <div appFadeIn class="media-list-item-loading">
+        <div class="media-main">
+            <div class="poster-skeleton"></div>
+            <div class="info-skeleton">
+                <div class="header-skeleton">
+                    <div class="title-container-skeleton">
+                        <div class="title-skeleton"></div>
+                        <div class="meta-skeleton"></div>
+                    </div>
+                    <app-rating-badge [rating]="media?.vote_average || 0" [isLoading]="true"></app-rating-badge>
+                </div>
+                <div class="overview-skeleton">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

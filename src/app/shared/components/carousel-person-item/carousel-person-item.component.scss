@@ -1,0 +1,69 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+.person {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    .person-profile {
+        width: 100%;
+        aspect-ratio: 1/1;
+        overflow: hidden;
+        transition: filter $transition-normal;
+        border-radius: $spacing-sm;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform $transition-normal;
+        }
+    }
+
+    .person-name {
+        font-size: 13px;
+        color: $text-primary;
+        font-weight: $font-weight-medium;
+        @include text-clamp(1);
+    }
+
+    &:hover {
+        .person-profile {
+            img {
+                transform: scale(1.05);
+            }
+        }
+    }
+}
+
+// Skeleton styles
+.skeleton-person {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    .skeleton-profile {
+        width: 100%;
+        aspect-ratio: 1/1;
+        @include skeleton-loading;
+        border-radius: $spacing-sm;
+    }
+
+    .skeleton-name {
+        width: 100%;
+        height: 13px;
+        @include skeleton-loading;
+        border-radius: $border-radius-sm;
+    }
+}

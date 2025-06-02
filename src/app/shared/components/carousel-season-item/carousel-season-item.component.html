@@ -1,0 +1,24 @@
+@if (!isLoading) {
+    <a
+        appFadeIn
+        class="season"
+        [title]="season.name"
+        [routerLink]="['/tv-shows', 'tv-show', tvShowId, 'seasons', season.season_number]"
+    >
+        <div class="season-poster">
+            @if (season.poster_path) {
+                <img appPosterPath [size]="posterSize" [posterPath]="season.poster_path" />
+            } @else {
+                <img [src]="posterFallback" />
+            }
+        </div>
+        <span class="season-name">{{ season.name }}</span>
+        <span class="season-episodes">{{ season.episode_count }} Episodes</span>
+    </a>
+} @else {
+    <div appFadeIn class="skeleton-season">
+        <div class="skeleton-poster"></div>
+        <div class="skeleton-name"></div>
+        <div class="skeleton-episodes"></div>
+    </div>
+}

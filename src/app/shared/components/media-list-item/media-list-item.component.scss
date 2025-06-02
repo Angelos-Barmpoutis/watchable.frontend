@@ -1,0 +1,211 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+.media-list-item {
+    text-decoration: none;
+    transition: all $transition-normal;
+    display: block;
+
+    .media-main {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: $spacing-sm;
+        cursor: pointer;
+
+        .poster-wrapper {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 2/3;
+            border-radius: $border-radius-lg;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform $transition-normal;
+            }
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+            padding: $spacing-md;
+            background-color: rgb(40, 44, 53);
+            border-radius: $border-radius-lg;
+
+            .info-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: $spacing-sm;
+
+                .title-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: $spacing-xs;
+
+                    .title {
+                        font-size: $font-size-sm;
+                        font-weight: $font-weight-semibold;
+                        color: $text-primary;
+                        margin: 0;
+                        @include text-clamp(1);
+                    }
+
+                    .meta {
+                        color: $text-secondary;
+                        font-size: $font-size-xs;
+
+                        > span {
+                            position: relative;
+
+                            &:not(:first-child)::before {
+                                content: "•";
+                                margin-inline: $spacing-xs;
+                                opacity: 0.5;
+                            }
+                        }
+
+                        .genres {
+                            display: inline;
+                        }
+                    }
+                }
+            }
+
+            .overview {
+                color: $text-primary;
+                font-size: $font-size-sm;
+                margin: 0;
+                line-height: 1.5;
+                @include text-clamp(3);
+            }
+        }
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.media-list-item-loading {
+    height: 150px;
+
+    .media-main {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: $spacing-sm;
+        height: 100%;
+
+        .poster-skeleton {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 2/3;
+            border-radius: $border-radius-lg;
+            @include skeleton-loading;
+        }
+
+        .info-skeleton {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+            padding: $spacing-md;
+            background-color: rgb(40, 44, 53);
+            border-radius: $border-radius-lg;
+
+            .header-skeleton {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: $spacing-sm;
+
+                .title-container-skeleton {
+                    display: flex;
+                    flex-direction: column;
+                    gap: $spacing-xs;
+                    flex: 1;
+                    margin-right: $spacing-md;
+
+                    .title-skeleton {
+                        width: 70%;
+                        height: $font-size-sm;
+                        @include skeleton-loading;
+                    }
+
+                    .meta-skeleton {
+                        width: 50%;
+                        height: $font-size-xs;
+                        @include skeleton-loading;
+                    }
+                }
+            }
+
+            .overview-skeleton {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-xs;
+                margin-top: $spacing-md;
+
+                .line {
+                    width: 100%;
+                    height: $font-size-sm;
+                    @include skeleton-loading;
+
+                    &:nth-child(3) {
+                        width: 80%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: map.get($breakpoints, "sm")) {
+    .media-list-item {
+        .media-main {
+            grid-template-columns: 96px 1fr;
+
+            .info {
+                padding: calc($spacing-sm * 1.5);
+
+                .info-header {
+                    flex-direction: row;
+                    align-items: center;
+
+                    .title-container {
+                        max-width: 70%;
+                    }
+                }
+
+                .overview {
+                    font-size: $font-size-xs;
+                }
+            }
+        }
+    }
+
+    .media-list-item-loading {
+        height: 144px;
+
+        .media-main {
+            grid-template-columns: 96px 1fr;
+
+            .info-skeleton {
+                padding: calc($spacing-sm * 1.5);
+
+                .header-skeleton {
+                    .title-container-skeleton {
+                        max-width: 70%;
+                    }
+                }
+            }
+        }
+    }
+}

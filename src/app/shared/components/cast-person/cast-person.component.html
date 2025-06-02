@@ -1,0 +1,24 @@
+@if (!isLoading) {
+    <a appFadeIn class="cast-person" [routerLink]="['/', 'people', 'person', person.id]" [title]="person.name">
+        <div class="cast-photo">
+            @if (person.profile_path) {
+                <img appProfilePath [profilePath]="person.profile_path" [size]="profileSize.w185" />
+            }
+            @if (!person.profile_path) {
+                <img [src]="default.mediumProfileFallback" />
+            }
+        </div>
+        <div class="cast-info">
+            <span class="cast-name">{{ person.name }}</span>
+            <span class="cast-character">{{ role }}</span>
+        </div>
+    </a>
+} @else {
+    <div appFadeIn class="cast-person-skeleton">
+        <div class="cast-photo"></div>
+        <div class="cast-info">
+            <span class="cast-name"></span>
+            <span class="cast-character"></span>
+        </div>
+    </div>
+}

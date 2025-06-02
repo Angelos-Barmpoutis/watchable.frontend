@@ -1,0 +1,108 @@
+@if (!isLoading && episodeDetails) {
+    <div appFadeIn>
+        <ul class="details-list">
+            @if (episodeDetails.name) {
+                <li>
+                    <span class="detail-label">Title:</span>
+                    <span class="detail-value">{{ episodeDetails.name }}</span>
+                </li>
+            }
+            @if (episodeDetails.air_date) {
+                <li>
+                    <span class="detail-label">Air Date:</span>
+                    <span class="detail-value">{{ episodeDetails.air_date | date: "longDate" }}</span>
+                </li>
+            }
+            @if (episodeDetails.episode_number) {
+                <li>
+                    <span class="detail-label">Episode Number:</span>
+                    <span class="detail-value">{{ episodeDetails.episode_number }}</span>
+                </li>
+            }
+            @if (episodeDetails.season_number) {
+                <li>
+                    <span class="detail-label">Season Number:</span>
+                    <span class="detail-value">{{ episodeDetails.season_number }}</span>
+                </li>
+            }
+            @if (episodeDetails.runtime) {
+                <li>
+                    <span class="detail-label">Runtime:</span>
+                    <span class="detail-value">{{ episodeDetails.runtime | time }}</span>
+                </li>
+            }
+            <li>
+                <span class="detail-label">My Rating:</span>
+                <div class="detail-value">
+                    <div class="rating-stars">
+                        @for (star of stars; track $index) {
+                            <button
+                                class="star-button"
+                                [class.active]="userRating && star * 2 <= userRating"
+                                [title]="'Rate ' + star + '/5'"
+                                (click)="rateEpisode(star * 2)"
+                            >
+                                <i class="fas fa-star"></i>
+                            </button>
+                        }
+                    </div>
+                </div>
+            </li>
+            @if (episodeDetails.vote_average) {
+                <li>
+                    <span class="detail-label">Rating:</span>
+                    <div class="detail-value">
+                        <div class="rating-badge">
+                            @if (episodeDetails.vote_average) {
+                                <span
+                                    class="rating-value"
+                                    [class.rating-low]="(episodeDetails.vote_average || 0) < 5"
+                                    [class.rating-medium]="
+                                        (episodeDetails.vote_average || 0) >= 5 &&
+                                        (episodeDetails.vote_average || 0) < 7
+                                    "
+                                    [class.rating-high]="
+                                        (episodeDetails.vote_average || 0) >= 7 &&
+                                        (episodeDetails.vote_average || 0) < 8.5
+                                    "
+                                    [class.rating-top]="(episodeDetails.vote_average || 0) >= 8.5"
+                                >
+                                    {{ (episodeDetails.vote_average || 0) / 2 | number: "1.1-1" }}
+                                </span>
+                            } @else {
+                                <span class="rating-value">-</span>
+                            }
+                            <span class="rating-total">/5</span>
+                            @if (episodeDetails.vote_count) {
+                                <span class="vote-count">
+                                    ({{ episodeDetails.vote_count || 0 | formatNumberWithK }} votes)
+                                </span>
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+            @if (episodeDetails.production_code) {
+                <li>
+                    <span class="detail-label">Production Code:</span>
+                    <span class="detail-value">{{ episodeDetails.production_code }}</span>
+                </li>
+            }
+        </ul>
+    </div>
+} @else {
+    @if (isLoading) {
+        <div class="skeleton-media-details">
+            <div class="skeleton-media-content">
+                <div class="skeleton-media-list">
+                    @for (i of [1, 2, 3, 4, 5, 6, 7]; track $index) {
+                        <div class="skeleton-media-item">
+                            <div class="skeleton-media-label"></div>
+                            <div class="skeleton-media-value"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}

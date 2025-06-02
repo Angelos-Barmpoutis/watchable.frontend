@@ -1,0 +1,82 @@
+@if (showViewer) {
+    <div appFadeIn class="video-viewer">
+        <div class="viewer-content">
+            <button title="Close" aria-label="Close" class="close-button" (click)="emitCloseViewer()">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="viewer-strip-container">
+                <swiper-container
+                    #viewerStrip
+                    class="viewer-strip"
+                    [spaceBetween]="16"
+                    [slidesPerView]="1"
+                    [initialSlide]="selectedIndex"
+                    [speed]="default.carouselAnimationDuration"
+                    [touchRatio]="1"
+                    [touchAngle]="45"
+                    [touchStartPreventDefault]="false"
+                    [touchMoveStopPropagation]="true"
+                    [allowTouchMove]="true"
+                    [grabCursor]="true"
+                    [effect]="'fade'"
+                    (swiperslidechange)="onViewerSlideChange($event)"
+                >
+                    @for (video of videos; track video.id) {
+                        <swiper-slide>
+                            <div class="video-container">
+                                @if (!videoUrl) {
+                                    <div class="video-loading">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                    </div>
+                                }
+                                @if (videoUrl) {
+                                    <iframe
+                                        #videoIframe
+                                        frameborder="0"
+                                        playsinline
+                                        webkit-playsinline
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                                        allowfullscreen
+                                        [src]="videoUrl"
+                                    ></iframe>
+                                }
+                            </div>
+                        </swiper-slide>
+                    }
+                </swiper-container>
+            </div>
+
+            @if (showPreviewStrip) {
+                <swiper-container
+                    #previewStrip
+                    class="preview-strip"
+                    [spaceBetween]="8"
+                    [slidesPerView]="'auto'"
+                    [initialSlide]="selectedIndex"
+                    [speed]="default.carouselAnimationDuration"
+                    [touchRatio]="1"
+                    [touchAngle]="45"
+                    [touchStartPreventDefault]="false"
+                    [touchMoveStopPropagation]="true"
+                    [allowTouchMove]="true"
+                >
+                    @for (video of videos; track video.id) {
+                        <swiper-slide [class.active]="$index === selectedIndex" (click)="selectItem($index)">
+                            <div class="video-thumbnail">
+                                <img
+                                    class="thumbnail-image"
+                                    [src]="'https://img.youtube.com/vi/' + video.key + '/maxresdefault.jpg'"
+                                    [alt]="video.name"
+                                />
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                        </swiper-slide>
+                    }
+                </swiper-container>
+            }
+        </div>
+    </div>
+}

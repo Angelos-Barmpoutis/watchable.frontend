@@ -1,0 +1,25 @@
+<div class="wrapper">
+    <section>
+        <header>
+            <app-section-header [isLoading]="false" [title]="genreName + ' Movies'"> </app-section-header>
+        </header>
+
+        <div class="list-container">
+            @if (items.length) {
+                @for (movie of items; track trackByItemId($index, movie)) {
+                    <app-media-list-item [media]="movie" [type]="mediaType.Movie" [isLoading]="false">
+                    </app-media-list-item>
+                }
+            } @else {
+                @for (item of skeletonArray; track $index) {
+                    <app-media-list-item [isLoading]="true"> </app-media-list-item>
+                }
+            }
+        </div>
+
+        <app-infinite-scroll-loader
+            [disabled]="isLoading || currentPage >= totalPages"
+            (scrolled)="loadMore()"
+        ></app-infinite-scroll-loader>
+    </section>
+</div>

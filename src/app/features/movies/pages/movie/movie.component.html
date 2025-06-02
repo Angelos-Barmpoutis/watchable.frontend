@@ -1,0 +1,177 @@
+<app-media-hero [mediaDetails]="movieDetails" [type]="mediaType.Movie" [isLoading]="isLoading"></app-media-hero>
+
+<div class="wrapper">
+    <div class="media-details-grid">
+        <ng-container>
+            <div class="media-details-grid-content">
+                @if (movieDetails?.overview || isLoading) {
+                    <section class="overview-section">
+                        <header>
+                            <app-section-header title="Overview" [isLoading]="isLoading"></app-section-header>
+                        </header>
+                        @if (movieDetails?.overview && !isLoading) {
+                            <p class="overview" appFadeIn>
+                                {{ movieDetails?.overview }}
+                            </p>
+                        } @else {
+                            <div class="skeleton-overview">
+                                <div class="skeleton-overview-line"></div>
+                                <div class="skeleton-overview-line"></div>
+                                <div class="skeleton-overview-line"></div>
+                                <div class="skeleton-overview-line"></div>
+                            </div>
+                        }
+                    </section>
+                }
+
+                @if (movieDetails?.credits?.cast?.length || isLoading) {
+                    <section>
+                        <header>
+                            <app-section-header title="Top Cast" [isLoading]="isLoading"></app-section-header>
+                        </header>
+                        <app-cast-grid
+                            [cast]="movieDetails?.credits?.cast || []"
+                            [isLoading]="isLoading"
+                        ></app-cast-grid>
+                    </section>
+                }
+
+                @if (movieDetails?.images?.backdrops?.length || isLoading) {
+                    <section>
+                        <header>
+                            <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
+                        </header>
+                        <app-image-grid
+                            [images]="movieDetails?.images?.backdrops || []"
+                            [isLoading]="isLoading"
+                        ></app-image-grid>
+                    </section>
+                }
+
+                @if (movieDetails?.videos?.results?.length || isLoading) {
+                    <section>
+                        <header>
+                            <app-section-header title="Videos" [isLoading]="isLoading"></app-section-header>
+                        </header>
+                        <app-video-grid
+                            [videos]="movieDetails?.videos?.results || []"
+                            [isLoading]="isLoading"
+                        ></app-video-grid>
+                    </section>
+                }
+
+                @if (movieDetails?.credits?.crew?.length || isLoading) {
+                    <section>
+                        <header>
+                            <app-section-header title="Top Crew" [isLoading]="isLoading"></app-section-header>
+                        </header>
+                        <app-cast-grid
+                            [cast]="movieDetails?.credits?.crew || []"
+                            [isLoading]="isLoading"
+                        ></app-cast-grid>
+                    </section>
+                }
+
+                @if (movieDetails?.similar?.results?.length || isLoading) {
+                    <section>
+                        <header>
+                            <app-section-header title="Similar Movies" [isLoading]="isLoading"></app-section-header>
+                        </header>
+                        <app-carousel-media
+                            [type]="mediaType.Movie"
+                            [items]="movieDetails?.similar?.results || []"
+                            [isLoading]="isLoading"
+                        >
+                        </app-carousel-media>
+                    </section>
+                }
+
+                @if (movieDetails?.recommendations?.results?.length || isLoading) {
+                    <section>
+                        <header>
+                            <app-section-header title="Recommendations" [isLoading]="isLoading"></app-section-header>
+                        </header>
+                        <app-carousel-media
+                            [type]="mediaType.Movie"
+                            [items]="movieDetails?.recommendations?.results || []"
+                            [isLoading]="isLoading"
+                        >
+                        </app-carousel-media>
+                    </section>
+                }
+            </div>
+        </ng-container>
+
+        <aside>
+            @if (movieDetails || isLoading) {
+                <section>
+                    <app-media-details
+                        [mediaDetails]="movieDetails"
+                        [type]="mediaType.Movie"
+                        [isLoading]="isLoading"
+                    ></app-media-details>
+                </section>
+            }
+
+            @if (isExternalIdAvailable || isLoading) {
+                <section>
+                    <div class="social-links">
+                        @if (movieDetails?.external_ids?.imdb_id || isLoading) {
+                            <app-button
+                                [variant]="ButtonType.Imdb"
+                                [type]="'button'"
+                                [icon]="'fab fa-imdb'"
+                                [link]="mediaLinks[0]"
+                                [isLoading]="isLoading"
+                                [text]="'IMDb'"
+                            >
+                            </app-button>
+                        }
+                        @if (movieDetails?.external_ids?.facebook_id || isLoading) {
+                            <app-button
+                                [variant]="ButtonType.Facebook"
+                                [type]="'button'"
+                                [icon]="'fab fa-facebook'"
+                                [link]="mediaLinks[1]"
+                                [isLoading]="isLoading"
+                                [text]="'Facebook'"
+                            >
+                            </app-button>
+                        }
+                        @if (movieDetails?.external_ids?.instagram_id || isLoading) {
+                            <app-button
+                                [variant]="ButtonType.Instagram"
+                                [type]="'button'"
+                                [icon]="'fab fa-instagram'"
+                                [link]="mediaLinks[2]"
+                                [isLoading]="isLoading"
+                                [text]="'Instagram'"
+                            >
+                            </app-button>
+                        }
+                        @if (movieDetails?.external_ids?.twitter_id || isLoading) {
+                            <app-button
+                                [variant]="ButtonType.Twitter"
+                                [type]="'button'"
+                                [icon]="'fab fa-twitter'"
+                                [link]="mediaLinks[3]"
+                                [isLoading]="isLoading"
+                                [text]="'Twitter'"
+                            >
+                            </app-button>
+                        }
+                    </div>
+                </section>
+            }
+        </aside>
+    </div>
+
+    @if (movieDetails?.reviews?.results?.length || isLoading) {
+        <section>
+            <header>
+                <app-section-header title="Reviews" [isLoading]="isLoading"></app-section-header>
+            </header>
+            <app-review-grid [reviews]="movieDetails?.reviews?.results || []" [isLoading]="isLoading"></app-review-grid>
+        </section>
+    }
+</div>

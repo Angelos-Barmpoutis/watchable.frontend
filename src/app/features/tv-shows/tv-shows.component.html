@@ -1,0 +1,56 @@
+<section>
+    <app-featured-banner [featuredItem]="airingToday[0]" [type]="mediaType.TvShow" [isLoading]="isMainContentLoading">
+    </app-featured-banner>
+</section>
+
+<div class="wrapper">
+    <section>
+        <header>
+            <app-section-header
+                redirectUrl="airing-today"
+                title="TV Shows Airing Today"
+                [isLoading]="isMainContentLoading"
+            >
+            </app-section-header>
+        </header>
+        <app-carousel-media [type]="mediaType.TvShow" [items]="airingToday" [isLoading]="isMainContentLoading">
+        </app-carousel-media>
+    </section>
+
+    <section>
+        <header>
+            <app-section-header redirectUrl="popular" title="Popular TV Shows" [isLoading]="isMainContentLoading">
+            </app-section-header>
+        </header>
+        <app-carousel-media [type]="mediaType.TvShow" [items]="popular" [isLoading]="isMainContentLoading">
+        </app-carousel-media>
+    </section>
+
+    <section>
+        <header>
+            <app-section-header redirectUrl="top-rated" title="Top Rated TV Shows" [isLoading]="isMainContentLoading">
+            </app-section-header>
+        </header>
+        <app-carousel-media [type]="mediaType.TvShow" [items]="topRated" [isLoading]="isMainContentLoading">
+        </app-carousel-media>
+    </section>
+
+    @for (genre of loadedGenres; track genre.genreName) {
+        <section>
+            <header>
+                <app-section-header
+                    [title]="genre.genreName + ' TV Shows'"
+                    [redirectUrl]="['discover', genre.genreName]"
+                    [isLoading]="isMainContentLoading"
+                >
+                </app-section-header>
+            </header>
+            <app-carousel-media [type]="genre.type" [items]="genre.items" [isLoading]="isMainContentLoading">
+            </app-carousel-media>
+        </section>
+    }
+</div>
+
+@if (!allGenresLoaded) {
+    <app-infinite-scroll-loader [disabled]="isLoadingMoreGenres" (scrolled)="loadMore()"></app-infinite-scroll-loader>
+}

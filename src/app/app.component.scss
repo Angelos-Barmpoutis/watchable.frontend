@@ -1,0 +1,47 @@
+@use "sass:map";
+@use "shared/styles/variables" as *;
+@use "shared/styles/colors" as *;
+@use "shared/styles/typography" as *;
+@use "shared/styles/spacing" as *;
+
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    width: 100%;
+    position: relative;
+
+    main {
+        flex: 1;
+        padding-block-start: $desktop-header-height;
+
+        // Exlude pages that either have media hero or featured banner
+        // &:not(:has(app-trending)):not(:has(app-movie)):not(:has(app-movies)):not(:has(app-tv-show)):not(
+        //         :has(app-tv-shows)
+        //     ) {
+        //     padding-block-start: $desktop-header-height;
+        // }
+    }
+}
+
+@media (max-width: map.get($breakpoints, "sm")) {
+    .app {
+        padding-bottom: calc($mobile-nav-height + min(env(safe-area-inset-bottom), 16px));
+    }
+
+    main {
+        flex: 1;
+        padding-block-start: $mobile-header-height !important;
+
+        // Exlude pages that either have media hero or featured banner
+        // &:not(:has(app-trending)):not(:has(app-movie)):not(:has(app-movies)):not(:has(app-tv-show)):not(
+        //         :has(app-tv-shows)
+        //     ) {
+        //     padding-block-start: $mobile-header-height;
+        // }
+    }
+
+    app-footer {
+        display: none;
+    }
+}

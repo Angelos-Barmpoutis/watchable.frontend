@@ -1,0 +1,163 @@
+@if (personDetails || isLoading) {
+    <section appFadeIn>
+        <div class="wrapper">
+            @if (!isLoading) {
+                <div class="person-hero">
+                    <div class="profile-image">
+                        @if (personDetails?.profile_path) {
+                            <img
+                                [src]="'https://image.tmdb.org/t/p/w500' + personDetails?.profile_path"
+                                [alt]="personDetails?.name"
+                            />
+                        }
+                    </div>
+                    <div class="hero-info">
+                        <h1>{{ personDetails?.name }}</h1>
+                        <div class="meta">
+                            @if (personDetails?.known_for_department) {
+                                <span>{{ personDetails?.known_for_department }}</span>
+                            }
+                            @if (gender) {
+                                <span>{{ gender }}</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            } @else {
+                <div class="person-hero-skeleton">
+                    <div class="profile-image-skeleton"></div>
+                    <div class="hero-info-skeleton">
+                        <div class="hero-info-skeleton-title"></div>
+                        <div class="hero-info-skeleton-meta">
+                            <div class="hero-info-skeleton-meta-item"></div>
+                            <div class="hero-info-skeleton-meta-item"></div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+}
+
+<div class="wrapper">
+    <div class="person-details-grid">
+        <div>
+            @if (personDetails?.biography || isLoading) {
+                <section appFadeIn>
+                    <header>
+                        <app-section-header title="Biography" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    @if (!isLoading) {
+                        <p appFadeIn class="overview">
+                            {{ personDetails?.biography }}
+                        </p>
+                    } @else {
+                        <div class="skeleton-overview">
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                        </div>
+                    }
+                </section>
+            }
+
+            @if (images.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-image-grid
+                        [aspectRatio]="aspectRatio['3/4']"
+                        [images]="images"
+                        [isLoading]="isLoading"
+                        [imagesCount]="8"
+                    ></app-image-grid>
+                </section>
+            }
+
+            @if (movieCastItems.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Movie Credits" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-media-grid
+                        [items]="movieCastItems"
+                        [type]="mediaType.Movie"
+                        [isLoading]="isLoading"
+                        [initialCount]="default.castCount"
+                    ></app-media-grid>
+                </section>
+            }
+
+            @if (tvCastItems.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="TV Show Credits" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-media-grid
+                        [items]="tvCastItems"
+                        [type]="mediaType.TvShow"
+                        [isLoading]="isLoading"
+                        [initialCount]="default.castCount"
+                    ></app-media-grid>
+                </section>
+            }
+        </div>
+
+        <aside>
+            @if (personDetails || isLoading) {
+                <section>
+                    <app-person-details [personDetails]="personDetails" [isLoading]="isLoading"></app-person-details>
+                </section>
+            }
+
+            @if (isExternalIdAvailable || isLoading) {
+                <section>
+                    <div class="social-links">
+                        @if (externalIds?.imdb_id) {
+                            <app-button
+                                [variant]="buttonType.Imdb"
+                                [type]="'button'"
+                                [icon]="'fab fa-imdb'"
+                                [link]="mediaLinks[0]"
+                                [isLoading]="isLoading"
+                                [text]="'IMDb'"
+                            ></app-button>
+                        }
+                        @if (externalIds?.facebook_id) {
+                            <app-button
+                                [variant]="buttonType.Facebook"
+                                [type]="'button'"
+                                [icon]="'fab fa-facebook'"
+                                [link]="mediaLinks[1]"
+                                [isLoading]="isLoading"
+                                [text]="'Facebook'"
+                            ></app-button>
+                        }
+                        @if (externalIds?.instagram_id) {
+                            <app-button
+                                [variant]="buttonType.Instagram"
+                                [type]="'button'"
+                                [icon]="'fab fa-instagram'"
+                                [link]="mediaLinks[2]"
+                                [isLoading]="isLoading"
+                                [text]="'Instagram'"
+                            ></app-button>
+                        }
+                        @if (externalIds?.twitter_id) {
+                            <app-button
+                                [variant]="buttonType.Twitter"
+                                [type]="'button'"
+                                [icon]="'fab fa-twitter'"
+                                [link]="mediaLinks[3]"
+                                [isLoading]="isLoading"
+                                [text]="'Twitter'"
+                            ></app-button>
+                        }
+                    </div>
+                </section>
+            }
+        </aside>
+    </div>
+</div>

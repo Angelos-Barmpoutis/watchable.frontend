@@ -1,0 +1,137 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+.snackbar {
+    position: fixed;
+    top: $spacing-xl;
+    right: $spacing-lg;
+    min-width: 300px;
+    width: 100%;
+    max-width: 500px;
+    padding: $spacing-sm * 1.5 $spacing-md;
+    border-radius: $border-radius-lg;
+    background-color: rgb(40, 44, 53);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1001;
+    animation: slideIn 0.2s ease-out;
+
+    @media (max-width: map.get($breakpoints, "md")) {
+        width: calc(100vw - $spacing-lg * 2);
+        padding: $spacing-sm * 1.5;
+    }
+
+    .snackbar-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $spacing-md;
+
+        .snackbar-message {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm * 1.5;
+            flex: 1;
+
+            i {
+                font-size: $font-size-lg;
+                flex-shrink: 0;
+            }
+
+            span {
+                font-size: $font-size-sm;
+                color: $text-primary;
+                line-height: 1.4;
+            }
+        }
+
+        .dismiss-container {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+
+            .progress-ring {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: translate(-50%, -50%);
+                width: 32px;
+                height: 32px;
+                transform-origin: center;
+                transform: rotate(-90deg);
+
+                .progress-ring-circle {
+                    stroke: currentColor;
+                    stroke-linecap: round;
+                    animation: progress-ring 3s linear forwards;
+                }
+            }
+
+            .dismiss-button {
+                position: relative;
+                background: none;
+                border: none;
+                padding: $spacing-xs;
+                color: $text-secondary;
+                cursor: pointer;
+                border-radius: $border-radius-full;
+                transition: all $transition-normal;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &:hover {
+                    background-color: rgba($text-secondary, 0.1);
+                    color: $text-primary;
+                }
+
+                i {
+                    font-size: $font-size-md;
+                }
+            }
+        }
+    }
+
+    &.snackbar-success {
+        border-left: 4px solid $success-color;
+
+        .icon,
+        .progress-ring-circle {
+            color: $success-color;
+        }
+    }
+
+    &.snackbar-error {
+        border-left: 4px solid $error-color;
+
+        .icon,
+        .progress-ring-circle {
+            color: $error-color;
+        }
+    }
+
+    &.snackbar-warning {
+        border-left: 4px solid $warning-color;
+
+        .icon,
+        .progress-ring-circle {
+            color: $warning-color;
+        }
+    }
+
+    &.snackbar-info {
+        border-left: 4px solid $primary-color;
+
+        .icon,
+        .progress-ring-circle {
+            color: $primary-color;
+        }
+    }
+}

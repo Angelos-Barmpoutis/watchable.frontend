@@ -1,0 +1,53 @@
+@if (!isLoading) {
+    <div class="review-card" appFadeIn>
+        <div class="review-header">
+            <div class="avatar">
+                @if (review.author_details.avatar_path) {
+                    <img alt="Reviewer avatar" [src]="review.author_details.avatar_path | avatarUrl" />
+                } @else {
+                    <i class="fas fa-user"></i>
+                }
+            </div>
+            <div class="reviewer-info">
+                <span class="reviewer-name">{{ review.author }}</span>
+                <span class="review-date">{{ review.created_at | date: "mediumDate" }}</span>
+            </div>
+            @if (review.author_details.rating) {
+                <div class="reviewer-rating">
+                    <app-rating-badge
+                        [rating]="review.author_details.rating"
+                        [isLoading]="isLoading"
+                    ></app-rating-badge>
+                </div>
+            }
+        </div>
+        <div class="review-content">
+            <p>
+                {{ review.content.length > 300 ? (review.content | slice: 0 : 300) + "..." : review.content }}
+            </p>
+            <a target="_blank" class="read-more" [href]="review.url">
+                Read full review
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+    </div>
+} @else {
+    <div class="review-card" appFadeIn>
+        <div class="review-header">
+            <div class="skeleton-avatar"></div>
+            <div class="skeleton-reviewer-info">
+                <div class="skeleton-reviewer-name"></div>
+                <div class="skeleton-review-date"></div>
+            </div>
+            <app-rating-badge [rating]="review.author_details.rating" [isLoading]="true"></app-rating-badge>
+        </div>
+        <div class="skeleton-review-content">
+            <div class="skeleton-review-text"></div>
+            <div class="skeleton-review-text"></div>
+            <div class="skeleton-review-text"></div>
+            <div class="skeleton-review-text"></div>
+            <div class="skeleton-review-text"></div>
+            <div class="skeleton-review-text"></div>
+        </div>
+    </div>
+}

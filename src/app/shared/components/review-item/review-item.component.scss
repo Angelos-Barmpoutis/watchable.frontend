@@ -1,0 +1,166 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+.review-card {
+    background-color: rgb(40, 44, 53);
+    border-radius: $border-radius-lg;
+    padding: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 259px;
+
+    @media (max-width: map.get($breakpoints, "sm")) {
+        padding: calc($spacing-sm * 1.5);
+        min-height: 215px;
+    }
+
+    .review-header {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        margin-bottom: $spacing-md;
+
+        @media (max-width: map.get($breakpoints, "sm")) {
+            gap: $spacing-sm * 1.5;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: $surface-color;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            i {
+                font-size: $font-size-xl;
+                color: $text-secondary;
+            }
+        }
+
+        .reviewer-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            .reviewer-name {
+                font-weight: $font-weight-semibold;
+                font-size: $font-size-sm;
+                color: $text-primary;
+            }
+
+            .review-date {
+                font-size: $font-size-xs;
+                color: $text-secondary;
+            }
+        }
+    }
+
+    .review-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        p {
+            font-size: $font-size-sm;
+            color: $text-primary;
+            margin-bottom: $spacing-md;
+            line-height: 1.5;
+            @include text-clamp(6);
+
+            @media (max-width: map.get($breakpoints, "sm")) {
+                font-size: $font-size-xs;
+            }
+        }
+
+        .read-more {
+            font-size: $font-size-sm;
+            color: rgba($primary-color, 0.8);
+            font-weight: $font-weight-semibold;
+            text-decoration: none;
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: $spacing-xs;
+            transition:
+                color $transition-normal,
+                transform $transition-normal;
+
+            i {
+                font-size: $font-size-sm;
+            }
+
+            &:hover {
+                transform: translateY(-2px);
+                color: rgba($primary-color, 1);
+            }
+        }
+    }
+}
+
+.skeleton-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50% !important;
+    background-color: $surface-color;
+    @include skeleton-loading;
+}
+
+.skeleton-reviewer-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs * 1.5;
+}
+
+.skeleton-reviewer-name {
+    width: 120px;
+    height: $font-size-sm;
+    background-color: $surface-color;
+    border-radius: $border-radius-sm !important;
+    @include skeleton-loading;
+}
+
+.skeleton-review-date {
+    width: 80px;
+    height: $font-size-xs;
+    background-color: $surface-color;
+    border-radius: $border-radius-sm !important;
+    @include skeleton-loading;
+}
+
+.skeleton-review-content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs * 1.5;
+}
+
+.skeleton-review-text {
+    height: $font-size-sm;
+    background-color: $surface-color;
+    border-radius: $border-radius-sm !important;
+    @include skeleton-loading;
+
+    @media (max-width: map.get($breakpoints, "sm")) {
+        height: $font-size-xs;
+    }
+
+    &:last-child {
+        width: 90%;
+    }
+}

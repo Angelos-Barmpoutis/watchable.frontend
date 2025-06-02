@@ -1,0 +1,20 @@
+<div class="wrapper">
+    <section>
+        <header>
+            <app-section-header [title]="(tvShowDetails?.name || 'TV Show') + ' - Seasons'" [isLoading]="isLoading">
+            </app-section-header>
+        </header>
+        <div class="list-container">
+            @if (!isLoading) {
+                @for (season of seasons; track trackByItemId($index, season)) {
+                    <app-season-list-item [season]="season" [tvShowId]="tvShowId || 0" [isLoading]="false">
+                    </app-season-list-item>
+                }
+            } @else {
+                @for (item of skeletonArray; track $index) {
+                    <app-season-list-item [isLoading]="true"> </app-season-list-item>
+                }
+            }
+        </div>
+    </section>
+</div>

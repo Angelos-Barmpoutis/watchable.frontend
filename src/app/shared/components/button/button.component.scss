@@ -1,0 +1,136 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+:host {
+    flex-shrink: 0;
+}
+
+.button {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: calc($spacing-sm * 1.5) $spacing-lg;
+    border-radius: $border-radius-lg;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    color: $text-primary;
+    transition: all $transition-normal;
+    font-size: $font-size-sm;
+    line-height: 1.2;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid transparent;
+    background: none;
+    width: 100%;
+    min-width: 50px;
+
+    @media (max-width: map.get($breakpoints, "sm")) {
+        padding: calc($spacing-sm * 1.5);
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+
+    i {
+        font-size: $font-size-sm;
+    }
+
+    &.primary-button {
+        background: rgba($primary-color, 0.8);
+        color: $text-primary;
+
+        &:hover {
+            background: rgba($primary-color, 1);
+        }
+    }
+
+    &.secondary-button {
+        background: transparent;
+        color: $text-primary;
+        border: none;
+
+        &:hover {
+            color: $primary-color;
+        }
+
+        &.active {
+            color: $primary-color;
+        }
+    }
+
+    &.outline-button {
+        background: transparent;
+        color: $text-primary;
+        border: 1px solid $text-primary;
+        backdrop-filter: blur(10px);
+
+        &:hover {
+            background: rgba($text-primary, 0.1);
+            color: $text-primary;
+        }
+    }
+
+    &.imdb-button {
+        background: #f5c518;
+        color: #000;
+
+        &:hover {
+            background: #e6b70e;
+        }
+    }
+
+    &.facebook-button {
+        background: #1877f2;
+
+        &:hover {
+            background: #166fe5;
+        }
+    }
+
+    &.instagram-button {
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        background-size: 200% 200%;
+        animation: gradient 3s ease infinite;
+    }
+
+    &.twitter-button {
+        background: #1da1f2;
+
+        &:hover {
+            background: #1a91da;
+            transform: translateY(-2px);
+        }
+    }
+
+    &.loading-skeleton {
+        cursor: default;
+        @include skeleton-loading;
+        min-width: 120px;
+        height: 40px;
+
+        @media (max-width: map.get($breakpoints, "sm")) {
+            // min-width: 90px;
+        }
+
+        &.no-padding {
+            height: 17px;
+            border-radius: $spacing-xs;
+        }
+    }
+
+    &.no-border {
+        border-color: transparent;
+    }
+
+    &.no-padding {
+        padding: 0;
+        border-radius: 0;
+    }
+}

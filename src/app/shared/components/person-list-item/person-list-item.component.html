@@ -1,0 +1,45 @@
+@if (!isLoading) {
+    <a appFadeIn class="person-list-item" [routerLink]="['/', 'people', 'person', person.id]" [title]="person.name">
+        <div class="person-main">
+            <div class="person-avatar">
+                @if (person.profile_path) {
+                    <img appProfilePath [size]="profileSize" [profilePath]="person.profile_path" />
+                } @else {
+                    <img [src]="profileFallback" />
+                }
+            </div>
+
+            <div class="person-content">
+                <div class="person-header">
+                    <h3 class="person-name">{{ person.name }}</h3>
+                    <span class="person-department">{{ person.known_for_department }}</span>
+                </div>
+
+                @if (person.known_for && person.known_for.length) {
+                    <div class="credits-list">
+                        @for (credit of person.known_for | slice: 0 : 1; track $index) {
+                            <span class="credit">
+                                {{ credit?.title ?? credit?.name }}
+                            </span>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </a>
+} @else {
+    <div appFadeIn class="person-list-item skeleton">
+        <div class="person-main">
+            <div class="skeleton-avatar"></div>
+            <div class="skeleton-content">
+                <div class="skeleton-header">
+                    <div class="skeleton-name"></div>
+                    <div class="skeleton-department"></div>
+                </div>
+                <div class="skeleton-credits">
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

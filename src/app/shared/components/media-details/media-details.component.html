@@ -1,0 +1,240 @@
+@if (!isLoading) {
+    <div appFadeIn>
+        <ul class="details-list">
+            <li>
+                <span class="detail-label">My Rating:</span>
+                <div class="detail-value">
+                    <div class="rating-stars">
+                        @for (star of stars; track $index) {
+                            <button
+                                class="star-button"
+                                [class.active]="userRating && star * 2 <= userRating"
+                                [title]="'Rate ' + star + '/5'"
+                                (click)="rateMedia(star * 2)"
+                            >
+                                <i class="fas fa-star"></i>
+                            </button>
+                        }
+                    </div>
+                </div>
+            </li>
+            <li>
+                <span class="detail-label">TMDB Rating:</span>
+                <div class="detail-value">
+                    <div class="rating-badge">
+                        @if (mediaDetails?.vote_average) {
+                            <span
+                                class="rating-value"
+                                [class.rating-low]="(mediaDetails?.vote_average || 0) < 5"
+                                [class.rating-medium]="
+                                    (mediaDetails?.vote_average || 0) >= 5 && (mediaDetails?.vote_average || 0) < 7
+                                "
+                                [class.rating-high]="
+                                    (mediaDetails?.vote_average || 0) >= 7 && (mediaDetails?.vote_average || 0) < 8.5
+                                "
+                                [class.rating-top]="(mediaDetails?.vote_average || 0) >= 8.5"
+                            >
+                                {{ (mediaDetails?.vote_average || 0) / 2 | number: "1.1-1" }}
+                            </span>
+                        } @else {
+                            <span class="rating-value">-</span>
+                        }
+                        <span class="rating-total">/5</span>
+                        @if (mediaDetails?.vote_count) {
+                            <span class="vote-count">
+                                ({{ mediaDetails?.vote_count || 0 | formatNumberWithK }} votes)
+                            </span>
+                        }
+                    </div>
+                </div>
+            </li>
+
+            <!-- Movie Details -->
+            @if (isMovie) {
+                @if (movieDetails?.status) {
+                    <li>
+                        <span class="detail-label">Status:</span>
+                        <span class="detail-value">{{ movieDetails?.status }}</span>
+                    </li>
+                }
+                @if (movieDetails?.release_date) {
+                    <li>
+                        <span class="detail-label">Release Date:</span>
+                        <span class="detail-value">{{ movieDetails?.release_date | date: "longDate" }}</span>
+                    </li>
+                }
+                @if (movieDetails?.runtime) {
+                    <li>
+                        <span class="detail-label">Runtime:</span>
+                        <span class="detail-value">{{ movieDetails?.runtime ?? 0 | time }}</span>
+                    </li>
+                }
+                @if (movieDetails?.budget) {
+                    <li>
+                        <span class="detail-label">Budget:</span>
+                        <span class="detail-value">{{ movieDetails?.budget | currency }}</span>
+                    </li>
+                }
+                @if (movieDetails?.revenue) {
+                    <li>
+                        <span class="detail-label">Revenue:</span>
+                        <span class="detail-value">{{ movieDetails?.revenue | currency }}</span>
+                    </li>
+                }
+            }
+
+            <!-- TV Show Details -->
+            @if (isTvShow) {
+                @if (tvShowDetails?.status) {
+                    <li>
+                        <span class="detail-label">Status:</span>
+                        <span class="detail-value">{{ tvShowDetails?.status }}</span>
+                    </li>
+                }
+                @if (tvShowDetails?.type) {
+                    <li>
+                        <span class="detail-label">Type:</span>
+                        <span class="detail-value">{{ tvShowDetails?.type }}</span>
+                    </li>
+                }
+                @if (tvShowDetails?.first_air_date) {
+                    <li>
+                        <span class="detail-label">First Air Date:</span>
+                        <span class="detail-value">{{ tvShowDetails?.first_air_date | date: "longDate" }}</span>
+                    </li>
+                }
+                @if (tvShowDetails?.last_air_date) {
+                    <li>
+                        <span class="detail-label">Last Air Date:</span>
+                        <span class="detail-value">{{ tvShowDetails?.last_air_date | date: "longDate" }}</span>
+                    </li>
+                }
+                @if (tvShowDetails?.episode_run_time?.length) {
+                    <li>
+                        <span class="detail-label">Episode Runtime:</span>
+                        <span class="detail-value">{{ tvShowDetails?.episode_run_time?.[0] ?? 0 | time }}</span>
+                    </li>
+                }
+                @if (tvShowDetails?.number_of_seasons) {
+                    <li>
+                        <span class="detail-label">Seasons:</span>
+                        <span class="detail-value">{{ tvShowDetails?.number_of_seasons }}</span>
+                    </li>
+                }
+                @if (tvShowDetails?.number_of_episodes) {
+                    <li>
+                        <span class="detail-label">Episodes:</span>
+                        <span class="detail-value">{{ tvShowDetails?.number_of_episodes }}</span>
+                    </li>
+                }
+                @if (tvShowDetails?.created_by?.length) {
+                    <li>
+                        <span class="detail-label">Created By:</span>
+                        <span class="detail-value">
+                            @for (creator of tvShowDetails?.created_by; track creator.id; let last = $last) {
+                                <span>
+                                    <a class="detail-link" [routerLink]="['/', 'people', 'person', creator?.id]">
+                                        {{ creator?.name }}</a
+                                    >
+                                    @if (!last) {
+                                        {{ ", " }}
+                                    }
+                                </span>
+                            }
+                        </span>
+                    </li>
+                }
+            }
+
+            <!-- Common Details -->
+            @if (mediaDetails?.spoken_languages?.length) {
+                <li>
+                    <span class="detail-label">Languages:</span>
+                    <span class="detail-value">
+                        @for (language of mediaDetails?.spoken_languages; track language.iso_639_1; let last = $last) {
+                            <span
+                                >{{ language?.english_name }}
+                                @if (!last) {
+                                    {{ ", " }}
+                                }
+                            </span>
+                        }
+                    </span>
+                </li>
+            }
+            @if (mediaDetails?.origin_country?.length) {
+                <li>
+                    <span class="detail-label">Origin Country:</span>
+                    <span class="detail-value">
+                        @for (country of mediaDetails?.origin_country; track $index; let last = $last) {
+                            <span
+                                >{{ country }}
+                                @if (!last) {
+                                    {{ ", " }}
+                                }
+                            </span>
+                        }
+                    </span>
+                </li>
+            }
+            @if (mediaDetails?.production_companies?.length) {
+                <li>
+                    <span class="detail-label">Production Companies:</span>
+                    <span class="detail-value">
+                        @for (company of mediaDetails?.production_companies; track company.id; let last = $last) {
+                            <span
+                                >{{ company?.name }}
+                                @if (!last) {
+                                    {{ ", " }}
+                                }
+                            </span>
+                        }
+                    </span>
+                </li>
+            }
+            @if (mediaDetails?.genres?.length) {
+                <li>
+                    <span class="detail-label">Genres:</span>
+                    <span class="detail-value">
+                        @for (genre of mediaDetails?.genres; track genre.id; let last = $last) {
+                            <span>
+                                <a
+                                    class="detail-link"
+                                    [routerLink]="['/', isMovie ? 'movies' : 'tv-shows', 'discover', genre?.name]"
+                                >
+                                    {{ genre?.name }}</a
+                                >
+                                @if (!last) {
+                                    {{ ", " }}
+                                }
+                            </span>
+                        }
+                    </span>
+                </li>
+            }
+            @if (mediaDetails?.homepage) {
+                <li>
+                    <span class="detail-label">Website:</span>
+                    <span class="detail-value">
+                        <a class="detail-link" target="_blank" [href]="mediaDetails?.homepage">
+                            {{ mediaDetails?.homepage }}
+                        </a>
+                    </span>
+                </li>
+            }
+        </ul>
+    </div>
+} @else {
+    <div appFadeIn class="skeleton-media-details">
+        <div class="skeleton-media-content">
+            <div class="skeleton-media-list">
+                @for (i of skeletonArray; track $index) {
+                    <div class="skeleton-media-item">
+                        <div class="skeleton-media-label"></div>
+                        <div class="skeleton-media-value"></div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

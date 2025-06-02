@@ -1,0 +1,191 @@
+<app-media-hero [mediaDetails]="tvShowDetails" [type]="mediaType.TvShow" [isLoading]="isLoading"></app-media-hero>
+
+<div class="wrapper">
+    <div class="media-details-grid">
+        <div class="media-details-grid-content">
+            @if (tvShowDetails?.overview || isLoading) {
+                <section class="overview-section">
+                    <header>
+                        <app-section-header title="Overview" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    @if (tvShowDetails?.overview && !isLoading) {
+                        <p class="overview" appFadeIn>
+                            {{ tvShowDetails?.overview }}
+                        </p>
+                    } @else {
+                        <div class="skeleton-overview">
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                            <div class="skeleton-overview-line"></div>
+                        </div>
+                    }
+                </section>
+            }
+
+            @if (tvShowDetails?.credits?.cast?.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Top Cast" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-cast-grid [cast]="tvShowDetails?.credits?.cast || []" [isLoading]="isLoading"></app-cast-grid>
+                </section>
+            }
+
+            @if (tvShowDetails?.seasons?.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header
+                            [title]="'Seasons'"
+                            [isLoading]="isLoading"
+                            [redirectUrl]="['/tv-shows', 'tv-show', (tvShowDetails?.id || 0).toString(), 'seasons']"
+                        >
+                        </app-section-header>
+                    </header>
+                    <app-carousel-season
+                        [items]="tvShowDetails?.seasons || []"
+                        [tvShowId]="tvShowDetails?.id || 0"
+                        [isLoading]="isLoading"
+                    >
+                    </app-carousel-season>
+                </section>
+            }
+
+            @if (tvShowDetails?.images?.backdrops?.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Photos" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-image-grid
+                        [images]="tvShowDetails?.images?.backdrops || []"
+                        [isLoading]="isLoading"
+                    ></app-image-grid>
+                </section>
+            }
+
+            @if (tvShowDetails?.videos?.results?.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Videos" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-video-grid
+                        [videos]="tvShowDetails?.videos?.results || []"
+                        [isLoading]="isLoading"
+                    ></app-video-grid>
+                </section>
+            }
+
+            @if (tvShowDetails?.credits?.crew?.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Top Crew" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-cast-grid [cast]="tvShowDetails?.credits?.crew || []" [isLoading]="isLoading"></app-cast-grid>
+                </section>
+            }
+
+            @if (tvShowDetails?.similar?.results?.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Similar TV Shows" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-carousel-media
+                        [type]="mediaType.TvShow"
+                        [items]="tvShowDetails?.similar?.results || []"
+                        [isLoading]="isLoading"
+                    >
+                    </app-carousel-media>
+                </section>
+            }
+
+            @if (tvShowDetails?.recommendations?.results?.length || isLoading) {
+                <section>
+                    <header>
+                        <app-section-header title="Recommendations" [isLoading]="isLoading"></app-section-header>
+                    </header>
+                    <app-carousel-media
+                        [type]="mediaType.TvShow"
+                        [items]="tvShowDetails?.recommendations?.results || []"
+                        [isLoading]="isLoading"
+                    >
+                    </app-carousel-media>
+                </section>
+            }
+        </div>
+
+        <aside>
+            @if (tvShowDetails || isLoading) {
+                <section>
+                    <app-media-details
+                        [mediaDetails]="tvShowDetails"
+                        [type]="mediaType.TvShow"
+                        [isLoading]="isLoading"
+                    ></app-media-details>
+                </section>
+            }
+
+            @if (isExternalIdAvailable || isLoading) {
+                <section>
+                    <div class="social-links">
+                        @if (tvShowDetails?.external_ids?.imdb_id || isLoading) {
+                            <app-button
+                                [variant]="ButtonType.Imdb"
+                                [type]="'button'"
+                                [icon]="'fab fa-imdb'"
+                                [link]="mediaLinks[0]"
+                                [isLoading]="isLoading"
+                                [text]="'IMDb'"
+                            >
+                            </app-button>
+                        }
+                        @if (tvShowDetails?.external_ids?.facebook_id || isLoading) {
+                            <app-button
+                                [variant]="ButtonType.Facebook"
+                                [type]="'button'"
+                                [icon]="'fab fa-facebook'"
+                                [link]="mediaLinks[1]"
+                                [isLoading]="isLoading"
+                                [text]="'Facebook'"
+                            >
+                            </app-button>
+                        }
+                        @if (tvShowDetails?.external_ids?.instagram_id || isLoading) {
+                            <app-button
+                                [variant]="ButtonType.Instagram"
+                                [type]="'button'"
+                                [icon]="'fab fa-instagram'"
+                                [link]="mediaLinks[2]"
+                                [isLoading]="isLoading"
+                                [text]="'Instagram'"
+                            >
+                            </app-button>
+                        }
+                        @if (tvShowDetails?.external_ids?.twitter_id || isLoading) {
+                            <app-button
+                                [variant]="ButtonType.Twitter"
+                                [type]="'button'"
+                                [icon]="'fab fa-twitter'"
+                                [link]="mediaLinks[3]"
+                                [isLoading]="isLoading"
+                                [text]="'Twitter'"
+                            >
+                            </app-button>
+                        }
+                    </div>
+                </section>
+            }
+        </aside>
+    </div>
+
+    @if (tvShowDetails?.reviews?.results?.length || isLoading) {
+        <section>
+            <header>
+                <app-section-header title="Reviews" [isLoading]="isLoading"></app-section-header>
+            </header>
+            <app-review-grid
+                [reviews]="tvShowDetails?.reviews?.results || []"
+                [isLoading]="isLoading"
+            ></app-review-grid>
+        </section>
+    }
+</div>

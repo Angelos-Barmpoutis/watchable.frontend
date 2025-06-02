@@ -1,0 +1,38 @@
+<div appFadeIn class="carousel">
+    @if (!isLoading) {
+        <div class="carousel-wrapper">
+            <button
+                title="Previous"
+                aria-label="Previous"
+                type="button"
+                class="nav-button nav-prev"
+                [class]="prevButtonClass"
+            >
+                <i class="fas fa-chevron-left chevron-icon"></i>
+            </button>
+
+            <button title="Next" aria-label="Next" type="button" class="nav-button nav-next" [class]="nextButtonClass">
+                <i class="fas fa-chevron-right chevron-icon"></i>
+            </button>
+
+            <swiper-container #swiperEl init="false">
+                @for (item of items; track item.id) {
+                    <swiper-slide>
+                        <app-carousel-season-item [season]="item" [tvShowId]="tvShowId" [isLoading]="false">
+                        </app-carousel-season-item>
+                    </swiper-slide>
+                }
+            </swiper-container>
+        </div>
+    } @else {
+        <div class="skeleton-carousel">
+            <div class="skeleton-wrapper">
+                @for (item of skeletonArray; track $index) {
+                    <div class="skeleton-slide">
+                        <app-carousel-season-item [isLoading]="true"></app-carousel-season-item>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

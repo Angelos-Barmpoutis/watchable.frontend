@@ -1,0 +1,32 @@
+<div class="episode-grid-container">
+    <div class="episode-grid">
+        @if (episodes.length) {
+            @for (episode of displayedEpisodes; track episode.id) {
+                <app-episode-grid-item
+                    [episode]="episode"
+                    [tvShowId]="tvShowId"
+                    [seasonNumber]="seasonNumber"
+                    [isLoading]="isLoading"
+                >
+                </app-episode-grid-item>
+            }
+        } @else {
+            @for (item of skeletonArray; track $index) {
+                <app-episode-grid-item [isLoading]="true"> </app-episode-grid-item>
+            }
+        }
+    </div>
+
+    <div class="view-all-container">
+        @if (hasMoreEpisodes && !isLoading) {
+            <app-button
+                [text]="showAll ? 'Show Less' : 'Show All'"
+                [variant]="buttonType.Secondary"
+                [icon]="showAll ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"
+                [isIconLeft]="false"
+                [hasPadding]="false"
+                (click)="toggleShowAll()"
+            ></app-button>
+        }
+    </div>
+</div>

@@ -1,0 +1,29 @@
+@if (!isLoading) {
+    <div appFadeIn class="media-list-grid">
+        @for (item of items | slice: 0 : (showAll ? items.length : initialCount); track item.id) {
+            <app-media-list-item [media]="item" [type]="type"></app-media-list-item>
+        }
+    </div>
+
+    @if (hasMore) {
+        <div class="view-all-container">
+            <app-button
+                [isIconLeft]="false"
+                [icon]="showAll ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"
+                [variant]="ButtonType.Secondary"
+                [type]="'button'"
+                [isLoading]="isLoading"
+                [text]="showAll ? 'Show Less' : 'View All'"
+                [hasPadding]="false"
+                (click)="toggleShowAll()"
+            >
+            </app-button>
+        </div>
+    }
+} @else {
+    <div appFadeIn class="media-list-grid">
+        @for (i of skeletonArray; track $index) {
+            <app-media-list-item [isLoading]="true" [type]="type"></app-media-list-item>
+        }
+    </div>
+}

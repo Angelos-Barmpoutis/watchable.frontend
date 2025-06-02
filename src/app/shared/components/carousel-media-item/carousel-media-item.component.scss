@@ -1,0 +1,49 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+.media {
+    width: 100%;
+    height: 100%;
+
+    .media-poster {
+        width: 100%;
+        height: 100%;
+        overflow: hidden !important;
+        transition: all $transition-normal;
+        border-radius: $spacing-sm;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform $transition-normal;
+        }
+    }
+
+    &:hover .media-poster {
+        img {
+            transform: scale(1.05);
+        }
+    }
+}
+
+// Skeleton styles
+.skeleton-media {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    .skeleton-poster {
+        width: 100%;
+        aspect-ratio: 2/3;
+        @include skeleton-loading;
+        border-radius: $spacing-sm;
+    }
+}

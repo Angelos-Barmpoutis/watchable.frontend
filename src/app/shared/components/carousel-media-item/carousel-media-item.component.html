@@ -1,0 +1,25 @@
+@if (!isLoading) {
+    <a
+        appFadeIn
+        class="media"
+        [title]="title"
+        [routerLink]="[
+            '/',
+            type === mediaType.Movie ? 'movies' : 'tv-shows',
+            type === mediaType.Movie ? 'movie' : 'tv-show',
+            item.id
+        ]"
+    >
+        <div class="media-poster">
+            @if (item.poster_path) {
+                <img appPosterPath [size]="posterSize" [posterPath]="item.poster_path" />
+            } @else {
+                <img [src]="posterFallback" />
+            }
+        </div>
+    </a>
+} @else {
+    <div appFadeIn class="skeleton-media">
+        <div class="skeleton-poster"></div>
+    </div>
+}

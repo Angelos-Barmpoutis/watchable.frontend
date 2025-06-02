@@ -1,0 +1,109 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+footer {
+    padding: $spacing-xl 0;
+    margin-top: auto;
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-xl;
+        margin-bottom: $spacing-xl;
+
+        .footer-section {
+            .footer-title {
+                color: $text-primary;
+                font-size: $font-size-lg;
+                font-weight: $font-weight-medium;
+                margin-bottom: $spacing-md;
+            }
+
+            .footer-links {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-sm;
+
+                li a {
+                    color: $text-secondary;
+                    text-decoration: none;
+                    font-size: $font-size-md;
+                    transition: color $transition-normal;
+                    font-weight: $font-weight-medium;
+
+                    &:hover {
+                        color: rgba($primary-color, 0.8);
+                    }
+                }
+            }
+        }
+    }
+
+    .footer-bottom {
+        padding-top: $spacing-lg;
+        border-top: 1px solid $surface-color;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .copyright {
+            color: $text-primary;
+            font-size: $font-size-sm;
+            margin: 0;
+        }
+
+        .powered-by {
+            color: $text-primary;
+            font-size: $font-size-sm;
+
+            a {
+                color: rgba($primary-color, 0.8);
+                text-decoration: none;
+
+                &:hover {
+                    color: rgba($primary-color, 1);
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: map.get($breakpoints, "sm")) {
+    footer {
+        padding: $spacing-md 0;
+
+        .footer-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: $spacing-md;
+            margin-bottom: $spacing-md;
+            justify-items: unset;
+
+            .footer-section {
+                .footer-title {
+                    font-size: $font-size-md;
+                    margin-bottom: $spacing-sm;
+                }
+
+                .footer-links {
+                    gap: $spacing-xs;
+
+                    li a {
+                        font-size: $font-size-sm;
+                    }
+                }
+            }
+        }
+
+        .footer-bottom {
+            padding-top: $spacing-md;
+        }
+    }
+}

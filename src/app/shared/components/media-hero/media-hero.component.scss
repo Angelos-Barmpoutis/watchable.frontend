@@ -1,0 +1,411 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+.media-hero {
+    height: calc(75vh - $desktop-header-height);
+    background-image: var(--background-image-780);
+    background-size: cover;
+    background-position: center 10%;
+    position: relative;
+
+    @media (min-width: 780px) {
+        background-image: var(--background-image-1280);
+    }
+
+    @media (min-width: 1280px) {
+        background-image: var(--background-image-original);
+    }
+
+    .overlay {
+        background: linear-gradient(to right, rgba($background-color, 0.6) 50%, transparent),
+            linear-gradient(to top, $background-color, rgba($background-color, 0.6) 50%, transparent);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .media-content {
+        display: flex;
+        gap: $spacing-xl;
+        align-items: flex-end;
+
+        .media-poster {
+            flex: 0 0 250px;
+            height: 375px;
+            border-radius: $border-radius-lg;
+            overflow: hidden;
+            box-shadow: $shadow-lg;
+            position: relative;
+
+            .bookmark-ribbon {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 40px;
+                height: 50px;
+                background: linear-gradient(135deg, $accent-color, color.adjust($accent-color, $lightness: -30%));
+                clip-path: polygon(100% 0, 100% 100%, 50% 75%, 0 100%, 0 0);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1;
+                animation: ribbon-appear 0.3s ease-out;
+                box-shadow: $shadow-md;
+
+                i {
+                    color: $text-primary;
+                    font-size: $font-size-lg;
+                    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+                }
+            }
+
+            &:hover {
+                img {
+                    transform: scale(1.02);
+                }
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform $transition-normal;
+            }
+        }
+
+        .media-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 700px;
+
+            .watchlist-badge {
+                display: none;
+            }
+
+            .media-title {
+                font-size: $font-size-2xl;
+                font-weight: $font-weight-semibold;
+                margin: 0;
+                line-height: 1.2;
+
+                .media-subtitle {
+                    font-size: $font-size-xl;
+                    color: $text-secondary;
+                }
+            }
+
+            .media-meta {
+                color: $text-secondary;
+                font-size: $font-size-sm;
+                margin-block-start: $spacing-xs;
+
+                > span,
+                > div {
+                    position: relative;
+                    display: inline-block;
+
+                    &:not(:first-child)::before {
+                        content: "•";
+                        margin-right: $spacing-xs;
+                        margin-left: calc($spacing-xs * 2);
+                        opacity: 0.5;
+                    }
+                }
+            }
+
+            .overview {
+                margin-block-start: $spacing-md;
+
+                p {
+                    font-size: $font-size-sm;
+                    line-height: 1.6;
+                    color: $text-primary;
+                    margin: 0;
+                }
+            }
+
+            .action-buttons {
+                margin-block-start: 40px;
+                display: flex;
+                gap: $spacing-md;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+        }
+    }
+
+    @media (max-width: map.get($breakpoints, "md")) {
+        height: calc(100svh - $mobile-nav-height - $mobile-header-height);
+
+        .overlay {
+            background: linear-gradient(
+                to top,
+                $background-color,
+                rgba($background-color, 0.8) 50%,
+                rgba($background-color, 0.3)
+            );
+            align-items: flex-end;
+        }
+
+        .media-content {
+            margin-bottom: $spacing-xl;
+            gap: $spacing-lg;
+
+            .media-poster {
+                height: 228px;
+                width: 152px;
+                flex: unset;
+            }
+
+            .media-info {
+                max-width: 700px;
+
+                .media-title {
+                    font-size: 28px;
+
+                    .media-subtitle {
+                        font-size: 18px;
+                    }
+                }
+
+                .overview {
+                    display: none;
+                    max-width: unset;
+                    font-size: $font-size-sm;
+                    @include text-clamp(3);
+                }
+            }
+        }
+    }
+
+    @media (max-width: map.get($breakpoints, "sm")) {
+        .media-content {
+            gap: $spacing-sm * 1.5;
+
+            .media-poster {
+                display: none;
+                flex: 0 0 112px;
+                height: 168px;
+
+                .bookmark-ribbon {
+                    width: 32px;
+                    height: 40px;
+
+                    i {
+                        color: $text-primary;
+                        font-size: $font-size-md;
+                        filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+                    }
+                }
+            }
+
+            .media-info {
+                .watchlist-badge {
+                    padding: calc($spacing-sm / 2) calc($spacing-sm * 1.5);
+                    gap: $spacing-sm;
+                    font-size: $font-size-xs;
+                    display: flex;
+                    align-items: center;
+                    background: linear-gradient(
+                        135deg,
+                        rgba($accent-color, 0.8),
+                        color.adjust($accent-color, $lightness: -30%)
+                    );
+                    backdrop-filter: blur(10px);
+                    color: $text-primary;
+                    border-radius: $border-radius-full;
+                    font-weight: $font-weight-medium;
+                    margin-bottom: $spacing-sm;
+                    box-shadow: $shadow-sm;
+                    width: fit-content;
+                    animation: badge-appear 0.3s ease-out;
+
+                    i {
+                        font-size: $font-size-sm;
+                    }
+                }
+
+                .media-title {
+                    font-size: 24px;
+
+                    .media-subtitle {
+                        font-size: $font-size-md;
+                    }
+                }
+
+                .media-meta {
+                    margin-block-start: 0;
+                    font-size: $font-size-xs;
+                }
+
+                .overview {
+                    margin-block-start: $spacing-sm * 1.5;
+                    p {
+                        font-size: $font-size-xs;
+                    }
+                }
+
+                .action-buttons {
+                    margin-block-start: 20px;
+                }
+            }
+        }
+    }
+}
+
+.skeleton-media-hero {
+    height: calc(75vh - $desktop-header-height);
+    background-color: $background-color;
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .skeleton-media-content {
+        display: flex;
+        gap: $spacing-xl;
+        align-items: flex-end;
+        width: 100%;
+
+        .skeleton-media-poster {
+            flex: 0 0 250px;
+            height: 375px;
+            border-radius: $border-radius-lg;
+            @include skeleton-loading;
+        }
+
+        .skeleton-media-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 700px;
+
+            .skeleton-media-title {
+                height: $font-size-2xl;
+                width: 60%;
+                @include skeleton-loading;
+                border-radius: $border-radius-md;
+            }
+
+            .skeleton-media-meta {
+                margin-block-start: $spacing-sm * 1.5;
+                display: flex;
+                gap: $spacing-sm;
+
+                .skeleton-media-meta-item {
+                    height: $font-size-sm;
+                    width: 100px;
+                    @include skeleton-loading;
+                    border-radius: $border-radius-sm;
+                }
+            }
+
+            .skeleton-media-overview {
+                margin-block-start: $spacing-lg;
+
+                .skeleton-media-overview-line {
+                    height: $font-size-sm;
+                    width: 100%;
+                    @include skeleton-loading;
+                    border-radius: $border-radius-sm;
+                    margin-bottom: $spacing-sm;
+
+                    &:last-child {
+                        width: 70%;
+                    }
+                }
+            }
+
+            .skeleton-media-buttons {
+                margin-block-start: 40px;
+                display: flex;
+                gap: $spacing-md;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+        }
+    }
+
+    @media (max-width: map.get($breakpoints, "md")) {
+        height: calc(100svh - $mobile-nav-height - $mobile-header-height);
+        align-items: flex-end;
+
+        .skeleton-media-content {
+            gap: $spacing-lg;
+            margin-bottom: $spacing-xl;
+
+            .skeleton-media-poster {
+                height: 228px;
+                width: 152px;
+                flex: unset;
+            }
+
+            .skeleton-media-info {
+                max-width: 100%;
+
+                .skeleton-media-title {
+                    height: 28px;
+                    width: 80%;
+                }
+
+                .skeleton-media-overview {
+                    .skeleton-media-overview-text {
+                        height: $font-size-sm;
+                        width: 68%;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: map.get($breakpoints, "sm")) {
+        .skeleton-media-content {
+            gap: $spacing-sm * 1.5;
+
+            .skeleton-media-poster {
+                display: none;
+                flex: 0 0 112px;
+                height: 168px;
+            }
+
+            .skeleton-media-info {
+                .skeleton-media-title {
+                    height: 24px;
+
+                    .skeleton-media-subtitle {
+                        height: $font-size-md;
+                    }
+                }
+
+                .skeleton-media-meta {
+                    margin-block-start: $spacing-sm;
+                    height: $font-size-xs;
+
+                    .skeleton-media-meta-item {
+                        width: 100%;
+                        max-width: 60px;
+                    }
+                }
+            }
+
+            .skeleton-media-overview {
+                margin-block-start: $spacing-md !important;
+
+                .skeleton-media-overview-text {
+                    height: $font-size-xs;
+                }
+            }
+
+            .skeleton-media-buttons {
+                margin-block-start: 8px !important;
+            }
+        }
+    }
+}

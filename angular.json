@@ -24,29 +24,41 @@
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": ["src/styles.scss"],
-                        "scripts": []
+                        "styles": [
+                            "src/styles.scss",
+                            "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+                            "node_modules/swiper/swiper-bundle.min.css"
+                        ],
+                        "scripts": [],
+                        "fileReplacements": []
                     },
                     "configurations": {
                         "production": {
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "500kb",
-                                    "maximumError": "1mb"
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
-                                    "maximumWarning": "2kb",
-                                    "maximumError": "4kb"
+                                    "maximumWarning": "100kb",
+                                    "maximumError": "200kb"
                                 }
                             ],
-                            "outputHashing": "all"
+                            "outputHashing": "all",
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.prod.ts"
+                                }
+                            ]
                         },
                         "development": {
                             "optimization": false,
                             "extractLicenses": false,
-                            "sourceMap": true
+                            "sourceMap": true,
+                            "fileReplacements": []
                         }
                     },
                     "defaultConfiguration": "production"
@@ -76,7 +88,11 @@
                         "tsConfig": "tsconfig.spec.json",
                         "inlineStyleLanguage": "scss",
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": ["src/styles.scss"],
+                        "styles": [
+                            "src/styles.scss",
+                            "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+                            "node_modules/swiper/swiper-bundle.min.css"
+                        ],
                         "scripts": []
                     }
                 },

@@ -1,0 +1,50 @@
+@if (!isLoading) {
+    <div appFadeIn class="images-grid">
+        @for (image of images | slice: 0 : imagesCount; track image.file_path; let i = $index) {
+            <div
+                class="image-item"
+                [ngClass]="{
+                    'aspect-ratio-16-9': aspectRatio === aspectRatioEnum['16/9'],
+                    'aspect-ratio-3-4': aspectRatio === aspectRatioEnum['3/4'],
+                    'aspect-ratio-2-3': aspectRatio === aspectRatioEnum['2/3']
+                }"
+                (click)="openViewer(i, $event)"
+            >
+                <img
+                    appBackdropPath
+                    class="grid-image"
+                    alt="Media image"
+                    [backdropPath]="image.file_path"
+                    [size]="backdropSize.w780"
+                />
+                @if (i === imagesCount - 1 && images.length > imagesCount) {
+                    <div class="more-images" (click)="openViewer(i, $event)">
+                        <span class="counter">+{{ images.length - imagesCount }} more</span>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <app-image-gallery
+        [images]="images"
+        [selectedIndex]="selectedImageIndex"
+        [aspectRatio]="aspectRatio"
+        (closeViewer)="closeViewer()"
+    ></app-image-gallery>
+} @else {
+    <div appFadeIn class="skeleton-grid">
+        @for (i of skeletonArray; track $index) {
+            <div
+                class="skeleton-image-item"
+                [ngClass]="{
+                    'aspect-ratio-16-9': aspectRatio === aspectRatioEnum['16/9'],
+                    'aspect-ratio-3-4': aspectRatio === aspectRatioEnum['3/4'],
+                    'aspect-ratio-2-3': aspectRatio === aspectRatioEnum['2/3']
+                }"
+            >
+                <div class="skeleton-image"></div>
+            </div>
+        }
+    </div>
+}

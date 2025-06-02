@@ -1,0 +1,112 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+.cast-person {
+    display: flex;
+    gap: $spacing-sm;
+    overflow: hidden;
+    transition: transform $transition-normal;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+
+    &:hover,
+    &:focus {
+        transform: translateY(-4px);
+    }
+
+    .cast-photo {
+        width: 110px;
+        height: 110px;
+        overflow: hidden;
+        flex-shrink: 0;
+        border-radius: $border-radius-lg;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: map.get($breakpoints, "sm")) {
+            width: 88px;
+            height: 88px;
+        }
+    }
+
+    .cast-info {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        padding: $spacing-md;
+        background-color: rgb(40, 44, 53);
+        border-radius: $border-radius-lg;
+        flex: 1;
+
+        .cast-name {
+            font-weight: $font-weight-semibold;
+            font-size: $font-size-sm;
+            @include text-clamp(1);
+        }
+
+        .cast-character {
+            font-size: $font-size-xs;
+            color: $text-secondary;
+            @include text-clamp(1);
+        }
+
+        @media (max-width: map.get($breakpoints, "sm")) {
+            padding: calc($spacing-sm * 1.5);
+        }
+    }
+}
+
+.cast-person-skeleton {
+    display: flex;
+    gap: $spacing-sm;
+    overflow: hidden;
+
+    .cast-photo {
+        width: 110px;
+        height: 110px;
+        overflow: hidden;
+        flex-shrink: 0;
+        border-radius: $border-radius-lg;
+        @include skeleton-loading;
+
+        @media (max-width: map.get($breakpoints, "sm")) {
+            width: 88px;
+            height: 88px;
+        }
+    }
+
+    .cast-info {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs * 1.5;
+        padding: $spacing-md;
+        overflow: hidden;
+        background-color: rgb(40, 44, 53);
+        border-radius: $border-radius-lg;
+        flex: 1;
+
+        .cast-name {
+            height: $font-size-sm;
+            width: 100px;
+            @include skeleton-loading;
+            border-radius: $border-radius-sm;
+        }
+
+        .cast-character {
+            height: $font-size-xs;
+            width: 80px;
+            @include skeleton-loading;
+            border-radius: $border-radius-sm;
+        }
+    }
+}

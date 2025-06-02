@@ -1,0 +1,68 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../styles/variables" as *;
+@use "../../styles/colors" as *;
+@use "../../styles/typography" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/animations" as *;
+
+.rating-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-xs;
+    padding: $spacing-xs $spacing-sm;
+    background-color: rgba($background-color, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: $border-radius-md;
+    border: 1px solid rgba($text-secondary, 0.1);
+    min-width: 56px;
+
+    &:has(.rating-value.rating-low) {
+        background-color: rgba($error-color, 0.05);
+    }
+
+    &:has(.rating-value.rating-medium) {
+        background-color: rgba($warning-color, 0.05);
+    }
+
+    &:has(.rating-value.rating-high) {
+        background-color: rgba($success-color, 0.05);
+    }
+
+    &:has(.rating-value.rating-top) {
+        background-color: rgba($primary-color, 0.05);
+    }
+
+    .rating-value {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-sm;
+
+        &.rating-low {
+            color: rgba($error-color, 0.8);
+        }
+
+        &.rating-medium {
+            color: rgba($warning-color, 0.8);
+        }
+
+        &.rating-high {
+            color: rgba($success-color, 0.8);
+        }
+
+        &.rating-top {
+            color: rgba($primary-color, 0.8);
+        }
+    }
+
+    .rating-total {
+        color: $text-secondary;
+        font-size: $font-size-xs;
+    }
+}
+
+.skeleton-rating-badge {
+    @include skeleton-loading;
+    width: 56px;
+    height: 31px;
+}

@@ -1,0 +1,51 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../shared/styles/variables" as *;
+@use "../../shared/styles/colors" as *;
+@use "../../shared/styles/typography" as *;
+@use "../../shared/styles/spacing" as *;
+@use "../../shared/styles/animations" as *;
+
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: $spacing-md;
+    padding-block: 12px $spacing-xl;
+
+    .search-form {
+        width: 640px;
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: $surface-color;
+            border-radius: $border-radius-xl;
+            border: 1px solid $border-color;
+            overflow: hidden;
+
+            .search-button {
+                background: none;
+                border: none;
+                padding: $spacing-md;
+                color: $text-secondary;
+                cursor: pointer;
+                transition: color $transition-normal;
+
+                &:hover {
+                    color: $text-primary;
+                }
+            }
+        }
+    }
+
+    @media (max-width: map.get($breakpoints, "sm")) {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .search-form {
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,67 @@
+<section>
+    <app-featured-banner [featuredItem]="trendingMovies[0]" [type]="mediaType.Movie" [isLoading]="isMainContentLoading">
+    </app-featured-banner>
+</section>
+
+<div class="wrapper">
+    <section>
+        <header>
+            <app-section-header
+                title="Trending Movies"
+                [isLoading]="isMainContentLoading"
+                [redirectUrl]="['trending', 'movies']"
+            >
+            </app-section-header>
+        </header>
+        <app-carousel-media [type]="mediaType.Movie" [items]="trendingMovies" [isLoading]="isMainContentLoading">
+        </app-carousel-media>
+    </section>
+
+    <section>
+        <header>
+            <app-section-header
+                title="Trending TV Shows"
+                [isLoading]="isMainContentLoading"
+                [redirectUrl]="['trending', 'tv-shows']"
+            >
+            </app-section-header>
+        </header>
+        <app-carousel-media [type]="mediaType.TvShow" [items]="trendingTvShows" [isLoading]="isMainContentLoading">
+        </app-carousel-media>
+    </section>
+
+    <section>
+        <header>
+            <app-section-header
+                title="Trending People"
+                [isLoading]="isMainContentLoading"
+                [redirectUrl]="['trending', 'people']"
+            >
+            </app-section-header>
+        </header>
+        <app-carousel-person [items]="trendingPeople" [isLoading]="isMainContentLoading"> </app-carousel-person>
+    </section>
+
+    @for (genre of loadedGenres; track genre.genreName) {
+        <section>
+            <header>
+                <app-section-header
+                    [isLoading]="isMainContentLoading"
+                    [title]="genre.genreName + ' ' + (genre.type === mediaType.Movie ? 'Movies' : 'TV Shows')"
+                    [redirectUrl]="[
+                        genre.type === mediaType.Movie ? 'movies' : 'tv-shows',
+                        'discover',
+                        genre.genreName
+                    ]"
+                >
+                </app-section-header>
+            </header>
+            <app-carousel-media [type]="genre.type" [items]="genre.items" [isLoading]="isMainContentLoading">
+            </app-carousel-media>
+        </section>
+    }
+</div>
+
+@if (!allGenresLoaded) {
+    <app-infinite-scroll-loader (scrolled)="loadMore()"></app-infinite-scroll-loader>
+}
