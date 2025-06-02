@@ -9,10 +9,10 @@ import { PersonDetails } from '../../models/people.model';
     imports: [CommonModule],
     templateUrl: './person-details.component.html',
     styleUrl: './person-details.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersonDetailsComponent {
-    @Input() personDetails!: PersonDetails;
+    @Input() personDetails: PersonDetails | undefined;
     @Input() isLoading = false;
 
     get gender(): string {

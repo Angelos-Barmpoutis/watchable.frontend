@@ -42,11 +42,11 @@ import { TvShowItem } from '../../../../shared/models/tv-show.model';
         FadeInDirective,
     ],
     templateUrl: './person.component.html',
-    styleUrl: './person.component.scss'
+    styleUrl: './person.component.scss',
 })
 export class PersonComponent implements OnInit {
     personId!: number;
-    personDetails!: PersonDetails;
+    personDetails: PersonDetails | undefined;
     isLoading = true;
     movieCastItems: Array<MovieItem> = [];
     tvCastItems: Array<TvShowItem> = [];
@@ -71,6 +71,15 @@ export class PersonComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadPersonDetails();
+    }
+
+    get isExternalIdAvailable(): boolean {
+        return (
+            !!this.personDetails?.external_ids?.imdb_id ||
+            !!this.personDetails?.external_ids?.facebook_id ||
+            !!this.personDetails?.external_ids?.instagram_id ||
+            !!this.personDetails?.external_ids?.twitter_id
+        );
     }
 
     private updateProperties(): void {

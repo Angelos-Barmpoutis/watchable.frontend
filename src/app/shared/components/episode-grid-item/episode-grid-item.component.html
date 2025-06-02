@@ -5,7 +5,7 @@
         [routerLink]="['/tv-shows', 'tv-show', tvShowId, 'seasons', seasonNumber, 'episode', episode.episode_number]"
         [title]="episode.name"
     >
-        <div class="episode-backdrop">
+        <div class="episode-poster">
             @if (episode.still_path) {
                 <img appBackdropPath [size]="backdropSize" [backdropPath]="episode.still_path" />
             } @else {
@@ -14,10 +14,14 @@
         </div>
         <h3 class="title">{{ episode.name }}</h3>
         <div class="meta">
-            <span class="episode-number">Episode {{ episode.episode_number }}</span>
-            <span class="air-date">
-                {{ episode.air_date | date: "MMM d, y" }}
-            </span>
+            @if (episode.episode_number) {
+                <span class="episode-number">Episode {{ episode.episode_number }}</span>
+            }
+            @if (episode.air_date) {
+                <span class="air-date">
+                    {{ episode.air_date | date: "MMM d, y" }}
+                </span>
+            }
         </div>
     </a>
 } @else {
@@ -25,8 +29,8 @@
         <div class="skeleton-poster"></div>
         <div class="skeleton-title"></div>
         <div class="skeleton-meta">
-            <div class="skeleton-episode-number"></div>
-            <div class="skeleton-air-date"></div>
+            <div class="skeleton-meta-item"></div>
+            <div class="skeleton-meta-item"></div>
         </div>
     </div>
 }
