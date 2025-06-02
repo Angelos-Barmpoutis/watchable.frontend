@@ -42,9 +42,20 @@ export class VideoGalleryComponent extends BaseGalleryComponent implements After
         window.addEventListener('message', (event: MessageEvent<string>) => {
             const iframe = this.videoIframe?.nativeElement;
             if (iframe && event.source === iframe.contentWindow) {
-                const data = JSON.parse(event.data) as YouTubeEvent;
-                if (data.event === 'onStateChange' && data.info === 1) {
-                    this.handleVideoPlay();
+                try {
+                    const data = JSON.parse(event.data) as YouTubeEvent;
+                    if (data.event === 'onStateChange') {
+                        if (data.info === 1) {
+                            // Video started playing
+                            this.handleVideoPlay();
+                        } else if (data.info === -1) {
+                            // Player ready, set quality
+                            this.setVideoQuality();
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error parsing YouTube event:', e);
+                    // Ignore parsing errors from other messages
                 }
             }
         });
@@ -59,7 +70,24 @@ export class VideoGalleryComponent extends BaseGalleryComponent implements After
     private handleVideoPlay(): void {
         const iframe = this.videoIframe?.nativeElement;
         if (iframe?.contentWindow) {
-            iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'unMute' }), '*');
+            // Try to unmute if on iOS
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'unMute' }), '*');
+            }
+        }
+    }
+
+    private setVideoQuality(): void {
+        const iframe = this.videoIframe?.nativeElement;
+        if (iframe?.contentWindow) {
+            iframe.contentWindow.postMessage(
+                JSON.stringify({
+                    event: 'command',
+                    func: 'setPlaybackQuality',
+                    args: ['hd1080'],
+                }),
+                '*',
+            );
         }
     }
 }

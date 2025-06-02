@@ -21,9 +21,6 @@ function isIOSDevice(): boolean {
  * @param video - The video object containing YouTube key
  * @param sanitizer - Angular DomSanitizer for secure URL handling
  * @returns SafeResourceUrl for YouTube embed or null if no video
- *
- * Note: iOS Safari requires initial muted state for autoplay.
- * Users can unmute after playback starts.
  */
 export function getYoutubeVideoUrl(video: Video | null, sanitizer: DomSanitizer): SafeResourceUrl | null {
     if (!video) return null;
@@ -32,11 +29,25 @@ export function getYoutubeVideoUrl(video: Video | null, sanitizer: DomSanitizer)
     let videoUrl = `https://www.youtube.com/embed/${video.key}?`;
 
     // Common parameters for all devices
-    const commonParams = ['autoplay=1', 'modestbranding=1', 'rel=0', 'showinfo=0', 'controls=1', 'enablejsapi=1'];
+    const commonParams = [
+        'autoplay=1',
+        'modestbranding=1',
+        'rel=0',
+        'showinfo=0',
+        'enablejsapi=1',
+        'origin=' + window.location.origin,
+        'playerapiid=ytplayer',
+        'version=3',
+        'suggestedQuality=highres',
+        'quality=highres',
+    ];
 
     if (isIOS) {
-        // iOS requires muted state for autoplay to work
-        commonParams.push('mute=1', 'playsinline=1');
+        // iOS requires muted start and needs controls
+        commonParams.push('mute=1', 'playsinline=1', 'controls=1');
+    } else {
+        // Non-iOS devices start with sound and no controls
+        commonParams.push('mute=0', 'controls=0');
     }
 
     videoUrl += commonParams.join('&');
