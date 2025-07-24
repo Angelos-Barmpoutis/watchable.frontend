@@ -270,7 +270,7 @@ This project is open for contributions! Whether you're:
 
 ### How to Contribute
 
-We welcome contributions of all kinds:
+I welcome contributions of all kinds:
 
 -   Bug fixes and improvements
 -   New features and enhancements
@@ -285,12 +285,6 @@ We welcome contributions of all kinds:
 -   Angular Team. (2024). _Angular Framework Documentation_. Retrieved from https://angular.io/
 -   The Movie Database. (2024). _TMDB API Documentation_. Retrieved from https://developers.themoviedb.org/
 -   Mozilla Developer Network. (2024). _Web APIs_. Retrieved from https://developer.mozilla.org/
-
-### Recommended Reading
-
--   Freeman, A. (2022). _Pro Angular 9: Build Powerful and Dynamic Web Apps_. Apress.
--   Fain, Y., & Moiseev, A. (2021). _Angular Development with TypeScript_. Manning Publications.
--   Martin, R. C. (2017). _Clean Architecture: A Craftsman's Guide to Software Structure and Design_. Prentice Hall.
 
 ## Acknowledgments
 
