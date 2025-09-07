@@ -58,7 +58,7 @@ This project showcases expertise in:
 -   **Back to Top**: Quick navigation enhancement
 -   **Mobile Navigation**: Optimized mobile menu system
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend Framework
 

@@ -1,21 +1,15 @@
 <div appFadeIn class="carousel">
     @if (!isLoading) {
         <div class="carousel-wrapper">
-            <button
-                title="Previous"
-                aria-label="Previous"
-                type="button"
-                class="nav-button nav-prev"
-                [class]="prevButtonClass"
-            >
+            <button title="Previous" type="button" class="nav-button nav-prev" [class]="prevButtonClass">
                 <i class="fas fa-chevron-left chevron-icon"></i>
             </button>
 
-            <button title="Next" aria-label="Next" type="button" class="nav-button nav-next" [class]="nextButtonClass">
+            <button title="Next" type="button" class="nav-button nav-next" [class]="nextButtonClass">
                 <i class="fas fa-chevron-right chevron-icon"></i>
             </button>
 
-            <swiper-container #swiperEl init="false">
+            <swiper-container #swiperEl id="carousel-media" init="false">
                 @for (item of items; track item.id) {
                     <swiper-slide>
                         <app-carousel-media-item

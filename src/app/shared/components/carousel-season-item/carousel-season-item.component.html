@@ -2,14 +2,16 @@
     <a
         appFadeIn
         class="season"
+        aria-label="Link to the season"
         [title]="season.name"
         [routerLink]="['/tv-shows', 'tv-show', tvShowId, 'seasons', season.season_number]"
     >
         <div class="season-poster">
             @if (season.poster_path) {
-                <img appPosterPath [size]="posterSize" [posterPath]="season.poster_path" />
+                <img appPosterPath alt="Poster of the season" [size]="posterSize" [posterPath]="season.poster_path" />
+                />
             } @else {
-                <img [src]="posterFallback" />
+                <img alt="Poster of the season" [src]="posterFallback" />
             }
         </div>
         <span class="season-name">{{ season.name }}</span>
