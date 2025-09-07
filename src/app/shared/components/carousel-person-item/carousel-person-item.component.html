@@ -1,10 +1,21 @@
 @if (!isLoading) {
-    <a appFadeIn class="person" [title]="item.name" [routerLink]="['/', 'people', 'person', item.id]">
+    <a
+        appFadeIn
+        class="person"
+        aria-label="Link to the person"
+        [title]="item.name"
+        [routerLink]="['/', 'people', 'person', item.id]"
+    >
         <div class="person-profile">
             @if (item.profile_path) {
-                <img appProfilePath [size]="profileSize" [profilePath]="item.profile_path" />
+                <img
+                    appProfilePath
+                    alt="Profile of the person"
+                    [size]="profileSize"
+                    [profilePath]="item.profile_path"
+                />
             } @else {
-                <img [src]="profileFallback" />
+                <img alt="Profile of the person" [src]="profileFallback" />
             }
         </div>
         <span class="person-name">{{ item.name }}</span>

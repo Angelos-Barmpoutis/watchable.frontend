@@ -1,6 +1,7 @@
 @if (!isLoading) {
     <a
         appFadeIn
+        aria-label="Link to the media"
         class="media"
         [title]="title"
         [routerLink]="[
@@ -12,9 +13,9 @@
     >
         <div class="media-poster">
             @if (item.poster_path) {
-                <img appPosterPath [size]="posterSize" [posterPath]="item.poster_path" />
+                <img appPosterPath alt="Poster of the media" [size]="posterSize" [posterPath]="item.poster_path" />
             } @else {
-                <img [src]="posterFallback" />
+                <img alt="Poster of the media" [src]="posterFallback" />
             }
         </div>
     </a>
