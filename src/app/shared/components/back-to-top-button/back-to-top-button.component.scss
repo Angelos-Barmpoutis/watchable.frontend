@@ -19,8 +19,8 @@
     @media (max-width: map.get($breakpoints, "sm")) {
         @supports (padding-bottom: env(safe-area-inset-bottom)) {
             bottom: min(
-                $mobile-nav-height + $spacing-lg + env(safe-area-inset-bottom),
-                $mobile-nav-height + $spacing-md + $spacing-md
+                $mobile-nav-height + $spacing-md + env(safe-area-inset-bottom),
+                $mobile-nav-height + $spacing-md + $spacing-sm + $spacing-md
             );
         }
     }
