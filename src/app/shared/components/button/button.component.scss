@@ -29,6 +29,7 @@
     background: none;
     width: 100%;
     min-width: 50px;
+    min-height: 42.8px;
 
     @media (max-width: map.get($breakpoints, "sm")) {
         padding: calc($spacing-sm * 1.5);
