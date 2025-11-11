@@ -42,7 +42,7 @@
         <app-carousel-person [items]="trendingPeople" [isLoading]="isMainContentLoading"> </app-carousel-person>
     </section>
 
-    @for (genre of loadedGenres; track genre.genreName) {
+    @for (genre of loadedGenres; track genre.type + genre.genreId) {
         <section>
             <header>
                 <app-section-header

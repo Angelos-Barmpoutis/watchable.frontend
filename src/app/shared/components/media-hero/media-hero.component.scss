@@ -128,6 +128,7 @@
                     line-height: 1.6;
                     color: $text-primary;
                     margin: 0;
+                    word-break: break-word;
                 }
             }
 
@@ -142,7 +143,7 @@
     }
 
     @media (max-width: map.get($breakpoints, "md")) {
-        height: calc(100svh - $mobile-nav-height - $mobile-header-height);
+        height: calc(100svh - $mobile-nav-height - $mobile-header-height - $spacing-md);
 
         .overlay {
             background: linear-gradient(
@@ -179,6 +180,7 @@
                     display: none;
                     max-width: unset;
                     font-size: $font-size-sm;
+                    word-break: break-word;
                     @include text-clamp(3);
                 }
             }
@@ -249,6 +251,7 @@
                     margin-block-start: $spacing-sm * 1.5;
                     p {
                         font-size: $font-size-xs;
+                        word-break: break-word;
                     }
                 }
 
@@ -334,7 +337,7 @@
     }
 
     @media (max-width: map.get($breakpoints, "md")) {
-        height: calc(100svh - $mobile-nav-height - $mobile-header-height);
+        height: calc(100svh - $mobile-nav-height - $mobile-header-height - $spacing-md);
         align-items: flex-end;
 
         .skeleton-media-content {

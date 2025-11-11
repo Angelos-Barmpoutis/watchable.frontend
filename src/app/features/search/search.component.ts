@@ -37,7 +37,7 @@ import { SearchService } from '../../shared/services/search.service';
         FadeInDirective,
     ],
     templateUrl: './search.component.html',
-    styleUrl: './search.component.scss'
+    styleUrl: './search.component.scss',
 })
 export class SearchComponent extends BaseMediaListItemComponent<MovieItem | TvShowItem | Person> implements OnInit {
     @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;

@@ -29,6 +29,7 @@
     background: none;
     width: 100%;
     min-width: 50px;
+    min-height: 42.8px;
 
     @media (max-width: map.get($breakpoints, "sm")) {
         padding: calc($spacing-sm * 1.5);
@@ -101,10 +102,11 @@
     }
 
     &.twitter-button {
-        background: #1da1f2;
+        background: #000;
+        color: #fff;
 
         &:hover {
-            background: #1a91da;
+            background: #333;
             transform: translateY(-2px);
         }
     }

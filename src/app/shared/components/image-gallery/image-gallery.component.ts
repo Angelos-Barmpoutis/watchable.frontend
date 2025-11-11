@@ -28,23 +28,11 @@ export class ImageGalleryComponent extends BaseGalleryComponent implements After
         requestAnimationFrame(() => {
             if (this.viewerStrip?.nativeElement) {
                 const viewerSwiper = this.viewerStrip.nativeElement;
-                Object.assign(viewerSwiper.swiper.params, {
-                    preloadImages: false,
-                    updateOnWindowResize: true,
-                    watchSlidesProgress: true,
-                    resistance: false,
-                });
                 viewerSwiper.swiper.update();
             }
 
             if (this.previewStrip?.nativeElement) {
                 const previewSwiper = this.previewStrip.nativeElement;
-                Object.assign(previewSwiper.swiper.params, {
-                    preloadImages: false,
-                    updateOnWindowResize: true,
-                    watchSlidesProgress: true,
-                    resistance: false,
-                });
                 previewSwiper.swiper.update();
             }
         });

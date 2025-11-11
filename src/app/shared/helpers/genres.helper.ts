@@ -17,7 +17,7 @@ export function mapMoviesWithGenres(movies: Array<Movie>, genres: Array<Genre>):
     return movies.map((movie) => ({
         ...movie,
         genres: movie.genre_ids
-            .map((id) => genres.find((g) => g.id === id))
+            ?.map((id) => genres.find((g) => g.id === id))
             .filter((genre): genre is Genre => genre !== undefined),
     }));
 }
@@ -32,7 +32,7 @@ export function mapTvShowsWithGenres(tvShows: Array<TvShow>, genres: Array<Genre
     return tvShows.map((tvShow) => ({
         ...tvShow,
         genres: tvShow.genre_ids
-            .map((id) => genres.find((g) => g.id === id))
+            ?.map((id) => genres.find((g) => g.id === id))
             .filter((genre): genre is Genre => genre !== undefined),
     }));
 }
@@ -45,7 +45,7 @@ export function mapTvShowsWithGenres(tvShows: Array<TvShow>, genres: Array<Genre
  */
 export function mapGenres(genreIds: Array<number> = [], allGenres: Array<Genre>): string {
     return genreIds
-        .map((id) => allGenres.find((g) => g.id === id))
+        ?.map((id) => allGenres.find((g) => g.id === id))
         .filter((genre): genre is Genre => genre !== undefined)
         .map((g) => g.name)
         .slice(0, 3)

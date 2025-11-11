@@ -91,6 +91,7 @@
                 line-height: 1.6;
                 color: $text-primary;
                 margin: 0;
+                word-break: break-word;
                 @include text-clamp(3);
             }
         }
@@ -172,7 +173,7 @@
 
 @media (max-width: map.get($breakpoints, "md")) {
     .featured-banner {
-        height: calc(100svh - $mobile-nav-height - $mobile-header-height - $spacing-md);
+        height: calc(100svh - $mobile-nav-height - $mobile-header-height - $spacing-xl);
 
         .overlay {
             background: linear-gradient(
@@ -193,13 +194,14 @@
 
             .overview {
                 max-width: unset;
+                word-break: break-word;
                 font-size: $font-size-sm;
             }
         }
     }
 
     .featured-banner-skeleton {
-        height: calc(100svh - $mobile-nav-height - $mobile-header-height - $spacing-md);
+        height: calc(100svh - $mobile-nav-height - $mobile-header-height - $spacing-xl);
 
         .overlay {
             align-items: flex-end;
@@ -252,6 +254,7 @@
 
                 p {
                     font-size: $font-size-xs;
+                    word-break: break-word;
                 }
             }
 

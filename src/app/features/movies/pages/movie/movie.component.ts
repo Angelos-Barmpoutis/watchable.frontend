@@ -39,7 +39,7 @@ import { Movie, MovieDetails } from '../../../../shared/models/movie.model';
         FadeInDirective,
     ],
     templateUrl: './movie.component.html',
-    styleUrls: ['./movie.component.scss']
+    styleUrls: ['./movie.component.scss'],
 })
 export class MovieComponent implements OnInit {
     readonly mediaType = MediaType;
