@@ -91,6 +91,7 @@
                 line-height: 1.6;
                 color: $text-primary;
                 margin: 0;
+                word-break: break-word;
                 @include text-clamp(3);
             }
         }
@@ -193,6 +194,7 @@
 
             .overview {
                 max-width: unset;
+                word-break: break-word;
                 font-size: $font-size-sm;
             }
         }
@@ -252,6 +254,7 @@
 
                 p {
                     font-size: $font-size-xs;
+                    word-break: break-word;
                 }
             }
 

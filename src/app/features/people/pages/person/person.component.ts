@@ -133,41 +133,53 @@ export class PersonComponent implements OnInit {
     }
 
     private createMovieCastItems(cast: Array<MovieCreditsCastPerson>): void {
-        this.movieCastItems = cast.map((item: MovieCreditsCastPerson) => ({
-            id: item.id,
-            title: item.title || '',
-            original_title: item.original_title || '',
-            overview: item.character || '',
-            poster_path: item.poster_path || '',
-            backdrop_path: item.backdrop_path || '',
-            genre_ids: item.genre_ids || [],
-            genres: [],
-            release_date: item.release_date || '',
-            vote_average: item.vote_average || 0,
-            vote_count: item.vote_count || 0,
-            popularity: item.popularity || 0,
-            original_language: item.original_language || '',
-            video: item.video || false,
-            adult: item.adult || false,
-        }));
+        this.movieCastItems = cast
+            .map((item: MovieCreditsCastPerson) => ({
+                id: item.id,
+                title: item.title || '',
+                original_title: item.original_title || '',
+                overview: item.character || '',
+                poster_path: item.poster_path || '',
+                backdrop_path: item.backdrop_path || '',
+                genre_ids: item.genre_ids || [],
+                genres: [],
+                release_date: item.release_date || '',
+                vote_average: item.vote_average || 0,
+                vote_count: item.vote_count || 0,
+                popularity: item.popularity || 0,
+                original_language: item.original_language || '',
+                video: item.video || false,
+                adult: item.adult || false,
+            }))
+            .sort((a, b) => {
+                const dateA = a.release_date ? new Date(a.release_date).getTime() : 0;
+                const dateB = b.release_date ? new Date(b.release_date).getTime() : 0;
+                return dateB - dateA;
+            });
     }
 
     private createTvCastItems(cast: Array<TvCreditsCastPerson>): void {
-        this.tvCastItems = cast.map((item: TvCreditsCastPerson) => ({
-            id: item.id,
-            title: item.name || '',
-            original_name: item.original_name || '',
-            overview: item.character || '',
-            poster_path: item.poster_path || '',
-            backdrop_path: item.backdrop_path || '',
-            genre_ids: item.genre_ids || [],
-            genres: [],
-            first_air_date: item.first_air_date || '',
-            vote_average: item.vote_average || 0,
-            vote_count: item.vote_count || 0,
-            popularity: item.popularity || 0,
-            origin_country: item.origin_country || [],
-            name: item.name || '',
-        }));
+        this.tvCastItems = cast
+            .map((item: TvCreditsCastPerson) => ({
+                id: item.id,
+                title: item.name || '',
+                original_name: item.original_name || '',
+                overview: item.character || '',
+                poster_path: item.poster_path || '',
+                backdrop_path: item.backdrop_path || '',
+                genre_ids: item.genre_ids || [],
+                genres: [],
+                first_air_date: item.first_air_date || '',
+                vote_average: item.vote_average || 0,
+                vote_count: item.vote_count || 0,
+                popularity: item.popularity || 0,
+                origin_country: item.origin_country || [],
+                name: item.name || '',
+            }))
+            .sort((a, b) => {
+                const dateA = a.first_air_date ? new Date(a.first_air_date).getTime() : 0;
+                const dateB = b.first_air_date ? new Date(b.first_air_date).getTime() : 0;
+                return dateB - dateA;
+            });
     }
 }

@@ -85,6 +85,7 @@
                 font-size: $font-size-sm;
                 margin: 0;
                 line-height: 1.5;
+                word-break: break-word;
                 @include text-clamp(3);
             }
         }

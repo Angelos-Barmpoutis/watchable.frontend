@@ -37,6 +37,7 @@
     .rating-value {
         font-weight: $font-weight-bold;
         font-size: $font-size-sm;
+        color: $text-secondary;
 
         &.rating-low {
             color: rgba($error-color, 0.8);

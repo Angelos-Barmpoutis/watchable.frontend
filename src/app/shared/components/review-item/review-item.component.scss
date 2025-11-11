@@ -80,6 +80,7 @@
             color: $text-primary;
             margin-bottom: $spacing-md;
             line-height: 1.5;
+            word-break: break-word;
             @include text-clamp(6);
 
             @media (max-width: map.get($breakpoints, "sm")) {
