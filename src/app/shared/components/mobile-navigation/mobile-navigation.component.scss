@@ -9,7 +9,7 @@
 .bottom-nav {
     display: none;
     position: fixed;
-    bottom: $spacing-sm;
+    bottom: $spacing-md;
     border-radius: $spacing-xl;
     left: 50%;
     transform: translateX(-50%);
@@ -73,7 +73,7 @@
         display: block;
 
         @supports (bottom: env(safe-area-inset-bottom)) {
-            bottom: min($spacing-sm + env(safe-area-inset-bottom), $spacing-sm + $spacing-md);
+            bottom: min($spacing-md + env(safe-area-inset-bottom), $spacing-xl);
         }
     }
 }
