@@ -143,7 +143,7 @@
     }
 
     @media (max-width: map.get($breakpoints, "md")) {
-        height: calc(100svh - $mobile-nav-height - $mobile-header-height);
+        height: calc(100svh - $mobile-nav-height - $mobile-header-height - $spacing-md);
 
         .overlay {
             background: linear-gradient(
@@ -337,7 +337,7 @@
     }
 
     @media (max-width: map.get($breakpoints, "md")) {
-        height: calc(100svh - $mobile-nav-height - $mobile-header-height);
+        height: calc(100svh - $mobile-nav-height - $mobile-header-height - $spacing-md);
         align-items: flex-end;
 
         .skeleton-media-content {

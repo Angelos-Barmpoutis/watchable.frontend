@@ -6,46 +6,40 @@
 @use "../../styles/spacing" as *;
 @use "../../styles/animations" as *;
 
-.wrapper {
+.back-to-top {
     position: fixed;
     bottom: $spacing-3xl;
-    right: 0;
-    left: 0;
+    right: $spacing-lg;
     z-index: map.get($z-layers, "header");
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba($primary-color, 0.8);
+    backdrop-filter: blur(17px);
+    border: none;
+    color: $text-primary;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
+    transition: all $transition-normal;
+
+    &:hover {
+        background-color: rgba($primary-color, 1);
+        transform: translateY(-2px);
+    }
+
+    i {
+        font-size: $font-size-lg;
+    }
 
     @media (max-width: map.get($breakpoints, "sm")) {
+        right: $spacing-md;
         @supports (padding-bottom: env(safe-area-inset-bottom)) {
             bottom: min(
                 $mobile-nav-height + $spacing-xl + env(safe-area-inset-bottom),
                 $mobile-nav-height + $spacing-md + $spacing-xl
             );
-        }
-    }
-
-    .back-to-top {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        background-color: rgba($primary-color, 0.8);
-        backdrop-filter: blur(17px);
-        border: none;
-        color: $text-primary;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all $transition-normal;
-
-        &:hover {
-            background-color: rgba($primary-color, 1);
-            transform: translateY(-2px);
-        }
-
-        i {
-            font-size: $font-size-lg;
         }
     }
 }

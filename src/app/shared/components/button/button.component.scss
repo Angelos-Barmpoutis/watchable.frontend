@@ -101,10 +101,11 @@
     }
 
     &.twitter-button {
-        background: #1da1f2;
+        background: #000;
+        color: #fff;
 
         &:hover {
-            background: #1a91da;
+            background: #333;
             transform: translateY(-2px);
         }
     }
