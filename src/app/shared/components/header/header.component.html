@@ -7,12 +7,11 @@
                     @for (link of navigationLinks; track link.path) {
                         <li>
                             <app-button
-                                [variant]="buttonType.Secondary"
+                                [variant]="buttonType.Tertiary"
                                 [type]="'button'"
                                 [link]="link"
                                 [routerLinkActive]="'active'"
                                 [text]="link.title"
-                                [hasPadding]="false"
                             ></app-button>
                         </li>
                     }

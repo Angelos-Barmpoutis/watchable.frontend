@@ -15,30 +15,16 @@
     overflow-x: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    display: flex;
+    gap: $spacing-sm;
 
-    &::-webkit-scrollbar {
-        display: none;
-    }
-
-    .tab-group {
-        display: flex;
-        background-color: rgb(40, 44, 53);
-        border-radius: $border-radius-xl;
-        padding: $spacing-xs;
-        gap: $spacing-sm;
-
-        app-button {
-            flex-shrink: unset;
-        }
+    app-button {
+        flex-shrink: 0;
     }
 }
 
 @media (max-width: map.get($breakpoints, "sm")) {
     :host {
-        width: 100%;
-    }
-
-    .tab {
         width: 100%;
     }
 }

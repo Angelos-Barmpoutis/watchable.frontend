@@ -1,7 +1,7 @@
 export enum ButtonType {
     Primary = 'primary',
     Secondary = 'secondary',
-    Outline = 'outline',
+    Tertiary = 'tertiary',
     Imdb = 'imdb',
     Facebook = 'facebook',
     Instagram = 'instagram',

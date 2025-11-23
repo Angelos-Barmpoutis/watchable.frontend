@@ -1,20 +1,16 @@
 <div appFadeIn class="tabs-container">
-    <div class="tab-group" role="tablist">
-        @for (tab of tabs; track tab.id) {
-            <app-button
-                class="tab button"
-                role="tab"
-                [title]="tab.label"
-                [type]="'button'"
-                [variant]="selectedTabId === tab.id ? ButtonType.Primary : ButtonType.Secondary"
-                [isLoading]="isLoading"
-                [class.button-primary]="selectedTabId === tab.id"
-                [attr.aria-selected]="selectedTabId === tab.id"
-                [text]="tab.label"
-                [hasBorder]="false"
-                (click)="selectTab(tab.value)"
-            >
-            </app-button>
-        }
-    </div>
+    @for (tab of tabs; track tab.id) {
+        <app-button
+            role="tab"
+            [title]="tab.label"
+            [type]="'button'"
+            [variant]="selectedTabId === tab.id ? ButtonType.Primary : ButtonType.Secondary"
+            [isRounded]="true"
+            [isLoading]="isLoading"
+            [attr.aria-selected]="selectedTabId === tab.id"
+            [text]="tab.label"
+            (click)="selectTab(tab.value)"
+        >
+        </app-button>
+    }
 </div>

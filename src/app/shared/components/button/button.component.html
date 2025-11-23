@@ -6,13 +6,12 @@
             [type]="type"
             [class.primary-button]="variant === ButtonType.Primary"
             [class.secondary-button]="variant === ButtonType.Secondary"
-            [class.outline-button]="variant === ButtonType.Outline"
+            [class.tertiary-button]="variant === ButtonType.Tertiary"
+            [class.rounded]="isRounded"
             [class.imdb-button]="variant === ButtonType.Imdb"
             [class.facebook-button]="variant === ButtonType.Facebook"
             [class.instagram-button]="variant === ButtonType.Instagram"
             [class.twitter-button]="variant === ButtonType.Twitter"
-            [class.no-border]="!hasBorder"
-            [class.no-padding]="!hasPadding"
             [class.disabled]="disabled"
         >
             @if (icon && isIconLeft) {
@@ -30,13 +29,12 @@
                 class="button"
                 [class.primary-button]="variant === ButtonType.Primary"
                 [class.secondary-button]="variant === ButtonType.Secondary"
-                [class.outline-button]="variant === ButtonType.Outline"
+                [class.tertiary-button]="variant === ButtonType.Tertiary"
+                [class.rounded]="isRounded"
                 [class.imdb-button]="variant === ButtonType.Imdb"
                 [class.facebook-button]="variant === ButtonType.Facebook"
                 [class.instagram-button]="variant === ButtonType.Instagram"
                 [class.twitter-button]="variant === ButtonType.Twitter"
-                [class.no-border]="!hasBorder"
-                [class.no-padding]="!hasPadding"
                 [class.disabled]="disabled"
                 [target]="link.isExternal ? '_blank' : '_self'"
                 [href]="link.isExternal ? link.path : null"
@@ -55,9 +53,8 @@
                 class="button"
                 [class.primary-button]="variant === ButtonType.Primary"
                 [class.secondary-button]="variant === ButtonType.Secondary"
-                [class.outline-button]="variant === ButtonType.Outline"
-                [class.no-border]="!hasBorder"
-                [class.no-padding]="!hasPadding"
+                [class.tertiary-button]="variant === ButtonType.Tertiary"
+                [class.rounded]="isRounded"
                 [class.disabled]="disabled"
                 [routerLink]="link.path"
                 [routerLinkActive]="routerLinkActive"
@@ -73,5 +70,5 @@
         }
     }
 } @else {
-    <div appFadeIn class="button loading-skeleton" [class.no-padding]="!hasPadding"></div>
+    <div appFadeIn class="button loading-skeleton" [class.rounded]="isRounded"></div>
 }

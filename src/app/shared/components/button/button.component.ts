@@ -12,7 +12,7 @@ import { ButtonLink } from './models/button.model';
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss'],
     imports: [CommonModule, RouterModule, FadeInDirective],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
     @Input() type: HTMLButtonElement['type'] = 'button';
@@ -21,8 +21,7 @@ export class ButtonComponent {
     @Input() routerLinkActive: string = '';
     @Input() disabled: boolean = false;
     @Input() isIconLeft: boolean = true;
-    @Input() hasBorder: boolean = true;
-    @Input() hasPadding: boolean = true;
+    @Input() isRounded: boolean = false;
     @Input() text?: string;
     @Input() icon?: string;
     @Input() link?: ButtonLink;

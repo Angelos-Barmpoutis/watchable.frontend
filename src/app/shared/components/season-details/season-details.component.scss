@@ -30,8 +30,8 @@
         }
 
         .detail-label {
-            color: $text-secondary;
-            font-weight: $font-weight-medium;
+            color: $text-primary;
+            font-weight: $font-weight-regular;
             width: 124px;
             flex-shrink: 0;
             display: flex;
@@ -43,13 +43,13 @@
         }
 
         .detail-value {
-            color: $text-primary;
+            color: $text-secondary;
 
             .detail-link {
-                color: rgba($primary-color, 0.8);
+                color: $primary-color;
                 text-decoration: none;
                 transition: color $transition-normal;
-                font-weight: $font-weight-medium;
+                font-weight: $font-weight-regular;
                 line-break: anywhere;
 
                 &:hover {

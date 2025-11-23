@@ -30,7 +30,7 @@
 
     .title {
         font-size: $font-size-sm;
-        font-weight: $font-weight-semibold;
+        font-weight: $font-weight-regular;
         color: $text-primary;
         margin: 0;
         @include text-clamp(1);
@@ -54,10 +54,6 @@
         .genres {
             display: inline;
         }
-    }
-
-    &:hover {
-        transform: translateY(-2px);
     }
 }
 

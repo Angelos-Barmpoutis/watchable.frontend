@@ -9,7 +9,7 @@
                             <button
                                 class="star-button"
                                 [class.active]="userRating && star * 2 <= userRating"
-                                [title]="'Rate ' + star + '/5'"
+                                [title]="'Rate ' + star + '/ 5'"
                                 (click)="rateMedia(star * 2)"
                             >
                                 <i class="fas fa-star"></i>
@@ -39,7 +39,7 @@
                         } @else {
                             <span class="rating-value">-</span>
                         }
-                        <span class="rating-total">/5</span>
+                        <span class="rating-total">/ 5</span>
                         @if (mediaDetails?.vote_count) {
                             <span class="vote-count">
                                 ({{ mediaDetails?.vote_count || 0 | formatNumberWithK }} votes)
