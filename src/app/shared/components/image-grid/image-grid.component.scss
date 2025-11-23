@@ -60,7 +60,7 @@
         }
 
         &:hover .grid-image {
-            transform: scale(1.02);
+            transform: scale(1.05);
         }
 
         .more-images {
@@ -82,7 +82,7 @@
 
             .counter {
                 font-size: $font-size-md;
-                font-weight: $font-weight-semibold;
+                font-weight: $font-weight-medium;
                 color: $text-primary;
             }
         }

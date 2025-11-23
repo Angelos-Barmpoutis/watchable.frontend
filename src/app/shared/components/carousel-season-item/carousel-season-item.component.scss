@@ -33,7 +33,7 @@
     .season-name {
         font-size: 13px;
         color: $text-primary;
-        font-weight: $font-weight-medium;
+        font-weight: $font-weight-regular;
         @include text-clamp(1);
     }
 

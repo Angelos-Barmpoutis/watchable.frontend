@@ -56,7 +56,7 @@
 
             &:hover {
                 .thumbnail-image {
-                    transform: scale(1.02);
+                    transform: scale(1.05);
                 }
 
                 .play-button {
@@ -85,7 +85,7 @@
 
             .counter {
                 font-size: $font-size-md;
-                font-weight: $font-weight-semibold;
+                font-weight: $font-weight-medium;
                 color: $text-primary;
             }
         }

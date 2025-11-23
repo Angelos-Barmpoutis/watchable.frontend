@@ -16,7 +16,7 @@
     backdrop-filter: blur(10px);
     border-radius: $border-radius-md;
     border: 1px solid rgba($text-secondary, 0.1);
-    min-width: 56px;
+    min-width: 68px;
 
     &:has(.rating-value.rating-low) {
         background-color: rgba($error-color, 0.05);
@@ -52,7 +52,7 @@
         }
 
         &.rating-top {
-            color: rgba($primary-color, 0.8);
+            color: $primary-color;
         }
     }
 
@@ -64,6 +64,6 @@
 
 .skeleton-rating-badge {
     @include skeleton-loading;
-    width: 56px;
+    width: 68px;
     height: 31px;
 }

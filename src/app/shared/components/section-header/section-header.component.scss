@@ -18,7 +18,7 @@
 
     .title {
         font-size: 22px;
-        font-weight: $font-weight-medium;
+        font-weight: $font-weight-semibold;
         color: $text-primary;
         display: flex;
         align-items: center;
@@ -26,16 +26,16 @@
         margin: 0;
         width: 100%;
 
-        &:not(:has(.loading-skeleton)) {
-            &::before {
-                content: "";
-                display: block;
-                width: $spacing-xs;
-                height: $font-size-2xl;
-                background-color: rgba($primary-color, 0.8);
-                border-radius: $spacing-sm;
-            }
-        }
+        // &:not(:has(.loading-skeleton)) {
+        //     &::before {
+        //         content: "";
+        //         display: block;
+        //         width: $spacing-xs;
+        //         height: $font-size-2xl;
+        //         background-color: $primary-color;
+        //         border-radius: $spacing-sm;
+        //     }
+        // }
 
         .title-link {
             gap: $spacing-md;
@@ -58,45 +58,20 @@
                     align-items: center;
                     gap: 6px;
 
-                    &::before {
-                        content: "";
-                        display: block;
-                        width: $spacing-xs;
-                        height: $font-size-2xl;
-                        @include skeleton-loading;
-                        border-radius: $spacing-sm;
-                    }
+                    // &::before {
+                    //     content: "";
+                    //     display: block;
+                    //     width: $spacing-xs;
+                    //     height: $font-size-2xl;
+                    //     @include skeleton-loading;
+                    //     border-radius: $spacing-sm;
+                    // }
 
                     .skeleton-title {
                         height: 24px;
                         width: 200px;
                         @include skeleton-loading;
                         border-radius: 4px;
-                    }
-                }
-            }
-
-            a {
-                flex-shrink: 0;
-
-                .view-more {
-                    font-size: $font-size-md;
-                    font-weight: $font-weight-medium;
-                    display: flex;
-                    align-items: baseline;
-                    gap: $spacing-xs;
-                    transition: all $transition-normal;
-                    color: rgba($primary-color, 0.8);
-                    text-decoration: none;
-                    cursor: pointer;
-
-                    .chevron-icon {
-                        color: inherit;
-                        font-size: $font-size-sm;
-                    }
-
-                    &:hover {
-                        color: rgba($primary-color, 1);
                     }
                 }
             }

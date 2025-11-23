@@ -46,11 +46,11 @@
             );
             backdrop-filter: blur(10px);
             color: $text-primary;
-            padding: calc($spacing-xs / 2) calc($spacing-sm * 1.5);
+            padding: calc($spacing-sm) calc($spacing-sm * 1.5);
             border-radius: $border-radius-full;
             font-size: $font-size-sm;
-            font-weight: $font-weight-medium;
-            margin-bottom: $spacing-sm;
+            font-weight: $font-weight-regular;
+            margin-bottom: $spacing-md;
             box-shadow: $shadow-sm;
             width: fit-content;
 
@@ -60,10 +60,12 @@
         }
 
         .featured-title {
-            font-size: $font-size-2xl;
-            font-weight: $font-weight-semibold;
+            font-size: $font-size-3xl;
+            font-weight: $font-weight-bold;
+            text-transform: uppercase;
+            letter-spacing: $letter-spacing-tight;
             margin: 0;
-            line-height: 1.2;
+            line-height: 1;
         }
 
         .featured-meta {
@@ -89,7 +91,7 @@
             p {
                 font-size: $font-size-sm;
                 line-height: 1.6;
-                color: $text-primary;
+                color: $text-secondary;
                 margin: 0;
                 word-break: break-word;
                 @include text-clamp(3);
@@ -121,14 +123,14 @@
 
         .skeleton-badge {
             width: 150px;
-            height: 29px;
+            height: 37px;
             @include skeleton-loading;
             border-radius: $border-radius-full;
             margin-bottom: $spacing-md;
         }
 
         .skeleton-title {
-            height: $font-size-2xl;
+            height: $font-size-3xl;
             width: 40%;
             @include skeleton-loading;
             border-radius: $border-radius-md;
@@ -189,7 +191,7 @@
             max-width: 100%;
 
             .featured-title {
-                font-size: 28px;
+                font-size: $font-size-2xl;
             }
 
             .overview {
@@ -211,7 +213,7 @@
             max-width: 100%;
 
             .skeleton-title {
-                height: 28px;
+                height: $font-size-2xl;
                 width: 80%;
             }
 
@@ -231,7 +233,7 @@
             margin-bottom: $spacing-md;
 
             .featured-badge {
-                padding: calc($spacing-sm / 2) calc($spacing-sm * 1.5);
+                padding: calc($spacing-sm) calc($spacing-sm * 1.5);
                 gap: $spacing-sm;
                 font-size: $font-size-xs;
 
@@ -240,12 +242,7 @@
                 }
             }
 
-            .featured-title {
-                font-size: 24px;
-            }
-
             .featured-meta {
-                margin-block-start: 0;
                 font-size: $font-size-xs;
             }
 
@@ -270,12 +267,7 @@
 
             .skeleton-badge {
                 width: 135px;
-                height: 26px;
-            }
-
-            .skeleton-title {
-                height: 24px;
-                margin-block-end: $spacing-sm;
+                height: 34px;
             }
 
             .featured-meta {

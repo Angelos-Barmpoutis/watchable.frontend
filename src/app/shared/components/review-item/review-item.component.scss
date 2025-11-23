@@ -58,7 +58,7 @@
             flex-direction: column;
 
             .reviewer-name {
-                font-weight: $font-weight-semibold;
+                font-weight: $font-weight-regular;
                 font-size: $font-size-sm;
                 color: $text-primary;
             }
@@ -77,7 +77,7 @@
 
         p {
             font-size: $font-size-sm;
-            color: $text-primary;
+            color: $text-secondary;
             margin-bottom: $spacing-md;
             line-height: 1.5;
             word-break: break-word;
@@ -90,8 +90,8 @@
 
         .read-more {
             font-size: $font-size-sm;
-            color: rgba($primary-color, 0.8);
-            font-weight: $font-weight-semibold;
+            color: $primary-color;
+            font-weight: $font-weight-regular;
             text-decoration: none;
             margin-top: auto;
             display: flex;
@@ -107,8 +107,7 @@
             }
 
             &:hover {
-                transform: translateY(-2px);
-                color: rgba($primary-color, 1);
+                color: rgba($primary-color, 0.85);
             }
         }
     }

@@ -21,7 +21,7 @@ import { ButtonLink } from '../button/models/button.model';
     imports: [CommonModule, FadeInDirective, ButtonComponent, BackgroundPathDirective],
     templateUrl: './featured-banner.component.html',
     styleUrl: './featured-banner.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeaturedBannerComponent implements OnChanges {
     @Input() featuredItem!: Movie | TvShow;

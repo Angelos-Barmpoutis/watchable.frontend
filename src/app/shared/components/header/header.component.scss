@@ -91,10 +91,6 @@ header {
                     font-size: $font-size-lg;
                     cursor: pointer;
                     transition: transform $transition-normal;
-
-                    &:hover {
-                        transform: translateY(-2px);
-                    }
                 }
 
                 .search-form {
@@ -154,11 +150,7 @@ header {
                     }
 
                     &:hover {
-                        transform: translateY(-2px);
-                    }
-
-                    &.active {
-                        background-color: rgba($primary-color, 0.08);
+                        background-color: rgba($primary-color, 0.85);
                     }
 
                     .avatar-image {
@@ -173,7 +165,7 @@ header {
                         width: 100%;
                         height: 100%;
                         border-radius: 50%;
-                        background-color: rgba($primary-color, 0.7);
+                        background-color: $primary-color;
                         color: $text-primary;
                         display: flex;
                         align-items: center;
@@ -181,6 +173,10 @@ header {
                         font-size: $font-size-md;
                         font-weight: 500;
                         transition: all $transition-normal;
+
+                        &:hover {
+                            background-color: rgba($primary-color, 0.85);
+                        }
                     }
                 }
 
@@ -246,7 +242,7 @@ header {
 
                                 .username {
                                     font-size: $font-size-sm;
-                                    font-weight: $font-weight-semibold;
+                                    font-weight: $font-weight-medium;
                                     color: $text-primary;
                                 }
 
@@ -259,9 +255,9 @@ header {
                                     }
 
                                     .link {
-                                        color: rgba($primary-color, 0.8);
+                                        color: $primary-color;
                                         text-decoration: none;
-                                        font-weight: $font-weight-medium;
+                                        font-weight: $font-weight-regular;
                                         transition: all $transition-normal;
 
                                         &:hover {
@@ -294,7 +290,7 @@ header {
                             font-size: $font-size-sm;
                             border-radius: $border-radius-lg;
                             transition: all $transition-normal;
-                            font-weight: $font-weight-medium;
+                            font-weight: $font-weight-regular;
                             letter-spacing: -0.01em;
                             cursor: pointer;
 
@@ -306,12 +302,11 @@ header {
                             }
 
                             &:hover {
-                                background-color: rgba($primary-color, 0.08);
+                                background-color: rgba($primary-color, 0.15);
                                 color: $text-primary;
-                                transform: translateX(2px);
 
                                 i {
-                                    color: $primary-color;
+                                    color: $text-primary;
                                 }
                             }
 
@@ -323,8 +318,7 @@ header {
                                 }
 
                                 &:hover {
-                                    background-color: rgba($error-color, 0.08);
-                                    transform: translateX(2px);
+                                    background-color: rgba($error-color, 0.15);
                                 }
                             }
                         }

@@ -17,7 +17,7 @@
     gap: $spacing-sm;
     padding: calc($spacing-sm * 1.5) $spacing-lg;
     border-radius: $border-radius-lg;
-    font-weight: $font-weight-medium;
+    font-weight: $font-weight-regular;
     cursor: pointer;
     color: $text-primary;
     transition: all $transition-normal;
@@ -35,27 +35,36 @@
         padding: calc($spacing-sm * 1.5);
     }
 
-    &:hover {
-        transform: translateY(-2px);
-    }
-
     i {
         font-size: $font-size-sm;
     }
 
     &.primary-button {
-        background: rgba($primary-color, 0.8);
+        background: $primary-color;
         color: $text-primary;
+        border: 1px solid $primary-color;
 
         &:hover {
-            background: rgba($primary-color, 1);
+            background: rgba($primary-color, 0.85);
+            border: 1px solid rgba($primary-color, 0.85);
         }
     }
 
     &.secondary-button {
+        color: $primary-color;
+        border: 1px solid $primary-color;
+
+        &:hover {
+            background: rgba($primary-color, 0.15);
+        }
+    }
+
+    &.tertiary-button {
         background: transparent;
         color: $text-primary;
-        border: none;
+        border: 2px solid transparent;
+        padding: 0;
+        border-radius: 0;
 
         &:hover {
             color: $primary-color;
@@ -66,16 +75,8 @@
         }
     }
 
-    &.outline-button {
-        background: transparent;
-        color: $text-primary;
-        border: 1px solid $text-primary;
-        backdrop-filter: blur(10px);
-
-        &:hover {
-            background: rgba($text-primary, 0.1);
-            color: $text-primary;
-        }
+    &.rounded {
+        border-radius: 50px;
     }
 
     &.imdb-button {
@@ -107,7 +108,6 @@
 
         &:hover {
             background: #333;
-            transform: translateY(-2px);
         }
     }
 
@@ -121,18 +121,13 @@
             // min-width: 90px;
         }
 
-        &.no-padding {
+        &.tertiary-button {
             height: 17px;
             border-radius: $spacing-xs;
         }
-    }
 
-    &.no-border {
-        border-color: transparent;
-    }
-
-    &.no-padding {
-        padding: 0;
-        border-radius: 0;
+        &.rounded {
+            border-radius: 50px;
+        }
     }
 }

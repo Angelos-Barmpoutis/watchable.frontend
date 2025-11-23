@@ -29,7 +29,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
         MediaListItemComponent,
         TabsComponent,
         InfiniteScrollLoaderComponent,
-    ]
+    ],
 })
 export class TrendingMoviesComponent extends BaseMediaListItemComponent<MovieItem> {
     override items: Array<MovieItem> = [];
