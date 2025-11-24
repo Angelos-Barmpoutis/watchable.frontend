@@ -34,7 +34,7 @@
         align-items: center;
         justify-content: center;
         gap: $spacing-sm;
-        color: $text-primary;
+        color: $text-secondary;
         padding-block: $spacing-sm;
         text-decoration: none;
         transition: all linear $transition-normal;
@@ -49,7 +49,7 @@
         }
 
         span {
-            font-size: 10px;
+            font-size: 11px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -57,13 +57,13 @@
         }
 
         &.active {
-            color: $primary-color;
+            color: $text-primary;
             background-color: rgba($text-secondary, 0.2);
         }
 
         &:hover,
         &:focus {
-            color: $primary-color;
+            color: $text-primary;
         }
     }
 }

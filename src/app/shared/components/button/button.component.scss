@@ -44,7 +44,8 @@
         color: $text-primary;
         border: 1px solid $primary-color;
 
-        &:hover {
+        &:hover,
+        &.active {
             background: rgba($primary-color, 0.85);
             border: 1px solid rgba($primary-color, 0.85);
         }
@@ -53,30 +54,26 @@
     &.secondary-button {
         color: $primary-color;
         border: 1px solid $primary-color;
+        backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
+        -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
 
-        &:hover {
-            background: rgba($primary-color, 0.15);
+        &:hover,
+        &.active {
+            background-color: rgba($primary-color, 0.1);
         }
     }
 
     &.tertiary-button {
         background: transparent;
-        color: $text-primary;
+        color: $text-secondary;
         border: 2px solid transparent;
         padding: 0;
         border-radius: 0;
 
-        &:hover {
-            color: $primary-color;
-        }
-
+        &:hover,
         &.active {
-            color: $primary-color;
+            color: $text-primary;
         }
-    }
-
-    &.rounded {
-        border-radius: 50px;
     }
 
     &.imdb-button {
@@ -117,17 +114,9 @@
         min-width: 120px;
         height: 40px;
 
-        @media (max-width: map.get($breakpoints, "sm")) {
-            // min-width: 90px;
-        }
-
         &.tertiary-button {
             height: 17px;
             border-radius: $spacing-xs;
-        }
-
-        &.rounded {
-            border-radius: 50px;
         }
     }
 }

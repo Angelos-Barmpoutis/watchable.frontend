@@ -17,10 +17,14 @@
 }
 
 .transparency {
-    background-color: rgba($background-color, 0.6);
-    backdrop-filter: blur(17px);
-    border: 1px solid rgba($text-secondary, 0.2);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    background: rgba(21, 21, 21, 0.61);
+    box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.32),
+        0 1.5px 4px 0 rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba($text-secondary, 0.15);
+    backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
+    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
 }
 
 .list-container {
@@ -165,7 +169,7 @@
     }
 
     i {
-        font-size: $font-size-sm;
+        font-size: $font-size-lg;
     }
 }
 

@@ -7,7 +7,6 @@
             [class.primary-button]="variant === ButtonType.Primary"
             [class.secondary-button]="variant === ButtonType.Secondary"
             [class.tertiary-button]="variant === ButtonType.Tertiary"
-            [class.rounded]="isRounded"
             [class.imdb-button]="variant === ButtonType.Imdb"
             [class.facebook-button]="variant === ButtonType.Facebook"
             [class.instagram-button]="variant === ButtonType.Instagram"
@@ -30,7 +29,6 @@
                 [class.primary-button]="variant === ButtonType.Primary"
                 [class.secondary-button]="variant === ButtonType.Secondary"
                 [class.tertiary-button]="variant === ButtonType.Tertiary"
-                [class.rounded]="isRounded"
                 [class.imdb-button]="variant === ButtonType.Imdb"
                 [class.facebook-button]="variant === ButtonType.Facebook"
                 [class.instagram-button]="variant === ButtonType.Instagram"
@@ -54,7 +52,6 @@
                 [class.primary-button]="variant === ButtonType.Primary"
                 [class.secondary-button]="variant === ButtonType.Secondary"
                 [class.tertiary-button]="variant === ButtonType.Tertiary"
-                [class.rounded]="isRounded"
                 [class.disabled]="disabled"
                 [routerLink]="link.path"
                 [routerLinkActive]="routerLinkActive"
@@ -70,5 +67,5 @@
         }
     }
 } @else {
-    <div appFadeIn class="button loading-skeleton" [class.rounded]="isRounded"></div>
+    <div appFadeIn class="button loading-skeleton"></div>
 }
