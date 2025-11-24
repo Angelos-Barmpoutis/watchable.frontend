@@ -31,21 +31,27 @@
         font-size: $font-size-sm;
         line-height: 1.2;
         overflow: hidden;
-        border: 1px solid $background-color;
+        border: 1px solid $surface-color;
         min-width: 100px;
         min-height: 42.8px;
-        background-color: $surface-color;
+        background-color: rgba($surface-color, 0.61);
         color: $text-secondary;
         border-radius: 50px;
+        box-shadow:
+            0 8px 32px 0 rgba(0, 0, 0, 0.32),
+            0 1.5px 4px 0 rgba(0, 0, 0, 0.18),
+            inset 1px 1px 7px 0 rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba($text-secondary, 0.2);
+        backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
+        -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
 
         &:hover {
             background-color: rgba($surface-color, 0.85);
         }
 
         &[aria-selected="true"] {
-            background-color: $primary-color;
+            background-color: rgba($primary-color, 0.61);
             color: $background-color;
-            border: 1px solid $primary-color;
         }
 
         @media (max-width: map.get($breakpoints, "sm")) {

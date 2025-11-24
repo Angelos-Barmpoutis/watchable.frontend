@@ -1,4 +1,4 @@
-<header appFadeIn>
+<header class="transparency" appFadeIn>
     <div class="wrapper">
         <nav>
             <div class="nav-start">
@@ -73,83 +73,80 @@
                             <i class="fa-regular fa-user"></i>
                         }
                     </button>
-
-                    @if (isProfileDropdownOpen) {
-                        <div class="dropdown-menu" appDropdownAnimation>
-                            @if (isLoggedIn) {
-                                <div class="dropdown-header">
-                                    <div class="user-info">
-                                        <div class="avatar">
-                                            @if (userInfo?.avatar_path) {
-                                                <img
-                                                    class="avatar-image"
-                                                    [src]="
-                                                        'https://image.tmdb.org/t/p/w92' + (userInfo?.avatar_path || '')
-                                                    "
-                                                    [alt]="userInfo?.name || userInfo?.username || ''"
-                                                />
-                                            } @else {
-                                                <div class="avatar-initials">
-                                                    {{ userInfo?.name || userInfo?.username || "" | avatarLetter }}
-                                                </div>
-                                            }
-                                        </div>
-                                        <div class="user-details">
-                                            <span class="username">{{ userInfo?.name || "TMDB Account" }}</span>
-                                            <span class="email">{{ userInfo?.username || "Connected to TMDB" }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <ul class="dropdown-list">
-                                    <li>
-                                        <a class="dropdown-item" [routerLink]="['/', 'watchlist']">
-                                            <i class="fas fa-bookmark"></i>
-                                            <span>Watchlist</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <ul class="dropdown-list">
-                                    <li>
-                                        <a class="dropdown-item" [routerLink]="['/', 'ratings']">
-                                            <i class="fa fa-star"></i>
-                                            <span>Ratings</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <ul class="dropdown-list">
-                                    <li>
-                                        <a class="dropdown-item text-danger" (click)="signOut()">
-                                            <i class="fas fa-sign-out-alt"></i>
-                                            <span>Sign out</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            } @else {
-                                <div class="dropdown-header">
-                                    <div class="user-info">
-                                        <div class="user-details">
-                                            <span class="username">Join Watchable</span>
-                                            <span class="email">
-                                                Connect your TMDB account to access your personalized experience or
-                                                <a class="link" [routerLink]="['/', 'register']">create a new account</a
-                                                >.
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <ul class="dropdown-list">
-                                    <li>
-                                        <a class="dropdown-item" (click)="signIn()">
-                                            <i class="fas fa-sign-in-alt"></i>
-                                            <span>Sign in</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            }
-                        </div>
-                    }
                 </div>
             </div>
         </nav>
     </div>
 </header>
+
+@if (isProfileDropdownOpen) {
+    <div class="dropdown-menu transparency" appDropdownAnimation>
+        @if (isLoggedIn) {
+            <div class="dropdown-header">
+                <div class="user-info">
+                    <div class="avatar">
+                        @if (userInfo?.avatar_path) {
+                            <img
+                                class="avatar-image"
+                                [src]="'https://image.tmdb.org/t/p/w92' + (userInfo?.avatar_path || '')"
+                                [alt]="userInfo?.name || userInfo?.username || ''"
+                            />
+                        } @else {
+                            <div class="avatar-initials">
+                                {{ userInfo?.name || userInfo?.username || "" | avatarLetter }}
+                            </div>
+                        }
+                    </div>
+                    <div class="user-details">
+                        <span class="username">{{ userInfo?.name || "TMDB Account" }}</span>
+                        <span class="email">{{ userInfo?.username || "Connected to TMDB" }}</span>
+                    </div>
+                </div>
+            </div>
+            <ul class="dropdown-list">
+                <li>
+                    <a class="dropdown-item" [routerLink]="['/', 'watchlist']">
+                        <i class="fas fa-bookmark"></i>
+                        <span>Watchlist</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="dropdown-list">
+                <li>
+                    <a class="dropdown-item" [routerLink]="['/', 'ratings']">
+                        <i class="fa fa-star"></i>
+                        <span>Ratings</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="dropdown-list">
+                <li>
+                    <a class="dropdown-item text-danger" (click)="signOut()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Sign out</span>
+                    </a>
+                </li>
+            </ul>
+        } @else {
+            <div class="dropdown-header">
+                <div class="user-info">
+                    <div class="user-details">
+                        <span class="username">Join Watchable</span>
+                        <span class="email">
+                            Connect your TMDB account to access your personalized experience or
+                            <a class="link" [routerLink]="['/', 'register']">create a new account</a>.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <ul class="dropdown-list">
+                <li>
+                    <a class="dropdown-item" (click)="signIn()">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Sign in</span>
+                    </a>
+                </li>
+            </ul>
+        }
+    </div>
+}
