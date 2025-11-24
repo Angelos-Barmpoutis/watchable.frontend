@@ -17,7 +17,8 @@
     justify-content: center;
     z-index: 1000;
     background: rgba($background-color, 0.8);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
+    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
 
     .viewer-content {
         position: relative;

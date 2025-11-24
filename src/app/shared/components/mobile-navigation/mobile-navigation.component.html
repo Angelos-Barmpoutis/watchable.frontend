@@ -14,7 +14,7 @@
 
         @for (link of navigationLinks; track link.path) {
             <li>
-                <a routerLinkActive="active" class="bottom-nav__item" [routerLink]="link.path">
+                <a class="bottom-nav__item" [class.active]="isLinkActive(link.path)" [routerLink]="link.path">
                     <i [class]="link.icon"></i>
                     <span>{{ link.title }}</span>
                 </a>

@@ -3,22 +3,25 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 
 import { DEFAULT } from '../../constants/defaults.constant';
 import { FadeInDirective } from '../../directives/fade-in.directive';
-import { ButtonComponent } from '../button/button.component';
 import { ButtonType } from '../button/enumerations/button-type.enum';
 
 export interface TabItem<T> {
     id: number;
     value: T;
     label: string;
+    icon?: {
+        name: string;
+        isLeft?: boolean;
+    };
 }
 
 @Component({
     standalone: true,
     selector: 'app-tabs',
-    imports: [CommonModule, FadeInDirective, ButtonComponent],
+    imports: [CommonModule, FadeInDirective],
     templateUrl: './tabs.component.html',
     styleUrl: './tabs.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsComponent<T = unknown> {
     @Input() isLoading = false;

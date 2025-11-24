@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { NAVIGATION_LINKS, NavigationLink } from '../../config/navigation.config';
 import { FadeInDirective } from '../../directives/fade-in.directive';
@@ -14,6 +14,12 @@ import { FadeInDirective } from '../../directives/fade-in.directive';
 })
 export class MobileNavigationComponent {
     readonly navigationLinks = NAVIGATION_LINKS;
+
+    constructor(private router: Router) {}
+
+    isLinkActive(path: string): boolean {
+        return this.router.url.includes(path);
+    }
 
     trackByLink(index: number, link: NavigationLink): string {
         return link.path;

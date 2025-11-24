@@ -21,7 +21,6 @@ export class ButtonComponent {
     @Input() routerLinkActive: string = '';
     @Input() disabled: boolean = false;
     @Input() isIconLeft: boolean = true;
-    @Input() isRounded: boolean = false;
     @Input() text?: string;
     @Input() icon?: string;
     @Input() link?: ButtonLink;

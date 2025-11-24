@@ -18,8 +18,51 @@
     display: flex;
     gap: $spacing-sm;
 
-    app-button {
+    .button {
         flex-shrink: 0;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        padding: calc($spacing-sm * 1.5) $spacing-lg;
+        font-weight: $font-weight-regular;
+        cursor: pointer;
+        transition: all $transition-normal;
+        font-size: $font-size-sm;
+        line-height: 1.2;
+        overflow: hidden;
+        border: 1px solid $background-color;
+        min-width: 100px;
+        min-height: 42.8px;
+        background-color: $surface-color;
+        color: $text-secondary;
+        border-radius: 50px;
+
+        &:hover {
+            background-color: rgba($surface-color, 0.85);
+        }
+
+        &[aria-selected="true"] {
+            background-color: $primary-color;
+            color: $background-color;
+            border: 1px solid $primary-color;
+        }
+
+        @media (max-width: map.get($breakpoints, "sm")) {
+            padding: calc($spacing-sm * 1.5);
+        }
+
+        i {
+            font-size: $font-size-sm;
+        }
+
+        &.loading-skeleton {
+            cursor: default;
+            @include skeleton-loading;
+            min-width: 100px;
+            height: 42.8px;
+            border-radius: 50px;
+        }
     }
 }
 

@@ -1,16 +1,24 @@
 <div appFadeIn class="tabs-container">
     @for (tab of tabs; track tab.id) {
-        <app-button
-            role="tab"
-            [title]="tab.label"
-            [type]="'button'"
-            [variant]="selectedTabId === tab.id ? ButtonType.Primary : ButtonType.Secondary"
-            [isRounded]="true"
-            [isLoading]="isLoading"
-            [attr.aria-selected]="selectedTabId === tab.id"
-            [text]="tab.label"
-            (click)="selectTab(tab.value)"
-        >
-        </app-button>
+        @if (!isLoading) {
+            <button
+                appFadeIn
+                class="button"
+                type="button"
+                role="tab"
+                [attr.aria-selected]="selectedTabId === tab.id"
+                (click)="selectTab(tab.value)"
+            >
+                @if (tab.icon && tab.icon.isLeft) {
+                    <i [class]="tab.icon.name"></i>
+                }
+                {{ tab.label }}
+                @if (tab.icon && !tab.icon.isLeft) {
+                    <i [class]="tab.icon.name"></i>
+                }
+            </button>
+        } @else {
+            <div appFadeIn class="button loading-skeleton"></div>
+        }
     }
 </div>
