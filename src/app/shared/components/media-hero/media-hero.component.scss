@@ -116,7 +116,7 @@
                 }
             }
 
-            .overview {
+            .tagline {
                 margin-block-start: $spacing-md;
 
                 p {
@@ -172,8 +172,7 @@
                     }
                 }
 
-                .overview {
-                    display: none;
+                .tagline {
                     max-width: unset;
                     font-size: $font-size-sm;
                     word-break: break-word;
@@ -241,10 +240,10 @@
                     font-size: $font-size-xs;
                 }
 
-                .overview {
+                .tagline {
                     margin-block-start: $spacing-sm * 1.5;
+
                     p {
-                        font-size: $font-size-xs;
                         word-break: break-word;
                     }
                 }
@@ -304,19 +303,15 @@
                 }
             }
 
-            .skeleton-media-overview {
+            .skeleton-media-tagline {
                 margin-block-start: $spacing-lg;
 
-                .skeleton-media-overview-line {
+                .skeleton-media-tagline-line {
                     height: $font-size-sm;
                     width: 100%;
                     @include skeleton-loading;
                     border-radius: $border-radius-sm;
                     margin-bottom: $spacing-sm;
-
-                    &:last-child {
-                        width: 70%;
-                    }
                 }
             }
 
@@ -351,13 +346,6 @@
                     height: $font-size-2xl;
                     width: 80%;
                 }
-
-                .skeleton-media-overview {
-                    .skeleton-media-overview-text {
-                        height: $font-size-sm;
-                        width: 68%;
-                    }
-                }
             }
         }
     }
@@ -390,12 +378,8 @@
                 }
             }
 
-            .skeleton-media-overview {
+            .skeleton-media-tagline {
                 margin-block-start: $spacing-md !important;
-
-                .skeleton-media-overview-text {
-                    height: $font-size-xs;
-                }
             }
 
             .skeleton-media-buttons {

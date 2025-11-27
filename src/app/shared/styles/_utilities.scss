@@ -5,6 +5,17 @@
 @use "./colors" as *;
 @use "./typography" as *;
 
+@mixin glassmorphism($background-color: rgba(21, 21, 21, 0.6)) {
+    box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.32),
+        0 1.5px 4px 0 rgba(0, 0, 0, 0.18),
+        inset 1px 1px 4px 0 rgba(255, 255, 255, 0.15),
+        inset -0.5px 0.5px 0 0 rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
+    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
+    background-color: #{$background-color};
+}
+
 .wrapper {
     width: 100%;
     max-width: 1680px;
@@ -14,17 +25,6 @@
     @media (max-width: map.get($breakpoints, "sm")) {
         padding: 0 $spacing-md;
     }
-}
-
-.transparency {
-    background: rgba(21, 21, 21, 0.61);
-    box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.32),
-        0 1.5px 4px 0 rgba(0, 0, 0, 0.18),
-        inset 1px 1px 7px 0 rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba($text-secondary, 0.2);
-    backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
-    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
 }
 
 .list-container {
@@ -154,14 +154,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: rgba(21, 21, 21, 0.61);
-    box-shadow:
-        0 8px 32px 0 rgba(0, 0, 0, 0.32),
-        0 1.5px 4px 0 rgba(0, 0, 0, 0.18),
-        inset 1px 1px 7px 0 rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba($text-secondary, 0.2);
-    backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
-    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
+    @include glassmorphism(rgba(21, 21, 21, 0.6));
     color: $text-primary;
     display: flex;
     align-items: center;
@@ -172,17 +165,15 @@
     z-index: map.get($z-layers, "header");
 
     &:hover {
-        background-color: rgba($surface-color, 1);
+        background-color: rgba($surface-color, 0.45);
     }
 
     i {
-        font-size: $font-size-lg;
+        font-size: $font-size-md;
     }
 }
 
 .overview-section {
-    display: none;
-
     @media (max-width: map.get($breakpoints, "md")) {
         display: block;
     }

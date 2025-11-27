@@ -3,6 +3,7 @@
 @use "./variables" as *;
 @use "./colors" as *;
 @use "./typography" as *;
+@use "utilities" as *;
 
 .input {
     width: 100%;

@@ -5,18 +5,17 @@
 @use "../../styles/typography" as *;
 @use "../../styles/spacing" as *;
 @use "../../styles/animations" as *;
+@use "../../styles/utilities" as *;
 
 .rating-badge {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: $spacing-xs;
-    padding: $spacing-xs $spacing-sm;
-    background-color: rgba($background-color, 0.05);
-    backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
-    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.1);
+    padding: $spacing-sm;
+    // background-color: rgba($background-color, 0.05);
+    @include glassmorphism(rgba($background-color, 0.05));
     border-radius: $border-radius-md;
-    border: 1px solid rgba($text-secondary, 0.1);
     min-width: 68px;
 
     &:has(.rating-value.rating-low) {
@@ -66,5 +65,5 @@
 .skeleton-rating-badge {
     @include skeleton-loading;
     width: 68px;
-    height: 31px;
+    height: 37px;
 }

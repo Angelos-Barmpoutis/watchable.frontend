@@ -5,6 +5,7 @@
 @use "../../styles/typography" as *;
 @use "../../styles/spacing" as *;
 @use "../../styles/animations" as *;
+@use "../../styles/utilities" as *;
 
 .bottom-nav {
     display: none;
@@ -15,13 +16,14 @@
     transform: translateX(-50%);
     width: calc(100% - $spacing-xl);
     z-index: map.get($z-layers, "header");
+    @include glassmorphism();
 
     &__container {
         display: flex;
         justify-content: space-around;
         align-items: center;
         width: 100%;
-        padding: 2px;
+        padding: 6px;
 
         li {
             flex: 1;
@@ -58,7 +60,7 @@
 
         &.active {
             color: $text-primary;
-            background-color: rgba($text-secondary, 0.2);
+            @include glassmorphism(rgba($text-secondary, 0.2));
         }
 
         &:hover,
