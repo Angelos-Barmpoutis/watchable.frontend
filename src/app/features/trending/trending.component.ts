@@ -31,7 +31,7 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
         CarouselPersonComponent,
         InfiniteScrollLoaderComponent,
         FeaturedBannerComponent,
-    ]
+    ],
 })
 export class TrendingComponent implements OnInit {
     readonly mediaType = MediaType;
@@ -76,8 +76,8 @@ export class TrendingComponent implements OnInit {
             .getAllTrending()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((results) => {
-                this.trendingMovies = filterMediaItems(results.movies.results) as Array<Movie>;
-                this.trendingTvShows = filterMediaItems(results.tvShows.results) as Array<TvShow>;
+                this.trendingMovies = filterMediaItems(results.movies.results);
+                this.trendingTvShows = filterMediaItems(results.tvShows.results);
                 this.trendingPeople = filterPersonItems(results.people.results);
                 this.isMainContentLoading = false;
             });

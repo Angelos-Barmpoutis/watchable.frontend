@@ -5,6 +5,7 @@
 @use "../../styles/typography" as *;
 @use "../../styles/spacing" as *;
 @use "../../styles/animations" as *;
+@use "../../styles/utilities" as *;
 
 .back-to-top {
     position: fixed;
@@ -14,8 +15,6 @@
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: $primary-color;
-    backdrop-filter: blur(17px);
     border: none;
     color: $text-primary;
     cursor: pointer;
@@ -23,9 +22,10 @@
     align-items: center;
     justify-content: center;
     transition: all $transition-normal;
+    @include glassmorphism(rgba($primary-color, 0.6));
 
     &:hover {
-        background-color: rgba($primary-color, 0.85);
+        background-color: rgba($primary-color, 0.45);
     }
 
     i {

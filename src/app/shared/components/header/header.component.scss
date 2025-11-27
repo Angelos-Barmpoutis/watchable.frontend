@@ -5,6 +5,7 @@
 @use "../../styles/typography" as *;
 @use "../../styles/spacing" as *;
 @use "../../styles/animations" as *;
+@use "../../styles/utilities" as *;
 
 header {
     padding: $spacing-md 0;
@@ -13,6 +14,7 @@ header {
     left: 0;
     width: 100%;
     z-index: map.get($z-layers, "header");
+    @include glassmorphism();
 
     nav {
         display: flex;
@@ -94,17 +96,22 @@ header {
                     transition: opacity $transition-normal;
 
                     .input-wrapper {
-                        background-color: rgb(40, 44, 53);
-                        border: 1px solid rgba($text-secondary, 0.2);
                         border-radius: $border-radius-xl;
                         padding-left: $spacing-xl;
+                        overflow: hidden;
+                        @include glassmorphism(rgb(40, 44, 53));
 
                         &.has-value {
-                            padding-right: $spacing-lg;
+                            padding-right: 40px;
+                        }
+
+                        .input {
+                            background-color: transparent;
+                            border-radius: none;
                         }
 
                         .close-button {
-                            right: 4px;
+                            right: $spacing-sm;
                             top: 50%;
                             transform: translateY(-50%);
                         }
@@ -185,6 +192,7 @@ header {
     border-radius: $border-radius-lg;
     padding: $spacing-sm;
     z-index: map.get($z-layers, "header");
+    @include glassmorphism();
 
     .dropdown-header {
         padding: $spacing-sm;

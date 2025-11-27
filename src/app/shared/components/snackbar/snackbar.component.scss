@@ -5,6 +5,7 @@
 @use "../../styles/typography" as *;
 @use "../../styles/spacing" as *;
 @use "../../styles/animations" as *;
+@use "../../styles/utilities" as *;
 
 .snackbar {
     position: fixed;
@@ -13,16 +14,15 @@
     min-width: 300px;
     width: 100%;
     max-width: 500px;
-    padding: $spacing-sm * 1.5 $spacing-md;
+    padding: $spacing-md $spacing-lg;
     border-radius: $border-radius-lg;
-    background-color: rgb(40, 44, 53);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    @include glassmorphism(rgba(40, 44, 53, 0.8));
     z-index: 1001;
     animation: slideIn 0.2s ease-out;
 
     @media (max-width: map.get($breakpoints, "md")) {
         width: calc(100vw - $spacing-lg * 2);
-        padding: $spacing-sm * 1.5;
+        padding: $spacing-md;
     }
 
     .snackbar-content {
@@ -54,6 +54,8 @@
             width: 32px;
             height: 32px;
             flex-shrink: 0;
+            border-radius: 50%;
+            @include glassmorphism(rgba(21, 21, 21, 0.6));
 
             .progress-ring {
                 position: absolute;

@@ -26,7 +26,7 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
         CarouselMediaComponent,
         InfiniteScrollLoaderComponent,
         FeaturedBannerComponent,
-    ]
+    ],
 })
 export class MoviesComponent extends AbstractGenreLoaderComponent<Movie> {
     readonly mediaType = MediaType;
@@ -53,10 +53,10 @@ export class MoviesComponent extends AbstractGenreLoaderComponent<Movie> {
             .getAllMovies()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((allMovies) => {
-                this.nowPlaying = filterMediaItems(allMovies.nowPlaying.results) as Array<Movie>;
-                this.popular = filterMediaItems(allMovies.popular.results) as Array<Movie>;
-                this.topRated = filterMediaItems(allMovies.topRated.results) as Array<Movie>;
-                this.upcoming = filterMediaItems(allMovies.upcoming.results) as Array<Movie>;
+                this.nowPlaying = filterMediaItems(allMovies.nowPlaying.results);
+                this.popular = filterMediaItems(allMovies.popular.results);
+                this.topRated = filterMediaItems(allMovies.topRated.results);
+                this.upcoming = filterMediaItems(allMovies.upcoming.results);
                 this.isMainContentLoading = false;
             });
     }

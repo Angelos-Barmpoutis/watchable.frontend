@@ -52,9 +52,9 @@ export class TvShowsComponent extends AbstractGenreLoaderComponent<TvShow> {
             .getAllTvShows()
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((allTvShows) => {
-                this.airingToday = filterMediaItems(allTvShows.airingToday.results) as Array<TvShow>;
-                this.popular = filterMediaItems(allTvShows.popular.results) as Array<TvShow>;
-                this.topRated = filterMediaItems(allTvShows.topRated.results) as Array<TvShow>;
+                this.airingToday = filterMediaItems(allTvShows.airingToday.results);
+                this.popular = filterMediaItems(allTvShows.popular.results);
+                this.topRated = filterMediaItems(allTvShows.topRated.results);
                 this.isMainContentLoading = false;
             });
     }
