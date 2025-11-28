@@ -13,11 +13,7 @@
             >
             </app-section-header>
         </header>
-        <app-carousel-media
-            [type]="mediaType.Movie"
-            [items]="trendingMovies | slice: 1"
-            [isLoading]="isMainContentLoading"
-        >
+        <app-carousel-media [type]="mediaType.Movie" [items]="trendingMovies" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 

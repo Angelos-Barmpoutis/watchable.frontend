@@ -9,7 +9,7 @@
             <app-section-header redirectUrl="now-playing" title="Now Playing Movies" [isLoading]="isMainContentLoading">
             </app-section-header>
         </header>
-        <app-carousel-media [type]="mediaType.Movie" [items]="nowPlaying | slice: 1" [isLoading]="isMainContentLoading">
+        <app-carousel-media [type]="mediaType.Movie" [items]="nowPlaying" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 

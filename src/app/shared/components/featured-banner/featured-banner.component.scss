@@ -7,7 +7,7 @@
 @use "../../styles/animations" as *;
 
 .featured-banner {
-    height: calc(75vh - $desktop-header-height);
+    height: 75vh;
     background-image: var(--background-image-780);
     background-size: cover;
     background-position: center 10%;
@@ -105,7 +105,7 @@
 }
 
 .featured-banner-skeleton {
-    height: calc(75dvh - $desktop-header-height);
+    height: 75vh;
     background-color: $background-color;
     position: relative;
 
@@ -173,7 +173,7 @@
 
 @media (max-width: map.get($breakpoints, "md")) {
     .featured-banner {
-        height: calc(100svh - $mobile-nav-height - $mobile-header-height - $spacing-xl);
+        height: calc(100svh - $mobile-nav-height - $spacing-xl);
 
         .overlay {
             background: linear-gradient(
@@ -201,7 +201,7 @@
     }
 
     .featured-banner-skeleton {
-        height: calc(100svh - $mobile-nav-height - $mobile-header-height - $spacing-xl);
+        height: calc(100svh - $mobile-nav-height - $spacing-xl);
 
         .overlay {
             align-items: flex-end;
