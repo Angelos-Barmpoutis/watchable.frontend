@@ -13,14 +13,14 @@
 
     main {
         flex: 1;
-        padding-block-start: $desktop-header-height;
+        // padding-block-start: $desktop-header-height;
 
         // Exlude pages that either have media hero or featured banner
-        // &:not(:has(app-trending)):not(:has(app-movie)):not(:has(app-movies)):not(:has(app-tv-show)):not(
-        //         :has(app-tv-shows)
-        //     ) {
-        //     padding-block-start: $desktop-header-height;
-        // }
+        &:not(:has(app-trending)):not(:has(app-movie)):not(:has(app-movies)):not(:has(app-tv-show)):not(
+                :has(app-tv-shows)
+            ) {
+            padding-block-start: $desktop-header-height;
+        }
     }
 }
 
@@ -31,14 +31,14 @@
 
     main {
         flex: 1;
-        padding-block-start: $mobile-header-height !important;
+        // padding-block-start: $mobile-header-height !important;
 
         // Exlude pages that either have media hero or featured banner
-        // &:not(:has(app-trending)):not(:has(app-movie)):not(:has(app-movies)):not(:has(app-tv-show)):not(
-        //         :has(app-tv-shows)
-        //     ) {
-        //     padding-block-start: $mobile-header-height;
-        // }
+        &:not(:has(app-trending)):not(:has(app-movie)):not(:has(app-movies)):not(:has(app-tv-show)):not(
+                :has(app-tv-shows)
+            ) {
+            padding-block-start: $mobile-header-height;
+        }
     }
 
     app-footer {

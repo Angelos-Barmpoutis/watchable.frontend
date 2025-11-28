@@ -13,11 +13,7 @@
             >
             </app-section-header>
         </header>
-        <app-carousel-media
-            [type]="mediaType.TvShow"
-            [items]="airingToday | slice: 1"
-            [isLoading]="isMainContentLoading"
-        >
+        <app-carousel-media [type]="mediaType.TvShow" [items]="airingToday" [isLoading]="isMainContentLoading">
         </app-carousel-media>
     </section>
 

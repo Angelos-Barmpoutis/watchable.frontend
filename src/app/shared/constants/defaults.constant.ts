@@ -20,7 +20,7 @@ export const DEFAULT = {
     infiniteScrollThreshold: 400,
     scrollThreshold: 700,
     carouselAnimationDuration: 300,
-    snackbarDuration: 3500,
+    snackbarDuration: 5000,
     searchOption: SearchOption.Movie,
     timeOption: TimeOption.Day,
     smallPosterSize: PosterSize.w92,
