@@ -10,7 +10,7 @@
     height: 75vh;
     background-image: var(--background-image-780);
     background-size: cover;
-    background-position: center 10%;
+    background-position: center $desktop-header-height;
     position: relative;
 
     @media (min-width: 780px) {
@@ -140,6 +140,7 @@
 
     @media (max-width: map.get($breakpoints, "md")) {
         height: calc(100svh - $mobile-nav-height - $spacing-md);
+        background-position: center $mobile-header-height;
 
         .overlay {
             background: linear-gradient(
